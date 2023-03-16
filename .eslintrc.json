@@ -1,0 +1,3 @@
+{
+	"extends": ["@pulse/eslint-config"]
+}

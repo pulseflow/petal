@@ -1,0 +1,29 @@
+{
+	"compilerOptions": {
+		"declaration": false,
+		"experimentalDecorators": false,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"importHelpers": false,
+		"incremental": true,
+		"isolatedModules": true,
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"noEmit": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"pretty": true,
+		"removeComments": true,
+		"resolveJsonModule": true,
+		"strict": true,
+		"strictBindCallApply": true,
+		"strictFunctionTypes": true,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": true,
+		"stripInternal": true
+	}
+}

@@ -1,0 +1,45 @@
+{
+	"name": "@pulse/petal-utils",
+	"version": "1.0.0",
+	"description": "Package that contains shared utils within Petal projects",
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/pastel.git",
+		"directory": "packages/petal-utils"
+	},
+	"main": "cjs/index.js",
+	"module": "esm/index.js",
+	"types": "types",
+	"files": [
+		"cjs",
+		"esm",
+		"types"
+	],
+	"scripts": {
+		"clean": "rimraf cjs esm types",
+		"build": "petal build",
+		"test": "petal test",
+		"lint": "petal lint --stylecheck",
+		"format": "petal format",
+		"bootstrap": "pnpm run clean && tsc --allowJs --outDir cjs --noEmit false --module CommonJS && tsc --declaration --isolatedModules false --outDir types --emitDeclarationOnly --noEmit false",
+		"prepublishOnly": "pnpm run bootstrap && pnpm run build"
+	},
+	"dependencies": {
+		"glob": "^8.0.3",
+		"read-pkg-up": "^7.0.1"
+	},
+	"devDependencies": {
+		"rimraf": "^4.4.0",
+		"@pulse/tsconfig": "workspace:*",
+		"@types/jest": "^29.4.0",
+		"@types/node": "^18.15.2",
+		"@types/glob": "^8.1.0"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=14"
+	}
+}

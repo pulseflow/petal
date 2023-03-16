@@ -1,0 +1,72 @@
+{
+	"name": "@pulse/petal",
+	"version": "1.0.0",
+	"license": "Apache-2.0",
+	"description": "Lightweight tooling suite for TS/JS libraries",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal.git",
+		"directory": "packages/petal"
+	},
+	"main": "cjs/index.js",
+	"module": "esm/index.js",
+	"types": "types",
+	"bin": {
+		"petal": "./bin/petal"
+	},
+	"files": [
+		"bin",
+		"cjs",
+		"config",
+		"esm",
+		"types"
+	],
+	"scripts": {
+		"clean": "rimraf cjs esm types",
+		"build": "node ./bin/petal build",
+		"test": "node ./bin/petal test",
+		"lint": "node ./bin/petal lint",
+		"format": "node ./bin/petal format",
+		"bootstrap": "pnpm run clean && tsc --allowJs --outDir cjs --noEmit false --module CommonJS",
+		"prepublishOnly": "pnpm run bootstrap && pnpm run build"
+	},
+	"dependencies": {
+		"@commitlint/cli": "^17.4.4",
+		"@commitlint/config-conventional": "^17.4.4",
+		"@pulse/eslint-config": "workspace:*",
+		"@pulse/prettier-config": "workspace:*",
+		"@pulse/tsconfig": "workspace:*",
+		"@pulse/petal-utils": "workspace:*",
+		"@types/cross-spawn": "^6.0.2",
+		"@types/debug": "^4.1.7",
+		"@types/jest": "^29.4.0",
+		"@types/react": "^18.0.28",
+		"@types/react-dom": "^18.0.11",
+		"commander": "^6.1.0",
+		"commitizen": "^4.2.6",
+		"cross-spawn-promise": "^0.10.1",
+		"cz-conventional-changelog": "^3.3.0",
+		"debug": "^4.1.1",
+		"eslint": "^8.36.0",
+		"jest": "^29.5.0",
+		"jest-junit": "^14.0.0",
+		"lint-staged": "^13.0.3",
+		"prettier": "^2.8.4",
+		"semantic-release": "^19.0.3",
+		"ts-jest": "^29.0.5",
+		"typescript": "^4.9.5"
+	},
+	"devDependencies": {
+		"rimraf": "^3.0.0",
+		"object.fromentries": "^2.0.6",
+		"tempy": "^1.0.1",
+		"@types/rimraf": "^3.0.0",
+		"@types/tempy": "^0.3.0"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=14"
+	}
+}

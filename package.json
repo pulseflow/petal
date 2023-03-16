@@ -1,0 +1,35 @@
+{
+	"name": "@pulse/petal-monorepo",
+	"private": true,
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal.git"
+	},
+	"scripts": {
+		"postinstall": "./postinstall.sh",
+		"test": "lerna run test --stream",
+		"build": "lerna run build --stream",
+		"lint": "petal lint --no-typecheck",
+		"format": "petal format",
+		"commit": "petal commit",
+		"bootstrap": "lerna bootstrap --use-workspaces",
+		"release": "./release.sh",
+		"prepare": "husky install"
+	},
+	"devDependencies": {
+		"@pulse/eslint-plugin-petal": "workspace:*",
+		"@pulse/eslint-config": "workspace:*",
+		"@pulse/eslint-config-typescript": "workspace:*",
+		"@pulse/eslint-config-base": "workspace:*",
+		"@pulse/eslint-config-react": "workspace:*",
+		"@pulse/petal": "workspace:^",
+		"husky": "^8.0.3",
+		"lerna": "^6.5.1",
+		"typescript": "^4.9.5"
+	},
+	"resolutions": {
+		"minimist": "^1.2.6",
+		"ansi-regex": "^4.1.1"
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"name": "@pulse/eslint-config",
+	"version": "1.0.0",
+	"description": "Combined ESLint config for Petal",
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal.git",
+		"directory": "packages/eslint-config"
+	},
+	"files": [
+		"index.js"
+	],
+	"scripts": {},
+	"dependencies": {
+		"@pulse/eslint-config-base": "workspace:*",
+		"@pulse/eslint-config-react": "workspace:*",
+		"@pulse/eslint-plugin-petal": "workspace:*",
+		"@pulse/petal-utils": "workspace:*",
+		"@typescript-eslint/eslint-plugin": "^5.54.1",
+		"@typescript-eslint/parser": "^5.54.1",
+		"eslint-config-prettier": "^8.7.0",
+		"eslint-plugin-jest": "^27.2.1",
+		"eslint-plugin-jsx-a11y": "^6.7.1",
+		"eslint-plugin-react": "^7.32.2",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"typescript": "^4.9.5"
+	},
+	"devDependencies": {
+		"eslint": "^8.36.0"
+	},
+	"peerDependencies": {
+		"@pulse/eslint-plugin-petal": ">=1",
+		"eslint": ">=8"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=14"
+	}
+}

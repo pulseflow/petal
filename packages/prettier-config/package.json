@@ -1,0 +1,25 @@
+{
+	"name": "@pulse/prettier-config",
+	"version": "1.0.0",
+	"license": "Apache-2.0",
+	"description": "Petal's base Prettier config",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal.git",
+		"directory": "packages/prettier-config"
+	},
+	"main": "index.js",
+	"scripts": {},
+	"devDependencies": {
+		"prettier": "^2.8.4"
+	},
+	"peerDependencies": {
+		"prettier": ">=2"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=14"
+	}
+}

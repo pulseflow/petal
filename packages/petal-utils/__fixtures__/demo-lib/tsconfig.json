@@ -1,0 +1,4 @@
+{
+	"extends": "@pulse/tsconfig",
+	"include": ["src"]
+}

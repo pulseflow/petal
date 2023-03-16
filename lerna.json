@@ -1,0 +1,10 @@
+{
+	"npmClient": "pnpm",
+	"useWorkspaces": "true",
+	"version": "1.0.0",
+	"command": {
+		"publish": {
+			"ignoreChanges": ["*.md", "@(!(package)).json"]
+		}
+	}
+}

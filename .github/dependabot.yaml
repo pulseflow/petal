@@ -1,0 +1,21 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /packages/petal/src/Tasks/AuditTasks/__fixtures__/12
+    schedule:
+      interval: daily
+    ignore:
+      - dependency-name: geddy
+  - package-ecosystem: npm
+    directory: /packages/petal/src/Tasks/AuditTasks/__fixtures__/30
+    schedule:
+      interval: daily
+    ignore:
+      - dependency-name: bassmaster
+      - dependency-name: chokidar
+      - dependency-name: geddy
+      - dependency-name: uglify-js

@@ -1,0 +1,30 @@
+{
+	"name": "@pulse/tsconfig",
+	"version": "1.0.0",
+	"license": "Apache-2.0",
+	"description": "Common TSConfig to be used as a base config",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal.git",
+		"directory": "packages/tsconfig"
+	},
+	"main": "tsconfig.json",
+	"files": [
+		"tsconfig.json"
+	],
+	"scripts": {
+		"test": "true"
+	},
+	"devDependencies": {
+		"typescript": "^4.9.5"
+	},
+	"peerDependencies": {
+		"typescript": ">=4"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=14"
+	}
+}

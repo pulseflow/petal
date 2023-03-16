@@ -1,0 +1,10 @@
+{
+	"extends": "@pulse/petal/config/tsconfig.json",
+	"include": ["src"],
+	"compilerOptions": {
+		"types": ["jest", "node"],
+		"isolatedModules": false,
+		"noEmit": true,
+		"jsx": "preserve"
+	}
+}

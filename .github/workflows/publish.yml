@@ -1,0 +1,33 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: fetch tags
+        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: pnpm install
+        run: pnpm install --frozen-lockfile
+      - name: pnpm build
+        run: pnpm build
+      - name: lint
+        run: pnpm lint
+      - name: test
+        run: pnpm test
+      - name: release
+        run: pnpm release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_USERNAME: ${{ secrets.GH_USERNAME }}

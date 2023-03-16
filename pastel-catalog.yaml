@@ -1,0 +1,7 @@
+apiVersion: dyn.gay/v1alpha1
+kind: Component
+metadata:
+  name: petal
+spec:
+  type: library
+  owner: web-infra
