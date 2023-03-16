@@ -134,7 +134,7 @@ export function commitMsgTask(
 
 export function releaseTask(task: ReleaseTaskDesc): SpawnSyncReturns<Buffer> {
 	const cmd = 'pnpm';
-	const args = ['--silent', 'dlx', 'semantic-release', ...task.restOptions];
+	const args = ['--silent', 'dlx', 'semantic-release', '--branches=\"main\"', ...task.restOptions];
 	dbg('pnpm dlx args %o', args);
 	return spawn.sync(cmd, args, { stdio: 'inherit' });
 }
