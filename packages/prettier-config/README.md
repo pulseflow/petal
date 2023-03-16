@@ -5,7 +5,7 @@ Petal's base Prettier config.
 ## Installation
 
 ```sh
-pnpm add -D @pulse/prettier-config
+pnpm add -D @flowr/prettier-config
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ After installing, update your project's `prettier.config.js` file to import the 
 
 ```js
 module.exports = {
-	...require('@pulse/prettier-config'),
+	...require('@flowr/prettier-config'),
 	// your overrides here
 };
 ```

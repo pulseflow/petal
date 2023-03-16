@@ -1,7 +1,7 @@
 import { default as spawn } from 'cross-spawn';
 import { default as Debug } from 'debug';
 import { SpawnSyncReturns } from 'child_process';
-import { hasConfig } from '@pulse/petal-utils';
+import { hasConfig } from '@flowr/petal-utils';
 
 import { TestTaskDesc } from '../SharedTypes';
 import { JEST_CONFIG } from '../Paths';

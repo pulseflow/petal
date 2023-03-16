@@ -4,7 +4,7 @@ import { default as promiseSpawn } from 'cross-spawn-promise';
 import { SpawnSyncReturns } from 'child_process';
 // @ts-ignore
 import { bootstrap as czBootstrap } from 'commitizen/dist/cli/git-cz';
-import { hasConfig } from '@pulse/petal-utils';
+import { hasConfig } from '@flowr/petal-utils';
 
 import { typeCheck } from './LintTask';
 import {

@@ -1,5 +1,5 @@
 {
-	"extends": "@pulse/petal/config/tsconfig.json",
+	"extends": "@flowr/petal/config/tsconfig.json",
 	"include": ["src"],
 	"compilerOptions": {
 		"types": ["jest", "node"],

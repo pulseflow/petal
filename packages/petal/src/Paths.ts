@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { getConsumingRoot } from '@pulse/petal-utils';
+import { getConsumingRoot } from '@flowr/petal-utils';
 
 export const CONSUMING_ROOT = getConsumingRoot();
 export const THIS_ROOT = join(__dirname, '..');

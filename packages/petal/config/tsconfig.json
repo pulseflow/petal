@@ -1,5 +1,5 @@
 {
-	"extends": "@pulse/tsconfig",
+	"extends": "@flowr/tsconfig",
 	"include": ["src"],
 	"compilerOptions": {
 		"declaration": true,

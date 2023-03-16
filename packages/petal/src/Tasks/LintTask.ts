@@ -1,6 +1,6 @@
 import { default as spawn } from 'cross-spawn-promise';
 import { default as Debug } from 'debug';
-import { hasConfig } from '@pulse/petal-utils';
+import { hasConfig } from '@flowr/petal-utils';
 
 import { LintTaskDesc } from '../SharedTypes';
 import { CONSUMING_ROOT, ESLINT_CONFIG } from '../Paths';

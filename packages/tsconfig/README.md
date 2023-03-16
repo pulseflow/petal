@@ -7,7 +7,7 @@ A collection of different base `tsconfig.json` to be extended from in your proje
 Using npm or yarn:
 
 ```sh
-pnpm add -D @pulse/tsconfig
+pnpm add -D @flowr/tsconfig
 ```
 
 ## Contributing

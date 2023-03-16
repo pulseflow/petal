@@ -7,32 +7,32 @@ overrides:
 importers:
   .:
     specifiers:
-      '@pulse/eslint-config': workspace:*
-      '@pulse/eslint-config-base': workspace:*
-      '@pulse/eslint-config-react': workspace:*
-      '@pulse/eslint-config-typescript': workspace:*
-      '@pulse/eslint-plugin-petal': workspace:*
-      '@pulse/petal': workspace:^
+      '@flowr/eslint-config': workspace:*
+      '@flowr/eslint-config-base': workspace:*
+      '@flowr/eslint-config-react': workspace:*
+      '@flowr/eslint-config-typescript': workspace:*
+      '@flowr/eslint-plugin-petal': workspace:*
+      '@flowr/petal': workspace:^
       husky: ^8.0.3
       lerna: ^6.5.1
       typescript: ^4.9.5
     devDependencies:
-      '@pulse/eslint-config': link:packages/eslint-config
-      '@pulse/eslint-config-base': link:packages/eslint-config-base
-      '@pulse/eslint-config-react': link:packages/eslint-config-react
-      '@pulse/eslint-config-typescript': link:packages/eslint-config-typescript
-      '@pulse/eslint-plugin-petal': link:packages/eslint-petal
-      '@pulse/petal': link:packages/petal
+      '@flowr/eslint-config': link:packages/eslint-config
+      '@flowr/eslint-config-base': link:packages/eslint-config-base
+      '@flowr/eslint-config-react': link:packages/eslint-config-react
+      '@flowr/eslint-config-typescript': link:packages/eslint-config-typescript
+      '@flowr/eslint-plugin-petal': link:packages/eslint-petal
+      '@flowr/petal': link:packages/petal
       husky: 8.0.3
       lerna: 6.5.1
       typescript: 4.9.5
 
   packages/eslint-config:
     specifiers:
-      '@pulse/eslint-config-base': workspace:*
-      '@pulse/eslint-config-react': workspace:*
-      '@pulse/eslint-plugin-petal': workspace:*
-      '@pulse/petal-utils': workspace:*
+      '@flowr/eslint-config-base': workspace:*
+      '@flowr/eslint-config-react': workspace:*
+      '@flowr/eslint-plugin-petal': workspace:*
+      '@flowr/petal-utils': workspace:*
       '@typescript-eslint/eslint-plugin': ^5.54.1
       '@typescript-eslint/parser': ^5.54.1
       eslint: ^8.36.0
@@ -43,10 +43,10 @@ importers:
       eslint-plugin-react-hooks: ^4.6.0
       typescript: ^4.9.5
     dependencies:
-      '@pulse/eslint-config-base': link:../eslint-config-base
-      '@pulse/eslint-config-react': link:../eslint-config-react
-      '@pulse/eslint-plugin-petal': link:../eslint-petal
-      '@pulse/petal-utils': link:../petal-utils
+      '@flowr/eslint-config-base': link:../eslint-config-base
+      '@flowr/eslint-config-react': link:../eslint-config-react
+      '@flowr/eslint-plugin-petal': link:../eslint-petal
+      '@flowr/petal-utils': link:../petal-utils
       '@typescript-eslint/eslint-plugin': 5.55.0_342y7v4tc7ytrrysmit6jo4wri
       '@typescript-eslint/parser': 5.55.0_vgl77cfdswitgr47lm5swmv43m
       eslint-config-prettier: 8.7.0_eslint@8.36.0
@@ -107,10 +107,10 @@ importers:
     specifiers:
       '@commitlint/cli': ^17.4.4
       '@commitlint/config-conventional': ^17.4.4
-      '@pulse/eslint-config': workspace:*
-      '@pulse/petal-utils': workspace:*
-      '@pulse/prettier-config': workspace:*
-      '@pulse/tsconfig': workspace:*
+      '@flowr/eslint-config': workspace:*
+      '@flowr/petal-utils': workspace:*
+      '@flowr/prettier-config': workspace:*
+      '@flowr/tsconfig': workspace:*
       '@types/cross-spawn': ^6.0.2
       '@types/debug': ^4.1.7
       '@types/jest': ^29.4.0
@@ -137,10 +137,10 @@ importers:
     dependencies:
       '@commitlint/cli': 17.4.4
       '@commitlint/config-conventional': 17.4.4
-      '@pulse/eslint-config': link:../eslint-config
-      '@pulse/petal-utils': link:../petal-utils
-      '@pulse/prettier-config': link:../prettier-config
-      '@pulse/tsconfig': link:../tsconfig
+      '@flowr/eslint-config': link:../eslint-config
+      '@flowr/petal-utils': link:../petal-utils
+      '@flowr/prettier-config': link:../prettier-config
+      '@flowr/tsconfig': link:../tsconfig
       '@types/cross-spawn': 6.0.2
       '@types/debug': 4.1.7
       '@types/jest': 29.4.1
@@ -168,7 +168,7 @@ importers:
 
   packages/petal-utils:
     specifiers:
-      '@pulse/tsconfig': workspace:*
+      '@flowr/tsconfig': workspace:*
       '@types/glob': ^8.1.0
       '@types/jest': ^29.4.0
       '@types/node': ^18.15.2
@@ -179,7 +179,7 @@ importers:
       glob: 8.1.0
       read-pkg-up: 7.0.1
     devDependencies:
-      '@pulse/tsconfig': link:../tsconfig
+      '@flowr/tsconfig': link:../tsconfig
       '@types/glob': 8.1.0
       '@types/jest': 29.4.1
       '@types/node': 18.15.3

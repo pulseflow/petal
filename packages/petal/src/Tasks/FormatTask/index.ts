@@ -1,7 +1,7 @@
 import { default as Debug } from 'debug';
 import { default as spawn } from 'cross-spawn';
 import { SpawnSyncReturns } from 'child_process';
-import { hasConfig } from '@pulse/petal-utils';
+import { hasConfig } from '@flowr/petal-utils';
 
 import { FormatTaskDesc } from '../../SharedTypes';
 import { PRETTIER_CONFIG, CONSUMING_ROOT } from '../../Paths';

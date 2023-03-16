@@ -1,5 +1,5 @@
 {
-	"name": "@pulse/petal",
+	"name": "@flowr/petal",
 	"version": "1.0.0",
 	"license": "Apache-2.0",
 	"description": "Lightweight tooling suite for TS/JS libraries",
@@ -33,10 +33,10 @@
 	"dependencies": {
 		"@commitlint/cli": "^17.4.4",
 		"@commitlint/config-conventional": "^17.4.4",
-		"@pulse/eslint-config": "workspace:*",
-		"@pulse/prettier-config": "workspace:*",
-		"@pulse/tsconfig": "workspace:*",
-		"@pulse/petal-utils": "workspace:*",
+		"@flowr/eslint-config": "workspace:*",
+		"@flowr/prettier-config": "workspace:*",
+		"@flowr/tsconfig": "workspace:*",
+		"@flowr/petal-utils": "workspace:*",
 		"@types/cross-spawn": "^6.0.2",
 		"@types/debug": "^4.1.7",
 		"@types/jest": "^29.4.0",

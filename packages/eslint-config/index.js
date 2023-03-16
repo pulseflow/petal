@@ -1,4 +1,4 @@
-const { hasConfig } = require('@pulse/petal-utils');
+const { hasConfig } = require('@flowr/petal-utils');
 
 const hasReact = hasConfig([
 	{ type: 'dependency', dependency: 'react' },
@@ -25,9 +25,9 @@ if (hasReact) {
 /** @type {import('eslint').ESLint.ConfigData} */
 module.exports = {
 	extends: [
-		'@pulse/eslint-config-base',
-		hasReact ? '@pulse/eslint-config-react' : null,
-		hasTypescript ? '@pulse/eslint-config-typescript' : null,
+		'@flowr/eslint-config-base',
+		hasReact ? '@flowr/eslint-config-react' : null,
+		hasTypescript ? '@flowr/eslint-config-typescript' : null,
 		'prettier',
 		'plugin:jest/recommended',
 	].filter(s => !!s),
@@ -40,5 +40,5 @@ module.exports = {
 		sourceType: 'module',
 	},
 	settings,
-	plugins: ['@pulse/eslint-plugin-petal'],
+	plugins: ['@flowr/eslint-plugin-petal'],
 };

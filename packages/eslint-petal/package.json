@@ -1,5 +1,5 @@
 {
-	"name": "@pulse/eslint-plugin-petal",
+	"name": "@flowr/eslint-plugin-petal",
 	"version": "1.0.0",
 	"description": "Set of rules for Petal's custom ESLint rules",
 	"keywords": [

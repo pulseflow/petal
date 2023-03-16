@@ -1,5 +1,5 @@
 {
-	"name": "@pulse/eslint-config-base",
+	"name": "@flowr/eslint-config-base",
 	"version": "1.0.0",
 	"license": "Apache-2.0",
 	"description": "Petal's base ESLint config",

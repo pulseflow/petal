@@ -1,5 +1,5 @@
 {
-	"name": "@pulse/petal-monorepo",
+	"name": "@flowr/petal-monorepo",
 	"private": true,
 	"license": "Apache-2.0",
 	"repository": {
@@ -18,12 +18,12 @@
 		"prepare": "husky install"
 	},
 	"devDependencies": {
-		"@pulse/eslint-plugin-petal": "workspace:*",
-		"@pulse/eslint-config": "workspace:*",
-		"@pulse/eslint-config-typescript": "workspace:*",
-		"@pulse/eslint-config-base": "workspace:*",
-		"@pulse/eslint-config-react": "workspace:*",
-		"@pulse/petal": "workspace:^",
+		"@flowr/eslint-plugin-petal": "workspace:*",
+		"@flowr/eslint-config": "workspace:*",
+		"@flowr/eslint-config-typescript": "workspace:*",
+		"@flowr/eslint-config-base": "workspace:*",
+		"@flowr/eslint-config-react": "workspace:*",
+		"@flowr/petal": "workspace:^",
 		"husky": "^8.0.3",
 		"lerna": "^6.5.1",
 		"typescript": "^4.9.5"

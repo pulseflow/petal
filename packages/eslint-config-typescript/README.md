@@ -5,7 +5,7 @@ Petal's TypeScript ESLint config extras.
 ## Installation
 
 ```sh
-pnpm add -D @pulse/eslint-config-typescript
+pnpm add -D @flowr/eslint-config-typescript
 ```
 
 ## Usage
@@ -15,8 +15,8 @@ After installing, update your project's `.eslintrc.json` file to import the rule
 ```js
 {
   "extends" : [
-    "@pulse/eslint-config-base",
-    "@pulse/eslint-config-typescript"
+    "@flowr/eslint-config-base",
+    "@flowr/eslint-config-typescript"
   ]
 }
 ```

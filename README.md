@@ -1,7 +1,7 @@
-# @pulse/petal
+# @flowr/petal
 
 [![Actions Status](https://github.com/pulseflow/petal/workflows/Tests/badge.svg)](https://github.com/pulseflow/petal/actions)
-[![Version](https://img.shields.io/npm/v/@pulse/petal.svg)](https://www.npmjs.com/package/@pulse/petal)
+[![Version](https://img.shields.io/npm/v/@flowr/petal.svg)](https://www.npmjs.com/package/@flowr/petal)
 
 A monorepo of base configs and CLI wrappers used to speed up development @ Pulse.
 
@@ -11,10 +11,10 @@ Want to use it? Check out the [CLI documentation](https://github.com/pulseflow/p
 
 ### petal CLI
 
-[@pulse/petal](./packages/petal) is a CLI that combines shared configuration for building, linting, testing, formatting, and releasing libraries for Node and the browser.
+[@flowr/petal](./packages/petal) is a CLI that combines shared configuration for building, linting, testing, formatting, and releasing libraries for Node and the browser.
 
 ```bash
-pnpm add -D @pulse/petal husky
+pnpm add -D @flowr/petal husky
 ```
 
 It is intended to be used within a project as a series of npm scripts.
@@ -22,7 +22,7 @@ It is intended to be used within a project as a series of npm scripts.
 ```json
 {
 	"devDependencies": {
-		"@pulse/petal": "^1.0.0",
+		"@flowr/petal": "^1.0.0",
 		"husky": "^7.0.0"
 	},
 	"scripts": {
@@ -54,13 +54,13 @@ View the [full CLI documentation](./packages/petal) for more details on how to g
 
 ### Petal shared configurations
 
-- [@pulse/eslint-config](./packages/eslint-config)
-- [@pulse/eslint-config-base](./packages/eslint-config-base)
-- [@pulse/eslint-config-react](./packages/eslint-config-react)
-- [@pulse/eslint-config-typescript](./packages/eslint-config-typescript)
-- [@pulse/petal-plugin](./packages/petal-plugin)
-- [@pulse/prettier-config](./packages/prettier-config)
-- [@pulse/tsconfig](./packages/tsconfig)
+- [@flowr/eslint-config](./packages/eslint-config)
+- [@flowr/eslint-config-base](./packages/eslint-config-base)
+- [@flowr/eslint-config-react](./packages/eslint-config-react)
+- [@flowr/eslint-config-typescript](./packages/eslint-config-typescript)
+- [@flowr/petal-plugin](./packages/petal-plugin)
+- [@flowr/prettier-config](./packages/prettier-config)
+- [@flowr/tsconfig](./packages/tsconfig)
 
 ## Related projects we use
 

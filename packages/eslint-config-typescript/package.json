@@ -1,5 +1,5 @@
 {
-	"name": "@pulse/eslint-config-typescript",
+	"name": "@flowr/eslint-config-typescript",
 	"version": "1.0.0",
 	"license": "Apache-2.0",
 	"description": "Petal's ESLint config for TypeScript",

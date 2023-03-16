@@ -1,11 +1,11 @@
-# @pulse/eslint-config-base
+# @flowr/eslint-config-base
 
 Petak's base ESLint config.
 
 ## Installation
 
 ```sh
-pnpm add -D @pulse/eslint-config-base eslint
+pnpm add -D @flowr/eslint-config-base eslint
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ After installing, update your project's `.eslintrc.json` file to import the rule
 ```js
 {
   "extends" : [
-    "@pulse/eslint-config-base"
+    "@flowr/eslint-config-base"
   ]
 }
 ```
@@ -25,7 +25,7 @@ After installing, update your project's `.eslintrc.json` file to import the rule
 ```js
 {
   "extends" : [
-    "@pulse/eslint-config-base/es5"
+    "@flowr/eslint-config-base/es5"
   ]
 }
 ```
@@ -35,7 +35,7 @@ After installing, update your project's `.eslintrc.json` file to import the rule
 ```js
 {
   "extends" : [
-    "@pulse/eslint-config-base/es6"
+    "@flowr/eslint-config-base/es6"
   ]
 }
 ```

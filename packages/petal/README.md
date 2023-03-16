@@ -3,7 +3,7 @@
 ## Usage
 
 ```sh
-yarn add --dev @pulse/petal husky
+yarn add --dev @flowr/petal husky
 ```
 
 Add the scripts and commit hooks to your package.json:

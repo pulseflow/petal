@@ -1,1 +1,1 @@
-module.exports = require('@pulse/prettier-config');
+module.exports = require('@flowr/prettier-config');

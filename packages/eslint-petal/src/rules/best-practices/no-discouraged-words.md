@@ -5,7 +5,7 @@ Use in order to prevent discouraged words in variable names and comments.
 ```js
 // .eslintrc.json
 {
-  "plugins": ["@pulse/eslint-plugin-petal"]
+  "plugins": ["@flowr/eslint-plugin-petal"]
 }
 ```
 

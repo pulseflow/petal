@@ -1,5 +1,5 @@
 {
-	"name": "@pulse/tsconfig",
+	"name": "@flowr/tsconfig",
 	"version": "1.0.0",
 	"license": "Apache-2.0",
 	"description": "Common TSConfig to be used as a base config",

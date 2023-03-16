@@ -1,11 +1,11 @@
-# @pulse/eslint-plugin-petal
+# @flowr/eslint-plugin-petal
 
 This contains all Petal-specific eslint rules.
 
 ## Installation
 
 ```sh
-pnpm add -D eslint @pulse/eslint-plugin-petal
+pnpm add -D eslint @flowr/eslint-plugin-petal
 ```
 
 ## Rules
@@ -22,7 +22,7 @@ After installing, update your project's `.eslintrc.json` config:
 
 ```js
 {
-  "plugins": ["@pulse/eslint-plugin-petal"],
+  "plugins": ["@flowr/eslint-plugin-petal"],
 }
 ```
 

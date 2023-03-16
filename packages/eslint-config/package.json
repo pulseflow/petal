@@ -1,5 +1,5 @@
 {
-	"name": "@pulse/eslint-config",
+	"name": "@flowr/eslint-config",
 	"version": "1.0.0",
 	"description": "Combined ESLint config for Petal",
 	"license": "Apache-2.0",
@@ -13,10 +13,10 @@
 	],
 	"scripts": {},
 	"dependencies": {
-		"@pulse/eslint-config-base": "workspace:*",
-		"@pulse/eslint-config-react": "workspace:*",
-		"@pulse/eslint-plugin-petal": "workspace:*",
-		"@pulse/petal-utils": "workspace:*",
+		"@flowr/eslint-config-base": "workspace:*",
+		"@flowr/eslint-config-react": "workspace:*",
+		"@flowr/eslint-plugin-petal": "workspace:*",
+		"@flowr/petal-utils": "workspace:*",
 		"@typescript-eslint/eslint-plugin": "^5.54.1",
 		"@typescript-eslint/parser": "^5.54.1",
 		"eslint-config-prettier": "^8.7.0",
@@ -30,7 +30,7 @@
 		"eslint": "^8.36.0"
 	},
 	"peerDependencies": {
-		"@pulse/eslint-plugin-petal": ">=1",
+		"@flowr/eslint-plugin-petal": ">=1",
 		"eslint": ">=8"
 	},
 	"publishConfig": {
