@@ -1,6 +1,6 @@
 {
 	"name": "@flowr/petal",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"license": "Apache-2.0",
 	"description": "Lightweight tooling suite for TS/JS libraries",
 	"repository": {
@@ -34,9 +34,9 @@
 		"@commitlint/cli": "^17.4.4",
 		"@commitlint/config-conventional": "^17.4.4",
 		"@flowr/eslint-config": "workspace:*",
+		"@flowr/petal-utils": "workspace:*",
 		"@flowr/prettier-config": "workspace:*",
 		"@flowr/tsconfig": "workspace:*",
-		"@flowr/petal-utils": "workspace:*",
 		"@types/cross-spawn": "^6.0.2",
 		"@types/debug": "^4.1.7",
 		"@types/jest": "^29.4.0",
@@ -57,11 +57,11 @@
 		"typescript": "^4.9.5"
 	},
 	"devDependencies": {
-		"rimraf": "^3.0.0",
-		"object.fromentries": "^2.0.6",
-		"tempy": "^1.0.1",
 		"@types/rimraf": "^3.0.0",
-		"@types/tempy": "^0.3.0"
+		"@types/tempy": "^0.3.0",
+		"object.fromentries": "^2.0.6",
+		"rimraf": "^3.0.0",
+		"tempy": "^1.0.1"
 	},
 	"publishConfig": {
 		"access": "public"
