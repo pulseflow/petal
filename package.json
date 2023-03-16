@@ -14,7 +14,7 @@
 		"format": "petal format",
 		"commit": "petal commit",
 		"bootstrap": "lerna bootstrap --use-workspaces",
-		"release": "./release.sh",
+		"release": "lerna publish  --yes --force-publish --ignore-scripts --conventional-commits --create-release=github --registry=https://registry.npmjs.org",
 		"prepare": "husky install"
 	},
 	"devDependencies": {
