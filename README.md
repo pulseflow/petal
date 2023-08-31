@@ -23,7 +23,7 @@ It is intended to be used within a project as a series of npm scripts.
 {
 	"devDependencies": {
 		"@flowr/petal": "^1.0.0",
-		"husky": "^7.0.0"
+		"husky": "^8.0.0"
 	},
 	"scripts": {
 		"build": "petal build",
@@ -46,7 +46,7 @@ pnpm dlx husky set .husky/commit-msg 'pnpm petal commitmsg --edit="$1"' && \
   sed 's/edit=""/edit="$1"/g' .husky/commit-msg | tee .husky/commit-msg
 ```
 
-NOTE: the second command uses sed to hack around [this bug in husky](https://github.com/typicode/husky/issues/1019) that removes `$1`.
+NOTE: the second command uses `sed` to hack around [this bug in husky](https://github.com/typicode/husky/issues/1019) that removes `$1`.
 
 You'll want to add and commit the `.husky` directory.
 
