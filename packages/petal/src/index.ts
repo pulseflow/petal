@@ -1,4 +1,4 @@
-import program, { Command } from 'commander';
+import { program, Command } from 'commander';
 import { SpawnSyncReturns } from 'child_process';
 
 import {
@@ -263,7 +263,7 @@ function handleSpawnResult(result: SpawnSyncReturns<Buffer>) {
 }
 
 function getCommand(args: any[]): Command {
-	return args[0] as Command;
+	return args[1] as Command;
 }
 
 function getOpts(cmd: Command): { [key: string]: any } {

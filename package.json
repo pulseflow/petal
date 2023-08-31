@@ -18,18 +18,26 @@
 		"prepare": "husky install"
 	},
 	"devDependencies": {
-		"@flowr/eslint-plugin-petal": "workspace:*",
 		"@flowr/eslint-config": "workspace:*",
-		"@flowr/eslint-config-typescript": "workspace:*",
 		"@flowr/eslint-config-base": "workspace:*",
 		"@flowr/eslint-config-react": "workspace:*",
+		"@flowr/eslint-config-typescript": "workspace:*",
+		"@flowr/eslint-plugin-petal": "workspace:*",
 		"@flowr/petal": "workspace:^",
 		"husky": "^8.0.3",
-		"lerna": "^6.5.1",
-		"typescript": "^4.9.5"
+		"lerna": "^6.6.2",
+		"typescript": "^5.2.2"
 	},
-	"resolutions": {
-		"minimist": "^1.2.6",
-		"ansi-regex": "^4.1.1"
+	"pnpm": {
+		"overrides": {
+			"@types/node": "^18.0.0",
+			"semver@<5.7.2": ">=5.7.2",
+			"semver@>=6.0.0 <6.3.1": ">=6.3.1",
+			"semver@>=7.0.0 <7.5.2": ">=7.5.2",
+			"word-wrap@<1.2.4": ">=1.2.4"
+		}
+	},
+	"overrides": {
+		"@types/node": "^18.0.0"
 	}
 }
