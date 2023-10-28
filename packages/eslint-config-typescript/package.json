@@ -1,6 +1,6 @@
 {
 	"name": "@flowr/eslint-config-typescript",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"license": "Apache-2.0",
 	"description": "Petal's ESLint config for TypeScript",
 	"homepage": "https://petal.dyn.gay",
