@@ -13,21 +13,22 @@
 	"main": "./build/index.js",
 	"module": "./build/index.js",
 	"bin": {
-		"petal": "./build/index.js"
+		"petal": "./bin/petal.js"
 	},
 	"type": "module",
 	"types": "./types/index.d.ts",
 	"files": [
 		"config",
 		"build",
-		"types"
+		"types",
+		"bin"
 	],
 	"scripts": {
 		"clean": "rimraf build types",
-		"build": "node ./build/index.js build",
-		"test": "node ./build/index.js test",
-		"lint": "node ./build/index.js lint",
-		"format": "node ./build/index.js format",
+		"build": "node ./bin/petal.js build",
+		"test": "node ./bin/petal.js test",
+		"lint": "node ./bin/petal.js lint",
+		"format": "node ./bin/petal.js format",
 		"bootstrap": "pnpm run clean && tsc --allowJs --outDir build --noEmit false",
 		"prepublishOnly": "pnpm run bootstrap && pnpm run build"
 	},

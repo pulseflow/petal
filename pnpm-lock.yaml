@@ -156,6 +156,9 @@ importers:
       '@types/node':
         specifier: ^18.17.12
         version: 18.17.12
+      rimraf:
+        specifier: ^5.0.5
+        version: 5.0.5
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
