@@ -1,6 +1,6 @@
 {
 	"name": "@flowr/eslint-plugin-petal",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"description": "Set of rules for Petal's custom ESLint rules",
 	"keywords": [
 		"eslint",
@@ -44,8 +44,8 @@
 		"@types/eslint": "^8.44.6",
 		"@types/jest": "^29.5.6",
 		"@types/node": "^18.17.12",
-		"typescript": "^5.2.2",
-		"rimraf": "^5.0.5"
+		"rimraf": "^5.0.5",
+		"typescript": "^5.2.2"
 	},
 	"peerDependencies": {
 		"@typescript-eslint/parser": ">=6",

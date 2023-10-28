@@ -1,6 +1,6 @@
 {
 	"name": "@flowr/tsconfig",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"license": "Apache-2.0",
 	"description": "Common TSConfig to be used as a base config",
 	"homepage": "https://petal.dyn.gay",

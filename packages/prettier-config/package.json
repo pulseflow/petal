@@ -1,6 +1,6 @@
 {
 	"name": "@flowr/prettier-config",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"license": "Apache-2.0",
 	"description": "Petal's base Prettier config",
 	"homepage": "https://petal.dyn.gay",
