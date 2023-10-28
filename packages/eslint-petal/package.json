@@ -1,6 +1,6 @@
 {
 	"name": "@flowr/eslint-plugin-petal",
-	"version": "1.1.1",
+	"version": "2.0.0",
 	"description": "Set of rules for Petal's custom ESLint rules",
 	"keywords": [
 		"eslint",
