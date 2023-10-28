@@ -70,6 +70,7 @@ View the [full CLI documentation](./packages/petal) for more details on how to g
 - [Jest]: our preferred JavaScript test framework.
 - [husky]: allows us to hook into git events in a convenient way.
 - [lint-staged]: allows us to write pre-commit hooks which target specific paths and run a series of commands.
+- [TypeScript ESLint]: allows us to combine the power of ESLint and Typescript.
 
 [eslint]: https://eslint.org/
 [typescript]: https://www.typescriptlang.org/
@@ -77,3 +78,4 @@ View the [full CLI documentation](./packages/petal) for more details on how to g
 [jest]: https://jestjs.io/
 [husky]: https://github.com/typicode/husky
 [lint-staged]: https://github.com/okonet/lint-staged
+[typescript eslint]: https://github.com/typescript-eslint
