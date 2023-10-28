@@ -2,18 +2,18 @@
 	"name": "@flowr/petal-monorepo",
 	"private": true,
 	"license": "Apache-2.0",
+	"type": "module",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/pulseflow/petal.git"
 	},
 	"scripts": {
 		"postinstall": "./postinstall.sh",
-		"test": "lerna run test --stream",
+		"test": "NODE_OPTIONS=--experimental-vm-modules lerna run test --stream",
 		"build": "lerna run build --stream",
 		"lint": "petal lint --no-typecheck",
 		"format": "petal format",
 		"commit": "petal commit",
-		"bootstrap": "lerna bootstrap --use-workspaces",
 		"release": "lerna publish  --yes --force-publish --ignore-scripts --conventional-commits --create-release=github --registry=https://registry.npmjs.org",
 		"prepare": "husky install"
 	},
@@ -23,19 +23,11 @@
 		"@flowr/eslint-config-react": "workspace:*",
 		"@flowr/eslint-config-typescript": "workspace:*",
 		"@flowr/eslint-plugin-petal": "workspace:*",
+		"@flowr/prettier-config": "workspace:*",
 		"@flowr/petal": "workspace:^",
 		"husky": "^8.0.3",
-		"lerna": "^6.6.2",
+		"lerna": "^7.4.1",
 		"typescript": "^5.2.2"
-	},
-	"pnpm": {
-		"overrides": {
-			"@types/node": "^18.0.0",
-			"semver@<5.7.2": ">=5.7.2",
-			"semver@>=6.0.0 <6.3.1": ">=6.3.1",
-			"semver@>=7.0.0 <7.5.2": ">=7.5.2",
-			"word-wrap@<1.2.4": ">=1.2.4"
-		}
 	},
 	"overrides": {
 		"@types/node": "^18.0.0"

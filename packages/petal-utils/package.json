@@ -3,38 +3,40 @@
 	"version": "1.1.1",
 	"description": "Package that contains shared utils within Petal projects",
 	"license": "Apache-2.0",
+	"homepage": "https://petal.dyn.gay",
+	"funding": "https://ko-fi.com/pauliesnug",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/pulseflow/pastel.git",
 		"directory": "packages/petal-utils"
 	},
-	"main": "cjs/index.js",
-	"module": "esm/index.js",
-	"types": "types",
+	"main": "build/index.js",
+	"module": "build/index.js",
+	"type": "module",
+	"types": "./types/index.d.ts",
 	"files": [
-		"cjs",
-		"esm",
+		"build",
 		"types"
 	],
 	"scripts": {
-		"clean": "rimraf cjs esm types",
+		"clean": "rimraf build types",
 		"build": "petal build",
 		"test": "petal test",
 		"lint": "petal lint --stylecheck",
 		"format": "petal format",
-		"bootstrap": "pnpm run clean && tsc --allowJs --outDir cjs --noEmit false --module CommonJS && tsc --declaration --isolatedModules false --outDir types --emitDeclarationOnly --noEmit false",
+		"bootstrap": "pnpm run clean && tsc --declaration --isolatedModules false --outDir types --emitDeclarationOnly --noEmit false && tsc --allowJs --outDir build --noEmit false",
 		"prepublishOnly": "pnpm run bootstrap && pnpm run build"
 	},
 	"dependencies": {
 		"glob": "^8.0.3",
-		"read-pkg-up": "^7.0.1"
+		"read-pkg-up": "^10.1.0"
 	},
 	"devDependencies": {
 		"@flowr/tsconfig": "workspace:*",
-		"@types/glob": "^8.1.0",
-		"@types/jest": "^29.5.4",
+		"@types/glob": "^8.0.3",
+		"@types/jest": "^29.5.6",
 		"@types/node": "^18.0.0",
-		"rimraf": "^4.4.1"
+		"rimraf": "^5.0.5"
 	},
 	"publishConfig": {
 		"access": "public"

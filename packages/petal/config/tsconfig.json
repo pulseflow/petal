@@ -5,9 +5,7 @@
 		"declaration": true,
 		"isolatedModules": false,
 		"jsx": "react",
-		"lib": ["es6", "dom"],
-		"module": "commonjs",
-		"sourceMap": true,
-		"target": "es6"
+		"lib": ["DOM"],
+		"sourceMap": true
 	}
 }

@@ -11,35 +11,33 @@ import {
 	PrecommitTaskDesc,
 	ReleaseTaskDesc,
 	TestTaskDesc,
-} from './SharedTypes';
-import { COMMITLINT_CONIFG } from './Paths';
-import { auditTask } from './Tasks/AuditTasks';
-import { testTask } from './Tasks/TestTask';
-import { buildTask } from './Tasks/BuildTask';
-import { lintTask } from './Tasks/LintTask';
-import { formatTask } from './Tasks/FormatTask';
+} from './SharedTypes.js';
+import { COMMITLINT_CONIFG } from './Paths.js';
+import { auditTask } from './Tasks/AuditTasks/index.js';
+import { testTask } from './Tasks/TestTask.js';
+import { buildTask } from './Tasks/BuildTask.js';
+import { lintTask } from './Tasks/LintTask.js';
+import { formatTask } from './Tasks/FormatTask/index.js';
 import {
 	commitTask,
 	commitMsgTask,
 	releaseTask,
 	precommitTask,
-} from './Tasks/CommitTasks';
+} from './Tasks/CommitTasks.js';
 
 program
 	.command('build')
 	.allowUnknownOption()
-	.description('Build your project into esm, cjs, and types folders')
+	.description('Build your project into esm and types folders')
 	.option('--no-esm', 'do not build esm target')
-	.option('--no-cjs', 'do not build cjs target')
 	.option('--no-types', 'do not build types target')
 	.action((...args) => {
 		const cmd = getCommand(args);
-		const { esm, types, cjs } = getOpts(cmd);
+		const { esm, types } = getOpts(cmd);
 		const t: BuildTaskDesc = {
 			name: 'build',
 			esm,
 			types,
-			cjs,
 			restOptions: cmd.args,
 		};
 

@@ -232,3 +232,4 @@ dist
 cjs/
 esm/
 types/
+build/

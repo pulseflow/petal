@@ -1,8 +1,5 @@
-import rule from './no-discouraged-words';
-import { createRuleTester } from '../../util/testHelpers';
-
-const defaultErrorMessageWithWord = (word: string): string =>
-	`Usage of the word "${word}" is strongly discouraged. Please use a different word.`;
+import rule from './no-discouraged-words.js';
+import { createRuleTester } from '../../util/ruleTester.js';
 
 createRuleTester().run('best-practices/no-discouraged-words', rule, {
 	valid: [
@@ -28,97 +25,93 @@ createRuleTester().run('best-practices/no-discouraged-words', rule, {
 	invalid: [
 		{
 			code: 'var whitelist = "";',
-			errors: [defaultErrorMessageWithWord('whitelist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var blacklist = "";',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var foo = blacklist => "";',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var foo = _blacklist => "";',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var foo = (bar: Blacklist) => "";',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var foo = bar => "" as Blacklist;',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var bLacKLisT = "";',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var _blacklist = "";',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var wordsWithBlacklistAndAfter = "";',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var { blacklist } = {};',
-			errors: [
-				defaultErrorMessageWithWord('blacklist'),
-				defaultErrorMessageWithWord('blacklist'),
-			],
+			// Because this translates to '{ var blacklist: blacklist } = {}' the plugin reports the error twice
+			errors: [{ messageId: 'disallowed' }, { messageId: 'disallowed' }],
 		},
 		{
 			code: 'var blacklist = {}; console.log(blacklist);',
-			errors: [
-				defaultErrorMessageWithWord('blacklist'),
-				defaultErrorMessageWithWord('blacklist'),
-			],
+			// Because we're using the word twice in the syntax, it'll report twice. Maybe we can clear this up later.
+			errors: [{ messageId: 'disallowed' }, { messageId: 'disallowed' }],
 		},
 		{
 			code: 'var { blacklist: name } = {};',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var { name: blacklist } = {};',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var foo: Blacklist = "";',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var foo = "" as Blacklist;',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var foo = "" as Example.Blacklist;',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var foo = "" as Blacklist.Example;',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'var foo = ""; // blacklist',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'enum Blacklist {}',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'class Blacklist {}',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: 'type Blacklist = {}',
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 		{
 			code: "/* Hello world. I'm using the discouraged word blacklist. */",
-			errors: [defaultErrorMessageWithWord('blacklist')],
+			errors: [{ messageId: 'disallowed' }],
 		},
 	],
 });

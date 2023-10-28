@@ -1,14 +1,14 @@
-import { join } from 'path';
-
-import { promisify } from 'util';
-import tempy from 'tempy';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { promisify } from 'node:util';
+import { temporaryDirectory } from 'tempy';
 import {
 	mkdir as mkdirFS,
 	readFile as readFileFS,
 	writeFile as writeFileFS,
 } from 'fs';
 
-import { formatTask } from '.';
+import { formatTask } from './index.js';
 
 const writeFile = promisify(writeFileFS);
 const readFile = promisify(readFileFS);
@@ -17,13 +17,15 @@ const mkdir = promisify(mkdirFS);
 // @ts-ignore
 jest.spyOn(process, 'exit').mockImplementation(c => c);
 
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
 describe('petal format', () => {
 	let pkgRoot: string;
 	let testFile: string;
 
 	beforeEach(async () => {
 		jest.clearAllMocks();
-		pkgRoot = tempy.directory();
+		pkgRoot = temporaryDirectory();
 
 		const fixtureFile = join(
 			__dirname,

@@ -1,24 +1,26 @@
 import { default as Debug } from 'debug';
-import { default as spawn } from 'cross-spawn';
+import { default as spawn } from 'cross-spawn/index.js';
 import { default as promiseSpawn } from 'cross-spawn-promise';
 import { SpawnSyncReturns } from 'child_process';
 // @ts-ignore
-import { bootstrap as czBootstrap } from 'commitizen/dist/cli/git-cz';
+import { bootstrap as czBootstrap } from 'commitizen/dist/cli/git-cz.js';
 import { hasConfig } from '@flowr/petal-utils';
 
-import { typeCheck } from './LintTask';
+import { getEslintConfig, typeCheck } from './LintTask.js';
 import {
 	CommitTaskDesc,
 	CommitMsgTaskDesc,
 	ReleaseTaskDesc,
 	PrecommitTaskDesc,
-} from '../SharedTypes';
-import { LINT_STAGED_CONFIG } from '../Paths';
+} from '../SharedTypes.js';
+import { LINT_STAGED_CONFIG } from '../Paths.js';
+import { getJestConfig } from './TestTask.js';
+import { getPrettierConfig } from './FormatTask/index.js';
 
 export function getLintStagedConfig(): string | null {
 	if (
 		!hasConfig([
-			{ type: 'file', pattern: 'lint-staged.config.js' },
+			{ type: 'file', pattern: 'lint-staged.config.*' },
 			{ type: 'file', pattern: '.lintstagedrc*' },
 			{ type: 'package.json', property: 'lint-staged' },
 		])
@@ -70,15 +72,10 @@ export async function lintStaged(task: PrecommitTaskDesc): Promise<string> {
 		WEB_SCRIPTS_RUN_TESTS: task.tests.toString(),
 	};
 
-	if (task.eslintConfig) {
-		env.WEB_SCRIPTS_ESLINT_CONFIG = task.eslintConfig;
-	}
-	if (task.jestConfig) {
-		env.WEB_SCRIPTS_JEST_CONFIG = task.jestConfig;
-	}
-	if (task.prettierConfig) {
-		env.WEB_SCRIPTS_PRETTIER_CONFIG = task.prettierConfig;
-	}
+	env.WEB_SCRIPTS_ESLINT_CONFIG = task.eslintConfig || getEslintConfig() || '';
+	env.WEB_SCRIPTS_JEST_CONFIG = task.jestConfig || getJestConfig() || '';
+	env.WEB_SCRIPTS_PRETTIER_CONFIG =
+		task.prettierConfig || getPrettierConfig() || '';
 
 	const stdout = await promiseSpawn(cmd, args, {
 		stdio: 'inherit',
@@ -88,12 +85,12 @@ export async function lintStaged(task: PrecommitTaskDesc): Promise<string> {
 	return (stdout || '').toString();
 }
 
-export function commitTask(task: CommitTaskDesc): void {
+export async function commitTask(task: CommitTaskDesc): Promise<void> {
 	dbg('running commitizen commit', task.restOptions);
 
-	const cliPath = require
-		.resolve('commitizen/package.json')
-		.replace('package.json', '');
+	const cliPath = (
+		(await import.meta.resolve?.('commitizen/package.json')) as string
+	).replace('package.json', '');
 
 	Object.assign(process.env, {
 		CZ_TYPE: process.env.CZ_TYPE || ' ',

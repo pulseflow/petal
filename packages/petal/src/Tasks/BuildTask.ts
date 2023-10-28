@@ -1,4 +1,4 @@
-import { BuildTaskDesc } from '../SharedTypes';
+import { BuildTaskDesc } from '../SharedTypes.js';
 
 import { default as Debug } from 'debug';
 import { default as spawn } from 'cross-spawn-promise';
@@ -7,12 +7,11 @@ const dbg = Debug('petal:build'); // eslint-disable-line new-cap
 export async function buildTask(task: BuildTaskDesc): Promise<string[]> {
 	const fns = [];
 
-	if (!task.cjs && !task.esm && !task.types) {
-		fns.push(buildTypes, buildCJS, buildESM);
+	if (!task.esm && !task.types) {
+		fns.push(buildTypes, buildESM);
 	} else {
 		if (task.types) fns.push(buildTypes);
 		if (task.esm) fns.push(buildESM);
-		if (task.cjs) fns.push(buildCJS);
 	}
 
 	return Promise.all(
@@ -42,29 +41,7 @@ async function buildTypes(task: BuildTaskDesc): Promise<string> {
 		'--noEmit',
 		'false',
 		'--module',
-		'CommonJS',
-		...task.restOptions,
-	];
-	const stdout = await spawn(cmd, args, { stdio: 'inherit' });
-	return (stdout || '').toString();
-}
-
-async function buildCJS(task: BuildTaskDesc): Promise<string> {
-	const cmd = 'pnpm';
-	const args = [
-		'--package=typescript',
-		'--silent',
-		'dlx',
-		'tsc',
-		'--declaration',
-		'false',
-		'--allowJs',
-		'--outDir',
-		'cjs',
-		'--noEmit',
-		'false',
-		'--module',
-		'CommonJS',
+		'NodeNext',
 		...task.restOptions,
 	];
 	const stdout = await spawn(cmd, args, { stdio: 'inherit' });
@@ -82,11 +59,11 @@ async function buildESM(task: BuildTaskDesc): Promise<string> {
 		'false',
 		'--allowJs',
 		'--outDir',
-		'esm',
+		'build',
 		'--noEmit',
 		'false',
 		'--module',
-		'ESNext',
+		'NodeNext',
 		...task.restOptions,
 	];
 	const stdout = await spawn(cmd, args, { stdio: 'inherit' });

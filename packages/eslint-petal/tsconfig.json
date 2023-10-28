@@ -5,6 +5,10 @@
 		"types": ["jest", "node"],
 		"isolatedModules": false,
 		"noEmit": true,
-		"jsx": "preserve"
+		"jsx": "preserve",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"noUnusedLocals": false,
+		"noUnusedParameters": false
 	}
 }

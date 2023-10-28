@@ -1,12 +1,20 @@
-/** @type {import('eslint').ESLint.ConfigData} */
-module.exports = {
-	plugins: ['react', 'react-hooks', 'jsx-a11y'],
-	parserOptions: {
+import react from 'eslint-plugin-react';
+import hooks from 'eslint-plugin-react-hooks';
+import a11y from 'eslint-plugin-jsx-a11y';
+
+/** @type {import('eslint').Linter.FlatConfig} */
+export default {
+	...a11y.configs['recommended'],
+	languageOptions: {
 		ecmaFeatures: {
 			jsx: true,
 		},
 	},
-	extends: ['plugin:jsx-a11y/recommended'],
+	plugins: {
+		react,
+		a11y,
+		hooks,
+	},
 	rules: {
 		// Prevent missing displayName in a React component definition
 		'react/display-name': 0,

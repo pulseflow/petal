@@ -1,8 +1,8 @@
 import glob from 'glob';
-import readPkgUp from 'read-pkg-up';
+import { readPackageUpSync } from 'read-pkg-up';
 
-import { getConsumingRoot } from './get-consuming-root';
-import { hasKeyInObj } from './has-key-in-obj';
+import { getConsumingRoot } from './get-consuming-root.js';
+import { hasKeyInObj } from './has-key-in-obj.js';
 
 const getDependencyTypePath = (
 	dependency: string,
@@ -29,7 +29,7 @@ export const hasConfig = (
 		  }
 	)[],
 ): boolean => {
-	const { path: pkgPath, packageJson } = readPkgUp.sync({
+	const { path: pkgPath, packageJson } = readPackageUpSync({
 		cwd: getConsumingRoot(),
 	}) || { packageJson: {}, path: getConsumingRoot() };
 	const root = pkgPath.slice(0, pkgPath.length - '/package.json'.length);

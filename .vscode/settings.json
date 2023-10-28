@@ -1,0 +1,10 @@
+{
+	"search.exclude": {
+		"**/node_modules": true,
+		"**/bower_components": true,
+		"**/*.code-search": true,
+		"**/.ruby-lsp": true,
+		"pnpm-lock.yaml": true
+	},
+	"eslint.experimental.useFlatConfig": true
+}

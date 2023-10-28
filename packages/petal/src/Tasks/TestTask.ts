@@ -1,10 +1,10 @@
-import { default as spawn } from 'cross-spawn';
+import { default as spawn } from 'cross-spawn/index.js';
 import { default as Debug } from 'debug';
 import { SpawnSyncReturns } from 'child_process';
 import { hasConfig } from '@flowr/petal-utils';
 
-import { TestTaskDesc } from '../SharedTypes';
-import { JEST_CONFIG } from '../Paths';
+import { TestTaskDesc } from '../SharedTypes.js';
+import { JEST_CONFIG } from '../Paths.js';
 
 const dbg = Debug('petal:test'); // eslint-disable-line new-cap
 

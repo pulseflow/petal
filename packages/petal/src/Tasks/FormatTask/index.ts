@@ -1,10 +1,10 @@
 import { default as Debug } from 'debug';
-import { default as spawn } from 'cross-spawn';
-import { SpawnSyncReturns } from 'child_process';
+import { default as spawn } from 'cross-spawn/index.js';
+import { SpawnSyncReturns } from 'node:child_process';
 import { hasConfig } from '@flowr/petal-utils';
 
-import { FormatTaskDesc } from '../../SharedTypes';
-import { PRETTIER_CONFIG, CONSUMING_ROOT } from '../../Paths';
+import { FormatTaskDesc } from '../../SharedTypes.js';
+import { PRETTIER_CONFIG, CONSUMING_ROOT } from '../../Paths.js';
 
 const dbg = Debug('petal:format'); // eslint-disable-line new-cap
 
@@ -12,6 +12,7 @@ export function getPrettierConfig(): string | null {
 	if (
 		!hasConfig([
 			{ type: 'file', pattern: '.prettierrc' },
+			{ type: 'file', pattern: 'prettier.config.cjs' },
 			{ type: 'file', pattern: 'prettier.config.js' },
 			{ type: 'package.json', property: 'prettierrc' },
 		])

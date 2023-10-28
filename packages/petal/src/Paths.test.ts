@@ -1,7 +1,7 @@
 import { stat as statFS } from 'fs';
 import { promisify } from 'util';
 const stat = promisify(statFS);
-import * as Paths from './Paths';
+import * as Paths from './Paths.js';
 
 test('Paths are exported and exist', async () => {
 	expect(await stat(Paths.CONSUMING_ROOT)).toBeTruthy();

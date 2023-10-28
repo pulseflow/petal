@@ -1,19 +1,10 @@
-import path from 'path';
-import { Rule } from 'eslint';
+import noDiscouragedWords from './rules/best-practices/no-discouraged-words.js';
+import { ESLintUtils } from '@typescript-eslint/utils';
 
-type RulesInput = string[];
-type RulesOutput = { [key: string]: Rule.RuleModule };
-
-const exportRules = (rulesInput: RulesInput): RulesOutput => {
-	return rulesInput.reduce(
-		(rulesOutput, rule) => ({
-			...rulesOutput,
-			[rule]: require(`./${path.join('./rules/', rule)}`).default,
-		}),
-		{} as RulesOutput,
-	);
+const rules = {
+	'no-discouraged-words': noDiscouragedWords,
 };
 
-module.exports = {
-	rules: exportRules(['best-practices/no-discouraged-words']),
+export default {
+	rules,
 };

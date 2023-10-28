@@ -1,4 +1,4 @@
-import { hasKeyInObj } from './has-key-in-obj';
+import { hasKeyInObj } from './has-key-in-obj.js';
 
 describe('hasKeyInObj', () => {
 	it('works when the key is defined', () => {

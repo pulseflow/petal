@@ -25,7 +25,6 @@ export type TaskDesc = {
 
 export type BuildTaskDesc = {
 	name: 'build';
-	cjs: boolean;
 	esm: boolean;
 	types: boolean;
 } & TaskDesc;

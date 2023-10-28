@@ -5,6 +5,7 @@
 		"isolatedModules": false,
 		"noEmit": true,
 		"declaration": false,
-		"jsx": "preserve"
+		"jsx": "preserve",
+		"module": "NodeNext"
 	}
 }

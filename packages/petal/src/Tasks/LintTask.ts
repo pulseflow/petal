@@ -2,9 +2,9 @@ import { default as spawn } from 'cross-spawn-promise';
 import { default as Debug } from 'debug';
 import { hasConfig } from '@flowr/petal-utils';
 
-import { LintTaskDesc } from '../SharedTypes';
-import { CONSUMING_ROOT, ESLINT_CONFIG } from '../Paths';
-import { getPrettierConfig } from './FormatTask';
+import { LintTaskDesc } from '../SharedTypes.js';
+import { CONSUMING_ROOT, ESLINT_CONFIG } from '../Paths.js';
+import { getPrettierConfig } from './FormatTask/index.js';
 
 const dbg = Debug('petal:lint'); // eslint-disable-line new-cap
 
@@ -12,6 +12,7 @@ export function getEslintConfig(): string | null {
 	if (
 		!hasConfig([
 			{ type: 'file', pattern: '.eslintrc.*' },
+			{ type: 'file', pattern: 'eslint.config.*' },
 			{ type: 'package.json', property: 'eslintConfig' },
 		])
 	) {
@@ -44,27 +45,22 @@ export async function eslintRun(task: LintTaskDesc): Promise<string> {
 		'--silent',
 		'dlx',
 		'eslint',
-		'--ext',
-		'js,ts,jsx,tsx',
 		CONSUMING_ROOT,
-		'--ignore-pattern',
-		'types/',
-		'--ignore-pattern',
-		'cjs/',
-		'--ignore-pattern',
-		'esm/',
 		...(config ? ['--config', config] : []),
 		...task.restOptions,
 	];
 	dbg('pnpm dlx args %o', args);
 
-	const stdout = await spawn(cmd, args, { stdio: 'inherit' });
+	const stdout = await spawn(cmd, args, {
+		stdio: 'inherit',
+		env: { ESLINT_USE_FLAT_CONFIG: 'true' },
+	});
 	return (stdout || '').toString();
 }
 
 export async function typeCheck(): Promise<string> {
 	const cmd = 'pnpm';
-	const args = ['--silent', 'dlx', 'tsc', '--noEmit'];
+	const args = ['--package=typescript', '--silent', 'dlx', 'tsc', '--noEmit'];
 	const stdout = await spawn(cmd, args, { stdio: 'inherit' });
 	return (stdout || '').toString();
 }

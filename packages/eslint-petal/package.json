@@ -8,18 +8,20 @@
 		"react",
 		"typescript"
 	],
+	"homepage": "https://petal.dyn.gay",
+	"funding": "https://ko-fi.com/pauliesnug",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/pulseflow/petal",
 		"directory": "packages/eslint-petal"
 	},
 	"license": "Apache-2.0",
-	"main": "cjs/index.js",
-	"module": "esm/index.js",
-	"types": "types",
+	"main": "./build/index.js",
+	"module": "./build/index.js",
+	"types": "./types/index.d.ts",
+	"type": "module",
 	"files": [
-		"cjs",
-		"esm",
+		"build",
 		"types"
 	],
 	"scripts": {
@@ -28,17 +30,23 @@
 		"lint": "petal lint --stylecheck",
 		"format": "petal format"
 	},
+	"dependencies": {
+		"@typescript-eslint/parser": "^6.9.0",
+		"@typescript-eslint/rule-tester": "^6.9.0",
+		"@typescript-eslint/scope-manager": "^6.9.0",
+		"@typescript-eslint/types": "^6.9.0",
+		"@typescript-eslint/typescript-estree": "^6.9.0",
+		"@typescript-eslint/utils": "^6.9.0",
+		"eslint": "^8.52.0"
+	},
 	"devDependencies": {
-		"@types/eslint": "^8.44.2",
-		"@types/jest": "^29.5.4",
+		"@types/eslint": "^8.44.6",
+		"@types/jest": "^29.5.6",
 		"@types/node": "^18.17.12",
-		"@typescript-eslint/parser": "^5.62.0",
-		"@typescript-eslint/types": "^5.62.0",
-		"eslint": "^8.48.0",
 		"typescript": "^5.2.2"
 	},
 	"peerDependencies": {
-		"@typescript-eslint/parser": ">=5",
+		"@typescript-eslint/parser": ">=6",
 		"eslint": ">=8"
 	},
 	"publishConfig": {

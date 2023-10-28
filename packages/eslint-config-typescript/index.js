@@ -1,10 +1,24 @@
-/** @type {import('eslint').ESLint.ConfigData} */
-module.exports = {
-	parser: '@typescript-eslint/parser',
-	parserOptions: {
-		sourceType: 'module',
+import ts from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+
+/** @type {import('eslint').Linter.FlatConfig} */
+export default {
+	...ts.configs['recommended'],
+	...ts.configs['eslint-recommended'],
+	languageOptions: {
+		parser: tsParser,
+		parserOptions: {
+			ecmaFeatures: {
+				modules: true,
+			},
+			ecmaVersion: 'latest',
+			sourceType: 'module',
+		},
 	},
-	plugins: ['@typescript-eslint/eslint-plugin'],
+	plugins: {
+		'@typescript-eslint': ts,
+		ts,
+	},
 	rules: {
 		// camelcase interference fix.
 		camelcase: 'off',

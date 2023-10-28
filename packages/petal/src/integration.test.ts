@@ -1,6 +1,7 @@
-import { exec as execCP } from 'child_process';
-import { join } from 'path';
-import { promisify } from 'util';
+import { exec as execCP } from 'node:child_process';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { promisify } from 'node:util';
 import {
 	writeFile as writeFileFS,
 	mkdir as mkdirFS,
@@ -10,13 +11,14 @@ import {
 import fromEntries from 'object.fromentries';
 import * as tempy from 'tempy';
 import { default as Debug } from 'debug';
-import rimraf from 'rimraf';
+import { rimrafSync } from 'rimraf';
 
-import { THIS_ROOT, TSCONFIG } from './Paths';
+import { THIS_ROOT, TSCONFIG } from './Paths.js';
 
 const dbg = Debug('petal:integration-test'); // eslint-disable-line new-cap
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const root = join(__dirname, '..');
-const CLI = join(root, 'bin/petal');
+const CLI = join(root, 'build/index.js');
 const MONOREPO_ROOT = join(root, '../..');
 const ESLINT_ROOT = join(MONOREPO_ROOT, 'packages/eslint-config');
 
@@ -49,7 +51,7 @@ describe.skip('integration tests', () => {
 	let PKG_ROOT: string;
 
 	beforeEach(() => {
-		PKG_ROOT = tempy.directory();
+		PKG_ROOT = tempy.temporaryDirectory();
 	});
 
 	describe('help', () => {
@@ -132,10 +134,10 @@ describe.skip('integration tests', () => {
 			},
 			dependencies: fromEntries([
 				...Object.entries(
-					require(`${THIS_ROOT}/package.json`).dependencies,
+					(await import(`${THIS_ROOT}/package.json`)).dependencies,
 				).filter(([k]) => localDependencies.includes(k)),
 				...Object.entries(
-					require(`${ESLINT_ROOT}/package.json`).dependencies,
+					(await import(`${ESLINT_ROOT}/package.json`)).dependencies,
 				).filter(([k]) => eslintDependencies.includes(k)),
 				['react', '^17'],
 			]),
@@ -178,10 +180,10 @@ describe.skip('integration tests', () => {
 		lintArgs: string[] = ['--ignore-path=.gitignore', '--format=checkstyle'],
 	) {
 		try {
-			rimraf.sync(join(PKG_ROOT, 'cjs'));
-			expect(existsSync(join(PKG_ROOT, 'cjs/index.js'))).toBe(false);
+			rimrafSync(join(PKG_ROOT, 'build'));
+			expect(existsSync(join(PKG_ROOT, 'build/index.js'))).toBe(false);
 			await exec(['pnpm build', ...buildArgs].join(' '), { cwd: PKG_ROOT });
-			expect(existsSync(join(PKG_ROOT, 'cjs/index.js'))).toBe(true);
+			expect(existsSync(join(PKG_ROOT, 'build/index.js'))).toBe(true);
 
 			await exec('pnpm test', { cwd: PKG_ROOT });
 			await exec('pnpm test index.test', { cwd: PKG_ROOT });

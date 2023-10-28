@@ -1,13 +1,21 @@
-/** @type {import('eslint').ESLint.ConfigData} */
-module.exports = {
+import globals from 'globals';
+
+/** @type {import('eslint').Linter.FlatConfig} */
+export default {
 	env: {
 		es6: true,
 	},
-	parserOptions: {
-		ecmaVersion: 2022,
+	languageOptions: {
+		ecmaVersion: 'latest',
 		sourceType: 'module',
 		ecmaFeatures: {
 			jsx: true,
+		},
+		globals: {
+			...globals.es2021,
+			...globals.es2020,
+			...globals.browser,
+			...globals.node,
 		},
 	},
 	rules: {

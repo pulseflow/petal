@@ -1,4 +1,11 @@
-const { hasConfig } = require('@flowr/petal-utils');
+import { hasConfig } from '@flowr/petal-utils';
+import base from '@flowr/eslint-config-base';
+import react from '@flowr/eslint-config-react';
+import typescript from '@flowr/eslint-config-typescript';
+import petal from '@flowr/eslint-plugin-petal';
+import prettier from 'eslint-config-prettier';
+import jest from 'eslint-plugin-jest';
+import globals from 'globals';
 
 const hasReact = hasConfig([
 	{ type: 'dependency', dependency: 'react' },
@@ -22,23 +29,27 @@ if (hasReact) {
 	};
 }
 
-/** @type {import('eslint').ESLint.ConfigData} */
-module.exports = {
-	extends: [
-		'@flowr/eslint-config-base',
-		hasReact ? '@flowr/eslint-config-react' : null,
-		hasTypescript ? '@flowr/eslint-config-typescript' : null,
-		'prettier',
-		'plugin:jest/recommended',
-	].filter(s => !!s),
-	parser: '@typescript-eslint/parser',
-	env: {
-		jest: true,
+/** @type {import('eslint').Linter.FlatConfig} */
+export default {
+	...base,
+	...(hasTypescript ? typescript : {}),
+	...(hasReact ? react : {}),
+	...prettier,
+	...jest,
+	languageOptions: {
+		parser: '@typescript-eslint/parser',
+		globals: {
+			...globals.jest,
+		},
+		parserOptions: {
+			ecmaVersion: 2022,
+			sourceType: 'module',
+		},
 	},
-	parserOptions: {
-		ecmaVersion: 2022,
-		sourceType: 'module',
+	plugins: {
+		'@flowr/petal': petal,
+		petal,
+		jest,
 	},
 	settings,
-	plugins: ['@flowr/eslint-plugin-petal'],
 };

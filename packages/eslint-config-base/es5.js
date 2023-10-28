@@ -1,13 +1,14 @@
-/** @type {import('eslint').ESLint.ConfigData} */
-module.exports = {
-	env: {
-		browser: true,
-		node: true,
-		amd: false,
-		mocha: false,
-		jasmine: false,
+import globals from 'globals';
+
+/** @type {import('eslint').Linter.FlatConfig} */
+export default {
+	languageOptions: {
+		globals: {
+			...globals.browser,
+			...globals.node,
+			...globals.es5,
+		},
 	},
-	globals: {},
 	rules: {
 		// Enforces getter/setter pairs in objects
 		'accessor-pairs': 0,

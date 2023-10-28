@@ -1,17 +1,29 @@
-const path = require('path');
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-module.exports = {
-	rootDir: path.join(process.cwd(), 'src'),
-	coverageDirectory: path.join(process.cwd(), 'coverage'),
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+/** @type {import('ts-jest').JestConfigWithTsJest} */
+const config = {
+	rootDir: join(process.cwd(), 'src'),
+	coverageDirectory: join(process.cwd(), 'coverage'),
 	collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}', '!**/*.d.ts'],
+	extensionsToTreatAsEsm: ['.ts'],
+	moduleNameMapper: {
+		'^(\\.{1,2}/.*)\\.js$': '$1',
+	},
+	setupFiles: [join(__dirname, './jest.setup.js')],
 	transform: {
-		'^.+\\.[tj]sx?$': [
+		'^.+\\.m?[tj]sx?$': [
 			'ts-jest',
 			{
 				tsconfig: {
 					allowJs: true,
 				},
+				useESM: true,
 			},
 		],
 	},
 };
+
+export default config;

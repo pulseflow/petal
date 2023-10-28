@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
 	extends: ['@commitlint/config-conventional'],
 	rules: {
 		'subject-case': [
@@ -26,3 +26,5 @@ module.exports = {
 		],
 	},
 };
+
+export default config;
