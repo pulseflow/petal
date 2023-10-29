@@ -1,0 +1,3 @@
+{
+	"extends": "@flowr/petal/config/tsconfig.strict.json"
+}

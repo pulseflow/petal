@@ -23,7 +23,8 @@ export function getEslintConfig(): string | null {
 }
 
 export async function lintTask(task: LintTaskDesc): Promise<string[]> {
-	const fns = [eslintRun];
+	const fns = [];
+	if (true) fns.push(eslintRun);
 	if (task.typecheck) fns.push(typeCheck);
 	if (task.stylecheck) fns.push(styleCheck);
 
@@ -38,7 +39,7 @@ export async function lintTask(task: LintTaskDesc): Promise<string[]> {
 }
 
 export async function eslintRun(task: LintTaskDesc): Promise<string> {
-	const cmd = 'pnpm';
+	// const cmd = 'pnpm';
 	const config = task.config || getEslintConfig();
 
 	const args = [
@@ -51,10 +52,7 @@ export async function eslintRun(task: LintTaskDesc): Promise<string> {
 	];
 	dbg('pnpm dlx args %o', args);
 
-	const stdout = await spawn(cmd, args, {
-		stdio: 'inherit',
-		env: { ESLINT_USE_FLAT_CONFIG: 'true' },
-	});
+	const stdout = await spawn('pnpm', args, { stdio: 'inherit' });
 	return (stdout || '').toString();
 }
 
