@@ -22,7 +22,7 @@ It is intended to be used within a project as a series of npm scripts.
 ```json
 {
 	"devDependencies": {
-		"@flowr/petal": "^1.0.0",
+		"@flowr/petal": "^2.0.0",
 		"husky": "^8.0.0"
 	},
 	"scripts": {
@@ -37,7 +37,7 @@ It is intended to be used within a project as a series of npm scripts.
 }
 ```
 
-Additionally, you'll need to run the following two commands to create the commit and pre-commit hooks:
+Additionally, you'll need to run the following two commands to create the commit and pre-commit hooks (i: you might have to chage `pnpm dlx` based on your package manager):
 
 ```shell
 pnpm dlx husky set .husky/pre-commit 'pnpm petal precommit --no-tests --no-typecheck'

@@ -2,10 +2,10 @@
 	"extends": "@flowr/tsconfig",
 	"include": ["src"],
 	"compilerOptions": {
-		"declaration": true,
 		"isolatedModules": false,
-		"jsx": "react",
-		"lib": ["DOM", "ESNext"],
-		"sourceMap": true
+		"noEmit": true,
+		"jsx": "preserve",
+		"esModuleInterop": true,
+		"types": ["jest"]
 	}
 }

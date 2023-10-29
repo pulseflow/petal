@@ -1,0 +1,14 @@
+{
+	"extends": "./tsconfig.strict.json",
+	"compilerOptions": {
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noUncheckedIndexedAccess": true,
+		"exactOptionalPropertyTypes": true,
+		"allowUnreachableCode": false,
+		"allowJs": false
+	}
+}

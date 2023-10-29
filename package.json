@@ -25,6 +25,7 @@
 		"@flowr/eslint-plugin-petal": "workspace:*",
 		"@flowr/prettier-config": "workspace:*",
 		"@flowr/petal": "workspace:^",
+		"create-petal": "workspace:*",
 		"husky": "^8.0.3",
 		"lerna": "^7.4.1",
 		"typescript": "^5.2.2"

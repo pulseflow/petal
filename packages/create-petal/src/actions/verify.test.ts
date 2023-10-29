@@ -1,0 +1,27 @@
+import { verify } from './verify.js';
+import { setup } from '../testUtils.js';
+
+describe('verify', () => {
+	const fixture = setup();
+	const exit = (code: number) => {
+		throw code;
+	};
+
+	it('basics', async () => {
+		const context = { template: 'basics', exit };
+		await verify(context as any);
+		expect(fixture.messages().length).toEqual(0);
+	});
+
+	it('missing', async () => {
+		const context = { template: 'missing', exit };
+		let err = null;
+		try {
+			await verify(context as any);
+		} catch (e) {
+			err = e;
+		}
+		expect(err).toEqual(1);
+		expect(fixture.hasMessage('template missing does not exist!')).toBe(true);
+	});
+});
