@@ -1,6 +1,6 @@
 {
 	"name": "@flowr/eslint-config-base",
-	"version": "2.0.2",
+	"version": "2.1.0",
 	"license": "Apache-2.0",
 	"description": "Petal's base ESLint config",
 	"homepage": "https://petal.dyn.gay",

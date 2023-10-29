@@ -12,19 +12,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - **test:** fix jest and use a shared esm-based jest config ([69083af](https://github.com/pulseflow/petal/commit/69083af1684d593b65fdfe657f51d63e0dd25583))
-
-## [2.0.2](https://github.com/pulseflow/petal/compare/v2.0.1...v2.0.2) (2023-10-28)
-
-**Note:** Version bump only for package @flowr/petal
-
-## [2.0.1](https://github.com/pulseflow/petal/compare/v2.0.0...v2.0.1) (2023-10-28)
-
-**Note:** Version bump only for package @flowr/petal
-
-## [1.1.1](https://github.com/pulseflow/petal/compare/v1.0.1...v1.1.1) (2023-08-31)
-
-**Note:** Version bump only for package @flowr/petal
-
-## 1.0.1 (2023-03-16)
-
-**Note:** Version bump only for package @flowr/petal
