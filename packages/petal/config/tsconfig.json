@@ -5,7 +5,8 @@
 		"declaration": true,
 		"isolatedModules": false,
 		"jsx": "react",
-		"lib": ["DOM", "ESNext"],
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"types": ["node", "jest"],
 		"sourceMap": true
 	}
 }

@@ -13,8 +13,7 @@ import {
 	ReleaseTaskDesc,
 	PrecommitTaskDesc,
 } from '../SharedTypes.js';
-import { LINT_STAGED_CONFIG } from '../Paths.js';
-import { getJestConfig } from './TestTask.js';
+import { JEST_CONFIG, LINT_STAGED_CONFIG } from '../Paths.js';
 import { getPrettierConfig } from './FormatTask/index.js';
 
 export function getLintStagedConfig(): string | null {
@@ -73,7 +72,7 @@ export async function lintStaged(task: PrecommitTaskDesc): Promise<string> {
 	};
 
 	env.WEB_SCRIPTS_ESLINT_CONFIG = task.eslintConfig || getEslintConfig() || '';
-	env.WEB_SCRIPTS_JEST_CONFIG = task.jestConfig || getJestConfig() || '';
+	env.WEB_SCRIPTS_JEST_CONFIG = task.jestConfig || JEST_CONFIG || '';
 	env.WEB_SCRIPTS_PRETTIER_CONFIG =
 		task.prettierConfig || getPrettierConfig() || '';
 

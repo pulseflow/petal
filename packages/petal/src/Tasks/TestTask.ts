@@ -1,37 +1,15 @@
-import { default as spawn } from 'cross-spawn/index.js';
-import { default as Debug } from 'debug';
-import { SpawnSyncReturns } from 'child_process';
-import { hasConfig } from '@flowr/petal-utils';
-
 import { TestTaskDesc } from '../SharedTypes.js';
 import { JEST_CONFIG } from '../Paths.js';
+import { run } from 'jest-cli';
 
-const dbg = Debug('petal:test'); // eslint-disable-line new-cap
+export const testTask = async (task: TestTaskDesc) => {
+	const config = task.config || JEST_CONFIG;
+	const args = [...(config ? ['--config', config] : []), ...task.restOptions];
 
-export function getJestConfig(): string | null {
-	if (
-		!hasConfig([
-			{ type: 'file', pattern: 'jest.config.js' },
-			{ type: 'package.json', property: 'jest' },
-		])
-	) {
-		return JEST_CONFIG;
-	}
+	if (!process.env.NODE_ENV) (process.env as any).NODE_ENV = 'test';
+	if (!process.env.TZ) (process.env as any).TZ = 'UTC';
+	if (args.includes('--help'))
+		(process.stdout as any)._handle.setBlocking(true);
 
-	return null;
-}
-
-export function testTask(task: TestTaskDesc): SpawnSyncReturns<Buffer> {
-	const cmd = 'pnpm';
-	const config = task.config || getJestConfig();
-
-	const args = [
-		'--silent',
-		'dlx',
-		'jest',
-		...(config ? ['--config', config] : []),
-		...task.restOptions,
-	];
-	dbg('pnpm dlx args %o', args);
-	return spawn.sync(cmd, args, { stdio: 'inherit' });
-}
+	return run(args);
+};

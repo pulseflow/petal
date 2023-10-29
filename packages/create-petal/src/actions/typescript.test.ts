@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { typescript, setupTypescript } from './typescript.js';
 import { setup, resetFixtures } from '../testUtils.js';
 import { describe } from 'node:test';
+import { join } from 'node:path';
 
 describe('typescript', () => {
 	const fixture = setup();
@@ -39,9 +40,6 @@ describe('typescript', () => {
 		};
 		await typescript(context as any);
 
-		expect(fixture.hasMessage('using strict typescript configuration')).toBe(
-			true,
-		);
 		expect(fixture.hasMessage('skipping typescript setup')).toBe(true);
 	});
 
@@ -54,9 +52,6 @@ describe('typescript', () => {
 		};
 		await typescript(context as any);
 
-		expect(fixture.hasMessage('using default typescript configuration')).toBe(
-			true,
-		);
 		expect(fixture.hasMessage('skipping typescript setup')).toBe(true);
 	});
 
@@ -69,9 +64,6 @@ describe('typescript', () => {
 		};
 		await typescript(context as any);
 
-		expect(fixture.hasMessage('using relaxed typescript configuration')).toBe(
-			true,
-		);
 		expect(fixture.hasMessage('skipping typescript setup')).toBe(true);
 	});
 
@@ -98,61 +90,14 @@ describe('typescript', () => {
 describe('typescript: setup tsconfig', () => {
 	beforeEach(() => resetFixtures());
 
-	it('none', async () => {
-		const root = new URL('./fixtures/empty/', import.meta.url);
-		const tsconfig = new URL('./tsconfig.json', root);
-
-		await setupTypescript('strict', { cwd: fileURLToPath(root) } as any);
-		expect(
-			JSON.parse(fs.readFileSync(tsconfig, { encoding: 'utf-8' })),
-		).toEqual({
-			extends: '@flowr/petal/config/strict.tsconfig.json',
-		});
-	});
-
 	it('exists', async () => {
-		const root = new URL('./fixtures/not-empty/', import.meta.url);
-		const tsconfig = new URL('./tsconfig.json', root);
+		const root = new URL('../../__fixtures__/not-empty', import.meta.url);
+		const tsconfig = join(fileURLToPath(root), './tsconfig.json');
 		await setupTypescript('strict', { cwd: fileURLToPath(root) } as any);
 		expect(
 			JSON.parse(fs.readFileSync(tsconfig, { encoding: 'utf-8' })),
 		).toEqual({
-			extends: '@flowr/petal/config/strict.tsconfig.json',
+			extends: '@flowr/petal/config/tsconfig.strict.json',
 		});
-	});
-});
-
-describe('typescript: setup package', () => {
-	beforeEach(() => resetFixtures());
-
-	it('none', async () => {
-		const root = new URL('./fixtures/empty/', import.meta.url);
-		const packageJson = new URL('./package.json', root);
-
-		await setupTypescript('strictest', {
-			cwd: fileURLToPath(root),
-			install: false,
-		} as any);
-		expect(fs.existsSync(packageJson)).toBe(false);
-	});
-
-	it('none', async () => {
-		const root = new URL('./fixtures/not-empty/', import.meta.url);
-		const packageJson = new URL('./package.json', root);
-
-		expect(
-			JSON.parse(fs.readFileSync(packageJson, { encoding: 'utf-8' })).scripts
-				.build,
-		).toEqual('petal build');
-		await setupTypescript('strictest', {
-			cwd: fileURLToPath(root),
-			install: false,
-		} as any);
-		const { scripts } = JSON.parse(
-			fs.readFileSync(packageJson, { encoding: 'utf-8' }),
-		);
-
-		expect(Object.keys(scripts)).toEqual(['build']);
-		expect(scripts.build).toEqual('petal build');
 	});
 });

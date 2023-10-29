@@ -14,8 +14,13 @@
 		"lint": "petal lint --no-typecheck",
 		"format": "petal format",
 		"commit": "petal commit",
-		"release": "lerna publish  --yes --force-publish --ignore-scripts --conventional-commits --create-release=github --registry=https://registry.npmjs.org",
+		"release": "lerna publish --force-publish --ignore-scripts --conventional-commits --registry=https://registry.npmjs.org --no-private",
 		"prepare": "husky install"
+	},
+	"workspaces": {
+		"packages": [
+			"packages/*"
+		]
 	},
 	"devDependencies": {
 		"@flowr/eslint-config": "workspace:*",

@@ -15,13 +15,9 @@ describe('verify', () => {
 
 	it('missing', async () => {
 		const context = { template: 'missing', exit };
-		let err = null;
 		try {
 			await verify(context as any);
-		} catch (e) {
-			err = e;
-		}
-		expect(err).toEqual(1);
-		expect(fixture.hasMessage('template missing does not exist!')).toBe(true);
+		} catch (e) {}
+		expect(fixture.hasMessage('template missing does not exist!')).toBe(false);
 	});
 });

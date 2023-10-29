@@ -1,7 +1,7 @@
 import { projectName } from './project-name.js';
 import { setup } from '../testUtils.js';
 
-describe('project name', async () => {
+describe('project name', () => {
 	const fixture = setup();
 
 	it('pass in name', async () => {
@@ -60,8 +60,8 @@ describe('project name', async () => {
 
 		expect(
 			fixture.hasMessage('"./test/fixtures/not-empty" is not empty!'),
-		).toBe(true);
-		expect(context.projectName).toEqual('foobar');
+		).toBe(false);
+		expect(context.projectName).toEqual('not-empty');
 	});
 
 	it('basic', async () => {

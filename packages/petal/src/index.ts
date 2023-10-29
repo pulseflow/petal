@@ -49,7 +49,7 @@ program
 	.allowUnknownOption()
 	.description('Run tests via jest')
 	.option('--config [path]', 'path to jest config')
-	.action((...args) => {
+	.action(async (...args) => {
 		const cmd = getCommand(args);
 		const { config } = getOpts(cmd);
 		const t: TestTaskDesc = {
@@ -59,7 +59,7 @@ program
 		};
 
 		const result = testTask(t);
-		handleSpawnResult(result);
+		handlePromiseResult(result);
 	});
 
 program
