@@ -46,7 +46,7 @@
 	},
 	"devDependencies": {
 		"@types/jest": "^29.5.6",
-		"@types/node": "^18.17.12",
+		"@types/node": "^20.8.9",
 		"rimraf": "^5.0.5",
 		"tempy": "^3.1.0",
 		"typescript": "^5.2.2"
