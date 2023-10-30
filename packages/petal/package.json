@@ -34,7 +34,7 @@
 	},
 	"dependencies": {
 		"@commitlint/cli": "^17.7.1",
-		"@commitlint/config-conventional": "^17.7.0",
+		"@commitlint/config-conventional": "^18.1.0",
 		"@flowr/eslint-config": "workspace:*",
 		"@flowr/petal-utils": "workspace:*",
 		"@flowr/prettier-config": "workspace:*",
