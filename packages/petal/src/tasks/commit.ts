@@ -6,15 +6,15 @@ import { SpawnSyncReturns } from 'child_process';
 import { bootstrap as czBootstrap } from 'commitizen/dist/cli/git-cz.js';
 import { hasConfig } from '@flowr/petal-utils';
 
-import { getEslintConfig, typeCheck } from './LintTask.js';
+import { getEslintConfig, typeCheck } from './lint.js';
 import {
 	CommitTaskDesc,
 	CommitMsgTaskDesc,
 	ReleaseTaskDesc,
 	PrecommitTaskDesc,
-} from '../SharedTypes.js';
-import { JEST_CONFIG, LINT_STAGED_CONFIG } from '../Paths.js';
-import { getPrettierConfig } from './FormatTask/index.js';
+} from '../types.js';
+import { JEST_CONFIG, LINT_STAGED_CONFIG } from '../paths.js';
+import { getPrettierConfig } from './format/index.js';
 
 export function getLintStagedConfig(): string | null {
 	if (

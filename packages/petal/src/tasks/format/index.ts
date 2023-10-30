@@ -3,8 +3,8 @@ import { default as spawn } from 'cross-spawn/index.js';
 import { SpawnSyncReturns } from 'node:child_process';
 import { hasConfig } from '@flowr/petal-utils';
 
-import { FormatTaskDesc } from '../../SharedTypes.js';
-import { PRETTIER_CONFIG, CONSUMING_ROOT } from '../../Paths.js';
+import { FormatTaskDesc } from '../../types.js';
+import { PRETTIER_CONFIG, CONSUMING_ROOT } from '../../paths.js';
 
 const dbg = Debug('petal:format'); // eslint-disable-line new-cap
 

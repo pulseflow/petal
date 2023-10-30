@@ -89,7 +89,7 @@ const FILES_TO_UPDATE = {
 		}),
 };
 
-export const getTemplateTarget = (tmpl: string, ref = 'latest') =>
+export const getTemplateTarget = (tmpl: string, ref = 'main') =>
 	tmpl.includes('/') ? tmpl : `github:pulseflow/petal/examples/${tmpl}#${ref}`;
 
 export const copyTemplate = async (tmpl: string, ctx: Context) => {

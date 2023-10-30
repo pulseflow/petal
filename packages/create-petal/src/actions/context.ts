@@ -94,7 +94,7 @@ export const getContext = async (argv: string[]): Promise<Context> => {
 		dryRun,
 		projectName,
 		template,
-		ref: ref ?? 'latest',
+		ref: ref ?? 'main',
 		hat: random(['🎃', '👻', '🕯️']),
 		yes,
 		install: install ?? (noInstall ? false : undefined),

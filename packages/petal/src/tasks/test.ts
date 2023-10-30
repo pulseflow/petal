@@ -1,5 +1,5 @@
-import { TestTaskDesc } from '../SharedTypes.js';
-import { JEST_CONFIG } from '../Paths.js';
+import { TestTaskDesc } from '../types.js';
+import { JEST_CONFIG } from '../paths.js';
 import { run } from 'jest-cli';
 
 export const testTask = async (task: TestTaskDesc) => {

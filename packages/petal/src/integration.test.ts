@@ -7,13 +7,13 @@ import {
 	mkdir as mkdirFS,
 	copyFile as copyFileFS,
 	existsSync,
-} from 'fs';
+} from 'node:fs';
 import fromEntries from 'object.fromentries';
 import * as tempy from 'tempy';
 import { default as Debug } from 'debug';
 import { rimrafSync } from 'rimraf';
 
-import { THIS_ROOT, TSCONFIG } from './Paths.js';
+import { THIS_ROOT, TSCONFIG } from './paths.js';
 
 const dbg = Debug('petal:integration-test'); // eslint-disable-line new-cap
 const __dirname = fileURLToPath(new URL('.', import.meta.url));

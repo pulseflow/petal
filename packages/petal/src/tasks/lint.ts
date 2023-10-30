@@ -2,9 +2,9 @@ import { default as spawn } from 'cross-spawn-promise';
 import { default as Debug } from 'debug';
 import { hasConfig } from '@flowr/petal-utils';
 
-import { LintTaskDesc } from '../SharedTypes.js';
-import { CONSUMING_ROOT, ESLINT_CONFIG } from '../Paths.js';
-import { getPrettierConfig } from './FormatTask/index.js';
+import { LintTaskDesc } from '../types.js';
+import { CONSUMING_ROOT, ESLINT_CONFIG } from '../paths.js';
+import { getPrettierConfig } from './format/index.js';
 
 const dbg = Debug('petal:lint'); // eslint-disable-line new-cap
 

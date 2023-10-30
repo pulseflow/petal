@@ -11,19 +11,19 @@ import {
 	PrecommitTaskDesc,
 	ReleaseTaskDesc,
 	TestTaskDesc,
-} from './SharedTypes.js';
-import { COMMITLINT_CONIFG } from './Paths.js';
-import { auditTask } from './Tasks/AuditTasks/index.js';
-import { testTask } from './Tasks/TestTask.js';
-import { buildTask } from './Tasks/BuildTask.js';
-import { lintTask } from './Tasks/LintTask.js';
-import { formatTask } from './Tasks/FormatTask/index.js';
+} from './types.js';
+import { COMMITLINT_CONIFG } from './paths.js';
+import { auditTask } from './tasks/audit.js';
+import { testTask } from './tasks/test.js';
+import { buildTask } from './tasks/build.js';
+import { lintTask } from './tasks/lint.js';
+import { formatTask } from './tasks/format/index.js';
 import {
 	commitTask,
 	commitMsgTask,
 	releaseTask,
 	precommitTask,
-} from './Tasks/CommitTasks.js';
+} from './tasks/commit.js';
 
 program
 	.command('build')

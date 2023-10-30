@@ -1,9 +1,9 @@
-import path, { join } from 'path';
+import path, { join } from 'node:path';
 import fs from 'fs-extra';
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 import glob from 'glob';
-import { fileURLToPath } from 'url';
-import { createRequire } from 'module';
+import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const loadJSON = path => JSON.parse(fs.readFileSync(join(__dirname, path)));

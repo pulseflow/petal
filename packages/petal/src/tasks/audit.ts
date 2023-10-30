@@ -1,8 +1,8 @@
 import { default as spawn } from 'cross-spawn-promise';
 import { default as Debug } from 'debug';
 
-import { AuditTaskDesc } from '../../SharedTypes.js';
-import { CONSUMING_ROOT } from '../../Paths.js';
+import { AuditTaskDesc } from '../types.js';
+import { CONSUMING_ROOT } from '../paths.js';
 
 const dbg = Debug('petal:audit'); // eslint-disable-line new-cap
 

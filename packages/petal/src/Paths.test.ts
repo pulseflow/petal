@@ -1,12 +1,12 @@
-import { stat as statFS } from 'fs';
-import { promisify } from 'util';
+import { stat as statFS } from 'node:fs';
+import { promisify } from 'node:util';
 const stat = promisify(statFS);
-import * as Paths from './Paths.js';
+import * as paths from './paths.js';
 
 test('Paths are exported and exist', async () => {
-	expect(await stat(Paths.CONSUMING_ROOT)).toBeTruthy();
-	expect(await stat(Paths.THIS_ROOT)).toBeTruthy();
-	expect(await stat(Paths.ESLINT_CONFIG)).toBeTruthy();
-	expect(await stat(Paths.PRETTIER_CONFIG)).toBeTruthy();
-	expect(await stat(Paths.TSCONFIG)).toBeTruthy();
+	expect(await stat(paths.CONSUMING_ROOT)).toBeTruthy();
+	expect(await stat(paths.THIS_ROOT)).toBeTruthy();
+	expect(await stat(paths.ESLINT_CONFIG)).toBeTruthy();
+	expect(await stat(paths.PRETTIER_CONFIG)).toBeTruthy();
+	expect(await stat(paths.TSCONFIG)).toBeTruthy();
 });

@@ -6,7 +6,7 @@ import {
 	mkdir as mkdirFS,
 	readFile as readFileFS,
 	writeFile as writeFileFS,
-} from 'fs';
+} from 'node:fs';
 
 import { formatTask } from './index.js';
 

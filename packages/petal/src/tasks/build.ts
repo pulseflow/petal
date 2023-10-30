@@ -1,4 +1,4 @@
-import { BuildTaskDesc } from '../SharedTypes.js';
+import { BuildTaskDesc } from '../types.js';
 
 import { default as Debug } from 'debug';
 import { default as spawn } from 'cross-spawn-promise';

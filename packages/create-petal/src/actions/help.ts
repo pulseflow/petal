@@ -15,7 +15,7 @@ export const help = () => {
 				['--no (-n)', 'Skip all prompts by declining defaults.'],
 				['--dry-run', 'Walk through steps without executing.'],
 				['--skip-flower', 'Skip Flower animation.'],
-				['--ref', 'Choose petal branch (default: latest).'],
+				['--ref', 'Choose petal branch (default: main).'],
 				['--fancy', 'Enable full Unicode support for Windows.'],
 				[
 					'--typescript <option>',
