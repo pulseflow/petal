@@ -22,6 +22,6 @@ paths to examples nested within repositories are also supported via [create peta
 npm create petal@latest -- --template [GITHUB_USER]/[REPO_NAME]/path/to/example
 ```
 
-[petal-create]: ../packages/create-petal/README.md
+[petal-create]: ../config/create-petal/README.md
 [awesome-pulseflow]: https://github.com/pulseflow/awesome
 [giget]: https://github.com/unjs/giget

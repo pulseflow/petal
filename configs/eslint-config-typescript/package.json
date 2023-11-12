@@ -1,0 +1,34 @@
+{
+	"name": "@flowr/eslint-config-typescript",
+	"version": "2.1.0",
+	"license": "Apache-2.0",
+	"description": "Petal's ESLint config for TypeScript",
+	"homepage": "https://petal.dyn.gay",
+	"funding": "https://ko-fi.com/pauliesnug",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal.git",
+		"directory": "configs/eslint-config-typescript"
+	},
+	"main": "index.js",
+	"type": "module",
+	"scripts": {},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^6.9.0",
+		"@typescript-eslint/parser": "^6.9.0",
+		"eslint": "^8.52.0",
+		"typescript": "^5.2.2"
+	},
+	"peerDependencies": {
+		"@typescript-eslint/eslint-plugin": ">=5",
+		"@typescript-eslint/parser": ">=5",
+		"eslint": ">=8",
+		"typescript": ">=4"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=18"
+	}
+}

@@ -19,7 +19,8 @@
 	},
 	"workspaces": {
 		"packages": [
-			"packages/*"
+			"core/*",
+			"configs/*"
 		]
 	},
 	"devDependencies": {
@@ -31,11 +32,18 @@
 		"@flowr/prettier-config": "workspace:*",
 		"@flowr/petal": "workspace:^",
 		"create-petal": "workspace:*",
+		"prettier": "^3.0.3",
 		"husky": "^8.0.3",
 		"lerna": "^7.4.1",
 		"typescript": "^5.2.2"
 	},
 	"overrides": {
-		"@types/node": "^18.0.0"
+		"@types/node": "^18.0.0",
+        "cosmiconfig": "9.0.0-alpha.3"
+	},
+	"pnpm": {
+		"overrides": {
+			"cosmiconfig": "9.0.0-alpha.3"
+		}
 	}
 }
