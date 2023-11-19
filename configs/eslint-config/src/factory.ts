@@ -1,8 +1,8 @@
-import fs from "node:fs";
+import fs from 'node:fs';
 import process from 'node:process';
-import { isPackageExists } from "local-pkg";
-import gitignore from "eslint-config-flat-gitignore";
-import type { ConfigItem, OptionsConfig } from "./types.js";
+import { isPackageExists } from 'local-pkg';
+import gitignore from 'eslint-config-flat-gitignore';
+import type { ConfigItem, OptionsConfig } from './types.js';
 import {
 	astro,
 	comments,
@@ -24,63 +24,59 @@ import {
 	unicorn,
 	vue,
 	yaml,
-} from "./configs/index.js";
-import { combine } from "./utils.js";
+} from './configs/index.js';
+import { combine } from './utils.js';
 
 const flatConfigProps: (keyof ConfigItem)[] = [
-	"files",
-	"ignores",
-	"languageOptions",
-	"linterOptions",
-	"processor",
-	"plugins",
-	"rules",
-	"settings",
+	'files',
+	'ignores',
+	'languageOptions',
+	'linterOptions',
+	'processor',
+	'plugins',
+	'rules',
+	'settings',
 ];
 
-const VuePackages = ["vue", "nuxt", "vitepress", "@slidev/cli"];
-const JestPackages = ["@jest/globals", "@types/jest", "jest"];
+const VuePackages = ['vue', 'nuxt', 'vitepress', '@slidev/cli'];
+const JestPackages = ['@jest/globals', '@types/jest', 'jest'];
 
 /**
  * Construct a Petal ESLint config.
  */
-export const petal = (
-	options: OptionsConfig & ConfigItem = {},
-	...userConfigs: (ConfigItem | ConfigItem[])[]
-): ConfigItem[] => {
+export function petal(options: OptionsConfig & ConfigItem = {},	...userConfigs: (ConfigItem | ConfigItem[])[]): ConfigItem[] {
 	const {
 		componentExts = [],
 		gitignore: enableGitignore = true,
 		isInEditor = !!(
-			(process.env.VSCODE_PID || process.env.JETBRAINS_IDE) &&
-			!process.env.CI
+			(process.env.VSCODE_PID || process.env.JETBRAINS_IDE)
+			&& !process.env.CI
 		),
 		overrides = {},
-		typescript: enableTypeScript = isPackageExists("typescript"),
+		typescript: enableTypeScript = isPackageExists('typescript'),
 		vue: enableVue = VuePackages.some(i => isPackageExists(i)),
 		jest: enableJest = JestPackages.some(i => isPackageExists(i)),
 		react: enableReact = isPackageExists('react'),
 		astro: enableAstro = isPackageExists('astro'),
 	} = options;
 
-	const stylisticOptions =
-		options.stylistic === false
+	const stylisticOptions
+		= options.stylistic === false
 			? false
-			: typeof options.stylistic === "object"
-			? options.stylistic
-			: {};
-	if (stylisticOptions && !("jsx" in stylisticOptions))
+			: typeof options.stylistic === 'object'
+				? options.stylistic
+				: {};
+	if (stylisticOptions && !('jsx' in stylisticOptions))
 		stylisticOptions.jsx = options.jsx ?? true;
 
-
 	const configs: ConfigItem[][] = [];
-	if (enableGitignore)
+	if (enableGitignore) {
 		if (typeof enableGitignore !== 'boolean')
 			configs.push([gitignore(enableGitignore)]);
 		else if (fs.existsSync('.gitignore'))
 			configs.push([gitignore()]);
+	}
 
-	
 	configs.push(
 		ignores(),
 		javascript({
@@ -99,56 +95,74 @@ export const petal = (
 		perfectionist(),
 	);
 
-	if (enableVue) componentExts.push('vue');
-	
-	if (enableTypeScript) configs.push(typescript({
-		...typeof enableTypeScript !== 'boolean'
-			? enableTypeScript
-			: {},
-		componentExts,
-		overrides: overrides.typescript,
-	}));
+	if (enableVue)
+		componentExts.push('vue');
 
-	if (stylisticOptions) configs.push(stylistic(stylisticOptions));
+	if (enableTypeScript) {
+		configs.push(typescript({
+			...typeof enableTypeScript !== 'boolean'
+				? enableTypeScript
+				: {},
+			componentExts,
+			overrides: overrides.typescript,
+		}));
+	}
 
-	if (options.test ?? true) configs.push(test({ isInEditor, overrides: overrides.test }));
+	if (stylisticOptions)
+		configs.push(stylistic(stylisticOptions));
 
-	if (enableJest) configs.push(jest({ isInEditor, overrides: overrides.jest }));
+	if (options.test ?? true)
+		configs.push(test({ isInEditor, overrides: overrides.test }));
 
-	if (enableVue) configs.push(vue({
-		overrides: overrides.vue,
-		stylistic: stylisticOptions,
-		typescript: !!enableTypeScript,
-	}));
+	if (enableJest)
+		configs.push(jest({ isInEditor, overrides: overrides.jest }));
 
-	if (enableAstro) configs.push(astro({
-		overrides: overrides.astro,
-		typescript: !!enableTypeScript,
-	}));
-
-	if (enableReact) configs.push(react({
-		overrides: overrides.react,
-		typescript: !!enableTypeScript,
-	}));
-
-	if (options.jsonc ?? true) configs.push(
-		jsonc({
-			overrides: overrides.jsonc,
+	if (enableVue) {
+		configs.push(vue({
+			overrides: overrides.vue,
 			stylistic: stylisticOptions,
-		}),
-		sortPackageJson(),
-		sortTsConfig(),
-	);
+			typescript: !!enableTypeScript,
+		}));
+	}
 
-	if (options.yaml ?? true) configs.push(yaml({
-		overrides: overrides.yaml,
-		stylistic: stylisticOptions,
-	}));
+	if (enableAstro) {
+		configs.push(astro({
+			overrides: overrides.astro,
+			typescript: !!enableTypeScript,
+		}));
+	}
 
-	if (options.markdown ?? true) configs.push(markdown({
-		componentExts,
-		overrides: overrides.markdown,
-	}));
+	if (enableReact) {
+		configs.push(react({
+			overrides: overrides.react,
+			typescript: !!enableTypeScript,
+		}));
+	}
+
+	if (options.jsonc ?? true) {
+		configs.push(
+			jsonc({
+				overrides: overrides.jsonc,
+				stylistic: stylisticOptions,
+			}),
+			sortPackageJson(),
+			sortTsConfig(),
+		);
+	}
+
+	if (options.yaml ?? true) {
+		configs.push(yaml({
+			overrides: overrides.yaml,
+			stylistic: stylisticOptions,
+		}));
+	}
+
+	if (options.markdown ?? true) {
+		configs.push(markdown({
+			componentExts,
+			overrides: overrides.markdown,
+		}));
+	}
 
 	const fusedConfig = flatConfigProps.reduce((acc, key) => {
 		if (key in options)
@@ -165,4 +179,4 @@ export const petal = (
 	);
 
 	return merged;
-};
+}

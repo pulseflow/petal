@@ -1,3 +1,4 @@
+import process from 'node:process';
 import { getContext } from './actions/context.js';
 
 import { dependencies } from './actions/deps.js';
@@ -11,13 +12,11 @@ import { setupTypescript, typescript } from './actions/typescript.js';
 import { verify } from './actions/verify.js';
 import { setStdout } from './messages.js';
 
-import process from 'node:process';
-
 const exit = () => process.exit(0);
 process.on('SIGINT', exit);
 process.on('SIGTERM', exit);
 
-export const main = async () => {
+export async function main() {
 	// clear console bc pnpm startup is ugly
 	// eslint-disable-next-line no-console
 	console.clear();
@@ -44,7 +43,7 @@ export const main = async () => {
 	for (const step of steps) await step(context);
 
 	process.exit(0);
-};
+}
 
 export {
 	dependencies,

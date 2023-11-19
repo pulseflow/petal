@@ -1,4 +1,5 @@
-import { parseErrorResponseBody, ErrorResponseBody } from './response.js';
+import type { ErrorResponseBody } from './response.js';
+import { parseErrorResponseBody } from './response.js';
 
 describe('parseErrorResponseBody', () => {
 	it('handles the happy path', async () => {

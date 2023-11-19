@@ -1,21 +1,24 @@
-import { BuildTaskDesc } from '../types.js';
-
 import Debug from 'debug';
 import spawn from 'cross-spawn-promise';
-const dbg = Debug('petal:build'); // eslint-disable-line new-cap
+import type { BuildTaskDesc } from '../types.js';
+
+const dbg = Debug('petal:build');
 
 export async function buildTask(task: BuildTaskDesc): Promise<string[]> {
 	const fns = [];
 
 	if (!task.esm && !task.types) {
 		fns.push(buildTypes, buildESM);
-	} else {
-		if (task.types) fns.push(buildTypes);
-		if (task.esm) fns.push(buildESM);
+	}
+	else {
+		if (task.types)
+			fns.push(buildTypes);
+		if (task.esm)
+			fns.push(buildESM);
 	}
 
 	return Promise.all(
-		fns.map(async fn => {
+		fns.map(async (fn) => {
 			dbg('Beginning %s task', fn.name);
 			const result = await fn(task);
 			dbg('Finished %s task', fn.name);

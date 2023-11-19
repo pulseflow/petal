@@ -1,5 +1,5 @@
-import { projectName } from './project-name.js';
 import { setup } from '../testUtils.js';
+import { projectName } from './project-name.js';
 
 describe('project name', () => {
 	const fixture = setup();

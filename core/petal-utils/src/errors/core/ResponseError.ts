@@ -1,9 +1,11 @@
 import { deserializeError } from '../model/error.js';
-import {
+import type {
 	ErrorResponseBody,
+} from '../model/response.js';
+import {
 	parseErrorResponseBody,
 } from '../model/response.js';
-import { ConsumedResponse } from './types.js';
+import type { ConsumedResponse } from './types.js';
 
 /**
  * An error thrown as the result of a failed server request.
@@ -63,10 +65,10 @@ export class ResponseError extends Error {
 	}
 
 	private constructor(props: {
-		message: string;
-		response: ConsumedResponse;
-		data: ErrorResponseBody;
-		cause: Error;
+		message: string
+		response: ConsumedResponse
+		data: ErrorResponseBody
+		cause: Error
 	}) {
 		super(props.message);
 		this.name = 'ResponseError';

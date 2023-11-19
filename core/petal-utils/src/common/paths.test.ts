@@ -1,11 +1,11 @@
 import { resolve as resolvePath } from 'node:path';
+import { __dirname } from '../index.js';
 import {
-	findPaths,
-	findRootPath,
 	findOwnDir,
 	findOwnRootDir,
+	findPaths,
+	findRootPath,
 } from './paths.js';
-import { __dirname } from '../index.js';
 
 describe('paths', () => {
 	it('findOwnDir and findOwnRootDir should find owns paths', () => {

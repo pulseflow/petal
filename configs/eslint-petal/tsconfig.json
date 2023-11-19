@@ -1,15 +1,15 @@
 {
 	"extends": "@flowr/petal/config/tsconfig.json",
-	"include": ["src"],
 	"compilerOptions": {
-		"types": ["jest", "node"],
-		"isolatedModules": false,
-		"noEmit": true,
 		"jsx": "preserve",
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
+		"resolveJsonModule": true,
+		"types": ["jest", "node"],
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
-        "resolveJsonModule": true,
-	}
+		"noEmit": true,
+		"isolatedModules": false
+	},
+	"include": ["src"]
 }

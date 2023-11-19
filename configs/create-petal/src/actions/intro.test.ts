@@ -1,5 +1,5 @@
-import { intro } from './intro.js';
 import { setup } from '../testUtils.js';
+import { intro } from './intro.js';
 
 describe('intro', () => {
 	const fixture = setup();

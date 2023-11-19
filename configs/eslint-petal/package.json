@@ -1,34 +1,40 @@
 {
 	"name": "@flowr/eslint-plugin-petal",
+	"type": "module",
 	"version": "2.1.0",
 	"description": "Set of rules for Petal's custom ESLint rules",
+	"license": "Apache-2.0",
+	"funding": "https://ko-fi.com/pauliesnug",
+	"homepage": "https://petal.dyn.gay",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal",
+		"directory": "configs/eslint-petal"
+	},
 	"keywords": [
 		"eslint",
 		"eslint-plugin",
 		"react",
 		"typescript"
 	],
-	"homepage": "https://petal.dyn.gay",
-	"funding": "https://ko-fi.com/pauliesnug",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/pulseflow/petal",
-		"directory": "configs/eslint-petal"
-	},
-	"license": "Apache-2.0",
 	"main": "./build/index.js",
 	"module": "./build/index.js",
 	"types": "./types/index.d.ts",
-	"type": "module",
 	"files": [
 		"build",
 		"types"
 	],
+	"engines": {
+		"node": ">=18"
+	},
 	"scripts": {
 		"build": "petal build",
 		"test": "petal test",
 		"lint": "petal lint",
 		"clean": "rimraf build types"
+	},
+	"peerDependencies": {
+		"eslint": "*"
 	},
 	"devDependencies": {
 		"@types/eslint": "^8.44.7",
@@ -46,13 +52,7 @@
 		"rimraf": "^5.0.5",
 		"typescript": "^5.2.2"
 	},
-	"peerDependencies": {
-		"eslint": "*"
-	},
 	"publishConfig": {
 		"access": "public"
-	},
-	"engines": {
-		"node": ">=18"
 	}
 }

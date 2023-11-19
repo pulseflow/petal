@@ -1,8 +1,8 @@
 /* eslint-disable unused-imports/no-unused-vars */
-import { JsonPrimitive, JsonArray, JsonObject, JsonValue } from './json.js';
+import type { JsonArray, JsonObject, JsonPrimitive, JsonValue } from './json.js';
 
 describe('json', () => {
-	it('JsonPrimitive', () => {
+	it('jsonPrimitive', () => {
 		function isValid(..._v: JsonPrimitive[]) {}
 		isValid(1, 's', true, false, null);
 
@@ -14,7 +14,7 @@ describe('json', () => {
 		expect(true).toBe(true);
 	});
 
-	it('JsonArray', () => {
+	it('jsonArray', () => {
 		function isValid(..._v: JsonArray[]) {}
 		isValid([], [1, 's', true, false, null, {}, []]);
 
@@ -34,7 +34,7 @@ describe('json', () => {
 		expect(true).toBe(true);
 	});
 
-	it('JsonObject', () => {
+	it('jsonObject', () => {
 		function isValid(..._v: JsonObject[]) {}
 		isValid(
 			{},
@@ -57,7 +57,7 @@ describe('json', () => {
 		expect(true).toBe(true);
 	});
 
-	it('JsonValue', () => {
+	it('jsonValue', () => {
 		function isValid(..._v: JsonValue[]) {}
 		isValid(1, 's', true, false, null, {}, []);
 

@@ -1,10 +1,11 @@
 {
 	"name": "@flowr/petal-utils",
+	"type": "module",
 	"version": "2.1.0",
 	"description": "Package that contains shared utils within Petal projects",
 	"license": "Apache-2.0",
-	"homepage": "https://petal.dyn.gay",
 	"funding": "https://ko-fi.com/pauliesnug",
+	"homepage": "https://petal.dyn.gay",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/pulseflow/pastel.git",
@@ -12,12 +13,14 @@
 	},
 	"main": "build/index.js",
 	"module": "build/index.js",
-	"type": "module",
 	"types": "./types/index.d.ts",
 	"files": [
 		"build",
 		"types"
 	],
+	"engines": {
+		"node": ">=18"
+	},
 	"scripts": {
 		"clean": "rimraf build && rimraf types",
 		"build": "petal build",
@@ -53,8 +56,5 @@
 	},
 	"publishConfig": {
 		"access": "public"
-	},
-	"engines": {
-		"node": ">=18"
 	}
 }

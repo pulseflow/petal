@@ -1,29 +1,29 @@
-import { ConsumedResponse } from '../core/types.js';
-import { SerializedError } from './error.js';
+import type { ConsumedResponse } from '../core/types.js';
+import type { SerializedError } from './error.js';
 
 /**
  * A standard shape of JSON data returned as the body of backend errors.
  *
  * @public
  */
-export type ErrorResponseBody = {
+export interface ErrorResponseBody {
 	/** Details of the error that was caught */
-	error: SerializedError;
+	error: SerializedError
 
 	/** Details about the incoming request */
 	request?: {
 		/** The HTTP method of the request */
-		method: string;
+		method: string
 		/** The URL of the request (excluding protocol and host/port) */
-		url: string;
-	};
+		url: string
+	}
 
 	/** Details about the response */
 	response: {
 		/** The numeric HTTP status code that was returned */
-		statusCode: number;
-	};
-};
+		statusCode: number
+	}
+}
 
 /**
  * Attempts to construct an ErrorResponseBody out of a failed server request.
@@ -37,9 +37,7 @@ export type ErrorResponseBody = {
  * @public
  * @param response - The response of a failed request
  */
-export const parseErrorResponseBody = async (
-	response: ConsumedResponse & { text(): Promise<string> },
-): Promise<ErrorResponseBody> => {
+export async function parseErrorResponseBody(response: ConsumedResponse & { text(): Promise<string> }): Promise<ErrorResponseBody> {
 	try {
 		const text = await response.text();
 		if (text) {
@@ -50,10 +48,10 @@ export const parseErrorResponseBody = async (
 			) {
 				try {
 					const body = JSON.parse(text);
-					if (body.error && body.response) {
+					if (body.error && body.response)
 						return body;
-					}
-				} catch {
+				}
+				catch {
 					// ignore
 				}
 			}
@@ -68,7 +66,8 @@ export const parseErrorResponseBody = async (
 				},
 			};
 		}
-	} catch {
+	}
+	catch {
 		// ignore
 	}
 
@@ -81,4 +80,4 @@ export const parseErrorResponseBody = async (
 			statusCode: response.status,
 		},
 	};
-};
+}

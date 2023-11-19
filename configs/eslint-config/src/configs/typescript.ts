@@ -1,3 +1,4 @@
+import process from 'node:process';
 import type {
 	ConfigItem,
 	OptionsComponentExts,
@@ -6,16 +7,13 @@ import type {
 	OptionsTypeScriptWithTypes,
 } from '../types.js';
 import { GLOB_SRC } from '../globs.js';
-import { parserTs, pluginPetal, pluginImport, pluginTs } from '../plugins.js';
+import { parserTs, pluginImport, pluginPetal, pluginTs } from '../plugins.js';
 import { renameRules, toArray } from '../utils.js';
-import process from 'node:process';
 
-export const typescript = (
-	options?: OptionsComponentExts &
-		OptionsOverrides &
-		OptionsTypeScriptWithTypes &
-		OptionsTypeScriptParserOptions,
-): ConfigItem[] => {
+export function typescript(options?: OptionsComponentExts &
+	OptionsOverrides &
+	OptionsTypeScriptWithTypes &
+	OptionsTypeScriptParserOptions): ConfigItem[] {
 	const {
 		componentExts = [],
 		overrides = {},
@@ -70,9 +68,9 @@ export const typescript = (
 					sourceType: 'module',
 					...(tsconfigPath
 						? {
-							projevt: tsconfigPath,
-							tsconfigRootDir: process.cwd(),
-						}
+								projevt: tsconfigPath,
+								tsconfigRootDir: process.cwd(),
+							}
 						: {}),
 					...(parserOptions as any),
 				},
@@ -161,4 +159,4 @@ export const typescript = (
 			},
 		},
 	];
-};
+}

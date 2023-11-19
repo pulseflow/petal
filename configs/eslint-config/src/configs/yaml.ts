@@ -6,12 +6,10 @@ import type {
 import { GLOB_YAML } from '../globs.js';
 import { parserYaml, pluginYaml } from '../plugins.js';
 
-export const yaml = (
-	options: OptionsOverrides & OptionsStylistic = {},
-): ConfigItem[] => {
+export function yaml(options: OptionsOverrides & OptionsStylistic = {}): ConfigItem[] {
 	const { overrides = {}, stylistic = true } = options;
-	const { indent = 2, quotes = 'single' } =
-		typeof stylistic === 'boolean' ? {} : stylistic;
+	const { indent = 2, quotes = 'single' }
+		= typeof stylistic === 'boolean' ? {} : stylistic;
 
 	return [
 		{
@@ -40,30 +38,30 @@ export const yaml = (
 
 				...(stylistic
 					? {
-						'yaml/block-mapping-question-indicator-newline':
+							'yaml/block-mapping-question-indicator-newline':
 							'error',
-						'yaml/block-sequence-hyphen-indicator-newline':
+							'yaml/block-sequence-hyphen-indicator-newline':
 							'error',
-						'yaml/flow-mapping-curly-newline': 'error',
-						'yaml/flow-mapping-curly-spacing': 'error',
-						'yaml/flow-sequence-bracket-newline': 'error',
-						'yaml/flow-sequence-bracket-spacing': 'error',
-						'yaml/indent': [
-							'error',
-							indent === 'tab' ? 2 : indent,
-						],
-						'yaml/key-spacing': 'error',
-						'yaml/no-tab-indent': 'error',
-						'yaml/quotes': [
-							'error',
-							{ avoidEscape: false, prefer: quotes },
-						],
-						'yaml/spaced-comment': 'error',
-					}
+							'yaml/flow-mapping-curly-newline': 'error',
+							'yaml/flow-mapping-curly-spacing': 'error',
+							'yaml/flow-sequence-bracket-newline': 'error',
+							'yaml/flow-sequence-bracket-spacing': 'error',
+							'yaml/indent': [
+								'error',
+								indent === 'tab' ? 2 : indent,
+							],
+							'yaml/key-spacing': 'error',
+							'yaml/no-tab-indent': 'error',
+							'yaml/quotes': [
+								'error',
+								{ avoidEscape: false, prefer: quotes },
+							],
+							'yaml/spaced-comment': 'error',
+						}
 					: {}),
 
 				...overrides,
 			},
 		},
 	];
-};
+}

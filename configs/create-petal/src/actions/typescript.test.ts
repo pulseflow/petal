@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-import { typescript, setupTypescript } from './typescript.js';
-import { setup, resetFixtures } from '../testUtils.js';
-import { describe } from 'node:test';
 import { join } from 'node:path';
+import { describe } from 'node:test';
+import { resetFixtures, setup } from '../testUtils.js';
+import { setupTypescript, typescript } from './typescript.js';
 
 describe('typescript', () => {
 	const fixture = setup();
@@ -80,7 +80,8 @@ describe('typescript', () => {
 		let err = null;
 		try {
 			await typescript(context as any);
-		} catch (e) {
+		}
+		catch (e) {
 			err = e;
 		}
 		expect(err).toEqual(1);

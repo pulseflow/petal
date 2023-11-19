@@ -1,9 +1,8 @@
-import type { Context } from './context.js';
-
-import { color, generateProjectName } from '@astrojs/cli-kit';
 import path from 'node:path';
 import process from 'node:process';
+import { color, generateProjectName } from '@astrojs/cli-kit';
 import { info, log, title } from '../messages.js';
+import type { Context } from './context.js';
 
 import { isEmpty, toValidName } from './shared.js';
 
@@ -12,7 +11,7 @@ type ProjectNameContext = Pick<
 	'cwd' | 'yes' | 'dryRun' | 'prompt' | 'projectName' | 'exit'
 >;
 
-export const projectName = async (ctx: ProjectNameContext) => {
+export async function projectName(ctx: ProjectNameContext) {
 	await checkCwd(ctx.cwd);
 
 	if (!ctx.cwd || !isEmpty(ctx.cwd)) {
@@ -37,7 +36,8 @@ export const projectName = async (ctx: ProjectNameContext) => {
 			message: 'where should we create your new project?',
 			initial: `./${generateProjectName()}`,
 			validate: (value: string) => {
-				if (!isEmpty(value)) return `directory is not empty!`;
+				if (!isEmpty(value))
+					return `directory is not empty!`;
 				if (value.match(/[^\x20-\x7E]/g) !== null)
 					return `invalid non printable character present!`;
 
@@ -51,12 +51,14 @@ export const projectName = async (ctx: ProjectNameContext) => {
 			await info('--dry-run', 'skipping project naming');
 			return;
 		}
-	} else {
+	}
+	else {
 		let name = ctx.cwd;
 		if (name === '.' || name === './') {
 			const parts = process.cwd().split(path.sep);
 			name = parts[parts.length - 1];
-		} else if (name.startsWith('./') || name.startsWith('../')) {
+		}
+		else if (name.startsWith('./') || name.startsWith('../')) {
 			const parts = name.split('/');
 			name = parts[parts.length - 1];
 		}
@@ -64,10 +66,11 @@ export const projectName = async (ctx: ProjectNameContext) => {
 		ctx.projectName = toValidName(name);
 	}
 
-	if (!ctx.cwd) ctx.exit(1);
-};
+	if (!ctx.cwd)
+		ctx.exit(1);
+}
 
-const checkCwd = async (cwd: string | undefined) => {
+async function checkCwd(cwd: string | undefined) {
 	const empty = cwd && isEmpty(cwd);
 	if (empty) {
 		log('');
@@ -78,4 +81,4 @@ const checkCwd = async (cwd: string | undefined) => {
 	}
 
 	return empty;
-};
+}

@@ -1,9 +1,7 @@
-import type { Context } from './context.js';
-
-import { color } from '@astrojs/cli-kit';
 import { readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { color } from '@astrojs/cli-kit';
 import stripJsonComments from 'strip-json-comments';
 import {
 	error,
@@ -12,6 +10,7 @@ import {
 	title,
 	typescript as tsDefault,
 } from '../messages.js';
+import type { Context } from './context.js';
 
 type TypescriptContext = Pick<
 	Context,
@@ -25,10 +24,10 @@ type TypescriptContext = Pick<
 	| 'install'
 >;
 
-export const typescript = async (ctx: TypescriptContext) => {
-	let ts =
-		ctx.typescript ??
-		(typeof ctx.yes !== 'undefined' ? 'strict' : undefined);
+export async function typescript(ctx: TypescriptContext) {
+	let ts
+		= ctx.typescript
+		?? (typeof ctx.yes !== 'undefined' ? 'strict' : undefined);
 
 	if (ts === undefined) {
 		const { useTs } = await ctx.prompt({
@@ -57,7 +56,8 @@ export const typescript = async (ctx: TypescriptContext) => {
 				{ value: 'base', label: 'Relaxed' },
 			],
 		}));
-	} else {
+	}
+	else {
 		if (
 			![
 				'strict',
@@ -87,21 +87,24 @@ export const typescript = async (ctx: TypescriptContext) => {
 
 	if (ctx.dryRun) {
 		await info('--dry-run', `skipping typescript setup`);
-	} else if (ts && ts !== 'unsure') {
-		if (ts === 'relaxed' || ts === 'default') ts = 'base';
+	}
+	else if (ts && ts !== 'unsure') {
+		if (ts === 'relaxed' || ts === 'default')
+			ts = 'base';
 		await spinner({
 			start: 'typescript customizing...',
 			end: 'typescript customized',
 			while: () =>
-				setupTypescript(ts!, ctx).catch(err => {
+				setupTypescript(ts!, ctx).catch((err) => {
 					error('error', err);
 					process.exit(1);
 				}),
 		});
-	} else {
+	}
+	else {
 		// do nothing
 	}
-};
+}
 
 const FILES_TO_UPDATE = {
 	'tsconfig.json': async (file: string, options: { value: string }) => {
@@ -114,12 +117,14 @@ const FILES_TO_UPDATE = {
 				});
 
 				await writeFile(file, JSON.stringify(result, null, 2));
-			} else {
+			}
+			else {
 				throw new Error(
 					`there was an error applying typescript settings.`,
 				);
 			}
-		} catch (err) {
+		}
+		catch (err) {
 			if (err && (err as any).code === 'ENOENT') {
 				await writeFile(
 					file,
@@ -136,13 +141,10 @@ const FILES_TO_UPDATE = {
 	},
 };
 
-export const setupTypescript = async (
-	value: string,
-	ctx: TypescriptContext,
-) => {
+export async function setupTypescript(value: string,	ctx: TypescriptContext) {
 	await Promise.all(
 		Object.entries(FILES_TO_UPDATE).map(async ([file, update]) =>
 			update(path.resolve(path.join(ctx.cwd, file)), { value }),
 		),
 	);
-};
+}

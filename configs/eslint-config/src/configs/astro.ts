@@ -2,18 +2,16 @@ import type {
 	ConfigItem,
 	OptionsHasTypeScript,
 	OptionsOverrides,
-} from "../types.js";
+} from '../types.js';
 import {
-	parserTs,
 	parserAstro,
-	pluginAstro,
+	parserTs,
 	pluginA11y,
-} from "../plugins.js";
+	pluginAstro,
+} from '../plugins.js';
 import { GLOB_ASTRO } from '../globs.js';
 
-export const astro = (
-	options: OptionsHasTypeScript & OptionsOverrides = {}
-): ConfigItem[] => {
+export function astro(options: OptionsHasTypeScript & OptionsOverrides = {}): ConfigItem[] {
 	const { overrides = {} } = options;
 
 	return [
@@ -46,4 +44,4 @@ export const astro = (
 			},
 		},
 	];
-};
+}

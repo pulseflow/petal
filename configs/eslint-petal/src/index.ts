@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import type { ESLint, Linter } from 'eslint';
 import genericSpacing from './rules/generic-spacing.js';
 import ifNewline from './rules/if-newline.js';
@@ -11,8 +12,7 @@ import namedTupleSpacing from './rules/named-tuple-spacing.js';
 import consistentListNewline from './rules/consistent-list-newline.js';
 import indentBinaryOps from './rules/indent-binary-ops.js';
 
-import { readFileSync } from 'node:fs';
-const { version } = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), 'utf-8'));
+const { version } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf-8'));
 
 const plugin = {
 	meta: {

@@ -1,13 +1,13 @@
 {
 	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
-		"resolveJsonModule": true,
-		"verbatimModuleSyntax": true,
-		"esModuleInterop": true,
-		"allowJs": true,
-		"allowImportingTsExtensions": true,
 		"target": "ESNext",
 		"module": "ESNext",
-		"moduleResolution": "Bundler"
+		"moduleResolution": "Bundler",
+		"resolveJsonModule": true,
+		"allowImportingTsExtensions": true,
+		"allowJs": true,
+		"esModuleInterop": true,
+		"verbatimModuleSyntax": true
 	}
 }

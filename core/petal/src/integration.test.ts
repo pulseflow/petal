@@ -3,12 +3,12 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 import {
-	writeFile as writeFileFS,
-	mkdir as mkdirFS,
 	copyFile as copyFileFS,
 	existsSync,
+	mkdir as mkdirFS,
+	writeFile as writeFileFS,
 } from 'node:fs';
-import { Buffer } from 'node:buffer';
+import type { Buffer } from 'node:buffer';
 import fromEntries from 'object.fromentries';
 import * as tempy from 'tempy';
 import Debug from 'debug';
@@ -16,7 +16,7 @@ import { rimrafSync } from 'rimraf';
 
 import { THIS_ROOT, TSCONFIG } from './paths.js';
 
-const dbg = Debug('petal:integration-test'); // eslint-disable-line new-cap
+const dbg = Debug('petal:integration-test');
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const root = join(__dirname, '..');
 const CLI = join(root, 'build/index.js');
@@ -29,23 +29,26 @@ const mkdir = promisify(mkdirFS);
 const copyFile = promisify(copyFileFS);
 
 // log output after the command finishes
-const exec = async (cmd: string, options?: object) => {
+async function exec(cmd: string, options?: object) {
 	function _log(resp: {
-		stdout?: string | Buffer;
-		stderr?: string | Buffer;
+		stdout?: string | Buffer
+		stderr?: string | Buffer
 	}) {
-		if (resp.stdout) resp.stdout.toString().split('\n').forEach(dbg);
-		if (resp.stderr) resp.stderr.toString().split('\n').forEach(dbg);
+		if (resp.stdout)
+			resp.stdout.toString().split('\n').forEach(dbg);
+		if (resp.stderr)
+			resp.stderr.toString().split('\n').forEach(dbg);
 	}
 	try {
 		const resp = await execPromise(cmd, options);
 		_log(resp);
 		return resp;
-	} catch (err) {
+	}
+	catch (err) {
 		_log(err as any);
 		throw err;
 	}
-};
+}
 
 const SETUP_REPO_TIMEOUT = 30000;
 const TEST_SCRIPTS_TIMEOUT = 60000;
@@ -60,19 +63,19 @@ describe.skip('integration tests', () => {
 	describe('help', () => {
 		const USAGE_MATCH = 'Usage: petal [options] [command]';
 
-		test('The CLI fails and offers help when invoked with no arguments', async () => {
+		it('the CLI fails and offers help when invoked with no arguments', async () => {
 			await expect(exec(`${CLI}`)).rejects.toMatchObject({
 				stdout: expect.stringContaining(USAGE_MATCH),
 			});
 		});
 
-		test('The CLI offers help when invoked with --help flag', async () => {
+		it('the CLI offers help when invoked with --help flag', async () => {
 			const result = await exec(`${CLI} --help`);
 			expect(result.stdout).toMatch(USAGE_MATCH);
 		});
 	});
 
-	describe('TypeScript', () => {
+	describe('typeScript', () => {
 		beforeEach(async () => {
 			await setupRepo(
 				'index.ts',
@@ -82,14 +85,14 @@ describe.skip('integration tests', () => {
 			);
 		}, SETUP_REPO_TIMEOUT);
 
-		test(
-			'Full integration test',
+		it(
+			'full integration test',
 			async () => await testScripts(),
 			TEST_SCRIPTS_TIMEOUT,
 		);
 	});
 
-	describe('JavaScript', () => {
+	describe('javaScript', () => {
 		beforeEach(async () => {
 			await setupRepo(
 				'index.js',
@@ -99,8 +102,8 @@ describe.skip('integration tests', () => {
 			);
 		}, SETUP_REPO_TIMEOUT);
 
-		test(
-			'Full integration test',
+		it(
+			'full integration test',
 			async () => await testScripts(['--no-types'], ['--no-typecheck']),
 			TEST_SCRIPTS_TIMEOUT,
 		);
@@ -194,7 +197,8 @@ describe.skip('integration tests', () => {
 			await exec('pnpm test', { cwd: PKG_ROOT });
 			await exec('pnpm test index.test', { cwd: PKG_ROOT });
 			await exec(['pnpm lint', ...lintArgs].join(' '), { cwd: PKG_ROOT });
-		} catch (e) {
+		}
+		catch (e) {
 			console.log((e as any).stdout); // eslint-disable-line no-console
 			throw e;
 		}

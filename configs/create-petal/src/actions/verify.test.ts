@@ -1,5 +1,5 @@
-import { verify } from './verify.js';
 import { setup } from '../testUtils.js';
+import { verify } from './verify.js';
 
 describe('verify', () => {
 	const fixture = setup();
@@ -17,7 +17,8 @@ describe('verify', () => {
 		const context = { template: 'missing', exit };
 		try {
 			await verify(context as any);
-		} catch (e) {}
+		}
+		catch (e) {}
 		expect(fixture.hasMessage('template missing does not exist!')).toBe(
 			false,
 		);

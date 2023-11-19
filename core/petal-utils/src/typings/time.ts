@@ -3,16 +3,16 @@
  *
  * @public
  */
-export type HumanDuration = {
-	years?: number;
-	months?: number;
-	weeks?: number;
-	days?: number;
-	hours?: number;
-	minutes?: number;
-	seconds?: number;
-	milliseconds?: number;
-};
+export interface HumanDuration {
+	years?: number
+	months?: number
+	weeks?: number
+	days?: number
+	hours?: number
+	minutes?: number
+	seconds?: number
+	milliseconds?: number
+}
 
 /**
  * Converts a {@link HumanDuration} to milliseconds.
@@ -28,7 +28,7 @@ export type HumanDuration = {
  * @param duration - A human friendly duration object.
  * @returns The number of approximate milliseconds that the duration represents.
  */
-export const durationToMilliseconds = (duration: HumanDuration): number => {
+export function durationToMilliseconds(duration: HumanDuration): number {
 	const {
 		years = 0,
 		months = 0,
@@ -47,4 +47,4 @@ export const durationToMilliseconds = (duration: HumanDuration): number => {
 	const totalMilliseconds = totalSeconds * 1000 + milliseconds;
 
 	return totalMilliseconds;
-};
+}

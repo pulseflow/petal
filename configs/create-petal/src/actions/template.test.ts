@@ -1,5 +1,5 @@
-import { template } from './template.js';
 import { setup } from '../testUtils.js';
+import { template } from './template.js';
 
 describe('template', () => {
 	const fixture = setup();

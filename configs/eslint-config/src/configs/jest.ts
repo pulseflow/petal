@@ -1,3 +1,4 @@
+import globals from 'globals';
 import type {
 	ConfigItem,
 	OptionsIsInEditor,
@@ -5,9 +6,8 @@ import type {
 } from '../types.js';
 import { pluginJest, pluginNoOnlyTests } from '../plugins.js';
 import { GLOB_TESTS } from '../globs.js';
-import globals from 'globals';
 
-export const jest = (options: OptionsIsInEditor & OptionsOverrides = {}): ConfigItem[] => {
+export function jest(options: OptionsIsInEditor & OptionsOverrides = {}): ConfigItem[] {
 	const { isInEditor = false, overrides = {} } = options;
 
 	return [
@@ -44,9 +44,9 @@ export const jest = (options: OptionsIsInEditor & OptionsOverrides = {}): Config
 			rules: {
 				'node/prefer-global/process': 'off',
 				'test/no-only-tests': isInEditor ? 'off' : 'error',
-				
+
 				...overrides,
 			},
 		},
 	];
-};
+}

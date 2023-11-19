@@ -1,13 +1,13 @@
 {
 	"extends": "@flowr/petal/config/tsconfig.json",
-	"include": ["src"],
 	"compilerOptions": {
-		"isolatedModules": false,
-		"noEmit": true,
 		"jsx": "preserve",
-		"esModuleInterop": true,
 		"types": ["jest", "node"],
-        "skipLibCheck": true,
-        "skipDefaultLibCheck": true
-	}
+		"noEmit": true,
+		"esModuleInterop": true,
+		"isolatedModules": false,
+		"skipDefaultLibCheck": true,
+		"skipLibCheck": true
+	},
+	"include": ["src"]
 }

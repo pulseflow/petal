@@ -6,9 +6,7 @@ import type {
 import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE } from '../globs.js';
 import { pluginMarkdown } from '../plugins.js';
 
-export const markdown = (
-	options: OptionsComponentExts & OptionsOverrides = {},
-): ConfigItem[] => {
+export function markdown(options: OptionsComponentExts & OptionsOverrides = {}): ConfigItem[] {
 	const { componentExts = [], overrides = {} } = options;
 
 	return [
@@ -88,4 +86,4 @@ export const markdown = (
 			},
 		},
 	];
-};
+}

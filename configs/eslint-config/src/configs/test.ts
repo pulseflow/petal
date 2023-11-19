@@ -6,9 +6,7 @@ import type {
 import { pluginNoOnlyTests, pluginVitest } from '../plugins.js';
 import { GLOB_TESTS } from '../globs.js';
 
-export const test = (
-	options: OptionsIsInEditor & OptionsOverrides = {},
-): ConfigItem[] => {
+export function test(options: OptionsIsInEditor & OptionsOverrides = {}): ConfigItem[] {
 	const { isInEditor = false, overrides = {} } = options;
 
 	return [
@@ -43,4 +41,4 @@ export const test = (
 			},
 		},
 	];
-};
+}

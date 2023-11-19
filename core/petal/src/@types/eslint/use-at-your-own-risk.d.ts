@@ -13,18 +13,18 @@ declare module 'eslint/use-at-your-own-risk' {
 		 * Initialize this enumerator.
 		 */
 		constructor(params?: {
-			cwd?: string;
-			configArrayFactory?: any;
-			extensions?: any;
-			globInputPaths?: boolean;
-			errorOnUnmatchedPattern?: boolean;
-			ignore?: boolean;
+			cwd?: string
+			configArrayFactory?: any
+			extensions?: any
+			globInputPaths?: boolean
+			errorOnUnmatchedPattern?: boolean
+			ignore?: boolean
 		});
 		isTargetPath(filePath: string, providedConfig?: any): boolean;
 		iterateFiles(patternOrPatterns: string | string[]): IterableIterator<{
-			config: any;
-			filePath: string;
-			ignored: boolean;
+			config: any
+			filePath: string
+			ignored: boolean
 		}>;
 	}
 
@@ -37,46 +37,46 @@ declare module 'eslint/use-at-your-own-risk' {
 	/**
 	 * Type for Options used in {@link FlatESLint}
 	 */
-	export type FlatESLintOptions = {
+	export interface FlatESLintOptions {
 		/** Enable or disable inline configuration comments. */
-		allowInlineConfig?: boolean;
+		allowInlineConfig?: boolean
 		/** Base config object, extended by all configs used with this instance */
-		baseConfig?: import('eslint').ESLint.ConfigData;
+		baseConfig?: import('eslint').ESLint.ConfigData
 		/** Enable result caching. */
-		cache?: boolean;
+		cache?: boolean
 		/** The cache file to use instead of .eslintcache. */
-		cacheLocation?: string;
+		cacheLocation?: string
 		/** The strategy used to detect changed files. */
-		cacheStrategy?: 'metadata' | 'content';
+		cacheStrategy?: 'metadata' | 'content'
 		/** The value to use for the current working directory. */
-		cwd?: string;
+		cwd?: string
 		/** If `false` then {@link FlatESLint#lintFiles} doesn't throw even if no target files found. Defaults to `true`. */
-		errorOnUnmatchedPattern?: boolean;
+		errorOnUnmatchedPattern?: boolean
 		/** Execute in autofix mode. If a function, should return a boolean. */
-		fix?: boolean | Function;
+		fix?: boolean | Function
 		/** Array of rule types to apply fixes for. */
-		fixTypes?: string[];
+		fixTypes?: string[]
 		/** Set to false to skip glob resolution of input file paths to lint (default: true). If false, each input file paths is assumed to be a non-glob path to an existing file. */
-		globInputPaths?: boolean;
+		globInputPaths?: boolean
 		/** False disables all ignore patterns except for the default ones. */
-		ignore?: boolean;
+		ignore?: boolean
 		/** Ignore file patterns to use in addition to config ignores. These patterns are relative to `cwd`. */
-		ignorePatterns?: string[];
+		ignorePatterns?: string[]
 		/** Override config object, overrides all configs used with this instance */
-		overrideConfig?: import('eslint').ESLint.ConfigData;
+		overrideConfig?: import('eslint').ESLint.ConfigData
 		/**
 		 * Searches for default config file when falsy;
 		 * doesn't do any config file lookup when `true`; considered to be a config filename
 		 * when a string.
 		 */
-		overrideConfigFile?: boolean | string;
+		overrideConfigFile?: boolean | string
 		/** An array of plugin implementations. */
-		plugins?: Record<string, import('eslint').ESLint.Plugin>;
+		plugins?: Record<string, import('eslint').ESLint.Plugin>
 		/** The severity to report unused eslint-disable directives. */
-		reportUnusedDisableDirectives?: 'error' | 'warn' | 'off';
+		reportUnusedDisableDirectives?: 'error' | 'warn' | 'off'
 		/** Show warnings when the file list includes ignored files */
-		warnIgnored?: boolean;
-	};
+		warnIgnored?: boolean
+	}
 
 	/**
 	 * Primary Node.js API for ESLint (flat)
@@ -141,7 +141,7 @@ declare module 'eslint/use-at-your-own-risk' {
 		 */
 		lintText(
 			code: string,
-			options: { filePath: string; warnIgnored: boolean },
+			options: { filePath: string, warnIgnored: boolean },
 		): Promise<import('eslint').ESLint.LintResult[]>;
 
 		/**

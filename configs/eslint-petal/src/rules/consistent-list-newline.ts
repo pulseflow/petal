@@ -5,23 +5,23 @@ import { createEslintRule } from '../utils.js';
 export const RULE_NAME = 'consistent-list-newline';
 export type MessageIds = 'shouldWrap' | 'shouldNotWrap';
 export type Options = [{
-	ArrayExpression?: boolean;
-	ArrowFunctionExpression?: boolean;
-	CallExpression?: boolean;
-	ExportNamedDeclaration?: boolean;
-	FunctionDeclaration?: boolean;
-	FunctionExpression?: boolean;
-	ImportDeclaration?: boolean;
-	NewExpression?: boolean;
-	ObjectExpression?: boolean;
-	TSInterfaceDeclaration?: boolean;
-	TSTupleType?: boolean;
-	TSTypeLiteral?: boolean;
-	TSTypeParameterDeclaration?: boolean;
-	TSTypeParameterInstantiation?: boolean;
-	ObjectPattern?: boolean;
-	ArrayPattern?: boolean;
-}]
+	ArrayExpression?: boolean
+	ArrowFunctionExpression?: boolean
+	CallExpression?: boolean
+	ExportNamedDeclaration?: boolean
+	FunctionDeclaration?: boolean
+	FunctionExpression?: boolean
+	ImportDeclaration?: boolean
+	NewExpression?: boolean
+	ObjectExpression?: boolean
+	TSInterfaceDeclaration?: boolean
+	TSTupleType?: boolean
+	TSTypeLiteral?: boolean
+	TSTypeParameterDeclaration?: boolean
+	TSTypeParameterInstantiation?: boolean
+	ObjectPattern?: boolean
+	ArrayPattern?: boolean
+}];
 
 export default createEslintRule<Options, MessageIds>({
 	name: RULE_NAME,
@@ -62,9 +62,9 @@ export default createEslintRule<Options, MessageIds>({
 	defaultOptions: [{}],
 	create: (context, [options = {}] = [{}]) => {
 		function removeLines(fixer: RuleFixer, start: number, end: number) {
-			const range = [start, end] as const
-			const code = context.sourceCode.text.slice(...range)
-			return fixer.replaceTextRange(range, code.replace(/(\r\n|\n)/g, ''))
+			const range = [start, end] as const;
+			const code = context.sourceCode.text.slice(...range);
+			return fixer.replaceTextRange(range, code.replace(/(\r\n|\n)/g, ''));
 		}
 
 		function check(
@@ -73,62 +73,62 @@ export default createEslintRule<Options, MessageIds>({
 			prevNode?: TSESTree.Node,
 			nextNode?: TSESTree.Node,
 		) {
-			const items = children.filter(Boolean) as TSESTree.Node[]
+			const items = children.filter(Boolean) as TSESTree.Node[];
 			if (items.length === 0)
-				return
+				return;
 
 			const startLine = prevNode
 				? prevNode.loc.end.line
-				: node.loc.start.line
-			let mode: 'inline' | 'newline' | null = null
-			let lastLine = startLine
+				: node.loc.start.line;
+			let mode: 'inline' | 'newline' | null = null;
+			let lastLine = startLine;
 
 			items.forEach((item, idx) => {
 				if (mode == null) {
-					mode = item.loc.start.line === lastLine ? 'inline' : 'newline'
-					lastLine = item.loc.end.line
-					return
+					mode = item.loc.start.line === lastLine ? 'inline' : 'newline';
+					lastLine = item.loc.end.line;
+					return;
 				}
 
-				const currentStart = item.loc.start.line
+				const currentStart = item.loc.start.line;
 
 				if (mode === 'newline' && currentStart === lastLine) {
 					context.report({
 						node: item,
 						messageId: 'shouldWrap',
 						*fix(fixer) {
-							yield fixer.insertTextBefore(item, '\n')
+							yield fixer.insertTextBefore(item, '\n');
 						},
-					})
+					});
 				}
 				else if (mode === 'inline' && currentStart !== lastLine) {
-					const lastItem = items[idx - 1]
+					const lastItem = items[idx - 1];
 					context.report({
 						node: item,
 						messageId: 'shouldNotWrap',
 						*fix(fixer) {
-							yield removeLines(fixer, lastItem!.range[1], item.range[0])
+							yield removeLines(fixer, lastItem!.range[1], item.range[0]);
 						},
-					})
+					});
 				}
 
-				lastLine = item.loc.end.line
-			})
+				lastLine = item.loc.end.line;
+			});
 
-			const endLoc = nextNode?.loc.start ?? node.loc.end
+			const endLoc = nextNode?.loc.start ?? node.loc.end;
 			const endRange = nextNode?.range[0]
 				? nextNode?.range[0] - 1
-				: node.range[1]
+				: node.range[1];
 
-			const lastItem = items[items.length - 1]!
+			const lastItem = items[items.length - 1]!;
 			if (mode === 'newline' && endLoc.line === lastLine) {
 				context.report({
 					node: lastItem,
 					messageId: 'shouldWrap',
 					*fix(fixer) {
-						yield fixer.insertTextAfter(lastItem, '\n')
+						yield fixer.insertTextAfter(lastItem, '\n');
 					},
-				})
+				});
 			}
 			else if (mode === 'inline' && endLoc.line !== lastLine) {
 				// If there is only one multiline item, we allow the closing bracket to be on the a different line
@@ -138,7 +138,7 @@ export default createEslintRule<Options, MessageIds>({
 					node: lastItem,
 					messageId: 'shouldNotWrap',
 					*fix(fixer) {
-						yield removeLines(fixer, lastItem.range[1], endRange)
+						yield removeLines(fixer, lastItem.range[1], endRange);
 					},
 				});
 			}
@@ -146,16 +146,16 @@ export default createEslintRule<Options, MessageIds>({
 
 		const listenser = {
 			ObjectExpression: (node) => {
-				check(node, node.properties)
+				check(node, node.properties);
 			},
 			ArrayExpression: (node) => {
-				check(node, node.elements)
+				check(node, node.elements);
 			},
 			ImportDeclaration: (node) => {
-				check(node, node.specifiers)
+				check(node, node.specifiers);
 			},
 			ExportNamedDeclaration: (node) => {
-				check(node, node.specifiers)
+				check(node, node.specifiers);
 			},
 			FunctionDeclaration: (node) => {
 				check(
@@ -163,7 +163,7 @@ export default createEslintRule<Options, MessageIds>({
 					node.params,
 					node.typeParameters || undefined,
 					node.returnType || node.body,
-				)
+				);
 			},
 			FunctionExpression: (node) => {
 				check(
@@ -171,7 +171,7 @@ export default createEslintRule<Options, MessageIds>({
 					node.params,
 					node.typeParameters || undefined,
 					node.returnType || node.body,
-				)
+				);
 			},
 			ArrowFunctionExpression: (node) => {
 				check(
@@ -179,7 +179,7 @@ export default createEslintRule<Options, MessageIds>({
 					node.params,
 					node.typeParameters || undefined,
 					node.returnType || node.body,
-				)
+				);
 			},
 			CallExpression: (node) => {
 				const startNode
@@ -195,28 +195,28 @@ export default createEslintRule<Options, MessageIds>({
 				check(node, node.arguments, startNode);
 			},
 			TSInterfaceDeclaration: (node) => {
-				check(node, node.body.body)
+				check(node, node.body.body);
 			},
 			TSTypeLiteral: (node) => {
-				check(node, node.members)
+				check(node, node.members);
 			},
 			TSTupleType: (node) => {
-				check(node, node.elementTypes)
+				check(node, node.elementTypes);
 			},
 			NewExpression: (node) => {
-				check(node, node.arguments, node.callee)
+				check(node, node.arguments, node.callee);
 			},
 			TSTypeParameterDeclaration(node) {
-				check(node, node.params)
+				check(node, node.params);
 			},
 			TSTypeParameterInstantiation(node) {
-				check(node, node.params)
+				check(node, node.params);
 			},
 			ObjectPattern(node) {
-				check(node, node.properties, undefined, node.typeAnnotation)
+				check(node, node.properties, undefined, node.typeAnnotation);
 			},
 			ArrayPattern(node) {
-				check(node, node.elements)
+				check(node, node.elements);
 			},
 		} satisfies RuleListener;
 
@@ -224,17 +224,17 @@ export default createEslintRule<Options, MessageIds>({
 		type KeysOptions = keyof Options[0];
 
 		// Type assertion to check if all keys are exported
-		exportType<KeysListener, KeysOptions>()
+		exportType<KeysListener, KeysOptions>();
 		exportType<KeysOptions, KeysListener>();
 		(Object.keys(options) as KeysOptions[])
 			.forEach((key) => {
 				if (options[key] === false)
-					delete listenser[key]
+					delete listenser[key];
 			});
 
 		return listenser;
 	},
-})
+});
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 function exportType<A, B extends A>() { }

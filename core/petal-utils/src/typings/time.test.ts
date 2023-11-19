@@ -1,8 +1,9 @@
-import { HumanDuration, durationToMilliseconds } from './time.js';
 import { Duration } from 'luxon';
+import type { HumanDuration } from './time.js';
+import { durationToMilliseconds } from './time.js';
 
 describe('time', () => {
-	describe('HumanDuration', () => {
+	describe('humanDuration', () => {
 		const durations: HumanDuration[] = [
 			{ years: 1 },
 			{ months: 1 },
@@ -13,7 +14,7 @@ describe('time', () => {
 			{ seconds: 1 },
 			{ milliseconds: 1 },
 		];
-		it.each(durations)('successfully parsed by luxon, %p', d => {
+		it.each(durations)('successfully parsed by luxon, %p', (d) => {
 			expect(Duration.fromObject(d).toObject()).toEqual(d);
 		});
 	});
@@ -45,7 +46,7 @@ describe('time', () => {
 			{ seconds: 1 },
 			{ milliseconds: 1 },
 		];
-		it.each(durations)('computes milliseconds like luxon does, %p', d => {
+		it.each(durations)('computes milliseconds like luxon does, %p', (d) => {
 			expect(Duration.fromObject(d).as('milliseconds')).toEqual(
 				durationToMilliseconds(d),
 			);

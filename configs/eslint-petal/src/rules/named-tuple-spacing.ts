@@ -1,10 +1,10 @@
-import { createEslintRule } from '../utils.js'
+import { createEslintRule } from '../utils.js';
 
-export const RULE_NAME = 'named-tuple-spacing'
-export type MessageIds = 'expectedSpaceAfter' | 'unexpectedSpaceBetween' | 'unexpectedSpaceBefore'
-export type Options = []
+export const RULE_NAME = 'named-tuple-spacing';
+export type MessageIds = 'expectedSpaceAfter' | 'unexpectedSpaceBetween' | 'unexpectedSpaceBefore';
+export type Options = [];
 
-const RE = /^([\w_$]+)(\s*)(\?\s*)?:(\s*)(.*)$/
+const RE = /^([\w_$]+)(\s*)(\?\s*)?:(\s*)(.*)$/;
 
 export default createEslintRule<Options, MessageIds>({
 	name: RULE_NAME,
@@ -27,25 +27,25 @@ export default createEslintRule<Options, MessageIds>({
 		const sourceCode = context.sourceCode;
 		return {
 			TSNamedTupleMember: (node: any) => {
-				const code = sourceCode.text.slice(node.range[0], node.range[1])
+				const code = sourceCode.text.slice(node.range[0], node.range[1]);
 
-				const match = code.match(RE)
+				const match = code.match(RE);
 				if (!match)
-					return
+					return;
 
-				const labelName = node.label.name
-				const spaceBeforeColon = match[2]
-				const optionalMark = match[3]
-				const spacesAfterColon = match[4]
-				const elementType = match[5]
+				const labelName = node.label.name;
+				const spaceBeforeColon = match[2];
+				const optionalMark = match[3];
+				const spacesAfterColon = match[4];
+				const elementType = match[5];
 
 				function getReplaceValue() {
-					let ret = labelName
+					let ret = labelName;
 					if (node.optional)
-						ret += '?'
-					ret += ': '
-					ret += elementType
-					return ret
+						ret += '?';
+					ret += ': ';
+					ret += elementType;
+					return ret;
 				}
 
 				if (optionalMark?.length > 1) {
@@ -53,9 +53,9 @@ export default createEslintRule<Options, MessageIds>({
 						node,
 						messageId: 'unexpectedSpaceBetween',
 						*fix(fixer) {
-							yield fixer.replaceTextRange(node.range, code.replace(RE, getReplaceValue()))
+							yield fixer.replaceTextRange(node.range, code.replace(RE, getReplaceValue()));
 						},
-					})
+					});
 				}
 
 				if (spaceBeforeColon?.length) {
@@ -63,9 +63,9 @@ export default createEslintRule<Options, MessageIds>({
 						node,
 						messageId: 'unexpectedSpaceBefore',
 						*fix(fixer) {
-							yield fixer.replaceTextRange(node.range, code.replace(RE, getReplaceValue()))
+							yield fixer.replaceTextRange(node.range, code.replace(RE, getReplaceValue()));
 						},
-					})
+					});
 				}
 
 				if (spacesAfterColon != null && spacesAfterColon.length !== 1) {
@@ -73,11 +73,11 @@ export default createEslintRule<Options, MessageIds>({
 						node,
 						messageId: 'expectedSpaceAfter',
 						*fix(fixer) {
-							yield fixer.replaceTextRange(node.range, code.replace(RE, getReplaceValue()))
+							yield fixer.replaceTextRange(node.range, code.replace(RE, getReplaceValue()));
 						},
-					})
+					});
 				}
 			},
-		}
+		};
 	},
-})
+});

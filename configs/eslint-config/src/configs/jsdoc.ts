@@ -1,7 +1,7 @@
 import type { ConfigItem, OptionsStylistic } from '../types.js';
 import { pluginJsdoc } from '../plugins.js';
 
-export const jsdoc = (options: OptionsStylistic = {}): ConfigItem[] => {
+export function jsdoc(options: OptionsStylistic = {}): ConfigItem[] {
 	const { stylistic = true } = options;
 
 	return [
@@ -29,11 +29,11 @@ export const jsdoc = (options: OptionsStylistic = {}): ConfigItem[] => {
 
 				...(stylistic
 					? {
-						'jsdoc/check-alignment': 'warn',
-						'jsdoc/multiline-blocks': 'warn',
-					}
+							'jsdoc/check-alignment': 'warn',
+							'jsdoc/multiline-blocks': 'warn',
+						}
 					: {}),
 			},
 		},
 	];
-};
+}

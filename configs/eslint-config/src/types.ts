@@ -1,52 +1,52 @@
-import type { FlatGitignoreOptions } from "eslint-config-flat-gitignore";
-import type { ParserOptions } from "@typescript-eslint/parser";
+import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
+import type { ParserOptions } from '@typescript-eslint/parser';
 import type {
 	EslintCommentsRules,
 	EslintRules,
 	FlatESLintConfigItem,
 	ImportRules,
 	JsoncRules,
+	JsxA11yRules,
 	MergeIntersection,
 	NRules,
 	Prefix,
+	ReactHooksRules,
+	ReactRules,
 	RenamePrefix,
 	RuleConfig,
 	VitestRules,
 	VueRules,
 	YmlRules,
-	JsxA11yRules,
-	ReactHooksRules,
-	ReactRules,
-} from "@antfu/eslint-define-config";
-import type { RuleOptions as JSDocRules } from "@eslint-types/jsdoc/types";
-import type { RuleOptions as TypeScriptRules } from "@eslint-types/typescript-eslint/types";
-import type { RuleOptions as UnicornRules } from "@eslint-types/unicorn/types";
+} from '@antfu/eslint-define-config';
+import type { RuleOptions as JSDocRules } from '@eslint-types/jsdoc/types';
+import type { RuleOptions as TypeScriptRules } from '@eslint-types/typescript-eslint/types';
+import type { RuleOptions as UnicornRules } from '@eslint-types/unicorn/types';
 import type { Rules as PetalRules } from '@flowr/eslint-plugin-petal';
-import type { StylisticCustomizeOptions, UnprefixedRuleOptions as StylisticRules } from "@stylistic/eslint-plugin";
+import type { StylisticCustomizeOptions, UnprefixedRuleOptions as StylisticRules } from '@stylistic/eslint-plugin';
 
 export type WrapRuleConfig<T extends { [key: string]: any }> = {
 	[K in keyof T]: T[K] extends RuleConfig ? T[K] : RuleConfig<T[K]>;
 };
 
 export interface AstroRules {
-	"astro/no-conflict-set-directives": string;
-	"astro/no-deprecated-astro-canonicalurl": string;
-	"astro/no-deprecated-astro-fetchcontent": string;
-	"astro/no-deprecated-astro-resolve": string;
-	"astro/no-deprecated-getentrybyslug": string;
-	"astro/no-unused-define-vars-in-style": string;
-	"astro/valid-compile": string;
+	'astro/no-conflict-set-directives': string
+	'astro/no-deprecated-astro-canonicalurl': string
+	'astro/no-deprecated-astro-fetchcontent': string
+	'astro/no-deprecated-astro-resolve': string
+	'astro/no-deprecated-getentrybyslug': string
+	'astro/no-unused-define-vars-in-style': string
+	'astro/valid-compile': string
 }
 
 export interface JestRules { }
 
 export type Rules = WrapRuleConfig<
 	MergeIntersection<
-		RenamePrefix<TypeScriptRules, "@typescript-eslint/", "ts/"> &
-		RenamePrefix<VitestRules, "vitest/", "test/"> &
-		RenamePrefix<YmlRules, "yml/", "yaml/"> &
-		RenamePrefix<NRules, "n/", "node/"> &
-		Prefix<StylisticRules, "style/"> &
+		RenamePrefix<TypeScriptRules, '@typescript-eslint/', 'ts/'> &
+		RenamePrefix<VitestRules, 'vitest/', 'test/'> &
+		RenamePrefix<YmlRules, 'yml/', 'yaml/'> &
+		RenamePrefix<NRules, 'n/', 'node/'> &
+		Prefix<StylisticRules, 'style/'> &
 		Prefix<PetalRules, 'petal/'> &
 		JSDocRules &
 		ImportRules &
@@ -58,20 +58,20 @@ export type Rules = WrapRuleConfig<
 		JsxA11yRules &
 		ReactHooksRules &
 		AstroRules &
-		ReactRules & { "test/no-only-tests": RuleConfig<[]> }
+		ReactRules & { 'test/no-only-tests': RuleConfig<[]> }
 	>
 >;
 
-export type ConfigItem = Omit<FlatESLintConfigItem<Rules, false>, "plugins"> & {
+export type ConfigItem = Omit<FlatESLintConfigItem<Rules, false>, 'plugins'> & {
 	/**
 	 * Custom name of each config item.
 	 */
-	name?: string;
+	name?: string
 
 	/**
 	 * An object containing a name-value mapping of plugin names to plugin objects.
 	 */
-	plugins?: Record<string, any>;
+	plugins?: Record<string, any>
 };
 
 export interface OptionsComponentExts {
@@ -81,14 +81,14 @@ export interface OptionsComponentExts {
 	 * @example ['vue']
 	 * @default []
 	 */
-	componentExts?: string[];
+	componentExts?: string[]
 }
 
 export interface OptionsTypeScriptParserOptions {
 	/**
 	 * Additional parser options for TypeScript.
 	 */
-	parserOptions?: Partial<ParserOptions>;
+	parserOptions?: Partial<ParserOptions>
 }
 
 export interface OptionsTypeScriptWithTypes {
@@ -96,25 +96,25 @@ export interface OptionsTypeScriptWithTypes {
 	 * When this options is provided, type aware rules will be enabled.
 	 * @see https://typescript-eslint.io/linting/typed-linting/
 	 */
-	tsconfigPath?: string | string[];
+	tsconfigPath?: string | string[]
 }
 
 export interface OptionsHasTypeScript {
-	typescript?: boolean;
+	typescript?: boolean
 }
 
 export interface OptionsStylistic {
-	stylistic?: boolean | StylisticConfig;
+	stylistic?: boolean | StylisticConfig
 }
 
 export interface StylisticConfig extends Pick<StylisticCustomizeOptions, 'indent' | 'quotes' | 'jsx' | 'semi'> { }
 
 export interface OptionsOverrides {
-	overrides?: ConfigItem["rules"];
+	overrides?: ConfigItem['rules']
 }
 
 export interface OptionsIsInEditor {
-	isInEditor?: boolean;
+	isInEditor?: boolean
 }
 
 export interface OptionsConfig extends OptionsComponentExts {
@@ -126,7 +126,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * @see https://github.com/antfu/eslint-config-flat-gitignore
 	 * @default true
 	 */
-	gitignore?: boolean | FlatGitignoreOptions;
+	gitignore?: boolean | FlatGitignoreOptions
 
 	/**
 	 * Enable TypeScript support.
@@ -136,9 +136,9 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * @default auto-detect based on the dependencies
 	 */
 	typescript?:
-	| boolean
-	| OptionsTypeScriptWithTypes
-	| OptionsTypeScriptParserOptions;
+		| boolean
+		| OptionsTypeScriptWithTypes
+		| OptionsTypeScriptParserOptions
 
 	/**
 	 * Enable JSX related rules.
@@ -147,90 +147,90 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 *
 	 * @default true
 	 */
-	jsx?: boolean;
+	jsx?: boolean
 
 	/**
 	 * Enable test support.
 	 *
 	 * @default true
 	 */
-	test?: boolean;
+	test?: boolean
 
 	/**
 	 * Enable jest support.
 	 *
 	 * @default auto-detect based on the dependencies
 	 */
-	jest?: boolean;
+	jest?: boolean
 
 	/**
 	 * Enable Vue support.
 	 *
 	 * @default auto-detect based on the dependencies
 	 */
-	vue?: boolean;
+	vue?: boolean
 
 	/**
 	 * Enable React support.
 	 *
 	 * @default auto-detect based on the dependencies
 	 */
-	react?: boolean;
+	react?: boolean
 
 	/**
 	 * Enable Astro support.
 	 *
 	 * @default auto-detect based on the dependencies
 	 */
-	astro?: boolean;
+	astro?: boolean
 
 	/**
 	 * Enable JSONC support.
 	 *
 	 * @default true
 	 */
-	jsonc?: boolean;
+	jsonc?: boolean
 
 	/**
 	 * Enable YAML support.
 	 *
 	 * @default true
 	 */
-	yaml?: boolean;
+	yaml?: boolean
 
 	/**
 	 * Enable Markdown support.
 	 *
 	 * @default true
 	 */
-	markdown?: boolean;
+	markdown?: boolean
 
 	/**
 	 * Enable stylistic rules.
 	 *
 	 * @default true
 	 */
-	stylistic?: boolean | StylisticConfig;
+	stylistic?: boolean | StylisticConfig
 
 	/**
 	 * Control to disable some rules in editors.
 	 * @default auto-detect based on the process.env
 	 */
-	isInEditor?: boolean;
+	isInEditor?: boolean
 
 	/**
 	 * Provide overrides for rules for each integration.
 	 */
 	overrides?: {
-		javascript?: ConfigItem["rules"];
-		typescript?: ConfigItem["rules"];
-		test?: ConfigItem["rules"];
-		jest?: ConfigItem["rules"];
-		vue?: ConfigItem["rules"];
-		react?: ConfigItem["rules"];
-		astro?: ConfigItem["rules"];
-		jsonc?: ConfigItem["rules"];
-		markdown?: ConfigItem["rules"];
-		yaml?: ConfigItem["rules"];
-	};
+		javascript?: ConfigItem['rules']
+		typescript?: ConfigItem['rules']
+		test?: ConfigItem['rules']
+		jest?: ConfigItem['rules']
+		vue?: ConfigItem['rules']
+		react?: ConfigItem['rules']
+		astro?: ConfigItem['rules']
+		jsonc?: ConfigItem['rules']
+		markdown?: ConfigItem['rules']
+		yaml?: ConfigItem['rules']
+	}
 }

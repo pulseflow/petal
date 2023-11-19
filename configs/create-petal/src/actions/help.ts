@@ -1,6 +1,6 @@
 import { printHelp } from '../messages.js';
 
-export const help = () => {
+export function help() {
 	printHelp({
 		commandName: 'create-petal',
 		usage: '[dir] [...flags]',
@@ -24,4 +24,4 @@ export const help = () => {
 			],
 		},
 	});
-};
+}

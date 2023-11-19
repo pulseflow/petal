@@ -1,35 +1,35 @@
+import os from 'node:os';
+import process from 'node:process';
 import { prompt } from '@astrojs/cli-kit';
 import { random } from '@astrojs/cli-kit/utils';
 import arg from 'arg';
-import os from 'node:os';
-import process from 'node:process';
 
 import { getName, getVersion } from '../messages.js';
 
 export interface Context {
-	help: boolean;
-	prompt: typeof prompt;
-	cwd: string;
-	packageManager: string;
-	username: Promise<string>;
-	version: Promise<string>;
-	skipFlower: boolean;
-	fancy?: boolean;
-	dryRun?: boolean;
-	yes?: boolean;
-	projectName?: string;
-	template?: string;
-	ref: string;
-	install?: boolean;
-	git?: boolean;
-	typescript?: string;
-	stdin?: typeof process.stdin;
-	stdout?: typeof process.stdout;
-	exit(code: number): never;
-	hat?: string;
+	help: boolean
+	prompt: typeof prompt
+	cwd: string
+	packageManager: string
+	username: Promise<string>
+	version: Promise<string>
+	skipFlower: boolean
+	fancy?: boolean
+	dryRun?: boolean
+	yes?: boolean
+	projectName?: string
+	template?: string
+	ref: string
+	install?: boolean
+	git?: boolean
+	typescript?: string
+	stdin?: typeof process.stdin
+	stdout?: typeof process.stdout
+	exit(code: number): never
+	hat?: string
 }
 
-export const getContext = async (argv: string[]): Promise<Context> => {
+export async function getContext(argv: string[]): Promise<Context> {
 	const packageManager = detectPackageManager() ?? 'npm';
 
 	const flags = arg(
@@ -55,7 +55,7 @@ export const getContext = async (argv: string[]): Promise<Context> => {
 		{ argv, permissive: true },
 	);
 
-	let cwd = flags['_'][0];
+	const cwd = flags._[0];
 	const {
 		'--help': help = false,
 		'--template': template,
@@ -73,18 +73,21 @@ export const getContext = async (argv: string[]): Promise<Context> => {
 		'--typescript': typescript,
 		'--skip-flower': skipFlower,
 	} = flags;
-	let projectName = cwd;
+	const projectName = cwd;
 
 	if (no) {
 		yes = false;
-		if (install === undefined) install = false;
-		if (git === undefined) git = false;
-		if (typescript === undefined) typescript = 'strict';
+		if (install === undefined)
+			install = false;
+		if (git === undefined)
+			git = false;
+		if (typescript === undefined)
+			typescript = 'strict';
 	}
 
-	skipFlower =
-		((os.platform() === 'win32' && !fancy) || skipFlower) ??
-		[yes, no, install, git, typescript].some(v => v !== undefined);
+	skipFlower
+		= ((os.platform() === 'win32' && !fancy) || skipFlower)
+		?? [yes, no, install, git, typescript].some(v => v !== undefined);
 
 	return {
 		help,
@@ -106,11 +109,12 @@ export const getContext = async (argv: string[]): Promise<Context> => {
 		cwd,
 		exit: code => process.exit(code),
 	} satisfies Context;
-};
+}
 
-const detectPackageManager = () => {
-	if (!process.env.npm_config_user_agent) return;
+function detectPackageManager() {
+	if (!process.env.npm_config_user_agent)
+		return;
 	const specifier = process.env.npm_config_user_agent.split(' ')[0];
 	const name = specifier.substring(0, specifier.lastIndexOf('/'));
 	return name === 'npminstall' ? 'cnpm' : name;
-};
+}

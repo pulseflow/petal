@@ -1,5 +1,5 @@
-import { next } from './next-steps.js';
 import { setup } from '../testUtils.js';
+import { next } from './next-steps.js';
 
 describe('next steps', () => {
 	const fixture = setup();

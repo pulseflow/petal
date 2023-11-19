@@ -3,34 +3,34 @@
  *
  * @public
  */
-export type Observer<T> = {
-	next?(value: T): void;
-	error?(error: Error): void;
-	complete?(): void;
-};
+export interface Observer<T> {
+	next?(value: T): void
+	error?(error: Error): void
+	complete?(): void
+}
 
 /**
  * Subscription returned when subscribing to an Observable, see TC39.
  *
  * @public
  */
-export type Subscription = {
+export interface Subscription {
 	/**
 	 * Cancels the subscription
 	 */
-	unsubscribe(): void;
+	unsubscribe(): void
 
 	/**
 	 * Value indicating whether the subscription is closed.
 	 */
-	readonly closed: boolean;
-};
+	readonly closed: boolean
+}
 
 // Declares the global well-known Symbol.observable
 // We get the actual runtime polyfill from zen-observable
 declare global {
 	interface SymbolConstructor {
-		readonly observable: symbol;
+		readonly observable: symbol
 	}
 }
 
@@ -44,16 +44,16 @@ declare global {
  *
  * @public
  */
-export type Observable<T> = {
-	[Symbol.observable](): Observable<T>;
+export interface Observable<T> {
+	[Symbol.observable](): Observable<T>
 
 	/**
 	 * Subscribes to this observable to start receiving new values.
 	 */
-	subscribe(observer: Observer<T>): Subscription;
+	subscribe(observer: Observer<T>): Subscription
 	subscribe(
 		onNext?: (value: T) => void,
 		onError?: (error: Error) => void,
 		onComplete?: () => void,
-	): Subscription;
-};
+	): Subscription
+}

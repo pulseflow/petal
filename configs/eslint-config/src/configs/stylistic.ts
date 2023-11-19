@@ -1,7 +1,7 @@
 import type { ConfigItem, StylisticConfig } from '../types.js';
 import { pluginPetal, pluginStylistic } from '../plugins.js';
 
-export const stylistic = (options: StylisticConfig = {}): ConfigItem[] => {
+export function stylistic(options: StylisticConfig = {}): ConfigItem[] {
 	const { indent = 'tab', jsx = true, quotes = 'single', semi = true } = options;
 	const config = pluginStylistic.configs.customize({ flat: true, indent, jsx, pluginName: 'style', quotes, semi });
 
@@ -20,8 +20,8 @@ export const stylistic = (options: StylisticConfig = {}): ConfigItem[] => {
 				'petal/indent-binary-ops': ['error', { indent }],
 				'petal/top-level-function': 'error',
 
-				curly: ['error', 'multi-or-nest', 'consistent'],
+				'curly': ['error', 'multi-or-nest', 'consistent'],
 			},
 		},
 	];
-};
+}

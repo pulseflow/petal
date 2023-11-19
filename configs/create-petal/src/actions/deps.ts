@@ -9,7 +9,7 @@ type DepsContext = Pick<
 	'install' | 'yes' | 'prompt' | 'packageManager' | 'cwd' | 'dryRun'
 >;
 
-export const dependencies = async (ctx: DepsContext) => {
+export async function dependencies(ctx: DepsContext) {
 	let deps = ctx.install ?? ctx.yes;
 	if (deps === undefined) {
 		({ deps } = await ctx.prompt({
@@ -25,7 +25,8 @@ export const dependencies = async (ctx: DepsContext) => {
 
 	if (ctx.dryRun) {
 		await info('--dry-run', `Skipping dependency installation`);
-	} else if (deps) {
+	}
+	else if (deps) {
 		await spinner({
 			start: `Installing dependencies with ${ctx.packageManager}...`,
 			end: 'Dependencies installed',
@@ -33,37 +34,40 @@ export const dependencies = async (ctx: DepsContext) => {
 				return install({
 					packageManager: ctx.packageManager,
 					cwd: ctx.cwd,
-				}).catch(err => {
+				}).catch((err) => {
 					error('error', err);
 					error('error', `deps failed to install.`);
 				});
 			},
 		});
-	} else {
+	}
+	else {
 		await info(
 			ctx.yes === false ? 'deps [skip]' : 'no problem!',
 			'Remember to install dependencies after setup.',
 		);
 	}
-};
+}
 
-const install = async ({
+async function install({
 	packageManager,
 	cwd,
 }: {
-	packageManager: string;
-	cwd: string;
-}) => {
-	if (packageManager === 'yarn') await ensureYarnLock({ cwd });
+	packageManager: string
+	cwd: string
+}) {
+	if (packageManager === 'yarn')
+		await ensureYarnLock({ cwd });
 	return shell(packageManager, ['install'], {
 		cwd,
 		timeout: 90_000,
 		stdio: 'ignore',
 	});
-};
+}
 
-const ensureYarnLock = async ({ cwd }: { cwd: string }) => {
+async function ensureYarnLock({ cwd }: { cwd: string }) {
 	const yarnLock = path.join(cwd, 'yarn.lock');
-	if (fs.existsSync(yarnLock)) return;
+	if (fs.existsSync(yarnLock))
+		return;
 	return fs.promises.writeFile(yarnLock, '', { encoding: 'utf-8' });
-};
+}

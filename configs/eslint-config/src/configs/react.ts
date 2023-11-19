@@ -3,23 +3,21 @@ import type {
 	OptionsHasTypeScript,
 	OptionsOverrides,
 	OptionsStylistic,
-} from "../types.js";
+} from '../types.js';
 import {
 	parserTs,
+	pluginA11y,
 	pluginReact,
 	pluginReactHooks,
-	pluginA11y,
-} from "../plugins.js";
+} from '../plugins.js';
 
-export const react = (
-	options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic = {}
-): ConfigItem[] => {
+export function react(options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic = {}): ConfigItem[] {
 	const { overrides = {}, stylistic = true } = options;
-	const { indent = 'tab' } = typeof stylistic === "boolean" ? {} : stylistic;
+	const { indent = 'tab' } = typeof stylistic === 'boolean' ? {} : stylistic;
 
 	return [
 		{
-			name: "petal:react:setup",
+			name: 'petal:react:setup',
 			plugins: {
 				react: pluginReact,
 				reactHooks: pluginReactHooks,
@@ -27,7 +25,7 @@ export const react = (
 			},
 			settings: {
 				react: {
-					version: "detect",
+					version: 'detect',
 				},
 			},
 		},
@@ -39,82 +37,82 @@ export const react = (
 					},
 				},
 				parser: options.typescript ? (parserTs as any) : null,
-				sourceType: "module",
+				sourceType: 'module',
 			},
-			name: "petal:react:rules",
+			name: 'petal:react:rules',
 			rules: {
 				...(pluginReact.configs.base.rules as any),
 				...(pluginA11y.configs.base.recommended as any),
 
 				// Prevent missing displayName in a React component definition
-				"react/display-name": 0,
+				'react/display-name': 0,
 				// Enforce boolean attributes notation in JSX
-				"react/jsx-boolean-value": 2,
+				'react/jsx-boolean-value': 2,
 				// Enforce or disallow spaces inside of curly braces in JSX attributes
-				"react/jsx-curly-spacing": 0,
+				'react/jsx-curly-spacing': 0,
 				// Enforce or disallow react string props to be wrapped in curly braces
-				"react/jsx-curly-brace-presence": 2,
+				'react/jsx-curly-brace-presence': 2,
 				// Prevent duplicate props in JSX
-				"react/jsx-no-duplicate-props": 0,
-				'react/jsx-indent': [ 0, indent ? indent : 'tab'],
+				'react/jsx-no-duplicate-props': 0,
+				'react/jsx-indent': [0, indent || 'tab'],
 				// Disallow undeclared variables in JSX
-				"react/jsx-no-undef": 0,
+				'react/jsx-no-undef': 0,
 				// Enforce quote style for JSX attributes
-				"react/jsx-quotes": 0,
+				'react/jsx-quotes': 0,
 				// Enforce propTypes declarations alphabetical sorting
-				"react/jsx-sort-prop-types": 0,
+				'react/jsx-sort-prop-types': 0,
 				// Enforce props alphabetical sorting
-				"react/jsx-sort-props": 0,
+				'react/jsx-sort-props': 0,
 				// Prevent React to be incorrectly marked as unused
-				"react/jsx-uses-react": 2,
+				'react/jsx-uses-react': 2,
 				// Prevent variables used in JSX to be incorrectly marked as unused
-				"react/jsx-uses-vars": 2,
+				'react/jsx-uses-vars': 2,
 				// Prevent missing parentheses around multilines JSX
-				"react/jsx-wrap-multilines": 2,
+				'react/jsx-wrap-multilines': 2,
 				// Enforce react rules of hooks
-				"react-hooks/rules-of-hooks": 2,
+				'react-hooks/rules-of-hooks': 2,
 				// Enforce the list of dependencies for hooks is correct
-				"react-hooks/exhaustive-deps": 2,
+				'react-hooks/exhaustive-deps': 2,
 				// Prevent usage of dangerous JSX properties
-				"react/no-danger": 0,
+				'react/no-danger': 0,
 				// Prevent usage of setState in componentDidMount
-				"react/no-did-mount-set-state": 0,
+				'react/no-did-mount-set-state': 0,
 				// Prevent usage of setState in componentDidUpdate
-				"react/no-did-update-set-state": 2,
+				'react/no-did-update-set-state': 2,
 				// Prevent multiple component definition per file
-				"react/no-multi-comp": [2, { ignoreStateless: true }],
+				'react/no-multi-comp': [2, { ignoreStateless: true }],
 				// Prevent usage of unknown DOM property
-				"react/no-unknown-property": 2,
+				'react/no-unknown-property': 2,
 				// Prevent missing props validation in a React component definition
-				"react/prop-types": 0,
+				'react/prop-types': 0,
 				// Prevent missing React when using JSX
-				"react/react-in-jsx-scope": 2,
+				'react/react-in-jsx-scope': 2,
 				// Restrict file extensions that may be required
-				"react/require-extension": 0,
+				'react/require-extension': 0,
 				// Prevent extra closing tags for components without children
-				"react/self-closing-comp": 2,
+				'react/self-closing-comp': 2,
 				// Enforce component methods order
-				"react/sort-comp": [
+				'react/sort-comp': [
 					2,
 					{
 						order: [
-							"statics",
-							"static-variables",
-							"static-methods",
-							"instance-variables",
-							"constructor",
-							"getChildContext",
-							"componentDidMount",
-							"shouldComponentUpdate",
-							"getSnapshotBeforeUpdate",
-							"componentDidUpdate",
-							"componentWillUnmount",
-							"componentDidCatch",
-							"/^handle.+$/",
-							"/^on.+$/",
-							"everything-else",
-							"/^render.+$/",
-							"render",
+							'statics',
+							'static-variables',
+							'static-methods',
+							'instance-variables',
+							'constructor',
+							'getChildContext',
+							'componentDidMount',
+							'shouldComponentUpdate',
+							'getSnapshotBeforeUpdate',
+							'componentDidUpdate',
+							'componentWillUnmount',
+							'componentDidCatch',
+							'/^handle.+$/',
+							'/^on.+$/',
+							'everything-else',
+							'/^render.+$/',
+							'render',
 						],
 					},
 				],
@@ -122,4 +120,4 @@ export const react = (
 			},
 		},
 	];
-};
+}

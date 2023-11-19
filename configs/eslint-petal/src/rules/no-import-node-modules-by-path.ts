@@ -1,8 +1,8 @@
 import { createEslintRule } from '../utils.js';
 
-export const RULE_NAME = 'no-import-node-modules-by-path'
-export type MessageIds = 'noImportNodeModulesByPath'
-export type Options = []
+export const RULE_NAME = 'no-import-node-modules-by-path';
+export type MessageIds = 'noImportNodeModulesByPath';
+export type Options = [];
 
 export default createEslintRule<Options, MessageIds>({
 	name: RULE_NAME,
@@ -25,18 +25,18 @@ export default createEslintRule<Options, MessageIds>({
 					context.report({
 						node,
 						messageId: 'noImportNodeModulesByPath',
-					})
+					});
 				}
 			},
 			'CallExpression[callee.name="require"]': (node: any) => {
-				const value = node.arguments[0]?.value
+				const value = node.arguments[0]?.value;
 				if (typeof value === 'string' && value.includes('/node_modules/')) {
 					context.report({
 						node,
 						messageId: 'noImportNodeModulesByPath',
-					})
+					});
 				}
 			},
-		}
+		};
 	},
-})
+});

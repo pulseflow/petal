@@ -48,14 +48,14 @@ describe('serialization', () => {
 	});
 
 	it('stringifies all supported forms', () => {
-		expect(stringifyError({})).toEqual("unknown error '[object Object]'");
+		expect(stringifyError({})).toEqual('unknown error \'[object Object]\'');
 		expect(
 			stringifyError({
 				toString() {
 					return 'str';
 				},
 			}),
-		).toEqual("unknown error 'str'");
+		).toEqual('unknown error \'str\'');
 		expect(
 			stringifyError({
 				name: 'not used',

@@ -1,14 +1,14 @@
+const crypto = require('node:crypto');
+const { Buffer } = require('node:buffer');
 const yaml = require('yaml');
-const crypto = require('crypto');
-const { Buffer } = require('buffer');
 
 function createTransformer(config) {
-	const process = source => {
+	const process = (source) => {
 		const json = JSON.stringify(yaml.parse(source), null, 2);
 		return { code: `module.exports = ${json}`, map: null };
 	};
 
-	const getCacheKey = sourceText => {
+	const getCacheKey = (sourceText) => {
 		return crypto
 			.createHash('md5')
 			.update(sourceText)

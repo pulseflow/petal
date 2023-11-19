@@ -8,15 +8,12 @@ import { action, strip } from './action.js';
 
 type Message = string | Promise<string>;
 
-export const say = async (
-	msg: Message | Message[],
-	{
-		clear = false,
-		hat = '',
-		stdin = process.stdin,
-		stdout = process.stdout,
-	} = {},
-) => {
+export async function say(msg: Message | Message[],	{
+	clear = false,
+	hat = '',
+	stdin = process.stdin,
+	stdout = process.stdout,
+} = {}) {
 	const messages = Array.isArray(msg) ? msg : [msg];
 	const rl = readline.createInterface({
 		input: stdin,
@@ -30,24 +27,30 @@ export const say = async (
 	let cancelled = false;
 	const done = async () => {
 		stdin.off('keypress', done);
-		if (stdin.isTTY) stdin.setRawMode(false);
+		if (stdin.isTTY)
+			stdin.setRawMode(false);
 		rl.close();
 		cancelled = true;
-		if (i < messages.length - 1) lu.clear();
-		else if (clear) lu.clear();
+		if (i < messages.length - 1)
+			lu.clear();
+		else if (clear)
+			lu.clear();
 		else lu.done();
 	};
 
-	if (stdin.isTTY) stdin.setRawMode(true);
+	if (stdin.isTTY)
+		stdin.setRawMode(true);
 	stdin.on('keypress', (_str, key) => {
-		if (stdin.isTTY) stdin.setRawMode(true);
+		if (stdin.isTTY)
+			stdin.setRawMode(true);
 		const _key = action(key, true);
 		if (_key === 'abort') {
 			done();
 			return process.exit(0);
 		}
 
-		if (['up', 'down', 'left', 'right'].includes(_key as any)) return;
+		if (['up', 'down', 'left', 'right'].includes(_key as any))
+			return;
 
 		done();
 	});
@@ -81,26 +84,32 @@ export const say = async (
 			? await message
 			: (await message).split(' ');
 
-		let msg = [];
+		const msg = [];
 		let eye = random(eyes);
 		let j = 0;
 
 		for (const word of [''].concat(_msg)) {
-			if (await word) msg.push(await word);
+			if (await word)
+				msg.push(await word);
 			const mouth = random(mouths);
-			if (j % 7 === 0) eye = random(eyes);
-			if (i === 1) eye = eye;
-			lu('\n' + face(msg.join(' '), { mouth, eye }));
-			if (!cancelled) await sleep(randomBetween(75, 200));
+			if (j % 7 === 0)
+				eye = random(eyes);
+			if (i === 1)
+				eye = eye;
+			lu(`\n${face(msg.join(' '), { mouth, eye })}`);
+			if (!cancelled)
+				await sleep(randomBetween(75, 200));
 			j++;
 		}
 
-		if (!cancelled) await sleep(100);
+		if (!cancelled)
+			await sleep(100);
 		const tmp = await Promise.all(_msg).then(res => res.join(' '));
-		const text = '\n' + face(tmp, { mouth: defaultMouth, eye: defaultEye });
+		const text = `\n${face(tmp, { mouth: defaultMouth, eye: defaultEye })}`;
 
 		lu(text);
-		if (!cancelled) await sleep(randomBetween(1200, 1400));
+		if (!cancelled)
+			await sleep(randomBetween(1200, 1400));
 		i++;
 	}
 
@@ -108,6 +117,7 @@ export const say = async (
 	await sleep(100);
 	done();
 
-	if (stdin.isTTY) stdin.setRawMode(false);
+	if (stdin.isTTY)
+		stdin.setRawMode(false);
 	stdin.removeAllListeners('keypress');
-};
+}

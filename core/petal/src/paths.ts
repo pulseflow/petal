@@ -9,5 +9,3 @@ export const CONFIG_FOLDER = join(THIS_ROOT, 'config');
 export const ESLINT_CONFIG = join(CONFIG_FOLDER, 'eslint.config.js');
 export const TSCONFIG = join(CONFIG_FOLDER, 'tsconfig.json');
 export const JEST_CONFIG = join(CONFIG_FOLDER, 'jest.config.js');
-export const COMMITLINT_CONIFG = join(CONFIG_FOLDER, 'commitlint.config.js');
-export const LINT_STAGED_CONFIG = join(CONFIG_FOLDER, 'lint-staged.config.mjs');

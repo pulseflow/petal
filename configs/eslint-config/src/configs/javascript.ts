@@ -7,9 +7,7 @@ import type {
 import { pluginPetal, pluginUnusedImports } from '../plugins.js';
 import { GLOB_SRC, GLOB_SRC_EXT } from '../globs.js';
 
-export const javascript = (
-	options: OptionsIsInEditor & OptionsOverrides = {},
-): ConfigItem[] => {
+export function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): ConfigItem[] {
 	const { isInEditor = false, overrides = {} } = options;
 
 	return [
@@ -38,7 +36,7 @@ export const javascript = (
 			},
 			name: 'petal:javascript',
 			plugins: {
-				petal: pluginPetal,
+				'petal': pluginPetal,
 				'unused-imports': pluginUnusedImports,
 			},
 			rules: {
@@ -85,7 +83,7 @@ export const javascript = (
 				'block-scoped-var': 'error',
 				'default-case-last': 'error',
 				'dot-notation': ['error', { allowKeywords: true }],
-				eqeqeq: ['error', 'smart'],
+				'eqeqeq': ['error', 'smart'],
 				'new-cap': [
 					'error',
 					{ capIsNew: false, newIsCap: true, properties: true },
@@ -277,7 +275,7 @@ export const javascript = (
 				],
 				'valid-typeof': ['error', { requireStringLiterals: true }],
 				'vars-on-top': 'error',
-				yoda: ['error', 'never'],
+				'yoda': ['error', 'never'],
 
 				...overrides,
 			},
@@ -290,4 +288,4 @@ export const javascript = (
 			},
 		},
 	];
-};
+}

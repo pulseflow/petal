@@ -1,5 +1,5 @@
 import ZenObservable from 'zen-observable';
-import { Observable, Observer, Subscription } from './observable.js';
+import type { Observable, Observer, Subscription } from './observable.js';
 
 describe('observable', () => {
 	it('works in conjunction with zen-observables', () => {
@@ -14,8 +14,8 @@ describe('observable', () => {
 		);
 
 		const subscription: Subscription = observable.subscribe(
-			_value => {},
-			_error => {},
+			(_value) => {},
+			(_error) => {},
 			() => {},
 		);
 

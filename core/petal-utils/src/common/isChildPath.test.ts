@@ -1,6 +1,6 @@
 import { posix, win32 } from 'node:path';
-import { isChildPath } from './isChildPath.js';
 import { __dirname } from '../index.js';
+import { isChildPath } from './isChildPath.js';
 
 describe('isChildPath', () => {
 	it('should check child posix paths', () => {

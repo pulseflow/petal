@@ -6,11 +6,13 @@ import { pluginPerfectionist } from '../plugins.js';
  *
  * @see https://github.com/azat-io/eslint-plugin-perfectionist
  */
-export const perfectionist = (): ConfigItem[] => [
-	{
-		name: 'petal:perfectionist',
-		plugins: {
-			perfectionist: pluginPerfectionist,
+export function perfectionist(): ConfigItem[] {
+	return [
+		{
+			name: 'petal:perfectionist',
+			plugins: {
+				perfectionist: pluginPerfectionist,
+			},
 		},
-	},
-];
+	];
+}

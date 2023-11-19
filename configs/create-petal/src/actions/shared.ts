@@ -27,11 +27,12 @@ const VALID_PROJECT_DIRECTORY_SAFE_LIST = [
 	/^yarn-error\.log/,
 ];
 
-export const isEmpty = (dirPath: string) => {
-	if (!fs.existsSync(dirPath)) return true;
+export function isEmpty(dirPath: string) {
+	if (!fs.existsSync(dirPath))
+		return true;
 
-	const conflicts = fs.readdirSync(dirPath).filter(content => {
-		return !VALID_PROJECT_DIRECTORY_SAFE_LIST.some(safeContent => {
+	const conflicts = fs.readdirSync(dirPath).filter((content) => {
+		return !VALID_PROJECT_DIRECTORY_SAFE_LIST.some((safeContent) => {
 			return typeof safeContent === 'string'
 				? content === safeContent
 				: safeContent.test(content);
@@ -39,15 +40,17 @@ export const isEmpty = (dirPath: string) => {
 	});
 
 	return conflicts.length === 0;
-};
+}
 
-export const isValidName = (projectName: string) =>
-	/^(?:@[a-z\d\-*~][a-z\d\-*._~]*\/)?[a-z\d\-~][a-z\d\-._~]*$/.test(
+export function isValidName(projectName: string) {
+	return /^(?:@[a-z\d\-*~][a-z\d\-*._~]*\/)?[a-z\d\-~][a-z\d\-._~]*$/.test(
 		projectName,
 	);
+}
 
-export const toValidName = (projectName: string) => {
-	if (isValidName(projectName)) return projectName;
+export function toValidName(projectName: string) {
+	if (isValidName(projectName))
+		return projectName;
 
 	return projectName
 		.trim()
@@ -57,4 +60,4 @@ export const toValidName = (projectName: string) => {
 		.replace(/[^a-z\d\-~]+/g, '-')
 		.replace(/^-+/, '')
 		.replace(/-+$/, '');
-};
+}

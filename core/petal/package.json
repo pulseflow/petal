@@ -1,10 +1,11 @@
 {
 	"name": "@flowr/petal",
+	"type": "module",
 	"version": "2.1.0",
-	"license": "Apache-2.0",
 	"description": "Lightweight tooling suite for TS/JS libraries",
-	"homepage": "https://petal.dyn.gay",
+	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",
+	"homepage": "https://petal.dyn.gay",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/pulseflow/petal.git",
@@ -12,17 +13,19 @@
 	},
 	"main": "./build/index.js",
 	"module": "./build/index.js",
+	"types": "./types/index.d.ts",
 	"bin": {
 		"petal": "./bin/petal.js"
 	},
-	"type": "module",
-	"types": "./types/index.d.ts",
 	"files": [
-		"config",
+		"bin",
 		"build",
-		"types",
-		"bin"
+		"config",
+		"types"
 	],
+	"engines": {
+		"node": ">=18"
+	},
 	"scripts": {
 		"clean": "rimraf build types",
 		"build": "node ./bin/petal.js build",
@@ -81,8 +84,5 @@
 	},
 	"publishConfig": {
 		"access": "public"
-	},
-	"engines": {
-		"node": ">=18"
 	}
 }

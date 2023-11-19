@@ -1,8 +1,8 @@
 import { createEslintRule } from '../utils.js';
 
-export const RULE_NAME = 'import-dedupe'
-export type MessageIds = 'importDedupe'
-export type Options = []
+export const RULE_NAME = 'import-dedupe';
+export type MessageIds = 'importDedupe';
+export type Options = [];
 
 export default createEslintRule<Options, MessageIds>({
 	name: RULE_NAME,
@@ -23,11 +23,11 @@ export default createEslintRule<Options, MessageIds>({
 		return {
 			ImportDeclaration(node) {
 				if (node.specifiers.length <= 1)
-					return
+					return;
 
-				const names = new Set<string>()
+				const names = new Set<string>();
 				node.specifiers.forEach((n) => {
-					const id = n.local.name
+					const id = n.local.name;
 					if (names.has(id)) {
 						context.report({
 							node,
@@ -37,17 +37,17 @@ export default createEslintRule<Options, MessageIds>({
 							},
 							messageId: 'importDedupe',
 							fix(fixer) {
-								const s = n.range[0]
-								let e = n.range[1]
+								const s = n.range[0];
+								let e = n.range[1];
 								if (context.sourceCode.text[e] === ',')
-									e += 1
-								return fixer.removeRange([s, e])
+									e += 1;
+								return fixer.removeRange([s, e]);
 							},
-						})
+						});
 					}
-					names.add(id)
-				})
+					names.add(id);
+				});
 			},
-		}
+		};
 	},
-})
+});

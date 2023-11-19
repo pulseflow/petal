@@ -1,10 +1,10 @@
 import fs from 'node:fs/promises';
 import process from 'node:process';
-import { Buffer } from 'node:buffer';
-import { setStdout } from './messages.js';
+import type { Buffer } from 'node:buffer';
 import stripAnsi from 'strip-ansi';
+import { setStdout } from './messages.js';
 
-export const setup = () => {
+export function setup() {
 	const ctx = { messages: new Array<string>() };
 	beforeAll(() => {
 		setStdout(
@@ -27,12 +27,13 @@ export const setup = () => {
 		hasMessage: (content: string) =>
 			!!ctx.messages.find(msg => msg.includes(content)),
 	};
-};
+}
 
-const resetEmptyFixture = () =>
-	fs.rm(new URL('../__fixtures__/empty/tsconfig.json', import.meta.url));
+function resetEmptyFixture() {
+	return fs.rm(new URL('../__fixtures__/empty/tsconfig.json', import.meta.url));
+}
 
-const resetNotEmptyFixture = async () => {
+async function resetNotEmptyFixture() {
 	const packagePath = new URL(
 		'../__fixtures__/not-empty/package.json',
 		import.meta.url,
@@ -54,7 +55,8 @@ const resetNotEmptyFixture = async () => {
 		}),
 		fs.writeFile(tsconfigPath, '{}', { encoding: 'utf-8' }),
 	]);
-};
+}
 
-export const resetFixtures = () =>
-	Promise.allSettled([resetEmptyFixture(), resetNotEmptyFixture()]);
+export function resetFixtures() {
+	return Promise.allSettled([resetEmptyFixture(), resetNotEmptyFixture()]);
+}

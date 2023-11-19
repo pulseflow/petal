@@ -5,6 +5,6 @@ export * from './factory.js';
 export * from './globs.js';
 export * from './plugins.js';
 export * from './types.js';
-export *  from './utils.js';
+export * from './utils.js';
 
 export default petal;

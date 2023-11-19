@@ -1,8 +1,7 @@
-import type { Context } from './context.js';
-
-import { color } from '@astrojs/cli-kit';
 import dns from 'node:dns/promises';
+import { color } from '@astrojs/cli-kit';
 import { bannerAbort, error, info, log } from '../messages.js';
+import type { Context } from './context.js';
 import { getTemplateTarget } from './template.js';
 
 type VerifyContext = Pick<
@@ -10,7 +9,7 @@ type VerifyContext = Pick<
 	'version' | 'dryRun' | 'template' | 'ref' | 'exit'
 >;
 
-export const verify = async (ctx: VerifyContext) => {
+export async function verify(ctx: VerifyContext) {
 	if (!ctx.dryRun) {
 		const online = await isOnline();
 		if (!online) {
@@ -36,15 +35,16 @@ export const verify = async (ctx: VerifyContext) => {
 			ctx.exit(1);
 		}
 	}
-};
+}
 
-const isOnline = () =>
-	dns.lookup('github.com').then(
+function isOnline() {
+	return dns.lookup('github.com').then(
 		() => true,
 		() => false,
 	);
+}
 
-const verifyTemplate = async (tmpl: string, ref?: string) => {
+async function verifyTemplate(tmpl: string, ref?: string) {
 	const target = getTemplateTarget(tmpl, ref);
 	const {
 		repo,
@@ -58,7 +58,7 @@ const verifyTemplate = async (tmpl: string, ref?: string) => {
 
 	let res = await fetch(url.toString(), {
 		headers: {
-			Accept: 'application/vnd.github+json',
+			'Accept': 'application/vnd.github+json',
 			'X-GitHub-Api-Version': '2022-11-28',
 		},
 	});
@@ -67,7 +67,7 @@ const verifyTemplate = async (tmpl: string, ref?: string) => {
 		res = await fetch(`https://github.com/${repo}/tree/${branch}${subdir}`);
 
 	return res.status === 200;
-};
+}
 
 // Adapted from https://github.com/unjs/giget/blob/main/src/_utils.ts
 // MIT License
@@ -93,12 +93,13 @@ const verifyTemplate = async (tmpl: string, ref?: string) => {
 // SOFTWARE.
 const GIT_RE = /^(?<repo>[\w.-]+\/[\w.-]+)(?<subdir>[^#]+)?(?<ref>#[\w.-]+)?/;
 
-const parseGitURI = (input: string) => {
+function parseGitURI(input: string) {
 	const m = input.match(GIT_RE)?.groups;
-	if (!m) throw new Error(`Unable to parse "${input}"`);
+	if (!m)
+		throw new Error(`Unable to parse "${input}"`);
 	return {
 		repo: m.repo,
 		subdir: m.subdir || '/',
 		ref: m.ref ? m.ref.slice(1) : 'main',
 	};
-};
+}

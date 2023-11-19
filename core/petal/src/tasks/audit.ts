@@ -1,11 +1,11 @@
+import process from 'node:process';
 import spawn from 'cross-spawn-promise';
 import Debug from 'debug';
-import process from 'node:process';
 
-import { AuditTaskDesc } from '../types.js';
+import type { AuditTaskDesc } from '../types.js';
 import { CONSUMING_ROOT } from '../paths.js';
 
-const dbg = Debug('petal:audit'); // eslint-disable-line new-cap
+const dbg = Debug('petal:audit');
 
 enum ThresholdLimits {
 	info = 1,
@@ -20,7 +20,7 @@ export async function auditTask(task: AuditTaskDesc): Promise<string[]> {
 	const fns = [yarnRun];
 
 	return await Promise.all(
-		fns.map(async fn => {
+		fns.map(async (fn) => {
 			dbg('Beginning %s task', fn.name);
 			const stdout = await fn(task);
 			dbg('Finished %s task', fn.name);
@@ -51,9 +51,11 @@ async function yarnRun(task: AuditTaskDesc): Promise<string> {
 
 	try {
 		await spawn(cmd, args, { stdio: 'inherit' });
-	} catch (err) {
+	}
+	catch (err) {
 		const thresholdReached = (err as any).exitStatus >= ThresholdLimits[threshold];
-		if (thresholdReached) process.exit((err as any).exitStatus);
+		if (thresholdReached)
+			process.exit((err as any).exitStatus);
 	}
 
 	return '';

@@ -1,7 +1,7 @@
-import { ErrorResponseBody } from '../model/index.js';
+import type { ErrorResponseBody } from '../model/index.js';
 import { ResponseError } from './ResponseError.js';
 
-describe('ResponseError', () => {
+describe('responseError', () => {
 	it('constructs itself from a response', async () => {
 		const body: ErrorResponseBody = {
 			error: { name: 'Fours', message: 'Expected fives', stack: 'lines' },

@@ -1,10 +1,10 @@
 {
 	"name": "@flowr/tsconfig",
 	"version": "2.1.0",
-	"license": "Apache-2.0",
 	"description": "Common TSConfig to be used as a base config",
-	"homepage": "https://petal.dyn.gay",
+	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",
+	"homepage": "https://petal.dyn.gay",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/pulseflow/petal.git",
@@ -14,19 +14,19 @@
 	"files": [
 		"tsconfig.json"
 	],
+	"engines": {
+		"node": ">=18"
+	},
 	"scripts": {
 		"test": "true"
-	},
-	"devDependencies": {
-		"typescript": "^5.2.2"
 	},
 	"peerDependencies": {
 		"typescript": ">=5"
 	},
+	"devDependencies": {
+		"typescript": "^5.2.2"
+	},
 	"publishConfig": {
 		"access": "public"
-	},
-	"engines": {
-		"node": ">=18"
 	}
 }

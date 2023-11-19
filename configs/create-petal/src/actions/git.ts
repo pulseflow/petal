@@ -1,15 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
-import type { Context } from './context.js';
 
 import { color } from '@astrojs/cli-kit';
 import { error, info, spinner, title } from '../messages.js';
 import { shell } from '../shell.js';
+import type { Context } from './context.js';
 
 type GitContext = Pick<Context, 'cwd' | 'git' | 'yes' | 'prompt' | 'dryRun'>;
 
-export const git = async (ctx: GitContext) => {
+export async function git(ctx: GitContext) {
 	if (fs.existsSync(path.join(ctx.cwd, '.git'))) {
 		await info('git setup', `git has already been initialized`);
 		return;
@@ -29,17 +29,19 @@ export const git = async (ctx: GitContext) => {
 
 	if (ctx.dryRun) {
 		await info('--dry-run', 'skipping git init');
-	} else if (_git) {
+	}
+	else if (_git) {
 		await spinner({
 			start: 'creating git repository...',
 			end: 'git has been initialized',
 			while: () =>
-				init({ cwd: ctx.cwd }).catch(err => {
+				init({ cwd: ctx.cwd }).catch((err) => {
 					error('error', err);
 					process.exit(1);
 				}),
 		});
-	} else {
+	}
+	else {
 		await info(
 			ctx.yes === false ? 'git [skip]' : 'sounds good!',
 			`you can always run ${color.reset('git init')}${color.dim(
@@ -47,9 +49,9 @@ export const git = async (ctx: GitContext) => {
 			)}`,
 		);
 	}
-};
+}
 
-const init = async ({ cwd }: { cwd: string }) => {
+async function init({ cwd }: { cwd: string }) {
 	try {
 		await shell('git', ['init'], { cwd, stdio: 'ignore' });
 		await shell('git', ['add', '-A'], { cwd, stdio: 'ignore' });
@@ -63,5 +65,6 @@ const init = async ({ cwd }: { cwd: string }) => {
 			],
 			{ cwd, stdio: 'ignore' },
 		);
-	} catch (err) {}
-};
+	}
+	catch (err) {}
+}

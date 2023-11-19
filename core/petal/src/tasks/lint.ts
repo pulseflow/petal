@@ -1,34 +1,35 @@
 import spawn from 'cross-spawn-promise';
 import Debug from 'debug';
 
-import { LintTaskDesc } from '../types.js';
-import { CONSUMING_ROOT, ESLINT_CONFIG } from '../paths.js';
-
 import { hasConfig } from '@flowr/petal-utils';
 import eslintCore from 'eslint/use-at-your-own-risk';
+import type { LintTaskDesc } from '../types.js';
+import { CONSUMING_ROOT, ESLINT_CONFIG } from '../paths.js';
+
 const { FlatESLint } = eslintCore;
 
-const dbg = Debug('petal:lint'); // eslint-disable-line new-cap
+const dbg = Debug('petal:lint');
 
 export function getEslintConfig(): string | undefined {
 	if (!hasConfig([
-			{ type: 'file', pattern: '.eslintrc.*' },
-			{ type: 'file', pattern: 'eslint.config.*' },
-			{ type: 'package.json', property: 'eslintConfig' },
-	])) {
+		{ type: 'file', pattern: '.eslintrc.*' },
+		{ type: 'file', pattern: 'eslint.config.*' },
+		{ type: 'package.json', property: 'eslintConfig' },
+	]))
 		return ESLINT_CONFIG;
-	}
 
 	return undefined;
 }
 
 export async function lintTask(task: LintTaskDesc): Promise<string[]> {
 	const fns = [];
-	if (true) fns.push(eslintRun);
-	if (task.typecheck) fns.push(typeCheck);
+	if (true)
+		fns.push(eslintRun);
+	if (task.typecheck)
+		fns.push(typeCheck);
 
 	return await Promise.all(
-		fns.map(async fn => {
+		fns.map(async (fn) => {
 			dbg('Beginning %s task', fn.name);
 			const stdout = await fn(task);
 			dbg('Finished %s task', fn.name);
@@ -40,7 +41,7 @@ export async function lintTask(task: LintTaskDesc): Promise<string[]> {
 export async function eslintRun(task: LintTaskDesc): Promise<string> {
 	const eslint = new FlatESLint({
 		overrideConfigFile: (task.config || getEslintConfig()) ?? undefined,
-		fix: true
+		fix: true,
 	});
 	const results = await eslint.lintFiles([CONSUMING_ROOT]);
 	const formatter = await eslint.loadFormatter('stylish');

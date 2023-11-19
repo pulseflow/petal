@@ -1,5 +1,5 @@
-import * as errors from './common.js';
 import { __filename } from '../../index.js';
+import * as errors from './common.js';
 
 describe('common', () => {
 	it('extends Error properly', () => {

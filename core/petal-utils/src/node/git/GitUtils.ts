@@ -1,6 +1,6 @@
-import { assertError, ForwardedError } from '../../errors/index.js';
+import type { Buffer } from 'node:buffer';
+import { ForwardedError, assertError } from '../../errors/index.js';
 import { execFile, paths } from '../index.js';
-import { Buffer } from 'node:buffer';
 
 /**
  * Run a git command, trimming the output splitting it into lines.
@@ -12,7 +12,8 @@ export async function runGit(...args: string[]) {
 			cwd: paths.targetRoot,
 		});
 		return stdout.trim().split(/\r\n|\r|\n/);
-	} catch (error) {
+	}
+	catch (error) {
 		assertError(error);
 		if (error.stderr || typeof error.code === 'number') {
 			const stderr = (error.stderr as undefined | Buffer)?.toString(
@@ -36,15 +37,15 @@ export class GitUtils {
 	 * of the provided `ref` and HEAD, as well as all files that are not tracked by git.
 	 */
 	static async listChangedFiles(ref: string) {
-		if (!ref) {
+		if (!ref)
 			throw new Error('ref is required');
-		}
 
 		let diffRef = ref;
 		try {
 			const [base] = await runGit('merge-base', 'HEAD', ref);
 			diffRef = base;
-		} catch {
+		}
+		catch {
 			// silently fall back to using the ref directly if merge base is not available
 		}
 
@@ -66,7 +67,8 @@ export class GitUtils {
 		try {
 			const [base] = await runGit('merge-base', 'HEAD', ref);
 			showRef = base;
-		} catch {
+		}
+		catch {
 			// silently fall back to using the ref directly if merge base is not available
 		}
 

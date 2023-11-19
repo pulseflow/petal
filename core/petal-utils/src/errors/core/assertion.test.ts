@@ -37,26 +37,26 @@ const notErrors = [
 ];
 
 describe('assertError', () => {
-	it.each(areErrors)('should assert that things are errors %#', error => {
+	it.each(areErrors)('should assert that things are errors %#', (error) => {
 		expect(assertError(error)).toBeUndefined();
 	});
 
 	it.each(notErrors)(
 		'should assert that things are not errors %#',
-		notError => {
+		(notError) => {
 			expect(() => assertError(notError)).toThrow();
 		},
 	);
 });
 
 describe('isError', () => {
-	it.each(areErrors)('should assert that things are errors %#', error => {
+	it.each(areErrors)('should assert that things are errors %#', (error) => {
 		expect(isError(error)).toBe(true);
 	});
 
 	it.each(notErrors)(
 		'should assert that things are not errors %#',
-		notError => {
+		(notError) => {
 			expect(isError(notError)).toBe(false);
 		},
 	);

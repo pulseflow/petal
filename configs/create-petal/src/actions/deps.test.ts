@@ -1,5 +1,5 @@
-import { dependencies } from './deps.js';
 import { setup } from '../testUtils.js';
+import { dependencies } from './deps.js';
 
 describe('deps', () => {
 	const fixture = setup();
