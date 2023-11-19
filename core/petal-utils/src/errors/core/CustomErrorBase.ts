@@ -29,11 +29,11 @@ export class CustomErrorBase extends Error {
 		let fullMessage = message;
 		if (cause !== undefined) {
 			const causeStr = stringifyError(cause);
-			if (fullMessage) {
+			if (fullMessage)
 				fullMessage += `; caused by ${causeStr}`;
-			} else {
+
+			else
 				fullMessage = `caused by ${causeStr}`;
-			}
 		}
 
 		super(fullMessage);
@@ -42,9 +42,8 @@ export class CustomErrorBase extends Error {
 
 		if (!this.name || this.name === 'Error') {
 			const baseName = this.constructor.name;
-			if (baseName !== 'Error') {
+			if (baseName !== 'Error')
 				this.name = this.constructor.name;
-			}
 		}
 
 		this.cause = isError(cause) ? cause : undefined;

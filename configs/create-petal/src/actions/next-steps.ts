@@ -1,4 +1,5 @@
 import path from 'node:path';
+import process from 'node:process';
 import type { Context } from './context.js';
 
 import { nextSteps, say } from '../messages.js';

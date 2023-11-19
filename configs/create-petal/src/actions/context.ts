@@ -2,6 +2,7 @@ import { prompt } from '@astrojs/cli-kit';
 import { random } from '@astrojs/cli-kit/utils';
 import arg from 'arg';
 import os from 'node:os';
+import process from 'node:process';
 
 import { getName, getVersion } from '../messages.js';
 
@@ -55,28 +56,30 @@ export const getContext = async (argv: string[]): Promise<Context> => {
 	);
 
 	let cwd = flags['_'][0];
-	let {
+	const {
 		'--help': help = false,
 		'--template': template,
 		'--no': no,
-		'--yes': yes,
-		'--install': install,
 		'--no-install': noInstall,
-		'--git': git,
 		'--no-git': noGit,
-		'--typescript': typescript,
 		'--fancy': fancy,
-		'--skip-flower': skipFlower,
 		'--dry-run': dryRun,
 		'--ref': ref,
+	} = flags;
+	let {
+		'--yes': yes,
+		'--install': install,
+		'--git': git,
+		'--typescript': typescript,
+		'--skip-flower': skipFlower,
 	} = flags;
 	let projectName = cwd;
 
 	if (no) {
 		yes = false;
-		if (install == undefined) install = false;
-		if (git == undefined) git = false;
-		if (typescript == undefined) typescript = 'strict';
+		if (install === undefined) install = false;
+		if (git === undefined) git = false;
+		if (typescript === undefined) typescript = 'strict';
 	}
 
 	skipFlower =

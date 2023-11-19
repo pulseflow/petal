@@ -1,12 +1,12 @@
 {
 	"extends": "@flowr/tsconfig",
-	"include": ["src"],
 	"compilerOptions": {
-		"declaration": true,
-		"isolatedModules": false,
 		"jsx": "react",
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"types": ["node", "jest"],
-		"sourceMap": true
-	}
+		"declaration": true,
+		"sourceMap": true,
+		"isolatedModules": false
+	},
+	"include": ["src"]
 }

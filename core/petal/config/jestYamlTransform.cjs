@@ -1,5 +1,6 @@
 const yaml = require('yaml');
 const crypto = require('crypto');
+const { Buffer } = require('buffer');
 
 function createTransformer(config) {
 	const process = source => {

@@ -1,5 +1,5 @@
 import glob from 'glob';
-import { readPackageUpSync } from 'read-pkg-up';
+import { readPackageUpSync } from 'read-package-up';
 
 import { getConsumingRoot } from './get-consuming-root.js';
 import { hasKeyInObj } from './has-key-in-obj.js';
@@ -23,10 +23,10 @@ export const hasConfig = (
 		| { type: 'file'; pattern: string }
 		| { type: 'package.json'; property: string }
 		| {
-				type: 'dependency';
-				dependency: string;
-				dependencyType?: 'peer' | 'dev';
-		  }
+			type: 'dependency';
+			dependency: string;
+			dependencyType?: 'peer' | 'dev';
+		}
 	)[],
 ): boolean => {
 	const { path: pkgPath, packageJson } = readPackageUpSync({

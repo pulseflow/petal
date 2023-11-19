@@ -1,9 +1,11 @@
 import path, { join } from 'node:path';
-import fs from 'fs-extra';
 import crypto from 'node:crypto';
-import glob from 'glob';
+import process from 'node:process';
+import { Buffer } from 'node:buffer';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import glob from 'glob';
+import fs from 'fs-extra';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const loadJSON = path => JSON.parse(fs.readFileSync(join(__dirname, path)));
@@ -24,17 +26,16 @@ const envOptions = {
 };
 
 /** @type {(targetPath: string, extraConfig: import('ts-jest').JestConfigWithTsJest) => import('ts-jest').JestConfigWithTsJest} */
-const getProjectCofig = async (targetPath, extraConfig) => {
+async function getProjectCofig(targetPath, extraConfig) {
 	const configJsPath = path.resolve(targetPath, 'jest.config.js');
 	const configTsPath = path.resolve(targetPath, 'jest.config.ts');
-	if (await fs.pathExists(configJsPath)) {
+	if (await fs.pathExists(configJsPath))
 		return require(configJsPath);
-	} else if (await fs.pathExists(configTsPath)) {
+	else if (await fs.pathExists(configTsPath))
 		return require(configTsPath);
-	}
 
 	const pkgJsonConfigs = [];
-	let closestPkgJson = undefined;
+	let closestPkgJson;
 	let currentPath = targetPath;
 	for (let i = 0; i < 100; i++) {
 		const packagePath = path.resolve(currentPath, 'package.json');
@@ -42,13 +43,13 @@ const getProjectCofig = async (targetPath, extraConfig) => {
 		if (exists) {
 			try {
 				const data = fs.readJsonSync(packagePath);
-				if (!closestPkgJson) {
+				if (!closestPkgJson)
 					closestPkgJson = data;
-				}
-				if (data.jest) {
+
+				if (data.jest)
 					pkgJsonConfigs.unshift(data.jest);
-				}
-			} catch (error) {
+			}
+			catch (error) {
 				throw new Error(
 					`could not parse package.json file reading jest configs, ${error}`,
 				);
@@ -56,9 +57,9 @@ const getProjectCofig = async (targetPath, extraConfig) => {
 		}
 
 		const newPath = path.dirname(currentPath);
-		if (newPath === currentPath) {
+		if (newPath === currentPath)
 			break;
-		}
+
 		currentPath = newPath;
 	}
 
@@ -135,9 +136,8 @@ const getProjectCofig = async (targetPath, extraConfig) => {
 	};
 
 	options.setupFilesAfterEnv = options.setupFilesAfterEnv || [];
-	if (fs.existsSync(path.resolve(targetPath, 'src/setupTests.ts'))) {
+	if (fs.existsSync(path.resolve(targetPath, 'src/setupTests.ts')))
 		options.setupFilesAfterEnv.push('<rootDir>/setupTests.ts');
-	}
 
 	const config = Object.assign(options, ...pkgJsonConfigs);
 
@@ -152,10 +152,10 @@ const getProjectCofig = async (targetPath, extraConfig) => {
 	}
 
 	return config;
-};
+}
 
 /** @type {() => import('ts-jest').JestConfigWithTsJest} */
-const getRootConfig = async () => {
+async function getRootConfig() {
 	const targetPath = process.cwd();
 	const targetPackagePath = path.resolve(targetPath, 'package.json');
 	const exists = await fs.pathExists(targetPackagePath);
@@ -166,20 +166,23 @@ const getRootConfig = async () => {
 		collectCoverageFrom: ['**/*.{js,jsx,ts,tsx,mjs,cjs}', '!**/*.d.ts'],
 	};
 
-	if (!exists) return getProjectCofig(targetPath, coverageConfig);
+	if (!exists)
+		return getProjectCofig(targetPath, coverageConfig);
 
 	const data = await fs.readJson(targetPackagePath);
 	const wsPatterns = data.workspaces && data.workspaces.packages;
-	if (!wsPatterns) return getProjectCofig(targetPath, coverageConfig);
+	if (!wsPatterns)
+		return getProjectCofig(targetPath, coverageConfig);
 
 	const projectPaths = await Promise.all(
 		wsPatterns.map(p => glob(path.join(targetPath, p))),
 	).then(_ => _.flat());
 
 	const configs = await Promise.all(
-		projectPaths.flat().map(async pp => {
+		projectPaths.flat().map(async (pp) => {
 			const packagePath = path.resolve(pp, 'package.json');
-			if (!(await fs.pathExists(packagePath))) return undefined;
+			if (!(await fs.pathExists(packagePath)))
+				return undefined;
 
 			const pkgData = await fs.readJson(packagePath);
 			const testScript = pkgData.scripts && pkgData.scripts.test;
@@ -199,6 +202,6 @@ const getRootConfig = async () => {
 		projects: configs,
 		...coverageConfig,
 	};
-};
+}
 
 export default getRootConfig();

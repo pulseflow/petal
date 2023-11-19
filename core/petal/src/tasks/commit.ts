@@ -1,8 +1,10 @@
-import { default as Debug } from 'debug';
-import { default as spawn } from 'cross-spawn/index.js';
-import { default as promiseSpawn } from 'cross-spawn-promise';
-import { SpawnSyncReturns } from 'child_process';
-// @ts-ignore
+import Debug from 'debug';
+import spawn from 'cross-spawn/index.js';
+import promiseSpawn from 'cross-spawn-promise';
+import { SpawnSyncReturns } from 'node:child_process';
+import process from 'node:process';
+import { Buffer } from 'node:buffer';
+// @ts-ignore should throw an error because import of internal module
 import { bootstrap as czBootstrap } from 'commitizen/dist/cli/git-cz.js';
 import { hasConfig } from '@flowr/petal-utils';
 
@@ -14,7 +16,8 @@ import {
 	PrecommitTaskDesc,
 } from '../types.js';
 import { JEST_CONFIG, LINT_STAGED_CONFIG } from '../paths.js';
-import { getPrettierConfig } from './format/index.js';
+
+//import lintStaged from 'lint-staged';
 
 export function getLintStagedConfig(): string | null {
 	if (
@@ -26,6 +29,7 @@ export function getLintStagedConfig(): string | null {
 	) {
 		return LINT_STAGED_CONFIG;
 	}
+
 
 	return null;
 }
@@ -49,12 +53,12 @@ export async function precommitTask(
 		}),
 	);
 
-	results.push(await lintStaged(task));
+	results.push(await lintStagedTask(task));
 
 	return results;
 }
 
-export async function lintStaged(task: PrecommitTaskDesc): Promise<string> {
+export async function lintStagedTask(task: PrecommitTaskDesc): Promise<string> {
 	const config = getLintStagedConfig();
 	const cmd = 'pnpm';
 	const args = [
@@ -71,11 +75,8 @@ export async function lintStaged(task: PrecommitTaskDesc): Promise<string> {
 		WEB_SCRIPTS_RUN_TESTS: task.tests.toString(),
 	};
 
-	env.WEB_SCRIPTS_ESLINT_CONFIG =
-		task.eslintConfig || getEslintConfig() || '';
+	env.WEB_SCRIPTS_ESLINT_CONFIG = task.eslintConfig || getEslintConfig() || '';
 	env.WEB_SCRIPTS_JEST_CONFIG = task.jestConfig || JEST_CONFIG || '';
-	env.WEB_SCRIPTS_PRETTIER_CONFIG =
-		task.prettierConfig || getPrettierConfig() || '';
 
 	const stdout = await promiseSpawn(cmd, args, {
 		stdio: 'inherit',

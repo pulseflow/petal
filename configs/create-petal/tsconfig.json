@@ -1,11 +1,11 @@
 {
 	"extends": "@flowr/tsconfig",
-	"include": ["src"],
 	"compilerOptions": {
-		"isolatedModules": false,
-		"noEmit": true,
 		"jsx": "preserve",
+		"types": ["jest"],
+		"noEmit": true,
 		"esModuleInterop": true,
-		"types": ["jest"]
-	}
+		"isolatedModules": false
+	},
+	"include": ["src"]
 }

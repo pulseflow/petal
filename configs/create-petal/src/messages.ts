@@ -1,6 +1,8 @@
+/* eslint-disable no-async-promise-executor */
+import { exec } from 'node:child_process';
+import process from 'node:process';
 import { color, label, spinner as load } from '@astrojs/cli-kit';
 import { align, sleep } from '@astrojs/cli-kit/utils';
-import { exec } from 'node:child_process';
 import stripAnsi from 'strip-ansi';
 import { shell } from './shell.js';
 import { say as flower } from './utils/say.js';
@@ -9,7 +11,7 @@ import { say as flower } from './utils/say.js';
  * Users may lack access to the global npm registry, so this function
  * checks the user's project type and will return an available registry.
  */
-const getRegistry = async (packageManager: string): Promise<string> => {
+async function getRegistry(packageManager: string): Promise<string> {
 	try {
 		const { stdout } = await shell(packageManager, [
 			'config',
@@ -19,31 +21,33 @@ const getRegistry = async (packageManager: string): Promise<string> => {
 		return (
 			stdout?.trim()?.replace(/\/$/, '') || 'https://registry.npmjs.org'
 		);
-	} catch (err) {
+	}
+	catch (err) {
 		return 'https://registry.npmjs.org';
 	}
-};
+}
 
 let stdout = process.stdout;
-/** @internal Used to mock `process.stdout.write` for testing */
-export const setStdout = (writable: typeof process.stdout) => {
+/**
+ * @internal
+ */
+export function setStdout(writable: typeof process.stdout) {
 	stdout = writable;
-};
+}
 
-export const say = async (
-	messages: string | string[],
-	{ clear = false, hat = '' } = {},
-) => flower(messages, { clear, hat, stdout });
+export async function say(messages: string | string[], { clear = false, hat = '' } = {}) {
+	return flower(messages, { clear, hat, stdout });
+}
 
-export const spinner = async (args: {
-	start: string;
-	end: string;
-	while: (...args: any) => Promise<any>;
-}) => {
+export async function spinner(args: {
+	start: string
+	end: string
+	while: (...args: any) => Promise<any>
+}) {
 	await load(args, { stdout });
-};
+}
 
-export const title = (text: string) => align(label(text), 'end', 7) + ' ';
+export const title = (text: string) => `${align(label(text), 'end', 7)} `;
 
 export const welcome = [
 	`hewo! get ready to plant some flowers or smth`,
@@ -51,22 +55,26 @@ export const welcome = [
 	`meow`,
 ];
 
-export const getName = () =>
-	new Promise<string>(resolve => {
+export function getName() {
+	return new Promise<string>((resolve) => {
 		exec('git config user.name', { encoding: 'utf-8' }, (_1, gitName) => {
-			if (gitName.trim()) return resolve(gitName.split(' ')[0].trim());
+			if (gitName.trim())
+				return resolve(gitName.split(' ')[0].trim());
 			exec('whoami', { encoding: 'utf-8' }, (_3, whoami) => {
-				if (whoami.trim()) return resolve(whoami.split(' ')[0].trim());
+				if (whoami.trim())
+					return resolve(whoami.split(' ')[0].trim());
 				return resolve('planter');
 			});
 		});
 	});
+}
 
 let v: string;
-export const getVersion = (packageManager: string) =>
-	new Promise<string>(async resolve => {
-		if (v) return resolve(v);
-		let registry = await getRegistry(packageManager);
+export function getVersion(packageManager: string) {
+	return new Promise<string>(async (resolve) => {
+		if (v)
+			return resolve(v);
+		const registry = await getRegistry(packageManager);
 
 		const { version } = await fetch(`${registry}/@flowr/petal/latest`, {
 			redirect: 'follow',
@@ -78,52 +86,57 @@ export const getVersion = (packageManager: string) =>
 		v = version;
 		resolve(version);
 	});
+}
 
-export const log = (message: string) => stdout.write(message + '\n');
+export const log = (message: string) => stdout.write(`${message}\n`);
 
-export const banner = () =>
-	log(
+export function banner() {
+	return log(
 		`${label(`petal`, color.bgMagenta, color.black)}  ${color.bold(
 			`initializing...`,
 		)}`,
 	);
+}
 
-export const bannerAbort = () =>
-	log(
+export function bannerAbort() {
+	return log(
 		`\n${label(`petal`, color.bgRed, color.black)} ${color.bold(
 			'aborting...',
 		)}`,
 	);
+}
 
-export const info = async (prefix: string, text: string) => {
+export async function info(prefix: string, text: string) {
 	await sleep(100);
 
 	if (stdout.columns < 80) {
 		log(`${' '.repeat(5)} ${color.cyan(`◼`)}  ${color.cyan(prefix)}`);
 		log(`${' '.repeat(9)}${color.dim(text)}`);
-	} else {
+	}
+	else {
 		log(
 			`${' '.repeat(5)} ${color.cyan(`◼`)}  ${color.cyan(
 				prefix,
 			)} ${color.dim(text)}`,
 		);
 	}
-};
+}
 
-export const error = async (prefix: string, text: string) => {
+export async function error(prefix: string, text: string) {
 	if (stdout.columns < 80) {
 		log(`${' '.repeat(5)} ${color.red('▲')}  ${color.red(prefix)}`);
 		log(`${' '.repeat(9)}${color.dim(text)}`);
-	} else {
+	}
+	else {
 		log(
 			`${' '.repeat(5)} ${color.red('▲')}  ${color.red(
 				prefix,
 			)} ${color.dim(text)}`,
 		);
 	}
-};
+}
 
-export const typescript = async () => {
+export async function typescript() {
 	await info(`no worries!`, `typescript is supported by default,`);
 	log(
 		`${' '.repeat(9)}${color.dim(
@@ -131,15 +144,15 @@ export const typescript = async () => {
 		)}`,
 	);
 	await sleep(1000);
-};
+}
 
-export const nextSteps = async ({
+export async function nextSteps({
 	projectDir,
 	devCmd,
 }: {
-	projectDir: string;
-	devCmd: string;
-}) => {
+	projectDir: string
+	devCmd: string
+}) {
 	const max = stdout.columns;
 	const prefix = max < 80 ? ' ' : ' '.repeat(9);
 	await sleep(200);
@@ -163,27 +176,27 @@ export const nextSteps = async ({
 		];
 		const length = enter[0].length + stripAnsi(enter[1]).length;
 
-		log(enter.join(length > max ? '\n' + prefix : ' '));
+		log(enter.join(length > max ? `\n${prefix}` : ' '));
 	}
 
 	log(`${prefix}run ${color.cyan(devCmd)} to start!`);
 
 	await sleep(200);
-};
+}
 
-export const printHelp = ({
+export function printHelp({
 	commandName,
 	headline,
 	usage,
 	tables,
 	description,
 }: {
-	commandName: string;
-	headline?: string;
-	usage?: string;
-	tables?: Record<string, [command: string, help: string][]>;
-	description?: string;
-}) => {
+	commandName: string
+	headline?: string
+	usage?: string
+	tables?: Record<string, [command: string, help: string][]>
+	description?: string
+}) {
 	const linebreak = () => '';
 	const calculatePadding = (rows: [string, string][]) =>
 		rows.reduce((val, [first]) => Math.max(val, first.length), 0);
@@ -196,28 +209,31 @@ export const printHelp = ({
 		let rawText = '';
 
 		for (const row of rows) {
-			if (split) rawText += `   ${row[0]}\n   `;
+			if (split)
+				rawText += `   ${row[0]}\n   `;
 			else rawText += `${`${row[0]}`.padStart(padding)}`;
-			rawText += '  ' + color.dim(row[1]) + '\n';
+			rawText += `  ${color.dim(row[1])}\n`;
 		}
 
 		return rawText.slice(0, -1);
 	};
 
-	let message = [];
+	const message = [];
 
-	if (headline)
+	if (headline) {
 		message.push(
 			linebreak(),
 			`${title(commandName)} ${color.green(
 				`v${process.env.PACKAGE_VERSION ?? ''}`,
 			)} ${headline}`,
 		);
-	if (usage)
+	}
+	if (usage) {
 		message.push(
 			linebreak(),
 			`${color.green(commandName)} ${color.bold(usage)}`,
 		);
+	}
 
 	if (tables) {
 		const tableEntries = Object.entries(tables);
@@ -228,7 +244,8 @@ export const printHelp = ({
 			message.push(linebreak(), table(tableRows, { padding }));
 	}
 
-	if (description) message.push(linebreak(), `${description}`);
+	if (description)
+		message.push(linebreak(), `${description}`);
 
-	log(message.join('\n') + '\n');
-};
+	log(`${message.join('\n')}\n`);
+}

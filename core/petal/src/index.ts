@@ -1,12 +1,13 @@
 import { program, Command } from 'commander';
-import { SpawnSyncReturns } from 'child_process';
+import { SpawnSyncReturns } from 'node:child_process';
+import process from 'node:process';
+import { Buffer } from 'node:buffer';
 
 import {
 	AuditTaskDesc,
 	BuildTaskDesc,
 	CommitTaskDesc,
 	CommitMsgTaskDesc,
-	FormatTaskDesc,
 	LintTaskDesc,
 	PrecommitTaskDesc,
 	ReleaseTaskDesc,
@@ -17,7 +18,6 @@ import { auditTask } from './tasks/audit.js';
 import { testTask } from './tasks/test.js';
 import { buildTask } from './tasks/build.js';
 import { lintTask } from './tasks/lint.js';
-import { formatTask } from './tasks/format/index.js';
 import {
 	commitTask,
 	commitMsgTask,
@@ -69,15 +69,12 @@ program
 	.option('--config [path]', 'path to ESLint config')
 	.option('--typecheck', 'run a TypeScript type check', true)
 	.option('--no-typecheck', 'do not run a TypeScript type check')
-	.option('--stylecheck', "run Prettier's style check", true)
-	.option('--no-stylecheck', "do not run Prettier's style check")
 	.action((...args) => {
 		const cmd = getCommand(args);
-		const { stylecheck, typecheck, config } = getOpts(cmd);
+		const { typecheck, config } = getOpts(cmd);
 		const t: LintTaskDesc = {
 			name: 'lint',
 			config,
-			stylecheck,
 			typecheck,
 			restOptions: cmd.args,
 		};
@@ -86,39 +83,16 @@ program
 	});
 
 program
-	.command('format')
-	.allowUnknownOption()
-	.description('Run Prettier to format your code')
-	.option('--config [path]', 'path to Prettier config')
-	.option(
-		'--path [path]',
-		'path to project folder to format. targets the `src` directory within this path only.',
-	)
-	.action((...args) => {
-		const cmd = getCommand(args);
-		const { config, path } = getOpts(cmd);
-		const t: FormatTaskDesc = {
-			name: 'format',
-			config,
-			path,
-			restOptions: cmd.args,
-		};
-
-		handleSpawnResult(formatTask(t));
-	});
-
-program
 	.command('precommit')
 	.allowUnknownOption()
 	.description('Locally validate the repo before committing')
 	.option('--jest-config [path]', 'path to jest config')
-	.option('--prettier-config [path]', 'path to prettier config')
 	.option('--eslint-config [path]', 'path to eslint config')
 	.option('--no-tests', 'Do not run Jest tests')
 	.option('--no-typecheck', 'Do not type check using TypeScript')
 	.action((...args) => {
 		const cmd = getCommand(args);
-		const { tests, typecheck, jestConfig, eslintConfig, prettierConfig } =
+		const { tests, typecheck, jestConfig, eslintConfig } =
 			getOpts(cmd);
 		const t: PrecommitTaskDesc = {
 			name: 'precommit',
@@ -126,7 +100,6 @@ program
 			typecheck,
 			jestConfig,
 			eslintConfig,
-			prettierConfig,
 			restOptions: cmd.args,
 		};
 

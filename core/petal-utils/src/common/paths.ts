@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import process from 'node:process';
 import { dirname, resolve as resolvePath } from 'node:path';
 
 /**

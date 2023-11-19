@@ -7,6 +7,5 @@ test('Paths are exported and exist', async () => {
 	expect(await stat(paths.CONSUMING_ROOT)).toBeTruthy();
 	expect(await stat(paths.THIS_ROOT)).toBeTruthy();
 	expect(await stat(paths.ESLINT_CONFIG)).toBeTruthy();
-	expect(await stat(paths.PRETTIER_CONFIG)).toBeTruthy();
 	expect(await stat(paths.TSCONFIG)).toBeTruthy();
 });

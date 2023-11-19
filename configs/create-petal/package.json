@@ -31,9 +31,8 @@
 	"scripts": {
 		"build": "petal build",
 		"test": "petal test",
-		"lint": "petal lint --stylecheck",
-		"clean": "rimraf build types",
-		"format": "petal format"
+		"lint": "petal lint",
+		"clean": "rimraf build types"
 	},
 	"dependencies": {
 		"@astrojs/cli-kit": "^0.3.0",
@@ -46,7 +45,7 @@
 	},
 	"devDependencies": {
 		"@types/jest": "^29.5.6",
-		"@types/node": "^18.17.12",
+		"@types/node": "^20.9.1",
 		"rimraf": "^5.0.5",
 		"tempy": "^3.1.0",
 		"typescript": "^5.2.2"

@@ -13,7 +13,6 @@ Add the scripts and commit hooks to your package.json:
 	"scripts": {
 		"test": "petal test",
 		"lint": "petal lint",
-		"format": "petal format",
 		"build": "petal build",
 		"commit": "petal commit",
 		"release": "petal release"

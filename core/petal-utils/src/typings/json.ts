@@ -24,4 +24,4 @@ export interface JsonArray extends Array<JsonValue> {}
  *
  * @public
  */
-export type JsonValue = JsonObject | JsonArray | JsonPrimitive;
+export type JsonValue = JsonObject | JsonArray | JsonPrimitive | unknown;

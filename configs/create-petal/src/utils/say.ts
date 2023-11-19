@@ -1,4 +1,6 @@
+/* eslint-disable no-self-assign */
 import readline from 'node:readline';
+import process from 'node:process';
 import { color } from '@astrojs/cli-kit';
 import { createLogUpdate } from 'log-update';
 import { random, randomBetween, sleep, useAscii } from '@astrojs/cli-kit/utils';
@@ -87,7 +89,7 @@ export const say = async (
 			if (await word) msg.push(await word);
 			const mouth = random(mouths);
 			if (j % 7 === 0) eye = random(eyes);
-			if (i == 1) eye = eye;
+			if (i === 1) eye = eye;
 			lu('\n' + face(msg.join(' '), { mouth, eye }));
 			if (!cancelled) await sleep(randomBetween(75, 200));
 			j++;

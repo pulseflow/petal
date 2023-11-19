@@ -1,32 +1,31 @@
-import { default as spawn } from 'cross-spawn-promise';
-import { default as Debug } from 'debug';
-import { hasConfig } from '@flowr/petal-utils';
+import spawn from 'cross-spawn-promise';
+import Debug from 'debug';
 
 import { LintTaskDesc } from '../types.js';
 import { CONSUMING_ROOT, ESLINT_CONFIG } from '../paths.js';
-import { getPrettierConfig } from './format/index.js';
+
+import { hasConfig } from '@flowr/petal-utils';
+import eslintCore from 'eslint/use-at-your-own-risk';
+const { FlatESLint } = eslintCore;
 
 const dbg = Debug('petal:lint'); // eslint-disable-line new-cap
 
-export function getEslintConfig(): string | null {
-	if (
-		!hasConfig([
+export function getEslintConfig(): string | undefined {
+	if (!hasConfig([
 			{ type: 'file', pattern: '.eslintrc.*' },
 			{ type: 'file', pattern: 'eslint.config.*' },
 			{ type: 'package.json', property: 'eslintConfig' },
-		])
-	) {
+	])) {
 		return ESLINT_CONFIG;
 	}
 
-	return null;
+	return undefined;
 }
 
 export async function lintTask(task: LintTaskDesc): Promise<string[]> {
 	const fns = [];
 	if (true) fns.push(eslintRun);
 	if (task.typecheck) fns.push(typeCheck);
-	if (task.stylecheck) fns.push(styleCheck);
 
 	return await Promise.all(
 		fns.map(async fn => {
@@ -39,40 +38,21 @@ export async function lintTask(task: LintTaskDesc): Promise<string[]> {
 }
 
 export async function eslintRun(task: LintTaskDesc): Promise<string> {
-	// const cmd = 'pnpm';
-	const config = task.config || getEslintConfig();
-
-	const args = [
-		'--silent',
-		'dlx',
-		'eslint',
-		CONSUMING_ROOT,
-		...(config ? ['--config', config] : []),
-		...task.restOptions,
-	];
-	dbg('pnpm dlx args %o', args);
-
-	const stdout = await spawn('pnpm', args, { stdio: 'inherit' });
-	return (stdout || '').toString();
+	const eslint = new FlatESLint({
+		overrideConfigFile: (task.config || getEslintConfig()) ?? undefined,
+		fix: true
+	});
+	const results = await eslint.lintFiles([CONSUMING_ROOT]);
+	const formatter = await eslint.loadFormatter('stylish');
+	const textResults = await formatter.format(results);
+	// eslint-disable-next-line no-console
+	console.log(textResults);
+	return textResults;
 }
 
 export async function typeCheck(): Promise<string> {
 	const cmd = 'pnpm';
 	const args = ['--package=typescript', '--silent', 'dlx', 'tsc', '--noEmit'];
-	const stdout = await spawn(cmd, args, { stdio: 'inherit' });
-	return (stdout || '').toString();
-}
-
-export async function styleCheck(): Promise<string> {
-	const cmd = 'pnpm';
-	const args = ['--silent', 'dlx', 'prettier'];
-
-	const config = getPrettierConfig();
-	if (config) {
-		args.push('--config', config);
-	}
-
-	args.push('--check', `${CONSUMING_ROOT}/**/src/**/*.{ts,tsx,js,jsx}`);
 	const stdout = await spawn(cmd, args, { stdio: 'inherit' });
 	return (stdout || '').toString();
 }

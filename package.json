@@ -2,6 +2,7 @@
 	"name": "@flowr/petal-monorepo",
 	"private": true,
 	"license": "Apache-2.0",
+	"packageManager": "pnpm@8.10.4",
 	"type": "module",
 	"repository": {
 		"type": "git",
@@ -11,8 +12,8 @@
 		"postinstall": "./postinstall.sh",
 		"test": "NODE_OPTIONS=--experimental-vm-modules lerna run test --stream",
 		"build": "lerna run build --stream",
+        "clean": "lerna run clean --stream",
 		"lint": "petal lint --no-typecheck",
-		"format": "petal format",
 		"commit": "petal commit",
 		"release": "lerna publish --force-publish --ignore-scripts --conventional-commits --registry=https://registry.npmjs.org --no-private",
 		"prepare": "husky install"
@@ -25,25 +26,13 @@
 	},
 	"devDependencies": {
 		"@flowr/eslint-config": "workspace:*",
-		"@flowr/eslint-config-base": "workspace:*",
-		"@flowr/eslint-config-react": "workspace:*",
-		"@flowr/eslint-config-typescript": "workspace:*",
-		"@flowr/eslint-plugin-petal": "workspace:*",
-		"@flowr/prettier-config": "workspace:*",
 		"@flowr/petal": "workspace:^",
 		"create-petal": "workspace:*",
-		"prettier": "^3.0.3",
 		"husky": "^8.0.3",
 		"lerna": "^7.4.1",
 		"typescript": "^5.2.2"
 	},
 	"overrides": {
-		"@types/node": "^18.0.0",
-        "cosmiconfig": "9.0.0-alpha.3"
-	},
-	"pnpm": {
-		"overrides": {
-			"cosmiconfig": "9.0.0-alpha.3"
-		}
+		"@types/node": "^18.0.0"
 	}
 }

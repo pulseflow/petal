@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // use typescript types, no long tsconfig needed!
 type HelloWorld = { messages: string[] };
 

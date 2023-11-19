@@ -1,1 +1,10 @@
-export { default } from '@flowr/eslint-config';
+// @ts-check
+import petal from "@flowr/eslint-config";
+
+export default petal({
+	typescript: true,
+	ignores: [
+		'fixtures',
+		'_fixtures',
+	],
+})

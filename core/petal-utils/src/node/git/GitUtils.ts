@@ -1,5 +1,6 @@
 import { assertError, ForwardedError } from '../../errors/index.js';
 import { execFile, paths } from '../index.js';
+import { Buffer } from 'node:buffer';
 
 /**
  * Run a git command, trimming the output splitting it into lines.

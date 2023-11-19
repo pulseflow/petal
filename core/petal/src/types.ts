@@ -11,16 +11,18 @@ export type TaskName =
 	| 'build'
 	| 'test'
 	| 'lint'
-	| 'format'
 	| 'commit'
 	| 'commitmsg'
+	| 'clean'
 	| 'precommit'
 	| 'release'
 	| 'audit';
 
+export type RestOptions = string[];
+
 export type TaskDesc = {
 	name: TaskName;
-	restOptions: string[];
+	restOptions: RestOptions;
 };
 
 export type BuildTaskDesc = {
@@ -37,14 +39,7 @@ export type TestTaskDesc = {
 export type LintTaskDesc = {
 	name: 'lint';
 	config?: string;
-	stylecheck: boolean;
 	typecheck: boolean;
-} & TaskDesc;
-
-export type FormatTaskDesc = {
-	name: 'format';
-	config?: string;
-	path?: string;
 } & TaskDesc;
 
 export type CommitTaskDesc = {
@@ -73,5 +68,8 @@ export type PrecommitTaskDesc = {
 	typecheck: boolean;
 	eslintConfig: string;
 	jestConfig: string;
-	prettierConfig: string;
+} & TaskDesc;
+
+export type CleanTaskDesc = {
+	name: 'clean';
 } & TaskDesc;

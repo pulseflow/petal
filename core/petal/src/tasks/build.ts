@@ -1,7 +1,7 @@
 import { BuildTaskDesc } from '../types.js';
 
-import { default as Debug } from 'debug';
-import { default as spawn } from 'cross-spawn-promise';
+import Debug from 'debug';
+import spawn from 'cross-spawn-promise';
 const dbg = Debug('petal:build'); // eslint-disable-line new-cap
 
 export async function buildTask(task: BuildTaskDesc): Promise<string[]> {

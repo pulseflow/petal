@@ -9,6 +9,7 @@
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
 		"noUnusedLocals": false,
-		"noUnusedParameters": false
+		"noUnusedParameters": false,
+        "resolveJsonModule": true,
 	}
 }

@@ -3,6 +3,7 @@ import type { Context } from './context.js';
 import { color } from '@astrojs/cli-kit';
 import { readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import process from 'node:process';
 import stripJsonComments from 'strip-json-comments';
 import {
 	error,
@@ -98,6 +99,7 @@ export const typescript = async (ctx: TypescriptContext) => {
 				}),
 		});
 	} else {
+		// do nothing
 	}
 };
 

@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 
-const currentVersion = process.versions.node;
+import process from 'node:process';
+
+const currentVersion = process.version.node;
 const requiredMajorVersion = parseInt(currentVersion.split('.')[0], 10);
 const minimumMajorVersion = 18;
 

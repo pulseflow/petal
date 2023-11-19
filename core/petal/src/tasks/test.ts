@@ -1,6 +1,7 @@
 import { TestTaskDesc } from '../types.js';
 import { JEST_CONFIG } from '../paths.js';
 import { run } from 'jest-cli';
+import process from 'node:process';
 
 export const testTask = async (task: TestTaskDesc) => {
 	const config = task.config || JEST_CONFIG;

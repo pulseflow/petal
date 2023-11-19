@@ -6,7 +6,6 @@
 	"scripts": {
 		"build": "petal build",
 		"test": "petal test",
-		"format": "petal format",
 		"lint": "petal lint",
 		"commit": "petal commit",
 		"release": "petal release"

@@ -8,9 +8,10 @@ import {
 	copyFile as copyFileFS,
 	existsSync,
 } from 'node:fs';
+import { Buffer } from 'node:buffer';
 import fromEntries from 'object.fromentries';
 import * as tempy from 'tempy';
-import { default as Debug } from 'debug';
+import Debug from 'debug';
 import { rimrafSync } from 'rimraf';
 
 import { THIS_ROOT, TSCONFIG } from './paths.js';
@@ -49,7 +50,6 @@ const exec = async (cmd: string, options?: object) => {
 const SETUP_REPO_TIMEOUT = 30000;
 const TEST_SCRIPTS_TIMEOUT = 60000;
 
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip('integration tests', () => {
 	let PKG_ROOT: string;
 
@@ -82,7 +82,6 @@ describe.skip('integration tests', () => {
 			);
 		}, SETUP_REPO_TIMEOUT);
 
-		// eslint-disable-next-line jest/expect-expect
 		test(
 			'Full integration test',
 			async () => await testScripts(),
@@ -100,7 +99,6 @@ describe.skip('integration tests', () => {
 			);
 		}, SETUP_REPO_TIMEOUT);
 
-		// eslint-disable-next-line jest/expect-expect
 		test(
 			'Full integration test',
 			async () => await testScripts(['--no-types'], ['--no-typecheck']),

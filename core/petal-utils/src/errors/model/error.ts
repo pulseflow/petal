@@ -19,6 +19,8 @@ export type SerializedError = JsonObject & {
 	stack?: string;
 	/** A custom code (not necessarily the same as an HTTP response code); may not be present */
 	code?: string;
+	/** A custom alleged cause of the error; may not be present */
+	cause?: unknown;
 };
 
 /**
@@ -27,6 +29,7 @@ export type SerializedError = JsonObject & {
  * @public
  * @param error - The error.
  * @param options - Optional serialization options.
+ * @param options.includeStack - Include stack trace in the output (default false)
  */
 export const serializeError = (
 	error: Error,

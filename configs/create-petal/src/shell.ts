@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 // This is an extremely simplified version of [`execa`](https://github.com/sindresorhus/execa)
 // intended to keep our dependency size down
 import type { ChildProcess, StdioOptions } from 'node:child_process';

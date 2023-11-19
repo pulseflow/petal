@@ -4,6 +4,7 @@ import { color } from '@astrojs/cli-kit';
 import { downloadTemplate } from 'giget';
 import fs from 'node:fs';
 import path from 'node:path';
+import process from 'node:process';
 import { error, info, spinner, title } from '../messages.js';
 
 type TemplateContext = Pick<

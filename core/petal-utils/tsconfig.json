@@ -1,11 +1,11 @@
 {
 	"extends": "@flowr/tsconfig",
-	"include": ["src"],
 	"compilerOptions": {
-		"isolatedModules": false,
-		"noEmit": true,
-		"declaration": false,
 		"jsx": "preserve",
-		"module": "NodeNext"
-	}
+		"module": "NodeNext",
+		"declaration": false,
+		"noEmit": true,
+		"isolatedModules": false
+	},
+	"include": ["src"]
 }

@@ -1,5 +1,6 @@
-import { default as spawn } from 'cross-spawn-promise';
-import { default as Debug } from 'debug';
+import spawn from 'cross-spawn-promise';
+import Debug from 'debug';
+import process from 'node:process';
 
 import { AuditTaskDesc } from '../types.js';
 import { CONSUMING_ROOT } from '../paths.js';
@@ -51,8 +52,7 @@ async function yarnRun(task: AuditTaskDesc): Promise<string> {
 	try {
 		await spawn(cmd, args, { stdio: 'inherit' });
 	} catch (err) {
-		const thresholdReached =
-			(err as any).exitStatus >= ThresholdLimits[threshold];
+		const thresholdReached = (err as any).exitStatus >= ThresholdLimits[threshold];
 		if (thresholdReached) process.exit((err as any).exitStatus);
 	}
 

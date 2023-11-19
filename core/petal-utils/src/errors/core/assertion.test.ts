@@ -4,7 +4,7 @@ import { CustomErrorBase } from './CustomErrorBase.js';
 
 const areErrors = [
 	{ name: 'e', message: '' },
-	new Error(),
+	new Error('e'),
 	new NotFoundError(),
 	Object.create({ name: 'e', message: '' }),
 	Object.assign(Object.create({ name: 'e' }), {
@@ -17,15 +17,15 @@ const areErrors = [
 	} {
 		name = 'e';
 	})(),
-	new (class SubclassError extends CustomErrorBase {})(),
-	new (class SubclassError extends NotFoundError {})(),
+	new (class SubclassError extends CustomErrorBase { })(),
+	new (class SubclassError extends NotFoundError { })(),
 ];
 
 const notErrors = [
 	null,
 	0,
 	'loller',
-	Symbol(),
+	Symbol('lolll'),
 	[],
 	BigInt(0),
 	false,
@@ -33,7 +33,7 @@ const notErrors = [
 	{ name: 'e' },
 	{ message: '' },
 	{ name: '', message: 'oh no' },
-	new (class {})(),
+	new (class { })(),
 ];
 
 describe('assertError', () => {
