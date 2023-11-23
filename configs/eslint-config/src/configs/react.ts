@@ -74,8 +74,8 @@ export async function react(options: OptionsHasTypeScript & OptionsOverrides & O
 				'react-hooks/rules-of-hooks': 2,
 				// react refresh
 				'react-refresh/only-export-components': [
-				  'warn',
-				  { allowConstantExport: isAllowConstantExport },
+					'warn',
+					{ allowConstantExport: isAllowConstantExport },
 				],
 				// Prevent missing displayName in a React component definition
 				'react/display-name': 0,
@@ -164,11 +164,11 @@ export async function react(options: OptionsHasTypeScript & OptionsOverrides & O
 				'style/jsx-wrap-multilines': 2,
 
 				...typescript
-				  ? {
-					  'react/jsx-no-undef': 'off',
-					  'react/prop-type': 'off',
+					? {
+							'react/jsx-no-undef': 'off',
+							'react/prop-type': 'off',
 						}
-				  : {},
+					: {},
 				...overrides,
 			},
 		},
