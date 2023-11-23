@@ -15,8 +15,8 @@
 	"module": "./build/index.js",
 	"types": "./types/index.d.ts",
 	"files": [
-		"build",
-		"types",
+		"build/**/*",
+		"types/**/*",
 		"!**/*.test.*",
 		"!**/*.spec",
 		"!**/*.tsbuildinfo",

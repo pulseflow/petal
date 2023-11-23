@@ -24,9 +24,9 @@
 		"create-petal": "./bin/create-petal.js"
 	},
 	"files": [
-		"bin",
-		"build",
-		"types",
+		"bin/**/*",
+		"build/**/*",
+		"types/**/*",
 		"!**/*.test.*",
 		"!**/*.spec",
 		"!**/*.tsbuildinfo",

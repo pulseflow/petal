@@ -18,10 +18,10 @@
 		"petal": "./bin/petal.js"
 	},
 	"files": [
-		"bin",
-		"build",
-		"config",
-		"types",
+		"bin/**/*",
+		"build/**/*",
+		"config/**/*",
+		"types/**/*",
 		"!**/*.test.*",
 		"!**/*.spec",
 		"!**/*.tsbuildinfo",
