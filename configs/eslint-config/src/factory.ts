@@ -1,8 +1,7 @@
 import fs from 'node:fs';
 import process from 'node:process';
 import { isPackageExists } from 'local-pkg';
-import gitignore from 'eslint-config-flat-gitignore';
-import type { ConfigItem, OptionsConfig } from './types.js';
+import type { Awaitable, FlatConfigItem, OptionsConfig, UserConfigItem } from './types.js';
 import {
 	astro,
 	comments,
@@ -25,9 +24,9 @@ import {
 	vue,
 	yaml,
 } from './configs/index.js';
-import { combine } from './utils.js';
+import { combine, interopDefault } from './utils.js';
 
-const flatConfigProps: (keyof ConfigItem)[] = [
+const flatConfigProps: (keyof FlatConfigItem)[] = [
 	'files',
 	'ignores',
 	'languageOptions',
@@ -44,7 +43,10 @@ const JestPackages = ['@jest/globals', '@types/jest', 'jest'];
 /**
  * Construct a Petal ESLint config.
  */
-export function petal(options: OptionsConfig & ConfigItem = {},	...userConfigs: (ConfigItem | ConfigItem[])[]): ConfigItem[] {
+export function petal(
+	options: OptionsConfig & FlatConfigItem = {},
+	...userConfigs: Awaitable<UserConfigItem | UserConfigItem[]>[]
+): Promise<UserConfigItem[]> {
 	const {
 		componentExts = [],
 		gitignore: enableGitignore = true,
@@ -69,12 +71,12 @@ export function petal(options: OptionsConfig & ConfigItem = {},	...userConfigs: 
 	if (stylisticOptions && !('jsx' in stylisticOptions))
 		stylisticOptions.jsx = options.jsx ?? true;
 
-	const configs: ConfigItem[][] = [];
+	const configs: Awaitable<FlatConfigItem[]>[] = [];
 	if (enableGitignore) {
 		if (typeof enableGitignore !== 'boolean')
-			configs.push([gitignore(enableGitignore)]);
+			configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r(enableGitignore)]));
 		else if (fs.existsSync('.gitignore'))
-			configs.push([gitignore()]);
+			configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r()]));
 	}
 
 	configs.push(
@@ -168,7 +170,7 @@ export function petal(options: OptionsConfig & ConfigItem = {},	...userConfigs: 
 		if (key in options)
 			acc[key] = options[key] as any;
 		return acc;
-	}, {} as ConfigItem);
+	}, {} as FlatConfigItem);
 
 	if (Object.keys(fusedConfig).length)
 		configs.push([fusedConfig]);

@@ -1,31 +1,15 @@
-# @flowr/eslint-plugin-petal
+# eslint-plugin-petal
 
-This contains all Petal-specific eslint rules.
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
 
-## Installation
+This contains all Petal-specific eslint rules for [eslint-config](https://github.com/pulseflow/petal/blob/main/configs/eslint-config).
 
-```sh
-pnpm add -D eslint @flowr/eslint-plugin-petal
-```
+[Rules List](https://github.com/pulseflow/petal/blob/main/configs/eslint-petal/src/rules/)
 
-## Rules
+<!-- Badges -->
 
-| Category       | Name                                    | Description                                                                          |
-| -------------- | --------------------------------------- | ------------------------------------------------------------------------------------ |
-| Best Practices | [`best-practices/no-discouraged-words`] | Prevents usage of specific words. [See more][`best-practices/no-discouraged-words`]. |
-
-[`best-practices/no-discouraged-words`]: https://github.com/pulseflow/petal/blob/main/configs/eslint-petal/src/rules/best-practices/no-discouraged-words.md
-
-## Usage
-
-After installing, update your project's `.eslintrc.json` config:
-
-```js
-{
-  "plugins": ["@flowr/eslint-plugin-petal"],
-}
-```
-
----
-
-Read the [ESlint config docs](http://eslint.org/docs/user-guide/configuring#extending-configuration-files) for more information.
+[npm-version-src]: https://img.shields.io/npm/v/eslint-plugin-petal?style=flat&colorA=080f12&colorB=1fa669
+[npm-version-href]: https://npmjs.com/package/eslint-plugin-petal
+[npm-downloads-src]: https://img.shields.io/npm/dm/eslint-plugin-petal?style=flat&colorA=080f12&colorB=1fa669
+[npm-downloads-href]: https://npmjs.com/package/eslint-plugin-petal

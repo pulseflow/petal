@@ -1,7 +1,7 @@
-import type { ConfigItem, OptionsStylistic } from '../types.js';
+import type { FlatConfigItem, OptionsStylistic } from '../types.js';
 import { pluginImport, pluginPetal } from '../plugins.js';
 
-export function imports(options: OptionsStylistic = {}): ConfigItem[] {
+export async function imports(options: OptionsStylistic = {}): Promise<FlatConfigItem[]> {
 	const { stylistic = true } = options;
 
 	return [

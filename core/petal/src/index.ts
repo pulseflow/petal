@@ -6,10 +6,10 @@ import type {
 	AuditTaskDesc,
 	BuildTaskDesc,
 	LintTaskDesc,
-	TestTaskDesc,
-} from './types.js';
+	// TestTaskDesc,
+} from './lib/types.js';
 import { auditTask } from './tasks/audit.js';
-import { testTask } from './tasks/test.js';
+// import {  } from './tasks/test.js';
 import { buildTask } from './tasks/build.js';
 import { lintTask } from './tasks/lint.js';
 
@@ -32,11 +32,12 @@ program
 		handlePromiseResult(buildTask(t));
 	});
 
+/*
 program
 	.command('test')
 	.allowUnknownOption()
-	.description('Run tests via jest')
-	.option('--config [path]', 'path to jest config')
+	.description('Run tests via vitest')
+	.option('--config [path]', 'path to vitest config')
 	.action(async (...args) => {
 		const cmd = getCommand(args);
 		const { config } = getOpts(cmd);
@@ -49,6 +50,7 @@ program
 		const result = testTask(t);
 		handlePromiseResult(result);
 	});
+	*/
 
 program
 	.command('lint')

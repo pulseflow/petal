@@ -1,9 +1,9 @@
-import type { ConfigItem } from '../types.js';
+import type { FlatConfigItem } from '../types.js';
 
 /**
  * Sort `package.json` fles -- in tandem with `jsonc` config
  */
-export function sortPackageJson(): ConfigItem[] {
+export async function sortPackageJson(): Promise<FlatConfigItem[]> {
 	return [
 		{
 			files: ['**/package.json'],
@@ -92,7 +92,7 @@ export function sortPackageJson(): ConfigItem[] {
 /**
  * Sort `tsconfig.(*.)json` fles -- in tandem with `jsonc` config
  */
-export function sortTsConfig(): ConfigItem[] {
+export async function sortTsConfig(): Promise<FlatConfigItem[]> {
 	return [
 		{
 			files: ['**/tsconfig.json', '**/tsconfig.*.json'],

@@ -1,7 +1,7 @@
-import type { ConfigItem } from '../types.js';
+import type { FlatConfigItem } from '../types.js';
 import { pluginComments } from '../plugins.js';
 
-export function comments(): ConfigItem[] {
+export async function comments(): Promise<FlatConfigItem[]> {
 	return [
 		{
 			name: 'petal:eslint-comments',

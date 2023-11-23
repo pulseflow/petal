@@ -1,26 +1,26 @@
 import process from 'node:process';
 import type {
-	ConfigItem,
+	FlatConfigItem,
 	OptionsComponentExts,
 	OptionsOverrides,
 	OptionsTypeScriptParserOptions,
 	OptionsTypeScriptWithTypes,
 } from '../types.js';
 import { GLOB_SRC } from '../globs.js';
-import { parserTs, pluginImport, pluginPetal, pluginTs } from '../plugins.js';
-import { renameRules, toArray } from '../utils.js';
+import { pluginPetal } from '../plugins.js';
+import { interopDefault, renameRules, toArray } from '../utils.js';
 
-export function typescript(options?: OptionsComponentExts &
+export async function typescript(options?: OptionsComponentExts &
 	OptionsOverrides &
 	OptionsTypeScriptWithTypes &
-	OptionsTypeScriptParserOptions): ConfigItem[] {
+	OptionsTypeScriptParserOptions): Promise<FlatConfigItem[]> {
 	const {
 		componentExts = [],
 		overrides = {},
 		parserOptions = {},
 	} = options ?? {};
 
-	const typeAwareRules: ConfigItem['rules'] = {
+	const typeAwareRules: FlatConfigItem['rules'] = {
 		'dot-notation': 'off',
 		'no-implied-eval': 'off',
 		'no-throw-literal': 'off',
@@ -46,12 +46,19 @@ export function typescript(options?: OptionsComponentExts &
 		? toArray(options.tsconfigPath)
 		: undefined;
 
+	const [
+		pluginTs,
+		parserTs,
+	] = await Promise.all([
+		interopDefault(import('@typescript-eslint/eslint-plugin')),
+		interopDefault(import('@typescript-eslint/parser')),
+	] as const);
+
 	return [
 		{
 			name: 'petal:typescript:setup',
 			plugins: {
 				petal: pluginPetal,
-				import: pluginImport,
 				ts: pluginTs as any,
 			},
 		},

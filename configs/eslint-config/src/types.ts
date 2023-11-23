@@ -1,5 +1,6 @@
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { ParserOptions } from '@typescript-eslint/parser';
+import type { Linter } from 'eslint';
 import type {
 	EslintCommentsRules,
 	EslintRules,
@@ -21,12 +22,14 @@ import type {
 import type { RuleOptions as JSDocRules } from '@eslint-types/jsdoc/types';
 import type { RuleOptions as TypeScriptRules } from '@eslint-types/typescript-eslint/types';
 import type { RuleOptions as UnicornRules } from '@eslint-types/unicorn/types';
-import type { Rules as PetalRules } from '@flowr/eslint-plugin-petal';
+import type { Rules as PetalRules } from 'eslint-plugin-petal';
 import type { StylisticCustomizeOptions, UnprefixedRuleOptions as StylisticRules } from '@stylistic/eslint-plugin';
 
 export type WrapRuleConfig<T extends { [key: string]: any }> = {
 	[K in keyof T]: T[K] extends RuleConfig ? T[K] : RuleConfig<T[K]>;
 };
+
+export type Awaitable<T> = T | Promise<T>;
 
 export interface AstroRules {
 	'astro/no-conflict-set-directives': string
@@ -62,7 +65,7 @@ export type Rules = WrapRuleConfig<
 	>
 >;
 
-export type ConfigItem = Omit<FlatESLintConfigItem<Rules, false>, 'plugins'> & {
+export type FlatConfigItem = Omit<FlatESLintConfigItem<Rules, false>, 'plugins'> & {
 	/**
 	 * Custom name of each config item.
 	 */
@@ -73,6 +76,8 @@ export type ConfigItem = Omit<FlatESLintConfigItem<Rules, false>, 'plugins'> & {
 	 */
 	plugins?: Record<string, any>
 };
+
+export type UserConfigItem = FlatConfigItem | Linter.FlatConfig;
 
 export interface OptionsComponentExts {
 	/**
@@ -110,7 +115,7 @@ export interface OptionsStylistic {
 export interface StylisticConfig extends Pick<StylisticCustomizeOptions, 'indent' | 'quotes' | 'jsx' | 'semi'> { }
 
 export interface OptionsOverrides {
-	overrides?: ConfigItem['rules']
+	overrides?: FlatConfigItem['rules']
 }
 
 export interface OptionsIsInEditor {
@@ -222,15 +227,15 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * Provide overrides for rules for each integration.
 	 */
 	overrides?: {
-		javascript?: ConfigItem['rules']
-		typescript?: ConfigItem['rules']
-		test?: ConfigItem['rules']
-		jest?: ConfigItem['rules']
-		vue?: ConfigItem['rules']
-		react?: ConfigItem['rules']
-		astro?: ConfigItem['rules']
-		jsonc?: ConfigItem['rules']
-		markdown?: ConfigItem['rules']
-		yaml?: ConfigItem['rules']
+		javascript?: FlatConfigItem['rules']
+		typescript?: FlatConfigItem['rules']
+		test?: FlatConfigItem['rules']
+		jest?: FlatConfigItem['rules']
+		vue?: FlatConfigItem['rules']
+		react?: FlatConfigItem['rules']
+		astro?: FlatConfigItem['rules']
+		jsonc?: FlatConfigItem['rules']
+		markdown?: FlatConfigItem['rules']
+		yaml?: FlatConfigItem['rules']
 	}
 }

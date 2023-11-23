@@ -2,7 +2,7 @@
 	"extends": "@flowr/petal/config/tsconfig.json",
 	"compilerOptions": {
 		"jsx": "preserve",
-		"types": ["jest", "node"],
+		"types": ["node"],
 		"noEmit": true,
 		"esModuleInterop": true,
 		"isolatedModules": false,

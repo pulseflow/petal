@@ -1,14 +1,15 @@
-import type { ConfigItem, OptionsStylistic } from '../types.js';
-import { pluginJsdoc } from '../plugins.js';
+import type { FlatConfigItem, OptionsStylistic } from '../types.js';
+import { interopDefault } from '../utils.js';
 
-export function jsdoc(options: OptionsStylistic = {}): ConfigItem[] {
+export async function jsdoc(options: OptionsStylistic = {}): Promise<FlatConfigItem[]> {
 	const { stylistic = true } = options;
 
 	return [
 		{
 			name: 'petal:jsdoc',
 			plugins: {
-				jsdoc: pluginJsdoc,
+				// @ts-expect-error missing types
+				jsdoc: await interopDefault(import('eslint-plugin-jsdoc')),
 			},
 			rules: {
 				'jsdoc/check-access': 'warn',

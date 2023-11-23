@@ -2,7 +2,7 @@
 	"extends": "@flowr/tsconfig",
 	"compilerOptions": {
 		"jsx": "preserve",
-		"types": ["jest"],
+        "types": ["node"],
 		"noEmit": true,
 		"esModuleInterop": true,
 		"isolatedModules": false

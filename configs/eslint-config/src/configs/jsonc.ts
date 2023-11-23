@@ -1,14 +1,22 @@
 import type {
-	ConfigItem,
+	FlatConfigItem,
 	OptionsOverrides,
 	OptionsStylistic,
 } from '../types.js';
 import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs.js';
-import { parserJsonc, pluginJsonc } from '../plugins.js';
+import { interopDefault } from '../utils.js';
 
-export function jsonc(options: OptionsStylistic & OptionsOverrides = {}): ConfigItem[] {
+export async function jsonc(options: OptionsStylistic & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
 	const { overrides = {}, stylistic = true } = options;
 	const { indent = 'tab' } = typeof stylistic === 'boolean' ? {} : stylistic;
+
+	const [
+		pluginJsonc,
+		parserJsonc,
+	] = await Promise.all([
+		interopDefault(import('eslint-plugin-jsonc')),
+		interopDefault(import('jsonc-eslint-parser')),
+	] as const);
 
 	return [
 		{

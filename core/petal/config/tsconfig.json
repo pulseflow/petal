@@ -3,7 +3,7 @@
 	"compilerOptions": {
 		"jsx": "react",
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
-		"types": ["node", "jest"],
+		"types": ["node"],
 		"declaration": true,
 		"sourceMap": true,
 		"isolatedModules": false

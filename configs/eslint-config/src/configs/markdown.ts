@@ -1,19 +1,20 @@
 import type {
-	ConfigItem,
+	FlatConfigItem,
 	OptionsComponentExts,
 	OptionsOverrides,
 } from '../types.js';
 import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE } from '../globs.js';
-import { pluginMarkdown } from '../plugins.js';
+import { interopDefault } from '../utils.js';
 
-export function markdown(options: OptionsComponentExts & OptionsOverrides = {}): ConfigItem[] {
+export async function markdown(options: OptionsComponentExts & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
 	const { componentExts = [], overrides = {} } = options;
 
 	return [
 		{
 			name: 'petal:markdown:setup',
 			plugins: {
-				markdown: pluginMarkdown,
+				// @ts-expect-error missing types
+				markdown: await interopDefault(import('eslint-plugin-markdown')),
 			},
 		},
 		{

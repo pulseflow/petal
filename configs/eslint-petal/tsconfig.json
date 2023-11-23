@@ -5,7 +5,7 @@
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
 		"resolveJsonModule": true,
-		"types": ["jest", "node"],
+		"types": ["node"],
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
 		"noEmit": true,

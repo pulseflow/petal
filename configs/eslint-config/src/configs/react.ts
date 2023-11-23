@@ -1,19 +1,27 @@
 import type {
-	ConfigItem,
+	FlatConfigItem,
 	OptionsHasTypeScript,
 	OptionsOverrides,
 	OptionsStylistic,
 } from '../types.js';
-import {
-	parserTs,
-	pluginA11y,
-	pluginReact,
-	pluginReactHooks,
-} from '../plugins.js';
+import { interopDefault } from '../utils.js';
 
-export function react(options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic = {}): ConfigItem[] {
+export async function react(options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic = {}): Promise<FlatConfigItem[]> {
 	const { overrides = {}, stylistic = true } = options;
 	const { indent = 'tab' } = typeof stylistic === 'boolean' ? {} : stylistic;
+
+	const [
+		pluginA11y,
+		pluginReact,
+		pluginReactHooks,
+	] = await Promise.all([
+		// @ts-expect-error missing types
+		interopDefault(import('eslint-plugin-jsx-a11y')),
+		// @ts-expect-error missing types
+		interopDefault(import('eslint-plugin-react')),
+		// @ts-expect-error missing types
+		interopDefault(import('eslint-plugin-react-hooks')),
+	] as const);
 
 	return [
 		{
@@ -36,7 +44,9 @@ export function react(options: OptionsHasTypeScript & OptionsOverrides & Options
 						jsx: true,
 					},
 				},
-				parser: options.typescript ? (parserTs as any) : null,
+				parser: options.typescript
+					? await interopDefault(import('@typescript-eslint/parser')) as any
+					: null,
 				sourceType: 'module',
 			},
 			name: 'petal:react:rules',

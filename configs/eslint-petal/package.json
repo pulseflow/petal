@@ -1,5 +1,5 @@
 {
-	"name": "@flowr/eslint-plugin-petal",
+	"name": "eslint-plugin-petal",
 	"type": "module",
 	"version": "2.1.0",
 	"description": "Set of rules for Petal's custom ESLint rules",
@@ -38,7 +38,6 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "^8.44.7",
-		"@types/jest": "^29.5.8",
 		"@types/lodash.merge": "^4.6.9",
 		"@types/node": "^20.9.1",
 		"@types/semver": "^7.5.5",

@@ -3,7 +3,7 @@
 
 import process from 'node:process';
 
-const currentVersion = process.version.node;
+const currentVersion = process.versions.node;
 const requiredMajorVersion = Number.parseInt(currentVersion.split('.')[0], 10);
 const minimumMajorVersion = 18;
 

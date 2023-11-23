@@ -1,6 +1,7 @@
 import { stat as statFS } from 'node:fs';
 import { promisify } from 'node:util';
-import * as paths from './paths.js';
+import { expect, it } from 'vitest';
+import * as paths from '../lib/paths.js';
 
 const stat = promisify(statFS);
 

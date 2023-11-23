@@ -1,6 +1,6 @@
 import Debug from 'debug';
-import spawn from 'cross-spawn-promise';
-import type { BuildTaskDesc } from '../types.js';
+import { execa } from 'execa';
+import type { BuildTaskDesc } from '../lib/types.js';
 
 const dbg = Debug('petal:build');
 
@@ -47,7 +47,7 @@ async function buildTypes(task: BuildTaskDesc): Promise<string> {
 		'NodeNext',
 		...task.restOptions,
 	];
-	const stdout = await spawn(cmd, args, { stdio: 'inherit' });
+	const stdout = await execa(cmd, args, { stdio: 'inherit' });
 	return (stdout || '').toString();
 }
 
@@ -69,6 +69,6 @@ async function buildESM(task: BuildTaskDesc): Promise<string> {
 		'NodeNext',
 		...task.restOptions,
 	];
-	const stdout = await spawn(cmd, args, { stdio: 'inherit' });
+	const stdout = await execa(cmd, args, { stdio: 'inherit' });
 	return (stdout || '').toString();
 }

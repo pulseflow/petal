@@ -1,18 +1,28 @@
 import globals from 'globals';
 import type {
-	ConfigItem,
+	FlatConfigItem,
 	OptionsIsInEditor,
 	OptionsOverrides,
 } from '../types.js';
-import { pluginJest, pluginNoOnlyTests } from '../plugins.js';
 import { GLOB_TESTS } from '../globs.js';
+import { interopDefault } from '../utils.js';
 
-export function jest(options: OptionsIsInEditor & OptionsOverrides = {}): ConfigItem[] {
+export async function jest(options: OptionsIsInEditor & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
 	const { isInEditor = false, overrides = {} } = options;
+
+	const [
+		pluginJest,
+		pluginNoOnlyTests,
+	] = await Promise.all([
+		// @ts-expect-error missing types
+		interopDefault(import('eslint-plugin-jest')),
+		// @ts-expect-error missing types
+		interopDefault(import('eslint-plugin-no-only-tests')),
+	] as const);
 
 	return [
 		{
-			name: 'petal:jest:startup',
+			name: 'petal:jest:setup',
 			plugins: {
 				jest: {
 					...pluginJest,

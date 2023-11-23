@@ -1,13 +1,22 @@
 import type {
-	ConfigItem,
+	FlatConfigItem,
 	OptionsIsInEditor,
 	OptionsOverrides,
 } from '../types.js';
-import { pluginNoOnlyTests, pluginVitest } from '../plugins.js';
 import { GLOB_TESTS } from '../globs.js';
+import { interopDefault } from '../utils.js';
 
-export function test(options: OptionsIsInEditor & OptionsOverrides = {}): ConfigItem[] {
+export async function test(options: OptionsIsInEditor & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
 	const { isInEditor = false, overrides = {} } = options;
+
+	const [
+		pluginVitest,
+		pluginNoOnlyTests,
+	] = await Promise.all([
+		interopDefault(import('eslint-plugin-vitest')),
+		// @ts-expect-error missing types
+		interopDefault(import('eslint-plugin-no-only-tests')),
+	] as const);
 
 	return [
 		{

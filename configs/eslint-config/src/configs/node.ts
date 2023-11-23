@@ -1,7 +1,7 @@
-import type { ConfigItem } from '../types.js';
+import type { FlatConfigItem } from '../types.js';
 import { pluginNode } from '../plugins.js';
 
-export function node(): ConfigItem[] {
+export async function node(): Promise<FlatConfigItem[]> {
 	return [
 		{
 			name: 'petal:node',

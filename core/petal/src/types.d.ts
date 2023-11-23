@@ -1,3 +1,17 @@
+declare module 'object.fromentries' {
+	export default function fromEntries<T>(entries: Array<[string, T]>): {
+		[s: string]: T
+	};
+}
+
+/// <reference types="node" />
+
+declare namespace NodeJS {
+	interface ProcessEnv {
+		NODE_ENV: 'development' | 'production' | 'test'
+	}
+}
+
 declare module 'eslint/use-at-your-own-risk' {
 	export { ESLint as LegacyESLint } from 'eslint';
 
@@ -189,3 +203,17 @@ declare module 'eslint/use-at-your-own-risk' {
 		isPathIgnored(filePath: string): Promise<boolean>;
 	}
 }
+
+// Rollup Plugins
+
+declare module 'rollup-plugin-image-files' {
+	export default function image(options?: any): any;
+}
+
+declare module '@svgr/rollup' {
+	export default function svgr(options?: any): any;
+}
+
+declare module '@rollup/plugin-yaml';
+
+declare module '@esbuild-kit/cjs-loader' {}

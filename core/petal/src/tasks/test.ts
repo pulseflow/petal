@@ -1,18 +1,9 @@
-import process from 'node:process';
-import { run } from 'jest-cli';
-import type { TestTaskDesc } from '../types.js';
-import { JEST_CONFIG } from '../paths.js';
+/**
+ * import process from 'node:process';
+import { createVitest } from 'vitest/node';
 
-export async function testTask(task: TestTaskDesc) {
-	const config = task.config || JEST_CONFIG;
-	const args = [...(config ? ['--config', config] : []), ...task.restOptions];
+import type { TestTaskDesc } from '../lib/types.js';
 
-	if (!process.env.NODE_ENV)
-		(process.env as any).NODE_ENV = 'test';
-	if (!process.env.TZ)
-		(process.env as any).TZ = 'UTC';
-	if (args.includes('--help'))
-		(process.stdout as any)._handle.setBlocking(true);
+ */
 
-	return run(args);
-}
+export {};

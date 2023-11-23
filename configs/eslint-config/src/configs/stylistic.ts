@@ -1,8 +1,12 @@
-import type { ConfigItem, StylisticConfig } from '../types.js';
-import { pluginPetal, pluginStylistic } from '../plugins.js';
+import type { FlatConfigItem, StylisticConfig } from '../types.js';
+import { pluginPetal } from '../plugins.js';
+import { interopDefault } from '../utils.js';
 
-export function stylistic(options: StylisticConfig = {}): ConfigItem[] {
+export async function stylistic(options: StylisticConfig = {}): Promise<FlatConfigItem[]> {
 	const { indent = 'tab', jsx = true, quotes = 'single', semi = true } = options;
+
+	const pluginStylistic = await interopDefault(import('@stylistic/eslint-plugin'));
+
 	const config = pluginStylistic.configs.customize({ flat: true, indent, jsx, pluginName: 'style', quotes, semi });
 
 	return [

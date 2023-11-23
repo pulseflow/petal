@@ -1,21 +1,29 @@
 import type {
-	ConfigItem,
+	FlatConfigItem,
 	OptionsOverrides,
 	OptionsStylistic,
 } from '../types.js';
 import { GLOB_YAML } from '../globs.js';
-import { parserYaml, pluginYaml } from '../plugins.js';
+import { interopDefault } from '../utils.js';
 
-export function yaml(options: OptionsOverrides & OptionsStylistic = {}): ConfigItem[] {
+export async function yaml(options: OptionsOverrides & OptionsStylistic = {}): Promise<FlatConfigItem[]> {
 	const { overrides = {}, stylistic = true } = options;
 	const { indent = 2, quotes = 'single' }
 		= typeof stylistic === 'boolean' ? {} : stylistic;
+
+	const [
+		pluginYaml,
+		parserYaml,
+	] = await Promise.all([
+		interopDefault(import('eslint-plugin-yml')),
+		interopDefault(import('yaml-eslint-parser')),
+	] as const);
 
 	return [
 		{
 			name: 'petal:yaml:setup',
 			plugins: {
-				yaml: pluginYaml as any,
+				yaml: pluginYaml,
 			},
 		},
 		{

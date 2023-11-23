@@ -1,9 +1,9 @@
 import process from 'node:process';
-import spawn from 'cross-spawn-promise';
 import Debug from 'debug';
+import { execa } from 'execa';
 
-import type { AuditTaskDesc } from '../types.js';
-import { CONSUMING_ROOT } from '../paths.js';
+import type { AuditTaskDesc } from '../lib/types.js';
+import { CONSUMING_ROOT } from '../lib/paths.js';
 
 const dbg = Debug('petal:audit');
 
@@ -50,7 +50,7 @@ async function yarnRun(task: AuditTaskDesc): Promise<string> {
 	dbg('pnpm args %o', args);
 
 	try {
-		await spawn(cmd, args, { stdio: 'inherit' });
+		await execa(cmd, args, { stdio: 'inherit' });
 	}
 	catch (err) {
 		const thresholdReached = (err as any).exitStatus >= ThresholdLimits[threshold];

@@ -1,10 +1,10 @@
-import spawn from 'cross-spawn-promise';
+import { execa } from 'execa';
 import Debug from 'debug';
 
 import { hasConfig } from '@flowr/petal-utils';
 import eslintCore from 'eslint/use-at-your-own-risk';
-import type { LintTaskDesc } from '../types.js';
-import { CONSUMING_ROOT, ESLINT_CONFIG } from '../paths.js';
+import type { LintTaskDesc } from '../lib/types.js';
+import { CONSUMING_ROOT, ESLINT_CONFIG } from '../lib/paths.js';
 
 const { FlatESLint } = eslintCore;
 
@@ -54,6 +54,6 @@ export async function eslintRun(task: LintTaskDesc): Promise<string> {
 export async function typeCheck(): Promise<string> {
 	const cmd = 'pnpm';
 	const args = ['--package=typescript', '--silent', 'dlx', 'tsc', '--noEmit'];
-	const stdout = await spawn(cmd, args, { stdio: 'inherit' });
+	const stdout = await execa(cmd, args, { stdio: 'inherit' });
 	return (stdout || '').toString();
 }

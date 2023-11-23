@@ -1,18 +1,24 @@
 import type {
-	ConfigItem,
+	FlatConfigItem,
 	OptionsHasTypeScript,
 	OptionsOverrides,
 } from '../types.js';
-import {
-	parserAstro,
-	parserTs,
-	pluginA11y,
-	pluginAstro,
-} from '../plugins.js';
+import { interopDefault } from '../utils.js';
 import { GLOB_ASTRO } from '../globs.js';
 
-export function astro(options: OptionsHasTypeScript & OptionsOverrides = {}): ConfigItem[] {
+export async function astro(options: OptionsHasTypeScript & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
 	const { overrides = {} } = options;
+
+	const [
+		pluginAstro,
+		pluginA11y,
+		parserAstro,
+	] = await Promise.all([
+		interopDefault(import('eslint-plugin-astro')),
+		// @ts-expect-error missing types
+		interopDefault(import('eslint-plugin-jsx-a11y')),
+		interopDefault(import('astro-eslint-parser')),
+	] as const);
 
 	return [
 		{
@@ -31,7 +37,9 @@ export function astro(options: OptionsHasTypeScript & OptionsOverrides = {}): Co
 						jsx: true,
 					},
 					sourceType: 'module',
-					parser: options.typescript ? (parserTs as any) : null,
+					parser: options.typescript
+						? await interopDefault(import('@typescript-eslint/parser')) as any
+						: null,
 					extraFileExtensions: ['.astro'],
 				},
 			},
