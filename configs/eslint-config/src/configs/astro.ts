@@ -24,8 +24,8 @@ export async function astro(options: OptionsHasTypeScript & OptionsOverrides = {
 		{
 			name: 'petal:astro:setup',
 			plugins: {
-				astro: pluginAstro as any,
 				a11y: pluginA11y,
+				astro: pluginAstro as any,
 			},
 		},
 		{
@@ -36,11 +36,11 @@ export async function astro(options: OptionsHasTypeScript & OptionsOverrides = {
 					ecmaFeatures: {
 						jsx: true,
 					},
-					sourceType: 'module',
+					extraFileExtensions: ['.astro'],
 					parser: options.typescript
 						? await interopDefault(import('@typescript-eslint/parser')) as any
 						: null,
-					extraFileExtensions: ['.astro'],
+					sourceType: 'module',
 				},
 			},
 			name: 'petal:astro:rules',

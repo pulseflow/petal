@@ -27,6 +27,7 @@
 	"devDependencies": {
 		"@flowr/eslint-config": "workspace:^",
 		"@flowr/petal": "workspace:^",
+		"@stylistic/eslint-plugin-migrate": "^1.4.1",
 		"create-petal": "workspace:^",
 		"husky": "^8.0.3",
 		"lerna": "^7.4.1",

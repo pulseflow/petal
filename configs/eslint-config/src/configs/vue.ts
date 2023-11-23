@@ -1,5 +1,6 @@
 import type {
 	FlatConfigItem,
+	OptionsFiles,
 	OptionsHasTypeScript,
 	OptionsOverrides,
 	OptionsStylistic,
@@ -7,8 +8,8 @@ import type {
 import { GLOB_VUE } from '../globs.js';
 import { interopDefault } from '../utils.js';
 
-export async function vue(options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic = {}): Promise<FlatConfigItem[]> {
-	const { overrides = {}, stylistic = true } = options;
+export async function vue(options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles = {}): Promise<FlatConfigItem[]> {
+	const { files = [GLOB_VUE], overrides = {}, stylistic = true } = options;
 	const { indent = 'tab' } = typeof stylistic === 'boolean' ? {} : stylistic;
 
 	const [
@@ -28,7 +29,7 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 			},
 		},
 		{
-			files: [GLOB_VUE],
+			files,
 			languageOptions: {
 				parser: parserVue,
 				parserOptions: {

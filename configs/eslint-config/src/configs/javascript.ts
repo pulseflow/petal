@@ -40,47 +40,14 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 				'unused-imports': pluginUnusedImports,
 			},
 			rules: {
-				// require parens in arrow function arguments
-				'arrow-parens': 0,
-				// require space before/after arrow function's arrow
-				'arrow-spacing': 0,
-				// verify super() callings in constructors
-				'constructor-super': 0,
-				// enforce the spacing around the * in generator functions
-				'generator-star-spacing': 0,
-				// disallow modifying variables of class declarations
-				'no-class-assign': 0,
-				// disallow modifying variables that are declared using const
-				'no-const-assign': 2,
-				// disallow to use this/super before super() calling in constructors.
-				'no-this-before-super': 0,
-				// disallow empty constructors and constructors that only delegate into the parent class.
-				'no-useless-constructor': 2,
-				// require let or const instead of var
-				'no-var': 2,
-				// require method and property shorthand syntax for object literals
-				'object-shorthand': 0,
-				// suggest using of const declaration for variables that are never modified after declared
-				'prefer-const': 2,
-				// suggest using the spread operator instead of .apply()
-				'prefer-spread': 0,
-				// suggest using Reflect methods where applicable
-				'prefer-reflect': 0,
-				// suggest using template strings instead of concatenation or joining
-				'prefer-template': 2,
-				// disallow generator functions that do not have yield
-				'require-yield': 0,
-				// disallow trailing commas in object literals
-				'comma-dangle': [2, 'always-multiline'],
-				'no-tabs': 'off',
-
 				'accessor-pairs': [
 					'error',
 					{ enforceForClassMembers: true, setWithoutGet: true },
 				],
-
 				'array-callback-return': 'error',
 				'block-scoped-var': 'error',
+				// verify super() callings in constructors
+				'constructor-super': 0,
 				'default-case-last': 'error',
 				'dot-notation': ['error', { allowKeywords: true }],
 				'eqeqeq': ['error', 'smart'],
@@ -93,9 +60,15 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 				'no-async-promise-executor': 'error',
 				'no-caller': 'error',
 				'no-case-declarations': 'error',
+				// disallow modifying variables of class declarations
+				'no-class-assign': 0,
 				'no-compare-neg-zero': 'error',
 				'no-cond-assign': ['error', 'always'],
 				'no-console': ['error', { allow: ['warn', 'error'] }],
+
+				// disallow modifying variables that are declared using const
+				'no-const-assign': 2,
+
 				'no-control-regex': 'error',
 				'no-debugger': 'error',
 				'no-delete-var': 'error',
@@ -185,6 +158,8 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 				'no-shadow-restricted-names': 'error',
 				'no-sparse-arrays': 'error',
 				'no-template-curly-in-string': 'error',
+				// disallow to use this/super before super() calling in constructors.
+				'no-this-before-super': 0,
 				'no-throw-literal': 'error',
 				'no-undef': 'error',
 				'no-undef-init': 'error',
@@ -220,9 +195,15 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 				'no-useless-call': 'error',
 				'no-useless-catch': 'error',
 				'no-useless-computed-key': 'error',
+				// disallow empty constructors and constructors that only delegate into the parent class.
+				'no-useless-constructor': 2,
 				'no-useless-rename': 'error',
 				'no-useless-return': 'error',
+				// require let or const instead of var
+				'no-var': 2,
 				'no-with': 'error',
+				// require method and property shorthand syntax for object literals
+				'object-shorthand': 0,
 				'one-var': ['error', { initialized: 'never' }],
 				'prefer-arrow-callback': [
 					'error',
@@ -231,13 +212,23 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 						allowUnboundThis: true,
 					},
 				],
+				// suggest using of const declaration for variables that are never modified after declared
+				'prefer-const': 2,
 				'prefer-exponentiation-operator': 'error',
 				'prefer-promise-reject-errors': 'error',
+				// suggest using Reflect methods where applicable
+				'prefer-reflect': 0,
 				'prefer-regex-literals': [
 					'error',
 					{ disallowRedundantWrapping: true },
 				],
 				'prefer-rest-params': 'error',
+				// suggest using the spread operator instead of .apply()
+				'prefer-spread': 0,
+				// suggest using template strings instead of concatenation or joining
+				'prefer-template': 2,
+				// disallow generator functions that do not have yield
+				'require-yield': 0,
 				'sort-imports': [
 					'error',
 					{
@@ -253,6 +244,15 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 						],
 					},
 				],
+				// require parens in arrow function arguments
+				'style/arrow-parens': 0,
+				// require space before/after arrow function's arrow
+				'style/arrow-spacing': 0,
+				// disallow trailing commas in object literals
+				'style/comma-dangle': [2, 'always-multiline'],
+				// enforce the spacing around the * in generator functions
+				'style/generator-star-spacing': 0,
+				'style/no-tabs': 'off',
 
 				'symbol-description': 'error',
 				'unicode-bom': ['error', 'never'],

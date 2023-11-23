@@ -1,13 +1,14 @@
 import type {
 	FlatConfigItem,
+	OptionsFiles,
 	OptionsOverrides,
 	OptionsStylistic,
 } from '../types.js';
 import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs.js';
 import { interopDefault } from '../utils.js';
 
-export async function jsonc(options: OptionsStylistic & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
-	const { overrides = {}, stylistic = true } = options;
+export async function jsonc(options: OptionsFiles & OptionsStylistic & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
+	const { files = [GLOB_JSON, GLOB_JSON5, GLOB_JSONC], overrides = {}, stylistic = true } = options;
 	const { indent = 'tab' } = typeof stylistic === 'boolean' ? {} : stylistic;
 
 	const [
@@ -26,7 +27,7 @@ export async function jsonc(options: OptionsStylistic & OptionsOverrides = {}): 
 			},
 		},
 		{
-			files: [GLOB_JSON, GLOB_JSON5, GLOB_JSONC],
+			files,
 			languageOptions: {
 				parser: parserJsonc,
 			},

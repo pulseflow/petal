@@ -24,15 +24,15 @@
 		"create-petal": "./bin/create-petal.js"
 	},
 	"files": [
-		"bin/**/*",
-		"build/**/*",
-		"types/**/*",
-		"!**/*.test.*",
 		"!**/*.spec",
+		"!**/*.test.*",
 		"!**/*.tsbuildinfo",
+		"CHANGELOG.md",
 		"LICENSE",
 		"README.md",
-		"CHANGELOG.md"
+		"bin/**/*",
+		"build/**/*",
+		"types/**/*"
 	],
 	"engines": {
 		"node": ">=18"

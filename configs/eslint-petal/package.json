@@ -21,14 +21,14 @@
 	"module": "./build/index.js",
 	"types": "./types/index.d.ts",
 	"files": [
-		"build/**/*",
-		"types/**/*",
-		"!**/*.test.*",
 		"!**/*.spec",
+		"!**/*.test.*",
 		"!**/*.tsbuildinfo",
+		"CHANGELOG.md",
 		"LICENSE",
 		"README.md",
-		"CHANGELOG.md"
+		"build/**/*",
+		"types/**/*"
 	],
 	"engines": {
 		"node": ">=18"

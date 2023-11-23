@@ -40,7 +40,6 @@ export async function jest(options: OptionsIsInEditor & OptionsOverrides = {}): 
 		},
 		{
 			files: GLOB_TESTS,
-			name: 'petal:test:rules',
 			languageOptions: {
 				globals: {
 					...globals.jest,
@@ -51,6 +50,7 @@ export async function jest(options: OptionsIsInEditor & OptionsOverrides = {}): 
 					sourceType: 'module',
 				},
 			},
+			name: 'petal:test:rules',
 			rules: {
 				'node/prefer-global/process': 'off',
 				'test/no-only-tests': isInEditor ? 'off' : 'error',

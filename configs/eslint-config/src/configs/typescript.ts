@@ -2,6 +2,7 @@ import process from 'node:process';
 import type {
 	FlatConfigItem,
 	OptionsComponentExts,
+	OptionsFiles,
 	OptionsOverrides,
 	OptionsTypeScriptParserOptions,
 	OptionsTypeScriptWithTypes,
@@ -10,15 +11,21 @@ import { GLOB_SRC } from '../globs.js';
 import { pluginPetal } from '../plugins.js';
 import { interopDefault, renameRules, toArray } from '../utils.js';
 
-export async function typescript(options?: OptionsComponentExts &
+export async function typescript(options: OptionsComponentExts &
 	OptionsOverrides &
 	OptionsTypeScriptWithTypes &
-	OptionsTypeScriptParserOptions): Promise<FlatConfigItem[]> {
+	OptionsTypeScriptParserOptions &
+	OptionsFiles = {}): Promise<FlatConfigItem[]> {
 	const {
 		componentExts = [],
 		overrides = {},
 		parserOptions = {},
-	} = options ?? {};
+	} = options;
+
+	const files = options.files ?? [
+		GLOB_SRC,
+		...componentExts.map(f => `**/*.${f}`),
+	];
 
 	const typeAwareRules: FlatConfigItem['rules'] = {
 		'dot-notation': 'off',
@@ -63,7 +70,7 @@ export async function typescript(options?: OptionsComponentExts &
 			},
 		},
 		{
-			files: [GLOB_SRC, ...componentExts.map(e => `**/*.${e}`)],
+			files,
 			languageOptions: {
 				parser: parserTs,
 				parserOptions: {
@@ -95,15 +102,15 @@ export async function typescript(options?: OptionsComponentExts &
 					'ts/',
 				),
 
-				'petal/generic-spacing': 'error',
-				'petal/named-tuple-spacing': 'error',
-
 				'no-dupe-class-members': 'off',
 				'no-invalid-this': 'off',
+
 				'no-loss-of-precision': 'off',
 				'no-redeclare': 'off',
 				'no-use-before-define': 'off',
 				'no-useless-constructor': 'off',
+				'petal/generic-spacing': 'error',
+				'petal/named-tuple-spacing': 'error',
 				'ts/ban-ts-comment': [
 					'error',
 					{ 'ts-ignore': 'allow-with-description' },
@@ -114,6 +121,7 @@ export async function typescript(options?: OptionsComponentExts &
 					'error',
 					{ disallowTypeAnnotations: false, prefer: 'type-imports' },
 				],
+				'ts/naming-convention': 'off',
 				'ts/no-dupe-class-members': 'error',
 				'ts/no-dynamic-delete': 'off',
 				'ts/no-explicit-any': 'off',
@@ -134,7 +142,6 @@ export async function typescript(options?: OptionsComponentExts &
 				'ts/prefer-ts-expect-error': 'error',
 				'ts/triple-slash-reference': 'off',
 				'ts/unified-signatures': 'off',
-				'ts/naming-convention': 'off',
 
 				...(tsconfigPath ? typeAwareRules : {}),
 				...overrides,

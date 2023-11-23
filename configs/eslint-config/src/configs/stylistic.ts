@@ -19,12 +19,12 @@ export async function stylistic(options: StylisticConfig = {}): Promise<FlatConf
 			rules: {
 				...config.rules,
 
+				'curly': ['error', 'multi-or-nest', 'consistent'],
 				'petal/consistent-list-newline': 'error',
 				'petal/if-newline': 'error',
 				'petal/indent-binary-ops': ['error', { indent }],
-				'petal/top-level-function': 'error',
 
-				'curly': ['error', 'multi-or-nest', 'consistent'],
+				'petal/top-level-function': 'error',
 			},
 		},
 	];

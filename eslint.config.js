@@ -1,5 +1,6 @@
 // @ts-check
 import petal from '@flowr/eslint-config';
+import styleMigrate from '@stylistic/eslint-plugin-migrate';
 
 export default petal({
 	typescript: true,
@@ -7,4 +8,17 @@ export default petal({
 		'fixtures',
 		'_fixtures',
 	],
+}, {
+	files: ['configs/eslint-config/src/**/*.ts'],
+	rules: {
+		'perfectionist/sort-objects': 'error',
+	},
+}, {
+	files: ['configs/eslint-config/src/configs/*.ts'],
+	plugins: {
+		'style-migrate': styleMigrate,
+	},
+	rules: {
+		'style-migrate/migrate': ['error', { namespaceTo: 'style' }],
+	},
 });

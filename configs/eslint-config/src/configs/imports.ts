@@ -8,20 +8,20 @@ export async function imports(options: OptionsStylistic = {}): Promise<FlatConfi
 		{
 			name: 'petal:imports',
 			plugins: {
-				petal: pluginPetal,
 				import: pluginImport,
+				petal: pluginPetal,
 			},
 			rules: {
-				'petal/import-dedupe': 'error',
-				'petal/no-import-node-modules-by-path': 'error',
-
 				'import/first': 'error',
 				'import/no-duplicates': 'error',
+
 				'import/no-mutable-exports': 'error',
 				'import/no-named-default': 'error',
 				'import/no-self-import': 'error',
 				'import/no-webpack-loader-syntax': 'error',
 				'import/order': 'error',
+				'petal/import-dedupe': 'error',
+				'petal/no-import-node-modules-by-path': 'error',
 
 				...(stylistic
 					? {

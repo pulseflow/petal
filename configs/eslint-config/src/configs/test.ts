@@ -1,13 +1,14 @@
 import type {
 	FlatConfigItem,
+	OptionsFiles,
 	OptionsIsInEditor,
 	OptionsOverrides,
 } from '../types.js';
 import { GLOB_TESTS } from '../globs.js';
 import { interopDefault } from '../utils.js';
 
-export async function test(options: OptionsIsInEditor & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
-	const { isInEditor = false, overrides = {} } = options;
+export async function test(options: OptionsIsInEditor & OptionsOverrides & OptionsFiles = {}): Promise<FlatConfigItem[]> {
+	const { files = GLOB_TESTS, isInEditor = false, overrides = {} } = options;
 
 	const [
 		pluginVitest,
@@ -32,7 +33,7 @@ export async function test(options: OptionsIsInEditor & OptionsOverrides = {}): 
 			},
 		},
 		{
-			files: GLOB_TESTS,
+			files,
 			name: 'petal:test:rules',
 			rules: {
 				'node/prefer-global/process': 'off',

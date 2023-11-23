@@ -1,13 +1,14 @@
 import type {
 	FlatConfigItem,
 	OptionsComponentExts,
+	OptionsFiles,
 	OptionsOverrides,
 } from '../types.js';
 import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE } from '../globs.js';
 import { interopDefault } from '../utils.js';
 
-export async function markdown(options: OptionsComponentExts & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
-	const { componentExts = [], overrides = {} } = options;
+export async function markdown(options: OptionsFiles & OptionsComponentExts & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
+	const { componentExts = [], files = [GLOB_MARKDOWN], overrides = {} } = options;
 
 	return [
 		{
@@ -18,7 +19,7 @@ export async function markdown(options: OptionsComponentExts & OptionsOverrides 
 			},
 		},
 		{
-			files: [GLOB_MARKDOWN],
+			files,
 			name: 'petal:markdown:processor',
 			processor: 'markdown/markdown',
 		},
@@ -36,7 +37,6 @@ export async function markdown(options: OptionsComponentExts & OptionsOverrides 
 			},
 			name: 'petal:markdown:rules',
 			rules: {
-				'petal/no-ts-export-equal': 'off',
 				'import/newline-after-import': 'off',
 				'no-alert': 'off',
 				'no-console': 'off',
@@ -47,8 +47,9 @@ export async function markdown(options: OptionsComponentExts & OptionsOverrides 
 				'no-unused-expressions': 'off',
 				'no-unused-labels': 'off',
 				'no-unused-vars': 'off',
-
 				'node/prefer-global/process': 'off',
+
+				'petal/no-ts-export-equal': 'off',
 				'style/comma-dangle': 'off',
 
 				'style/eol-last': 'off',
