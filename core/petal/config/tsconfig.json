@@ -5,7 +5,7 @@
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"types": ["node"],
 		"declaration": true,
-		"sourceMap": true,
+		"sourceMap": false,
 		"isolatedModules": false
 	},
 	"include": ["src"]
