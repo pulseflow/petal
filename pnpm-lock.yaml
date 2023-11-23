@@ -199,9 +199,6 @@ importers:
       '@types/eslint':
         specifier: ^8.44.7
         version: 8.44.7
-      '@types/jest':
-        specifier: ^29.5.8
-        version: 29.5.8
       '@types/lodash.merge':
         specifier: ^4.6.9
         version: 4.6.9
