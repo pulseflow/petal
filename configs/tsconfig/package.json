@@ -12,7 +12,13 @@
 	},
 	"main": "tsconfig.json",
 	"files": [
-		"tsconfig.json"
+		"tsconfig.json",
+		"!**/*.test.*",
+		"!**/*.spec",
+		"!**/*.tsbuildinfo",
+		"LICENSE",
+		"README.md",
+		"CHANGELOG.md"
 	],
 	"engines": {
 		"node": ">=18"

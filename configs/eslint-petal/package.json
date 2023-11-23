@@ -22,7 +22,13 @@
 	"types": "./types/index.d.ts",
 	"files": [
 		"build",
-		"types"
+		"types",
+		"!**/*.test.*",
+		"!**/*.spec",
+		"!**/*.tsbuildinfo",
+		"LICENSE",
+		"README.md",
+		"CHANGELOG.md"
 	],
 	"engines": {
 		"node": ">=18"
