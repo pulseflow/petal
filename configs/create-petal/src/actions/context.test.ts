@@ -1,4 +1,5 @@
 import os from 'node:os';
+import { describe, expect, it } from 'vitest';
 import { getContext } from './context.js';
 
 describe('context', () => {

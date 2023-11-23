@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import type { ErrorResponseBody } from '../model/index.js';
 import { ResponseError } from './ResponseError.js';
 

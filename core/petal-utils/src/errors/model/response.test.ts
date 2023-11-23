@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import type { ErrorResponseBody } from './response.js';
 import { parseErrorResponseBody } from './response.js';
 

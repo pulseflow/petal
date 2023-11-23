@@ -3,13 +3,13 @@
 	"jest": {
 		"collectCoverageFrom": "src/**/*.ts"
 	},
+	"peerDependencies": {
+		"styled-components": "*"
+	},
 	"dependencies": {
 		"react": "*"
 	},
 	"devDependencies": {
 		"@testing-library/react": "*"
-	},
-	"peerDependencies": {
-		"styled-components": "*"
 	}
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * import process from 'node:process';
 import { createVitest } from 'vitest/node';
 

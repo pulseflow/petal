@@ -1,4 +1,5 @@
 import { Duration } from 'luxon';
+import { describe, expect, it } from 'vitest';
 import type { HumanDuration } from './time.js';
 import { durationToMilliseconds } from './time.js';
 

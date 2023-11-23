@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
-
 import { join } from 'node:path';
-import { describe } from 'node:test';
+import { beforeEach, describe, expect, it } from 'vitest';
+
 import { resetFixtures, setup } from '../testUtils.js';
 import { setupTypescript, typescript } from './typescript.js';
 
@@ -89,7 +89,9 @@ describe('typescript', () => {
 });
 
 describe('typescript: setup tsconfig', () => {
-	beforeEach(() => resetFixtures());
+	beforeEach(() => {
+		resetFixtures();
+	});
 
 	it('exists', async () => {
 		const root = new URL('../../__fixtures__/not-empty', import.meta.url);

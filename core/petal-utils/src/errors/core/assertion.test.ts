@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { assertError, isError } from './assertion.js';
 import { NotFoundError } from './common.js';
 import { CustomErrorBase } from './CustomErrorBase.js';

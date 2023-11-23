@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { setup } from '../testUtils.js';
 import { dependencies } from './deps.js';
 

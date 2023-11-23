@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { __filename } from '../../index.js';
 import * as errors from './common.js';
 

@@ -1,4 +1,5 @@
 import ZenObservable from 'zen-observable';
+import { describe, expect, it } from 'vitest';
 import type { Observable, Observer, Subscription } from './observable.js';
 
 describe('observable', () => {

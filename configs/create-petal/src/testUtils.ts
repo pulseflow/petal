@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import process from 'node:process';
 import type { Buffer } from 'node:buffer';
 import stripAnsi from 'strip-ansi';
+import { beforeAll, beforeEach } from 'vitest';
 import { setStdout } from './messages.js';
 
 export function setup() {

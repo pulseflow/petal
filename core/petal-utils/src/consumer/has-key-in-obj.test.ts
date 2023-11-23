@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { hasKeyInObj } from './has-key-in-obj.js';
 
 describe('hasKeyInObj', () => {

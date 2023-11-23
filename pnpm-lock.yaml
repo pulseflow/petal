@@ -51,9 +51,6 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1
     devDependencies:
-      '@types/jest':
-        specifier: ^29.5.6
-        version: 29.5.8
       '@types/node':
         specifier: ^20.9.1
         version: 20.9.1
@@ -66,6 +63,9 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
+      vitest:
+        specifier: ^0.34.6
+        version: 0.34.6
 
   configs/eslint-config:
     dependencies:
@@ -199,9 +199,6 @@ importers:
       '@types/eslint':
         specifier: ^8.44.7
         version: 8.44.7
-      '@types/jest':
-        specifier: ^29.5.8
-        version: 29.5.8
       '@types/lodash.merge':
         specifier: ^4.6.9
         version: 4.6.9
@@ -238,6 +235,9 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
+      vitest:
+        specifier: ^0.34.6
+        version: 0.34.6
 
   configs/tsconfig:
     devDependencies:
@@ -393,9 +393,6 @@ importers:
       '@types/glob':
         specifier: ^8.0.3
         version: 8.1.0
-      '@types/jest':
-        specifier: ^29.5.6
-        version: 29.5.8
       '@types/luxon':
         specifier: ^3.3.3
         version: 3.3.4
@@ -411,6 +408,9 @@ importers:
       rimraf:
         specifier: ^5.0.5
         version: 5.0.5
+      vitest:
+        specifier: ^0.34.6
+        version: 0.34.6
       zen-observable:
         specifier: ^0.10.0
         version: 0.10.0

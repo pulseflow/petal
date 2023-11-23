@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { NotModifiedError } from '../core/index.js';
 import { deserializeError, serializeError, stringifyError } from './error.js';
 

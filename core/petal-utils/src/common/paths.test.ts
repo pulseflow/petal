@@ -1,4 +1,5 @@
 import { resolve as resolvePath } from 'node:path';
+import { describe, expect, it, vi } from 'vitest';
 import { __dirname } from '../index.js';
 import {
 	findOwnDir,
@@ -35,7 +36,7 @@ describe('paths', () => {
 		const dir = resolvePath(__dirname, '../..');
 		const root = resolvePath(__dirname, '../../../..');
 
-		jest.spyOn(process, 'cwd').mockReturnValue(dir);
+		vi.spyOn(process, 'cwd').mockReturnValue(dir);
 
 		const paths = findPaths(__dirname);
 

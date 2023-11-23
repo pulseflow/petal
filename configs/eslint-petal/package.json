@@ -49,7 +49,8 @@
 		"eslint-define-config": "^1.24.1",
 		"lodash.merge": "^4.6.2",
 		"rimraf": "^5.0.5",
-		"typescript": "^5.2.2"
+		"typescript": "^5.2.2",
+		"vitest": "^0.34.6"
 	},
 	"publishConfig": {
 		"access": "public"
