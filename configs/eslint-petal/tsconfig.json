@@ -9,7 +9,9 @@
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
 		"noEmit": true,
-		"isolatedModules": false
+		"isolatedModules": false,
+		"skipDefaultLibCheck": true,
+    	"skipLibCheck": true
 	},
 	"include": ["src"]
 }
