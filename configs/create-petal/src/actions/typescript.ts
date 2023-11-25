@@ -124,8 +124,8 @@ const FILES_TO_UPDATE = {
 				);
 			}
 		}
-		catch (err) {
-			if (err && (err as any).code === 'ENOENT') {
+		catch (err: any) {
+			if (err && err.code === 'ENOENT') {
 				await writeFile(
 					file,
 					JSON.stringify(

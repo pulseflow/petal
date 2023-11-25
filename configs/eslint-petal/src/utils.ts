@@ -2,10 +2,6 @@ import type { RuleListener, RuleWithMeta, RuleWithMetaAndName } from '@typescrip
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 import type { Rule } from 'eslint';
 
-const hasDocs: string[] = [
-
-];
-
 const blobUrl: string = 'https://github.com/pulseflow/petal/blob/main/configs/eslint-petal/src/rules';
 
 export interface RuleModule<
@@ -62,9 +58,7 @@ function createRule<TOptions extends readonly unknown[], TMessageIds extends str
 }
 
 export const createEslintRule = RuleCreator(
-	ruleName => hasDocs.includes(ruleName)
-		? `${blobUrl}/docs/${ruleName}.md`
-		: `${blobUrl}${ruleName}.test.ts`,
+	ruleName => `${blobUrl}/docs/${ruleName}.md`,
 ) as any as <TOptions extends readonly unknown[], TMessageIds extends string>
 ({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>) => RuleModule<TOptions>;
 

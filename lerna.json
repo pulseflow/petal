@@ -3,7 +3,10 @@
 	"version": "2.1.0",
 	"command": {
 		"publish": {
-			"ignoreChanges": ["*.md", "@(!(package)).json"]
+			"ignoreChanges": [
+				"*.md",
+				"@(!(package)).json"
+			]
 		}
 	},
 	"$schema": "node_modules/lerna/schemas/lerna-schema.json"
