@@ -14,11 +14,11 @@ async function satisfiesDependencyConstraint(
 	constraintIn: DependencyConstraint[string],
 ): Promise<boolean> {
 	const constraint: SemverVersionConstraint
-    = typeof constraintIn === 'string'
-    	? {
-    			range: `>=${constraintIn}`,
-    		}
-    	: constraintIn;
+		= typeof constraintIn === 'string'
+			? {
+					range: `>=${constraintIn}`,
+				}
+			: constraintIn;
 
 	return semver.satisfies(
 		(await import(`${packageName}/package.json`) as { version: string }).version,

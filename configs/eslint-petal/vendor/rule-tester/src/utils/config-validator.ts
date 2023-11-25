@@ -41,18 +41,18 @@ const severityMap = {
 function validateRuleSeverity(options: Linter.RuleEntry): number | string {
 	const severity = Array.isArray(options) ? options[0] : options;
 	const normSeverity
-    = typeof severity === 'string'
-    	? severityMap[severity.toLowerCase() as Linter.SeverityString]
-    	: severity;
+		= typeof severity === 'string'
+			? severityMap[severity.toLowerCase() as Linter.SeverityString]
+			: severity;
 
 	if (normSeverity === 0 || normSeverity === 1 || normSeverity === 2)
 		return normSeverity;
 
 	throw new Error(
-    `\tSeverity should be one of the following: 0 = off, 1 = warn, 2 = error (you passed '${util
-      .inspect(severity)
-      .replace(/'/gu, '"')
-      .replace(/\n/gu, '')}').\n`,
+		`\tSeverity should be one of the following: 0 = off, 1 = warn, 2 = error (you passed '${util
+			.inspect(severity)
+			.replace(/'/gu, '"')
+			.replace(/\n/gu, '')}').\n`,
 	);
 }
 
@@ -82,7 +82,7 @@ function validateRuleSchema(
 				validateRule.errors
 					.map(
 						error =>
-              `\tValue ${JSON.stringify(error.data)} ${error.message}.\n`,
+							`\tValue ${JSON.stringify(error.data)} ${error.message}.\n`,
 					)
 					.join(''),
 			);
@@ -112,9 +112,8 @@ function validateRuleOptions(
 			validateRuleSchema(rule, Array.isArray(options) ? options.slice(1) : []);
 	}
 	catch (err) {
-		const enhancedMessage = `Configuration for rule "${ruleId}" is invalid:\n${
-      (err as Error).message
-    }`;
+		const enhancedMessage = `Configuration for rule "${ruleId}" is invalid:\n${(err as Error).message
+			}`;
 
 		if (typeof source === 'string')
 			throw new Error(`${source}:\n\t${enhancedMessage}`);
@@ -189,9 +188,8 @@ function validateGlobals(
 			}
 			catch (err) {
 				throw new Error(
-          `ESLint configuration of global '${configuredGlobal}' in ${source} is invalid:\n${
-            (err as Error).message
-          }`,
+					`ESLint configuration of global '${configuredGlobal}' in ${source} is invalid:\n${(err as Error).message
+					}`,
 				);
 			}
 		},
@@ -223,11 +221,11 @@ function formatErrors(errors: AjvErrorObject[]): string {
 			}
 
 			const field
-        = error.dataPath[0] === '.' ? error.dataPath.slice(1) : error.dataPath;
+				= error.dataPath[0] === '.' ? error.dataPath.slice(1) : error.dataPath;
 
 			return `"${field}" ${error.message}. Value: ${JSON.stringify(
-        error.data,
-      )}`;
+				error.data,
+			)}`;
 		})
 		.map(message => `\t- ${message}.\n`)
 		.join('');
@@ -247,9 +245,9 @@ function validateConfigSchema(
 
 	if (!validateSchema(config)) {
 		throw new Error(
-      `ESLint configuration in ${source} is invalid:\n${formatErrors(
-        validateSchema.errors!,
-      )}`,
+			`ESLint configuration in ${source} is invalid:\n${formatErrors(
+				validateSchema.errors!,
+			)}`,
 		);
 	}
 

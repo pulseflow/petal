@@ -24,14 +24,14 @@ const valids = [
 	'function foo<T = {\na: 1,\nb: 2\n}>(a, b) {}',
 	'foo(() =>\nbar())',
 	'foo(() =>\nbar()\n)',
-    `call<{\nfoo: 'bar'\n}>('')`,
-    `function fn({ foo, bar }: {\nfoo: 'foo'\nbar: 'bar'\n}) {}`,
-    {
-    	code: 'foo(\na, b\n)',
-    	options: [{ CallExpression: false }],
-    },
-    {
-    	code: `
+	`call<{\nfoo: 'bar'\n}>('')`,
+	`function fn({ foo, bar }: {\nfoo: 'foo'\nbar: 'bar'\n}) {}`,
+	{
+		code: 'foo(\na, b\n)',
+		options: [{ CallExpression: false }],
+	},
+	{
+		code: `
 const a = (
   <div>
     {text.map((item, index) => (
@@ -41,12 +41,12 @@ const a = (
   </div>
 )
 `,
-    	parserOptions: {
-    		ecmaFeatures: {
-    			jsx: true,
-    		},
-    	},
-    },
+		parserOptions: {
+			ecmaFeatures: {
+				jsx: true,
+			},
+		},
+	},
 ];
 
 // Check snapshot for fixed code

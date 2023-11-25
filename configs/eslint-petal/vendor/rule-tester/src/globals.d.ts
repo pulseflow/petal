@@ -8,12 +8,12 @@ declare module '@eslint/eslintrc' {
 	import type { Linter } from '@typescript-eslint/utils/ts-eslint';
 
 	export const Legacy: {
-	  ConfigOps: {
+		ConfigOps: {
 			normalizeConfigGlobal: (
-		  configuredValue: boolean | string | null,
+				configuredValue: boolean | string | null,
 			) => Linter.GlobalVariableOptionBase
-	  }
-	  environments: Map<string, Linter.Environment>
+		}
+		environments: Map<string, Linter.Environment>
 	};
 }
 
