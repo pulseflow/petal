@@ -27,11 +27,11 @@
   "devDependencies": {
     "@flowr/eslint-config": "workspace:^",
     "@flowr/petal": "workspace:^",
-    "@stylistic/eslint-plugin-migrate": "^1.4.1",
+    "@stylistic/eslint-plugin-migrate": "^1.5.1",
     "create-petal": "workspace:^",
     "husky": "^8.0.3",
-    "lerna": "^8.0.0",
-    "typescript": "^5.2.2"
+    "lerna": "^8.0.1",
+    "typescript": "^5.3.3"
   },
   "overrides": {
     "@types/node": "^18.0.0"
