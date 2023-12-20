@@ -18,13 +18,8 @@ export async function intro(ctx: IntroContext) {
 					'welcome',
 					'to',
 					label('petal', color.bgMagenta, color.black),
-					Promise.resolve(ctx.version).then(
-						version =>
-							`${version ? color.green(`v${version}`) : ''},`,
-					),
-					Promise.resolve(ctx.username).then(
-						username => `${username}!`,
-					),
+					Promise.resolve(ctx.version).then(version => `${version ? color.green(`v${version}`) : ''} `),
+					Promise.resolve(ctx.username).then(username => `${username}!`),
 				],
 				random(welcome),
 			],

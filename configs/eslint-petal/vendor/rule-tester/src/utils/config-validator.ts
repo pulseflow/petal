@@ -2,7 +2,6 @@
 
 import util from 'node:util';
 
-// @ts-expect-error for some reason the types dont register
 import { Legacy } from '@eslint/eslintrc';
 import type { AnyRuleModule, Linter } from '@typescript-eslint/utils/ts-eslint';
 import type {
@@ -80,10 +79,7 @@ function validateRuleSchema(
 		if (validateRule.errors) {
 			throw new Error(
 				validateRule.errors
-					.map(
-						error =>
-							`\tValue ${JSON.stringify(error.data)} ${error.message}.\n`,
-					)
+					.map(error => `\tValue ${JSON.stringify(error.data)} ${error.message}.\n`)
 					.join(''),
 			);
 		}

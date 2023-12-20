@@ -2,8 +2,15 @@ import type { FlatConfigItem, StylisticConfig } from '../types.js';
 import { pluginPetal } from '../plugins.js';
 import { interopDefault } from '../utils.js';
 
+export const StylisticConfigDefaults: StylisticConfig = {
+	indent: 'tab',
+	jsx: true,
+	quotes: 'single',
+	semi: true,
+};
+
 export async function stylistic(options: StylisticConfig = {}): Promise<FlatConfigItem[]> {
-	const { indent = 'tab', jsx = true, quotes = 'single', semi = true } = options;
+	const { indent, jsx, quotes, semi } = { ...StylisticConfigDefaults, ...options };
 
 	const pluginStylistic = await interopDefault(import('@stylistic/eslint-plugin'));
 
@@ -22,9 +29,9 @@ export async function stylistic(options: StylisticConfig = {}): Promise<FlatConf
 				'curly': ['error', 'multi-or-nest', 'consistent'],
 				'petal/consistent-list-newline': 'error',
 				'petal/if-newline': 'error',
-				'petal/indent-binary-ops': ['error', { indent }],
 
 				'petal/top-level-function': 'error',
+				'style/implicit-arrow-linebreak': 'off',
 			},
 		},
 	];

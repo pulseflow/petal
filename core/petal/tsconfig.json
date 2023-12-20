@@ -6,5 +6,6 @@
 		"esModuleInterop": true,
 		"isolatedModules": false
 	},
-	"include": ["src"]
+	"include": ["src"],
+	"exclude": ["vendor", "test"]
 }

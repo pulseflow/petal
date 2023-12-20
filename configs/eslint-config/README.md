@@ -1,83 +1,117 @@
 # @flowr/eslint-config
 
-[![npm](https://img.shields.io/npm/v/@flowr/eslint-config?color=444&label=)]
+[![npm](https://img.shields.io/npm/v/@flowr/eslint-config?color=444&label=)](https://npmjs.com/package/@flowr/eslint-config)
 
-- single quotes with semi
-- auto fix for formatting (**without** prettier)
-- designed to work with a multitude of frameworks out-of-the-box
-- configs for json, yaml, markdown, and petal config
-- sorted imports, dangling commas
+- single quotea and semicolons
+- auto fix for formatting (without prettier)
+- designed to work with typescript, jsx, astro, testing and vue out of the box
+- lints also for json, yaml, toml and markdown
+- sorted imports and dangling commas
 - reasonable defaults, best practices, only one line of config
-- respects `.gitignore` by default
-- uses new [eslint flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new).
-- uses [eslint stylistic](https://github.com/eslint-stylistic/eslint-stylistic)
-- works seamlessly with [petal](../../core/petal/)
-- **core style principles**: minimal for reading, stable, consistant, and a11y
+- heavily opinionated very [customizable](#customization)
+- easily composable [eslint flat config][eslint-flat]
+- uses [eslint stylistic][stylistic] standards by default
+- respects `.gitignore` by default, without the need for `.eslintignore`
+- optional [formatter](#formatters) support for css, html, graphql, etc.
 
-Petal's TypeScript full ESLint config.
+> [!IMPORTANT]
+> this config uses the new [eslint flat config][eslint-flat]. this may require new integeration configuration and some adjustments.
 
-## Usage
+## usage
 
-### Install
+### installation
 
-```sh
-pnpm add -D eslint @flowr/eslint-config
+```bash
+pnpm i -D eslint @flowr/eslint-config
 ```
 
-### Create config file
+### create config file
 
-With [`"type": "module"`](https://nodejs.org/api/packages.html#type) in `package.json` (recommended):
+with [`"type": "module"`][node-type] in `package.json` (recommended):
 
 ```js
-// eslint.config.(m)js
+// eslint.config.js
 import petal from '@flowr/eslint-config';
 
-export default await petal();
+export default petal();
 ```
 
-With the [`petal cli`](../../core/petal/) (recommended, no config file needed):
+> [!TIP]
+> eslint only detects `eslint.config.js` as the flat config entry, meaning you need to put `type: module` in your `package.json` or you have to use cjs in `eslint.config.js`. if you want explicit extensions like `.mjs` or `.cjs`, or even `.ts`, you can install [`eslint-patch`][eslint-patch].
 
-```sh
-pnpm petal lint
+combined with a legacy configuration:
+
+```js
+// eslint.config.js
+const petal = require('@flowr/eslint-config').default
+const { FlatCompat } = require('@eslint/eslintrc')
+
+const compat = new FlatCompat()
+
+modules.exports = petal(
+    {
+        ignores: [],
+    },
+
+    // legacy config
+    ...compat.config({
+        'eslint:recommended',
+        // other extends...
+    }),
+
+    // other flat configs...
+);
 ```
 
-> Note that `.eslintignore` no longer works in flat config, see [customization](#customization) for more info.
+> note that `.eslintignore` no longer works in flat config, see [customization](#customization) for more details.
 
-## VSCode(ium) Support (auto fix)
+### lint script
 
-Install the [VSCode ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+```json
+{
+    "scripts": {
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix"
+    }
+}
+```
 
-Add the following settings to your `.vscode/settings.json`:
+## ide integration
+
+### vscode support (auto fix)
+
+install the [vscode eslint extension][vscode] and add the following settings to your `.vscode/settings.json`:
 
 ```jsonc
 {
-    // Enable the ESlint flat config support
+    // enable the eslint flat config support
     "eslint.experimental.useFlatConfig": true,
-
-    // Disable the default formatter, use eslint instead
+    
+    // disable the default formatter, use eslint
     "prettier.enable": false,
     "editor.formatOnSave": false,
 
-    // Auto fix
+    // automatically fix
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit",
         "source.organizeImports": "never"
     },
 
-    // Silent the stylistic rules in you IDE, but still auto fix them
+    // silent stylistic rules in the ide, but still fix them
     "eslint.rules.customizations": [
-        { "rule": "style/*", "severity": "off" },
-        { "rule": "*-indent", "severity": "off" },
-        { "rule": "*-spacing", "severity": "off" },
-        { "rule": "*-spaces", "severity": "off" },
-        { "rule": "*-order", "severity": "off" },
-        { "rule": "*-dangle", "severity": "off" },
-        { "rule": "*-newline", "severity": "off" },
-        { "rule": "*quotes", "severity": "off" },
-        { "rule": "*semi", "severity": "off" }
+        { "rule": "@stylistic/*", "severity": "warn" },
+        { "rule": "style*", "severity": "warn" },
+        { "rule": "*-indent", "severity": "warn" },
+        { "rule": "*-spacing", "severity": "warn" },
+        { "rule": "*-spaces", "severity": "warn" },
+        { "rule": "*-order", "severity": "warn" },
+        { "rule": "*-dangle", "severity": "warn" },
+        { "rule": "*-newline", "severity": "warn" },
+        { "rule": "*quotes", "severity": "warn" },
+        { "rule": "*semi", "severity": "warn" }
     ],
 
-    // Enable eslint for all supported languages
+    // enable eslint for all supported languages
     "eslint.validate": [
         "javascript",
         "javascriptreact",
@@ -90,97 +124,133 @@ Add the following settings to your `.vscode/settings.json`:
         "jsonc",
         "yaml",
         "astro",
-        /* ... */
+        "toml"
     ]
 }
 ```
 
-## Customization
+## customization
 
-Normally you only need to import the `petal` preset (auto-detects dependencies and stylistic options):
+we use [eslint's flat config feature][eslint-flat]. it provides much better orginzation and composition. normally you only need to import and use the `petal` preset:
 
 ```js
-// eslint.config.(m)js
-import petal from '@flowr/eslint-config'
+// eslint.config.js
+import petal from '@flowr/eslint-config';
 
-export default await petal()
+export default petal();
 ```
 
-And that's it! Or you can configure each integration individually, for example:
+alternatively, you can confgure each integration individually, for example:
 
 ```js
-// eslint.config.(m)js
-import petal from '@flowr/eslint-config'
+// eslint.config.js
+import petal from '@flowr/eslint-config';
 
-export default await petal({
-    // Enable stylistic formatting rules
-    // stylistic: true,
-
-    // Or customize the stylistic rules
+export default petal({
+    // enable stylistic formatting rules
     stylistic: {
-        indent: 'tab', // 2, 4, or 'tab'
+        indent: 'tab', // 4, or 2
         quotes: 'single', // or 'double'
     },
 
-    // frameworks are auto-detected, you can also explicitly enable them:
+    // frameworks are automatically detected. you can manually enable them:
     typescript: true,
-    vue: true,
-    react: true,
     jest: true,
     astro: true,
+    vue: true,
 
-    // Disable jsonc and yaml support
+    // disable jsonc and yaml support
     jsonc: false,
     yaml: false,
 
-    // `.eslintignore` is no longer supported in Flat config, use `ignores` or `.gitignore` instead
+    // `.eslintignore` isn't supported in flat configs, use `ignores` instead
     ignores: [
         './fixtures',
-        // ...any `glob`(s)
+        // ...globs
     ],
-})
+});
 ```
 
-The `petal` factory function also accepts any number of arbitrary custom config overrides:
+the `petal` factory function also accepts any number of arbitrary custom config overrides:
 
 ```js
-// eslint.config.(m)js
-import petal from '@flowr/eslint-config'
+// eslint.config.js
+import petal from '@flowr/eslint-config';
 
-export default await petal(
+export default petal(
     {
-        // Configures for Petal's config
+        // configures for `petal` preset
     },
-
-    // From the second arguments they are ESLint Flat Configs
-    // you can have multiple configs
+    
+    // eslint flat config overrides
     {
         files: ['**/*.ts'],
-        rules: {},
+        rules: {
+            'do-something': 'error',
+        },
     },
     {
-        rules: {},
+        rules: {
+            'do-something': 'off',
+        },
     },
 );
 ```
 
-Check out the [configs](https://github.com/pulseflow/petal/blob/main/configs/eslint-config/src/configs) and [factory](https://github.com/pulseflow/petal/blob/main/configs/eslint-config/src/factory.ts) for more details.
+going more advanced, you can also import fine-grainec configs and compose them as wanted:
 
-### Plugins Renaming
+<details>
+<summary>advanced example</summary>
 
-Since flat config requires us to explicitly provide the plugin names (instead of mandatory convention from npm package name), we renamed some plugins to make overall scope more consistent and easier to write.
+we wouldn't recommend using this style in general unless you know what you are doing, as there are shared options between configs and might need extra care to make consistent:
 
-| New Prefix | Original Prefix | Source Plugin |
-| --- | --- | --- |
-| `import/*` | `i/*` | [eslint-plugin-i](https://github.com/un-es/eslint-plugin-i) |
-| `node/*` | `n/*` | [eslint-plugin-n](https://github.com/eslint-community/eslint-plugin-n) |
-| `yaml/*` | `yml/*` | [eslint-plugin-yml](https://github.com/ota-meshi/eslint-plugin-yml) |
-| `ts/*` | `@typescript-eslint/*` | [@typescript-eslint/eslint-plugin](https://github.com/typescript-eslint/typescript-eslint) |
-| `style/*` | `@stylistic/*` | [@stylistic/eslint-plugin](https://github.com/eslint-stylistic/eslint-stylistic) |
-| `test/*` | `vitest/*` | [eslint-plugin-vitest](https://github.com/veritem/eslint-plugin-vitest) |
-| `test/*` | `no-only-tests/*` | [eslint-plugin-no-only-tests](https://github.com/levibuzolic/eslint-plugin-no-only-tests) |
+```js
+// eslint.config.js
+import {
+    combine, comments, ignores, imports,
+    javascript, jsdoc, jsonc, markdown,
+    node, sortPackageJson, sortTsconfig,
+    stylistic, toml, typescript, unicorn,
+    vue, yaml,
+} from '@flowr/eslint-config';
 
-When you want to override rules, or disable them inline, you need to update to the new prefix:
+export default combine(
+    ignores(),
+    javascript(/* options */),
+    comments(),
+    node(),
+    jsdoc(),
+    imports(),
+    unicorn(),
+    typescript(/* options */),
+    stylistic(),
+    vue(),
+    jsonc(),
+    yaml(),
+    toml(),
+    markdown(),
+);
+```
+
+</details>
+
+check out the [configs][configs] and [factory][factory] for more details.
+
+### plugins remaining
+
+since [flat config][eslint-flat] requires us to explicitly provide the plugin names (rather than the mandatory convention derived from the npm package name), we renamed some plugins to make the overall scope more consistent and easier to write:
+
+| New Prefix | Original Prefix        | Source Plugin                                                                              |
+| ---------- | ---------------------- | ------------------------------------------------------------------------------------------ |
+| `import/*` | `i/*`                  | [eslint-plugin-i](https://github.com/un-es/eslint-plugin-i)                                |
+| `node/*`   | `n/*`                  | [eslint-plugin-n](https://github.com/eslint-community/eslint-plugin-n)                     |
+| `yaml/*`   | `yml/*`                | [eslint-plugin-yml](https://github.com/ota-meshi/eslint-plugin-yml)                        |
+| `ts/*`     | `@typescript-eslint/*` | [@typescript-eslint/eslint-plugin](https://github.com/typescript-eslint/typescript-eslint) |
+| `style/*`  | `@stylistic/*`         | [@stylistic/eslint-plugin](https://github.com/eslint-stylistic/eslint-stylistic)           |
+| `test/*`   | `vitest/*`             | [eslint-plugin-vitest](https://github.com/veritem/eslint-plugin-vitest)                    |
+| `test/*`   | `no-only-tests/*`      | [eslint-plugin-no-only-tests](https://github.com/levibuzolic/eslint-plugin-no-only-tests)  |
+
+when you want to override rules, or disable them inline, you need to update to the new prefix (unfortunately the vscode eslint extension doesn't automatically rewrite this):
 
 ```diff
 -// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
@@ -188,28 +258,25 @@ When you want to override rules, or disable them inline, you need to update to t
 type foo = { bar: 2 }
 ```
 
-### Rules Overrides
+### rules overrides
 
-Certain rules would only be enabled in specific files, for example, `ts/*` rules would only be enabled in `.ts` files and `vue/*` rules would only be enabled in `.vue` files. If you want to override the rules, you need to specify the file extension:
+certain rules would only be enabled in specific files, for example `ts/*` rules would only be enabled in `.ts` files. if you want to override those rules, you need to specifiy the file extension:
 
 ```js
-// eslint.config.(m)js
-import petal from '@flowr/eslint-config'
+// eslint.config.js
+import petal from '@flowr/eslint-config';
 
-export default await petal(
+export default petal(
+    { vue: true, typescript: true },
     {
-        vue: true,
-        typescript: true,
-    },
-    {
-        // Remember to specify the file `glob` here.
+        // remember to specify the file glob here, otherwise the vue plugin might apply to non-vue files
         files: ['**/*.vue'],
         rules: {
             'vue/operator-linebreak': ['error', 'before'],
         },
     },
     {
-        // Without `files`, they are general rules for all files
+        // without the file globs, they are general rules for all files
         rules: {
             'style/semi': ['error', 'never'],
         },
@@ -217,11 +284,11 @@ export default await petal(
 );
 ```
 
-We also provided an `overrides` options to make it easier:
+we also provide an `overrides` option to use our default globs:
 
 ```js
-// eslint.config.(m)js
-import petal from '@flowr/eslint-config'
+// eslint.config.js
+import petal from '@flowr/eslint-config';
 
 export default petal({
     overrides: {
@@ -229,7 +296,7 @@ export default petal({
             'vue/operator-linebreak': ['error', 'before'],
         },
         typescript: {
-        'ts/consistent-type-definitions': ['error', 'interface'],
+            'ts/consistent-type-definitions': ['error', 'interface'],
         },
         yaml: {},
         // ...
@@ -237,17 +304,85 @@ export default petal({
 });
 ```
 
-### Optional Rules
+### optional configs
 
-This config also provides some optional plugins/rules for extended usages.
+we provide some additional configs for specific cases, that we don't include their dependencies by default to reduce package size:
 
-#### `perfectionist` (sorting)
+#### formatters
 
-This plugin [`eslint-plugin-perfectionist`](https://github.com/azat-io/eslint-plugin-perfectionist) allows you to sorted object keys, imports, etc, with auto-fix.
+> [!WARNING]
+> experimental feature, changes may not follow semver
 
-The plugin is installed but no rules are enabled by default.
+use external formatters to format files that eslint cannot handle yet (`.css`, `.html`, etc.)
 
-It's recommended to opt-in on each file individually using [configuration comments](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1).
+```js
+// eslint.config.js
+import petal from '@flowr/eslint-config';
+
+export default petal({
+    formatters: {
+        /**
+         * format CSS, LESS, SCSS files, also the `<style>` blocks in vue
+         * uses prettier by default
+         */
+        css: true,
+        
+        /**
+         * format HTML files
+         * uses prettier by default
+         */
+        html: true,
+
+        /**
+         * format markdown files
+         * supports prettier and dprint
+         * uses prettier by default
+         */
+        markdown: 'prettier', // also 'dprint' or `true` (default)
+    },
+});
+```
+
+the required dev dependencies are: `eslint-plugin-format` (you should be prompted to install these when running eslint)
+
+#### non-vue ui frameworks
+
+to enable framework support, you need to explicitly turn it on:
+
+```js
+// eslint.config.js
+import petal from '@flowr/eslint-config';
+
+export default petal({
+    react: true,
+    astro: true,
+});
+```
+
+the required dev dependencies are: `eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh eslint-plugin-astro` (you should be prompted to install these when running eslint)
+
+#### unocss
+
+to enable unocss support, you need to explicitly turn it on:
+
+```js
+// eslint.config.js
+import petal from '@flowr/eslint-config';
+
+export default petal({
+    unocss: true,
+});
+```
+
+the required dev dependencies are: `@unocss/eslint-plugin` (you should be prompted to install these when running eslint)
+
+### optional rules
+
+we also provide some optional plugins and rules for extended/stricter usage:
+
+### `prefectionist` sorting
+
+the plugin [`eslint-plugin-perfectionist`](https://github.com/azat-io/eslint-plugin-perfectionist) sorts object keys and imports with auto-fix. the plugin is installed but no rules are enabled by default. it's recommended to opt-in on each file individually using [configuration comments][config-comments].
 
 ```js
 /* eslint perfectionist/sort-objects: "error" */
@@ -259,13 +394,13 @@ const objectWantedToSort = {
 /* eslint perfectionist/sort-objects: "off" */
 ```
 
-### Type Aware Rules
+### type aware rules
 
-You can optionally enable the [type aware rules](https://typescript-eslint.io/linting/typed-linting/) by passing the options object to the `typescript` config:
+configuration for [type aware rules][type-aware] can be enabled by passing the options object to the `typescript` configuration:
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config'
+import petal from '@flowr/eslint-config';
 
 export default petal({
     typescript: {
@@ -274,21 +409,24 @@ export default petal({
 });
 ```
 
-### Lint Staged
+## FAQ
 
-If you want to apply lint and auto-fix before every commit, you can add the following to your `package.json`:
+### prettier?
 
-```json
-{
-    "scripts": {
-        "precommit": "petal hooks precommit",
-        "postinstall": "petal hooks install",
-    },
-}
-```
+using prettier isn't recommended, but you can still use it to format files that are not supported well by eslint yet, such as `.css`, `.html`, etc. (see [formatters](#formatters) for more details).
 
-and then
+### dprint?
 
-```bash
-pnpm add -D @flowr/petal
-```
+[dprint](https://dprint.dev/) is also a great formatter with more customization. however, it follows the same ast-based model as prettier (leading to inconsistent diff and ignoring line breaks). in general, we prefer to use eslint to format and lint most code.
+
+however, we do have dprint integration for formatting other files such as `.md` (see [formatters](#formatters) for more details).
+
+[configs]: https://github.com/pulseflow/petal/blob/main/configs/eslint-config/src/configs
+[factory]: https://github.com/pulseflow/petal/blob/main/configs/eslint-config/src/factory.ts
+[eslint-flat]: https://eslint.org/docs/latest/use/configure/configuration-files-new
+[stylistic]: https://github.com/eslint-stylistic/eslint-stylistic
+[node-type]: https://nodejs.org/api/packages.html#type
+[eslint-patch]: https://github.com/antfu/eslint-ts-patch
+[vscode]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+[config-comments]: https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1
+[type-aware]: https://typescript-eslint.io/linting/typed-linting

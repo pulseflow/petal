@@ -78,10 +78,7 @@ export function getVersion(packageManager: string) {
 
 		const { version } = await fetch(`${registry}/@flowr/petal/latest`, {
 			redirect: 'follow',
-		}).then(
-			res => res.json(),
-			() => ({ version: '' }),
-		);
+		}).then(res => res.json(), () => ({ version: '' }));
 
 		v = version;
 		resolve(version);

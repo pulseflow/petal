@@ -7,6 +7,7 @@ export default petal({
 	ignores: [
 		'fixtures',
 		'_fixtures',
+		'**/fixtures/**',
 	],
 }, {
 	files: ['configs/eslint-config/src/**/*.ts'],

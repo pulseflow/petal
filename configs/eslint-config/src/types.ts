@@ -1,5 +1,6 @@
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { ParserOptions } from '@typescript-eslint/parser';
+import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks';
 import type { Linter } from 'eslint';
 import type {
 	EslintCommentsRules,
@@ -24,6 +25,7 @@ import type { RuleOptions as TypeScriptRules } from '@eslint-types/typescript-es
 import type { RuleOptions as UnicornRules } from '@eslint-types/unicorn/types';
 import type { Rules as PetalRules } from 'eslint-plugin-petal';
 import type { StylisticCustomizeOptions, UnprefixedRuleOptions as StylisticRules } from '@stylistic/eslint-plugin';
+import type { VendoredPrettierOptions } from './vendor/prettier-types.js';
 
 export type WrapRuleConfig<T extends { [key: string]: any }> = {
 	[K in keyof T]: T[K] extends RuleConfig ? T[K] : RuleConfig<T[K]>;
@@ -79,6 +81,67 @@ export type FlatConfigItem = Omit<FlatESLintConfigItem<Rules, false>, 'plugins'>
 
 export type UserConfigItem = FlatConfigItem | Linter.FlatConfig;
 
+export interface OptionsVue {
+	/**
+	 * Create virtual files for Vue SFC blocks to enable linting.
+	 *
+	 * @see https://github.com/antfu/eslint-processor-vue-blocks
+	 * @default true
+	 */
+	sfcBlocks?: boolean | VueBlocksOptions
+
+	/**
+	 * Vue version. Apply different rules set from `eslint-plugin-vue`
+	 *
+	 * @default 3
+	 */
+	vueVersion?: 2 | 3
+}
+
+export interface OptionsFormatters {
+	/**
+	 * Enable formatting support for CSS, Less, Sass, and SCSS
+	 *
+	 * Currently only supports Prettier.
+	 */
+	css?: 'prettier' | boolean
+
+	/**
+	 * Enable formatting support for HTML.
+	 *
+	 * Currently only supports Prettier.
+	 */
+	html?: 'prettier' | boolean
+
+	/**
+	 * Enable formatting support for Markdown.
+	 *
+	 * Supports both Prettier and dprint.
+	 *
+	 * When set to `true`, it will use Prettier.
+	 */
+	markdown?: 'prettier' | 'dprint' | boolean
+
+	/**
+	 * Enable formatting support for GraphQL.
+	 */
+	graphql?: 'prettier' | boolean
+
+	/**
+	 * Custom options for Prettier.
+	 *
+	 * By default it's controlled by our own config.
+	 */
+	prettierOptions?: VendoredPrettierOptions
+
+	/**
+	 * Custom options for dprint.
+	 *
+	 * By default it's controlled by out own config.
+	 */
+	dprintOptions?: boolean
+}
+
 export interface OptionsFiles {
 	/**
 	 * Override the `files` options to provide custom globs.
@@ -127,6 +190,22 @@ export interface OptionsOverrides {
 
 export interface OptionsIsInEditor {
 	isInEditor?: boolean
+}
+
+export interface OptionsUnoCSS {
+	/**
+	 * Enable attributify support.
+	 *
+	 * @default true
+	 */
+	attributify?: boolean
+
+	/**
+	 * Enable strict mode (throws errors about blocked classes)
+	 *
+	 * @default false
+	 */
+	strict?: boolean
 }
 
 export interface OptionsConfig extends OptionsComponentExts {
@@ -180,12 +259,17 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 *
 	 * @default auto-detect based on the dependencies
 	 */
-	vue?: boolean
+	vue?: boolean | OptionsVue
 
 	/**
-	 * Enable React support.
+	 * Enable React rules.
 	 *
-	 * @default true
+	 * Requires installing:
+	 * - `eslint-plugin-react`
+	 * - `eslint-plugin-react-hooks`
+	 * - `eslint-plugin-react-refresh`
+	 *
+	 * @default false
 	 */
 	react?: boolean
 
@@ -211,7 +295,16 @@ export interface OptionsConfig extends OptionsComponentExts {
 	yaml?: boolean
 
 	/**
-	 * Enable Markdown support.
+	 * Enable TOML support.
+	 *
+	 * @default true
+	 */
+	toml?: boolean
+
+	/**
+	 * Enable linting for **code snippets** in Markdown.
+	 *
+	 * For formatting Markdown content, enable also `formatters.markdown`
 	 *
 	 * @default true
 	 */
@@ -223,6 +316,28 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * @default true
 	 */
 	stylistic?: boolean | StylisticConfig
+
+	/**
+	 * Enable UnoCSS rules.
+	 *
+	 * Requires installing:
+	 * - `@unocss/eslint-plugin`
+	 *
+	 * @default false
+	 */
+	unocss?: boolean | OptionsUnoCSS
+
+	/**
+	 * Use external formatters to format files.
+	 *
+	 * Requires installing:
+	 * - `eslint-plugin-format`
+	 *
+	 * When set to `true`, it will enable all formatters.
+	 *
+	 * @default false
+	 */
+	formatters?: boolean | OptionsFormatters
 
 	/**
 	 * Control to disable some rules in editors.
@@ -242,6 +357,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 		react?: FlatConfigItem['rules']
 		astro?: FlatConfigItem['rules']
 		jsonc?: FlatConfigItem['rules']
+		toml?: FlatConfigItem['rules']
 		markdown?: FlatConfigItem['rules']
 		yaml?: FlatConfigItem['rules']
 	}

@@ -20,7 +20,10 @@
 	"files": [
 		"!**/*.spec",
 		"!**/*.test.*",
+		"!**/*.ts.map",
+		"!**/*.ts.map",
 		"!**/*.tsbuildinfo",
+		"!**/test/**/*",
 		"CHANGELOG.md",
 		"LICENSE",
 		"README.md",

@@ -62,11 +62,8 @@ export function sanitize(text: string): string {
 	if (typeof text !== 'string')
 		return '';
 
-	return text.replace(
-		// eslint-disable-next-line no-control-regex
-		/[\u0000-\u0009\u000B-\u001A]/gu,
-		c => `\\u${c.codePointAt(0)!.toString(16).padStart(4, '0')}`,
-	);
+	// eslint-disable-next-line no-control-regex
+	return text.replace(/[\u0000-\u0009\u000B-\u001A]/gu, c => `\\u${c.codePointAt(0)!.toString(16).padStart(4, '0')}`);
 }
 
 // this symbol is used internally by ESLint to unwrap the wrapped parser

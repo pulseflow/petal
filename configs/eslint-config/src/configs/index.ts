@@ -17,3 +17,6 @@ export * from './typescript.js';
 export * from './unicorn.js';
 export * from './vue.js';
 export * from './yaml.js';
+export * from './toml.js';
+export * from './unocss.js';
+export * from './formatters.js';

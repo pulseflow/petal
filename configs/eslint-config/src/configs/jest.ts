@@ -1,14 +1,15 @@
 import globals from 'globals';
 import type {
 	FlatConfigItem,
+	OptionsFiles,
 	OptionsIsInEditor,
 	OptionsOverrides,
 } from '../types.js';
 import { GLOB_TESTS } from '../globs.js';
 import { interopDefault } from '../utils.js';
 
-export async function jest(options: OptionsIsInEditor & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
-	const { isInEditor = false, overrides = {} } = options;
+export async function jest(options: OptionsIsInEditor & OptionsOverrides & OptionsFiles = {}): Promise<FlatConfigItem[]> {
+	const { files = GLOB_TESTS, isInEditor = false, overrides = {} } = options;
 
 	const [
 		pluginJest,
@@ -39,7 +40,7 @@ export async function jest(options: OptionsIsInEditor & OptionsOverrides = {}): 
 			},
 		},
 		{
-			files: GLOB_TESTS,
+			files,
 			languageOptions: {
 				globals: {
 					...globals.jest,

@@ -1,27 +1,44 @@
+import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors';
 import type {
 	FlatConfigItem,
 	OptionsComponentExts,
 	OptionsFiles,
 	OptionsOverrides,
 } from '../types.js';
-import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE } from '../globs.js';
-import { interopDefault } from '../utils.js';
+import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN } from '../globs.js';
+import { interopDefault, parserPlain } from '../utils.js';
 
 export async function markdown(options: OptionsFiles & OptionsComponentExts & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
 	const { componentExts = [], files = [GLOB_MARKDOWN], overrides = {} } = options;
+
+	// @ts-expect-error missing types
+	const markdown = await interopDefault(import('eslint-plugin-markdown'));
 
 	return [
 		{
 			name: 'petal:markdown:setup',
 			plugins: {
-				// @ts-expect-error missing types
-				markdown: await interopDefault(import('eslint-plugin-markdown')),
+				markdown,
 			},
 		},
 		{
 			files,
+			ignores: [GLOB_MARKDOWN_IN_MARKDOWN],
 			name: 'petal:markdown:processor',
-			processor: 'markdown/markdown',
+			// `eslint-plugin-markdown` only creates virtual files for code blocks,
+			// but not the markdown file itself. we use `eslint-merge-processors` to
+			// add a pass-through processor for themarkdown file itself.
+			processor: mergeProcessors([
+				markdown.processors.markdown,
+				processorPassThrough,
+			]),
+		},
+		{
+			files,
+			languageOptions: {
+				parser: parserPlain,
+			},
+			name: 'petal:markdown:parser',
 		},
 		{
 			files: [
@@ -35,7 +52,7 @@ export async function markdown(options: OptionsFiles & OptionsComponentExts & Op
 					},
 				},
 			},
-			name: 'petal:markdown:rules',
+			name: 'petal:markdown:disables',
 			rules: {
 				'import/newline-after-import': 'off',
 				'no-alert': 'off',
@@ -49,7 +66,6 @@ export async function markdown(options: OptionsFiles & OptionsComponentExts & Op
 				'no-unused-vars': 'off',
 				'node/prefer-global/process': 'off',
 
-				'petal/no-ts-export-equal': 'off',
 				'style/comma-dangle': 'off',
 
 				'style/eol-last': 'off',

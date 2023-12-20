@@ -103,14 +103,11 @@ export async function typescript(options: OptionsComponentExts &
 				),
 
 				'no-dupe-class-members': 'off',
-				'no-invalid-this': 'off',
-
 				'no-loss-of-precision': 'off',
 				'no-redeclare': 'off',
 				'no-use-before-define': 'off',
 				'no-useless-constructor': 'off',
-				'petal/generic-spacing': 'error',
-				'petal/named-tuple-spacing': 'error',
+				'style/implicit-arrow-linebreak': 'off',
 				'ts/ban-ts-comment': [
 					'error',
 					{ 'ts-ignore': 'allow-with-description' },
@@ -127,7 +124,6 @@ export async function typescript(options: OptionsComponentExts &
 				'ts/no-explicit-any': 'off',
 				'ts/no-extraneous-class': 'off',
 				'ts/no-import-type-side-effects': 'error',
-				'ts/no-invalid-this': 'error',
 				'ts/no-invalid-void-type': 'off',
 				'ts/no-loss-of-precision': 'error',
 				'ts/no-non-null-assertion': 'off',

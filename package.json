@@ -1,39 +1,39 @@
 {
-  "name": "@flowr/petal-monorepo",
-  "type": "module",
-  "private": true,
-  "packageManager": "pnpm@8.10.4",
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pulseflow/petal.git"
-  },
-  "scripts": {
-    "postinstall": "lerna run bootstrap && petal audit",
-    "test": "NODE_OPTIONS=--experimental-vm-modules lerna run test --stream",
-    "build": "lerna run build --stream",
-    "clean": "lerna run clean --stream",
-    "lint": "petal lint --no-typecheck",
-    "commit": "petal commit",
-    "release": "lerna publish --force-publish --ignore-scripts --conventional-commits --registry=https://registry.npmjs.org --no-private",
-    "prepare": "husky install"
-  },
-  "workspaces": {
-    "packages": [
-      "core/*",
-      "configs/*"
-    ]
-  },
-  "devDependencies": {
-    "@flowr/eslint-config": "workspace:^",
-    "@flowr/petal": "workspace:^",
-    "@stylistic/eslint-plugin-migrate": "^1.5.1",
-    "create-petal": "workspace:^",
-    "husky": "^8.0.3",
-    "lerna": "^8.0.1",
-    "typescript": "^5.3.3"
-  },
-  "overrides": {
-    "@types/node": "^18.0.0"
-  }
+	"name": "@flowr/petal-monorepo",
+	"type": "module",
+	"private": true,
+	"packageManager": "pnpm@8.12.1",
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal.git"
+	},
+	"scripts": {
+		"postinstall": "lerna run bootstrap && petal audit",
+		"test": "NODE_OPTIONS=--experimental-vm-modules lerna run test --stream",
+		"build": "lerna run build --stream",
+		"clean": "lerna run clean --stream",
+		"lint": "petal lint --no-typecheck",
+		"commit": "petal commit",
+		"release": "lerna publish --force-publish --ignore-scripts --conventional-commits --registry=https://registry.npmjs.org --no-private",
+		"prepare": "husky install"
+	},
+	"workspaces": {
+		"packages": [
+			"core/*",
+			"configs/*"
+		]
+	},
+	"devDependencies": {
+		"@flowr/eslint-config": "workspace:^",
+		"@flowr/petal": "workspace:^",
+		"@stylistic/eslint-plugin-migrate": "^1.5.1",
+		"create-petal": "workspace:^",
+		"husky": "^8.0.3",
+		"lerna": "^8.0.1",
+		"typescript": "^5.3.3"
+	},
+	"overrides": {
+		"@types/node": "^18.0.0"
+	}
 }

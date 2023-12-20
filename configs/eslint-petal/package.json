@@ -23,8 +23,12 @@
 	"files": [
 		"!**/*.spec",
 		"!**/*.test.*",
+		"!**/*.ts.map",
 		"!**/*.tsbuildinfo",
 		"!**/docs/**/*",
+		"!**/test/**/*",
+		"!**/test/**/*",
+		"!**/vendor/**/*",
 		"CHANGELOG.md",
 		"LICENSE",
 		"README.md",
@@ -44,7 +48,7 @@
 		"eslint": "*"
 	},
 	"devDependencies": {
-		"@types/eslint": "^8.44.9",
+		"@types/eslint": "^8.56.0",
 		"@types/lodash.merge": "^4.6.9",
 		"@types/node": "^20.10.5",
 		"@types/semver": "^7.5.5",

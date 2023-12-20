@@ -1,4 +1,4 @@
-# tsconfig
+# @flowr/tsconfig
 
 A collection of different base `tsconfig.json` to be extended from in your project.
 

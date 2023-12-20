@@ -21,15 +21,15 @@ It is intended to be used within a project as a series of npm scripts.
 
 ```json
 {
-	"devDependencies": {
-		"@flowr/petal": "^2.0.0"
-	},
-	"scripts": {
-		"build": "petal build",
-		"test": "petal test",
-		"lint": "petal lint",
-		"prepare": "petal prepare"
-	}
+    "devDependencies": {
+        "@flowr/petal": "^2.0.0"
+    },
+    "scripts": {
+        "build": "petal build",
+        "test": "petal test",
+        "lint": "petal lint",
+        "prepare": "petal prepare"
+    }
 }
 ```
 

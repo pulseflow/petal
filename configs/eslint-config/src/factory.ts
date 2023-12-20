@@ -19,12 +19,15 @@ import {
 	sortTsConfig,
 	stylistic,
 	test,
+	toml,
 	typescript,
 	unicorn,
+	unocss,
 	vue,
 	yaml,
 } from './configs/index.js';
 import { combine, interopDefault } from './utils.js';
+import { formatters } from './configs/formatters.js';
 
 const flatConfigProps: (keyof FlatConfigItem)[] = [
 	'files',
@@ -48,18 +51,19 @@ export function petal(
 	...userConfigs: Awaitable<UserConfigItem | UserConfigItem[]>[]
 ): Promise<UserConfigItem[]> {
 	const {
+		astro: enableAstro = isPackageExists('astro'),
 		componentExts = [],
 		gitignore: enableGitignore = true,
 		isInEditor = !!(
-			(process.env.VSCODE_PID || process.env.JETBRAINS_IDE)
+			(process.env.VSCODE_PID || process.env.JETBRAINS_IDE || process.env.VIM)
 			&& !process.env.CI
 		),
-		overrides = {},
-		typescript: enableTypeScript = isPackageExists('typescript'),
-		vue: enableVue = VuePackages.some(i => isPackageExists(i)),
 		jest: enableJest = JestPackages.some(i => isPackageExists(i)),
+		overrides = {},
 		react: enableReact = isPackageExists('react'),
-		astro: enableAstro = isPackageExists('astro'),
+		typescript: enableTypeScript = isPackageExists('typescript'),
+		unocss: enableUnoCSS = false,
+		vue: enableVue = VuePackages.some(i => isPackageExists(i)),
 	} = options;
 
 	const stylisticOptions
@@ -121,6 +125,9 @@ export function petal(
 
 	if (enableVue) {
 		configs.push(vue({
+			...typeof enableVue !== 'boolean'
+				? enableVue
+				: {},
 			overrides: overrides.vue,
 			stylistic: stylisticOptions,
 			typescript: !!enableTypeScript,
@@ -141,6 +148,12 @@ export function petal(
 		}));
 	}
 
+	if (enableUnoCSS) {
+		configs.push(unocss(
+			typeof enableUnoCSS === 'boolean' ? {} : enableUnoCSS,
+		));
+	}
+
 	if (options.jsonc ?? true) {
 		configs.push(
 			jsonc({
@@ -159,11 +172,25 @@ export function petal(
 		}));
 	}
 
+	if (options.toml ?? true) {
+		configs.push(toml({
+			overrides: overrides.toml,
+			stylistic: stylisticOptions,
+		}));
+	}
+
 	if (options.markdown ?? true) {
 		configs.push(markdown({
 			componentExts,
 			overrides: overrides.markdown,
 		}));
+	}
+
+	if (options.formatters) {
+		configs.push(formatters(
+			options.formatters,
+			typeof stylisticOptions === 'boolean' ? {} : stylisticOptions,
+		));
 	}
 
 	const fusedConfig = flatConfigProps.reduce((acc, key) => {

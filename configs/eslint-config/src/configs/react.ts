@@ -4,16 +4,14 @@ import type {
 	OptionsFiles,
 	OptionsHasTypeScript,
 	OptionsOverrides,
-	OptionsStylistic,
 } from '../types.js';
 import { GLOB_JSX, GLOB_TSX } from '../globs.js';
 import { ensurePackages, interopDefault } from '../utils.js';
 
 const ReactRefreshAllowConstantExportPackages = ['vite'];
 
-export async function react(options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles = {}): Promise<FlatConfigItem[]> {
-	const { files = [GLOB_JSX, GLOB_TSX], overrides = {}, stylistic = true, typescript = true } = options;
-	const { indent = 'tab' } = typeof stylistic === 'boolean' ? {} : stylistic;
+export async function react(options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles = {}): Promise<FlatConfigItem[]> {
+	const { files = [GLOB_JSX, GLOB_TSX], overrides = {}, typescript = true } = options;
 
 	await ensurePackages([
 		'eslint-plugin-react',
@@ -157,7 +155,6 @@ export async function react(options: OptionsHasTypeScript & OptionsOverrides & O
 				'style/jsx-curly-brace-presence': 2,
 				// Enforce or disallow spaces inside of curly braces in JSX attributes
 				'style/jsx-curly-spacing': 0,
-				'style/jsx-indent': [0, indent || 'tab'],
 				// Enforce props alphabetical sorting
 				'style/jsx-sort-props': 0,
 				// Prevent missing parentheses around multilines JSX
