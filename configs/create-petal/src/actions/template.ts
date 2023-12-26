@@ -42,6 +42,7 @@ export async function template(ctx: TemplateContext) {
 					label: 'turborepo + petal sample repo',
 				},
 				{ value: 'rust', label: 'empty rust repository' },
+				{ value: 'rust-ws', label: 'rust workspace' },
 				{ value: 'rust-turbo', label: 'empty rust + petal turborepo' },
 				{ value: 'minimal', label: 'empty project template' },
 			],

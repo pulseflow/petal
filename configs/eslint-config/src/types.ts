@@ -26,24 +26,14 @@ import type { RuleOptions as UnicornRules } from '@eslint-types/unicorn/types';
 import type { Rules as PetalRules } from 'eslint-plugin-petal';
 import type { StylisticCustomizeOptions, UnprefixedRuleOptions as StylisticRules } from '@stylistic/eslint-plugin';
 import type { VendoredPrettierOptions } from './vendor/prettier-types.js';
+import type { AstroRules } from './vendor/astro-types.js';
+import type { JestRules } from './vendor/jest-types.js';
 
 export type WrapRuleConfig<T extends { [key: string]: any }> = {
 	[K in keyof T]: T[K] extends RuleConfig ? T[K] : RuleConfig<T[K]>;
 };
 
 export type Awaitable<T> = T | Promise<T>;
-
-export interface AstroRules {
-	'astro/no-conflict-set-directives': string
-	'astro/no-deprecated-astro-canonicalurl': string
-	'astro/no-deprecated-astro-fetchcontent': string
-	'astro/no-deprecated-astro-resolve': string
-	'astro/no-deprecated-getentrybyslug': string
-	'astro/no-unused-define-vars-in-style': string
-	'astro/valid-compile': string
-}
-
-export interface JestRules { }
 
 export type Rules = WrapRuleConfig<
 	MergeIntersection<
@@ -53,6 +43,8 @@ export type Rules = WrapRuleConfig<
 		RenamePrefix<NRules, 'n/', 'node/'> &
 		Prefix<StylisticRules, 'style/'> &
 		Prefix<PetalRules, 'petal/'> &
+		AstroRules &
+		JestRules &
 		JSDocRules &
 		ImportRules &
 		EslintRules &
@@ -62,7 +54,6 @@ export type Rules = WrapRuleConfig<
 		EslintCommentsRules &
 		JsxA11yRules &
 		ReactHooksRules &
-		AstroRules &
 		ReactRules & { 'test/no-only-tests': RuleConfig<[]> }
 	>
 >;

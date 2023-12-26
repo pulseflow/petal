@@ -1,0 +1,4 @@
+core = "auto"
+
+[rust]
+workspace = 2

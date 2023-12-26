@@ -1,0 +1,23 @@
+{
+	"name": "Contribute to Petal",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+
+	"features": {
+		"ghcr.io/devcontainers/features/desktop-lite:1": {}
+	},
+
+	"postCreateCommand": "pnpm install && pnpm run build",
+
+	"waitFor": "postCreateCommand",
+
+	"customizations": {
+		"codespaces": {
+			"openFiles": ["README.md", "CONTRIBUTING.md"]
+		},
+		"vscode": {
+			"extensions": ["dbaeumer.vscode-eslint"]
+		}
+	}
+}

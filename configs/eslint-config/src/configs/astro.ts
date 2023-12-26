@@ -4,14 +4,12 @@ import type {
 	OptionsFiles,
 	OptionsHasTypeScript,
 	OptionsOverrides,
-	OptionsStylistic,
 } from '../types.js';
 import { interopDefault } from '../utils.js';
 import { GLOB_ASTRO } from '../globs.js';
 
-export async function astro(options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles = {}): Promise<FlatConfigItem[]> {
-	const { files = [GLOB_ASTRO], overrides = {}, stylistic = true, typescript = true } = options;
-	const { indent = 'tab' } = typeof stylistic === 'boolean' ? {} : stylistic;
+export async function astro(options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles = {}): Promise<FlatConfigItem[]> {
+	const { files = [GLOB_ASTRO], overrides = {}, typescript = true } = options;
 
 	const [
 		pluginAstro,
@@ -67,15 +65,11 @@ export async function astro(options: OptionsHasTypeScript & OptionsOverrides & O
 				}],
 				'node/prefer-global/process': 'off',
 				'style/implicit-arrow-linebreak': 'off',
-				'style/indent': ['error', indent],
+				'style/indent': 'off',
+				'style/jsx-closing-bracket-location': 'off',
 				'style/jsx-indent': 'off',
 				'style/jsx-one-expression-per-line': 'off',
-				'style/jsx-tag-spacing': ['error', {
-					afterOpening: 'never',
-					beforeClosing: 'never',
-					beforeSelfClosing: 'never',
-					closingSlash: 'never',
-				}],
+				'style/jsx-tag-spacing': 'off',
 
 				...overrides,
 			},
