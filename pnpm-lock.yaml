@@ -33,8 +33,8 @@ importers:
   configs/create-petal:
     dependencies:
       '@astrojs/cli-kit':
-        specifier: ^0.3.0
-        version: 0.3.1
+        specifier: ^0.4.0
+        version: 0.4.0
       '@flowr/tsconfig':
         specifier: workspace:^
         version: link:../tsconfig
@@ -513,8 +513,8 @@ packages:
     resolution: {integrity: sha512-gFPqTG7otEJ8uP6wrhDv6mqwGWYZKNvAcCq6u9hOj0c+IKCEsY4L1oC9trPq2SaWIzAfHvqfBDxF591JkMf+kg==}
     dev: true
 
-  /@astrojs/cli-kit@0.3.1:
-    resolution: {integrity: sha512-BEzf3gudr4XrrrInJKD+GSS5O+GXRTukLUpOfgqdTSq6d48EWVhigNHobmlQGbpa9FEAw+sZmvmHmhS29QhnwA==}
+  /@astrojs/cli-kit@0.4.0:
+    resolution: {integrity: sha512-M7R2Af/Gh13pwZ2zjTkTPt87x4IjRw/bSRCmjJGWEGeW3nLNzuEeRY8tleeIGbbfUsm3DJg+UF5rCrQGoviHgQ==}
     engines: {node: '>=18.14.1'}
     dependencies:
       chalk: 5.3.0
@@ -3387,6 +3387,7 @@ packages:
   /autoprefixer@10.4.16(postcss@8.4.32):
     resolution: {integrity: sha512-7vd3UC6xKp0HLfua5IjZlcXvGAGy7cBAXTg2lyQ/8WpNhd6SiZ8Be+xm3FyBSYJx5GKcpRCzBh7RH4/0dnY+uQ==}
     engines: {node: ^10 || ^12 || >=14}
+    hasBin: true
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
@@ -5128,9 +5129,9 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       cross-spawn: 7.0.3
-      get-stream: 6.0.0
+      get-stream: 6.0.1
       human-signals: 2.1.0
-      is-stream: 2.0.0
+      is-stream: 2.0.1
       merge-stream: 2.0.0
       npm-run-path: 4.0.1
       onetime: 5.1.2
@@ -6302,7 +6303,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       async: 3.2.5
-      chalk: 4.1.0
+      chalk: 4.1.2
       filelist: 1.0.4
       minimatch: 3.1.2
     dev: true
@@ -6311,7 +6312,7 @@ packages:
     resolution: {integrity: sha512-LMIgiIrhigmPrs03JHpxUh2yISK3vLFPkAodPeo0+BuF7wA2FoQbkEg1u8gBYBThncu7e1oEDUfIXVuTqLRUjw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      chalk: 4.1.0
+      chalk: 4.1.2
       diff-sequences: 29.6.3
       jest-get-type: 29.6.3
       pretty-format: 29.7.0
@@ -6412,6 +6413,7 @@ packages:
 
   /jscodeshift@0.15.1:
     resolution: {integrity: sha512-hIJfxUy8Rt4HkJn/zZPU9ChKfKZM1342waJ1QC2e2YsPcWhM+3BJ4dcfQCzArTrk1jJeNLB341H+qOcEHRxJZg==}
+    hasBin: true
     peerDependencies:
       '@babel/preset-env': ^7.1.6
     peerDependenciesMeta:
@@ -7151,6 +7153,7 @@ packages:
 
   /mkdist@1.4.0(typescript@5.3.3):
     resolution: {integrity: sha512-LzzdzWDx6cWWPd8saIoO+kT5jnbijfeDaE6jZfmCYEi3YL2aJSyF23/tCFee/mDuh/ek1UQeSYdLeSa6oesdiw==}
+    hasBin: true
     peerDependencies:
       sass: ^1.69.5
       typescript: '>=5.3.2'
@@ -7504,6 +7507,7 @@ packages:
 
   /nx@17.2.6:
     resolution: {integrity: sha512-lBHp0e0AMBwYwpT44a8b0j29szspmYUhY1okqNctz/3ifuonNFG9WGfbzRO4YKOrVkfNsuaomHVAE6gtqo55ng==}
+    hasBin: true
     requiresBuild: true
     peerDependencies:
       '@swc-node/register': ^1.6.7
@@ -7519,7 +7523,7 @@ packages:
       '@yarnpkg/parsers': 3.0.0-rc.46
       '@zkochan/js-yaml': 0.0.6
       axios: 1.6.2
-      chalk: 4.1.0
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
       cliui: 8.0.1
@@ -9653,6 +9657,7 @@ packages:
 
   /unbuild@2.0.0(typescript@5.3.3):
     resolution: {integrity: sha512-JWCUYx3Oxdzvw2J9kTAp+DKE8df/BnH/JTSj6JyA4SH40ECdFu7FoJJcrm8G92B7TjofQ6GZGjJs50TRxoH6Wg==}
+    hasBin: true
     peerDependencies:
       typescript: ^5.1.6
     peerDependenciesMeta:
@@ -9771,6 +9776,7 @@ packages:
 
   /update-browserslist-db@1.0.13(browserslist@4.22.2):
     resolution: {integrity: sha512-xebP81SNcPuNpPP3uzeW1NYXxI3rxyJzF3pD6sH4jE7o/IX+WtSpwnVU+qIsDPyk0d3hmFQ7mjqc6AtV604hbg==}
+    hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
@@ -9843,6 +9849,7 @@ packages:
   /vite@5.0.10(@types/node@20.10.5):
     resolution: {integrity: sha512-2P8J7WWgmc355HUMlFrwofacvr98DAjoE52BfdbwQtyLH06XKwaL/FMnmKM2crF0iX4MpmMKoDlNCB1ok7zHCw==}
     engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
     peerDependencies:
       '@types/node': ^18.0.0 || >=20.0.0
       less: '*'
@@ -9877,6 +9884,7 @@ packages:
   /vitest@0.34.6:
     resolution: {integrity: sha512-+5CALsOvbNKnS+ZHMXtuUC7nL8/7F1F2DnHGjSsszX8zCjWSSviphCb/NuS9Nzf4Q03KyyDRBAXhF/8lffME4Q==}
     engines: {node: '>=v14.18.0'}
+    hasBin: true
     peerDependencies:
       '@edge-runtime/vm': '*'
       '@vitest/browser': '*'
@@ -10079,12 +10087,14 @@ packages:
   /which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
     engines: {node: '>= 8'}
+    hasBin: true
     dependencies:
       isexe: 2.0.0
 
   /which@4.0.0:
     resolution: {integrity: sha512-GlaYyEb07DPxYCKhKzplCWBJtvxZcZMrL+4UkrTSJHHPyZU4mYYTv3qaOe77H7EODLSSopAUFAc6W8U4yqvscg==}
     engines: {node: ^16.13.0 || >=18.0.0}
+    hasBin: true
     dependencies:
       isexe: 3.1.1
     dev: true
