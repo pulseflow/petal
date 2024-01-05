@@ -59,7 +59,7 @@
 		"@types/zen-observable": "^0.8.5",
 		"mock-fs": "^5.2.0",
 		"rimraf": "^5.0.5",
-		"vitest": "^0.34.6",
+		"vitest": "^1.1.2",
 		"zen-observable": "^0.10.0"
 	},
 	"publishConfig": {
