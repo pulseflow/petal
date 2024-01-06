@@ -5,6 +5,7 @@ import importDedupe from './rules/import-dedupe.js';
 import preferInlineTypeImport from './rules/prefer-inline-type-import.js';
 import topLevelFunction from './rules/top-level-function.js';
 import noImportNodeModulesByPath from './rules/no-import-node-modules-by-path.js';
+import noImportDist from './rules/no-import-dist.js';
 import noTsExportEqual from './rules/no-ts-export-equal.js';
 import consistentListNewline from './rules/consistent-list-newline.js';
 
@@ -20,6 +21,7 @@ const plugin = {
 		'if-newline': ifNewline,
 		'import-dedupe': importDedupe,
 		'no-import-node-modules-by-path': noImportNodeModulesByPath,
+		'no-import-dist': noImportDist,
 		'no-ts-export-equal': noTsExportEqual,
 		'prefer-inline-type-import': preferInlineTypeImport,
 		'top-level-function': topLevelFunction,
