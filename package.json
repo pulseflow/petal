@@ -33,6 +33,11 @@
 		"lerna": "^8.0.2",
 		"typescript": "^5.3.3"
 	},
+	"pnpm": {
+		"overrides": {
+			"follow-redirects@<1.15.4": ">=1.15.4"
+		}
+	},
 	"overrides": {
 		"@types/node": "^18.0.0"
 	}

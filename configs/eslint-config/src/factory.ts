@@ -18,6 +18,7 @@ import {
 	sortPackageJson,
 	sortTsConfig,
 	stylistic,
+	svelte,
 	test,
 	toml,
 	typescript,
@@ -59,8 +60,8 @@ export function petal(
 			&& !process.env.CI
 		),
 		jest: enableJest = JestPackages.some(i => isPackageExists(i)),
-		overrides = {},
 		react: enableReact = isPackageExists('react'),
+		svelte: enableSvelte = false,
 		typescript: enableTypeScript = isPackageExists('typescript'),
 		unocss: enableUnoCSS = false,
 		vue: enableVue = VuePackages.some(i => isPackageExists(i)),
@@ -72,6 +73,7 @@ export function petal(
 			: typeof options.stylistic === 'object'
 				? options.stylistic
 				: {};
+
 	if (stylisticOptions && !('jsx' in stylisticOptions))
 		stylisticOptions.jsx = options.jsx ?? true;
 
@@ -87,7 +89,7 @@ export function petal(
 		ignores(),
 		javascript({
 			isInEditor,
-			overrides: overrides.javascript,
+			overrides: getOverrides(options, 'javascript'),
 		}),
 		comments(),
 		node(),
@@ -106,29 +108,27 @@ export function petal(
 
 	if (enableTypeScript) {
 		configs.push(typescript({
-			...typeof enableTypeScript !== 'boolean'
-				? enableTypeScript
-				: {},
+			...resolveSubOptions(options, 'typescript'),
 			componentExts,
-			overrides: overrides.typescript,
 		}));
 	}
 
-	if (stylisticOptions)
-		configs.push(stylistic(stylisticOptions));
+	if (stylisticOptions) {
+		configs.push(stylistic({
+			...stylisticOptions,
+			overrides: getOverrides(options, 'stylistic'),
+		}));
+	}
 
 	if (options.test ?? true)
-		configs.push(test({ isInEditor, overrides: overrides.test }));
+		configs.push(test({ isInEditor, overrides: getOverrides(options, 'test') }));
 
 	if (enableJest)
-		configs.push(jest({ isInEditor, overrides: overrides.jest }));
+		configs.push(jest({ isInEditor, overrides: getOverrides(options, 'jest') }));
 
 	if (enableVue) {
 		configs.push(vue({
-			...typeof enableVue !== 'boolean'
-				? enableVue
-				: {},
-			overrides: overrides.vue,
+			...resolveSubOptions(options, 'vue'),
 			stylistic: stylisticOptions,
 			typescript: !!enableTypeScript,
 		}));
@@ -136,28 +136,37 @@ export function petal(
 
 	if (enableAstro) {
 		configs.push(astro({
-			overrides: overrides.astro,
+			overrides: getOverrides(options, 'astro'),
 			typescript: !!enableTypeScript,
 		}));
 	}
 
 	if (enableReact) {
 		configs.push(react({
-			overrides: overrides.react,
+			overrides: getOverrides(options, 'react'),
+			typescript: !!enableTypeScript,
+		}));
+	}
+
+	if (enableSvelte) {
+		configs.push(svelte({
+			overrides: getOverrides(options, 'svelte'),
+			stylistic: stylisticOptions,
 			typescript: !!enableTypeScript,
 		}));
 	}
 
 	if (enableUnoCSS) {
-		configs.push(unocss(
-			typeof enableUnoCSS === 'boolean' ? {} : enableUnoCSS,
-		));
+		configs.push(unocss({
+			...resolveSubOptions(options, 'unocss'),
+			overrides: getOverrides(options, 'unocss'),
+		}));
 	}
 
 	if (options.jsonc ?? true) {
 		configs.push(
 			jsonc({
-				overrides: overrides.jsonc,
+				overrides: getOverrides(options, 'jsonc'),
 				stylistic: stylisticOptions,
 			}),
 			sortPackageJson(),
@@ -167,14 +176,14 @@ export function petal(
 
 	if (options.yaml ?? true) {
 		configs.push(yaml({
-			overrides: overrides.yaml,
+			overrides: getOverrides(options, 'yaml'),
 			stylistic: stylisticOptions,
 		}));
 	}
 
 	if (options.toml ?? true) {
 		configs.push(toml({
-			overrides: overrides.toml,
+			overrides: getOverrides(options, 'toml'),
 			stylistic: stylisticOptions,
 		}));
 	}
@@ -182,7 +191,7 @@ export function petal(
 	if (options.markdown ?? true) {
 		configs.push(markdown({
 			componentExts,
-			overrides: overrides.markdown,
+			overrides: getOverrides(options, 'markdown'),
 		}));
 	}
 
@@ -208,4 +217,30 @@ export function petal(
 	);
 
 	return merged;
+}
+
+export type ResolveOptions<T> = T extends boolean
+	? never
+	: NonNullable<T>;
+
+export function resolveSubOptions<K extends keyof OptionsConfig>(
+	options: OptionsConfig,
+	key: K,
+): ResolveOptions<OptionsConfig[K]> {
+	return typeof options[key] === 'boolean'
+		? {} as any
+		: options[key] || {};
+}
+
+export function getOverrides<K extends keyof OptionsConfig>(
+	options: OptionsConfig,
+	key: K,
+) {
+	const sub = resolveSubOptions(options, key);
+	return {
+		...(options.overrides as any)?.[key],
+		...'overrides' in sub
+			? sub.overrides
+			: {},
+	};
 }

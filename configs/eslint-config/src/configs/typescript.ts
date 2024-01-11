@@ -7,7 +7,7 @@ import type {
 	OptionsTypeScriptParserOptions,
 	OptionsTypeScriptWithTypes,
 } from '../types.js';
-import { GLOB_SRC } from '../globs.js';
+import { GLOB_SRC, GLOB_TS, GLOB_TSX } from '../globs.js';
 import { pluginPetal } from '../plugins.js';
 import { interopDefault, renameRules, toArray } from '../utils.js';
 
@@ -26,6 +26,8 @@ export async function typescript(options: OptionsComponentExts &
 		GLOB_SRC,
 		...componentExts.map(f => `**/*.${f}`),
 	];
+
+	const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX];
 
 	const typeAwareRules: FlatConfigItem['rules'] = {
 		'dot-notation': 'off',
@@ -101,7 +103,6 @@ export async function typescript(options: OptionsComponentExts &
 					'@typescript-eslint/',
 					'ts/',
 				),
-
 				'no-dupe-class-members': 'off',
 				'no-loss-of-precision': 'off',
 				'no-redeclare': 'off',
@@ -138,7 +139,13 @@ export async function typescript(options: OptionsComponentExts &
 				'ts/prefer-ts-expect-error': 'error',
 				'ts/triple-slash-reference': 'off',
 				'ts/unified-signatures': 'off',
-
+				...overrides,
+			},
+		},
+		{
+			files: filesTypeAware,
+			name: 'petal:typescript:rules-type-aware',
+			rules: {
 				...(tsconfigPath ? typeAwareRules : {}),
 				...overrides,
 			},

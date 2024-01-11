@@ -12,6 +12,7 @@ export * from './perfectionist.js';
 export * from './react.js';
 export * from './sort.js';
 export * from './stylistic.js';
+export * from './svelte.js';
 export * from './test.js';
 export * from './typescript.js';
 export * from './unicorn.js';

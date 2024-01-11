@@ -1,5 +1,6 @@
 import type { FlatConfigItem, OptionsStylistic } from '../types.js';
 import { pluginImport, pluginPetal } from '../plugins.js';
+import { GLOB_SRC_EXT } from '../globs.js';
 
 export async function imports(options: OptionsStylistic = {}): Promise<FlatConfigItem[]> {
 	const { stylistic = true } = options;
@@ -21,6 +22,7 @@ export async function imports(options: OptionsStylistic = {}): Promise<FlatConfi
 				'import/no-webpack-loader-syntax': 'error',
 				'import/order': 'error',
 				'petal/import-dedupe': 'error',
+				'petal/no-import-dist': 'error',
 				'petal/no-import-node-modules-by-path': 'error',
 
 				...(stylistic
@@ -31,6 +33,14 @@ export async function imports(options: OptionsStylistic = {}): Promise<FlatConfi
 							],
 						}
 					: {}),
+			},
+		},
+		{
+			files: ['**/bin/**/*', `**/bin.${GLOB_SRC_EXT}`],
+			name: 'petal:imports:bin',
+			rules: {
+				'petal/no-import-dist': 'off',
+				'petal/no-import-node-modules-by-path': 'off',
 			},
 		},
 	];

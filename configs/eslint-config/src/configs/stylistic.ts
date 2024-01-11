@@ -1,4 +1,4 @@
-import type { FlatConfigItem, StylisticConfig } from '../types.js';
+import type { FlatConfigItem, OptionsOverrides, StylisticConfig } from '../types.js';
 import { pluginPetal } from '../plugins.js';
 import { interopDefault } from '../utils.js';
 
@@ -9,8 +9,8 @@ export const StylisticConfigDefaults: StylisticConfig = {
 	semi: true,
 };
 
-export async function stylistic(options: StylisticConfig = {}): Promise<FlatConfigItem[]> {
-	const { indent, jsx, quotes, semi } = { ...StylisticConfigDefaults, ...options };
+export async function stylistic(options: StylisticConfig & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
+	const { indent, jsx, overrides = {}, quotes, semi } = { ...StylisticConfigDefaults, ...options };
 
 	const pluginStylistic = await interopDefault(import('@stylistic/eslint-plugin'));
 
@@ -32,6 +32,8 @@ export async function stylistic(options: StylisticConfig = {}): Promise<FlatConf
 
 				'petal/top-level-function': 'error',
 				'style/implicit-arrow-linebreak': 'off',
+
+				...overrides,
 			},
 		},
 	];

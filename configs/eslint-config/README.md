@@ -3,16 +3,17 @@
 [![npm](https://img.shields.io/npm/v/@flowr/eslint-config?color=444&label=)](https://npmjs.com/package/@flowr/eslint-config)
 
 - single quotea and semicolons
+- sorted imports and best practices
+- easy reasonable defaults with only one line of config
 - auto fix for formatting (without prettier)
-- designed to work with typescript, jsx, astro, testing and vue out of the box
+- designed to work with typescript, jsx and vue out of the box
 - lints also for json, yaml, toml and markdown
-- sorted imports and dangling commas
-- reasonable defaults, best practices, only one line of config
+- optional [react and astro](#non-vue-ui-frameworks), [unocss](#unocss) and [svelte](#svelte) support
 - heavily opinionated very [customizable](#customization)
 - easily composable [eslint flat config][eslint-flat]
 - uses [eslint stylistic][stylistic] standards by default
 - respects `.gitignore` by default, without the need for `.eslintignore`
-- optional [formatter](#formatters) support for css, html, graphql, etc.
+- optional [formatter](#formatters) support for css, html, graphql, etc
 
 > [!IMPORTANT]
 > this config uses the new [eslint flat config][eslint-flat]. this may require new integeration configuration and some adjustments.
@@ -267,7 +268,10 @@ certain rules would only be enabled in specific files, for example `ts/*` rules 
 import petal from '@flowr/eslint-config';
 
 export default petal(
-    { vue: true, typescript: true },
+    {
+        vue: true,
+        typescript: true
+    },
     {
         // remember to specify the file glob here, otherwise the vue plugin might apply to non-vue files
         files: ['**/*.vue'],
@@ -284,22 +288,27 @@ export default petal(
 );
 ```
 
-we also provide an `overrides` option to use our default globs:
+we also provide an `overrides` option for each integration to use our default globs:
 
 ```js
 // eslint.config.js
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    overrides: {
-        vue: {
+    vue: {
+        overrides: {
             'vue/operator-linebreak': ['error', 'before'],
-        },
-        typescript: {
+        }
+    },
+    typescript: {
+        overrides: {
             'ts/consistent-type-definitions': ['error', 'interface'],
-        },
-        yaml: {},
-        // ...
+        }
+    },
+    yaml: {
+        overrides: {
+            /* ... */
+        }
     },
 });
 ```
@@ -360,6 +369,21 @@ export default petal({
 ```
 
 the required dev dependencies are: `eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh eslint-plugin-astro` (you should be prompted to install these when running eslint)
+
+#### svelte
+
+to enable svelte support, you need to explicitly turn it on:
+
+```js
+// eslint.config.js
+import petal from '@flowr/eslint-config';
+
+export default petal({
+    svelte: true,
+});
+```
+
+the required dev dependencies are: `eslint-plugin-svelte` (you should be prompted to install these when running eslint)
 
 #### unocss
 
