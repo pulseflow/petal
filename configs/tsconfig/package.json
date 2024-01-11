@@ -12,11 +12,6 @@
 	},
 	"main": "tsconfig.json",
 	"files": [
-		"!**/*.spec",
-		"!**/*.test.*",
-		"!**/*.ts.map",
-		"!**/*.tsbuildinfo",
-		"!**/test/**/*",
 		"CHANGELOG.md",
 		"LICENSE",
 		"README.md",

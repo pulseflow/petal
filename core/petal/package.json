@@ -18,19 +18,13 @@
 		"petal": "./bin/petal.js"
 	},
 	"files": [
-		"!**/*.spec",
-		"!**/*.test.*",
-		"!**/*.ts.map",
-		"!**/*.ts.map",
-		"!**/*.tsbuildinfo",
-		"!**/test/**/*",
 		"CHANGELOG.md",
 		"LICENSE",
 		"README.md",
-		"bin/**/*",
-		"build/**/*",
+		"bin/**/*.js",
+		"build/**/*.js",
 		"config/**/*",
-		"types/**/*"
+		"types/**/*.d.ts"
 	],
 	"engines": {
 		"node": ">=18"

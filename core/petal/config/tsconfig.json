@@ -6,7 +6,9 @@
 		"types": ["node"],
 		"declaration": true,
 		"sourceMap": false,
-		"isolatedModules": false
+		"isolatedModules": false,
+		"declarationMap": false,
+		"inlineSourceMap": false,
 	},
 	"include": ["src"]
 }

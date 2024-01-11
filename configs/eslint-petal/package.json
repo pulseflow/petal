@@ -21,19 +21,11 @@
 	"module": "./build/index.js",
 	"types": "./types/index.d.ts",
 	"files": [
-		"!**/*.spec",
-		"!**/*.test.*",
-		"!**/*.ts.map",
-		"!**/*.tsbuildinfo",
-		"!**/docs/**/*",
-		"!**/test/**/*",
-		"!**/test/**/*",
-		"!**/vendor/**/*",
 		"CHANGELOG.md",
 		"LICENSE",
 		"README.md",
-		"build/**/*",
-		"types/**/*"
+		"build/**/*.js",
+		"types/**/*.d.ts"
 	],
 	"engines": {
 		"node": ">=18"
