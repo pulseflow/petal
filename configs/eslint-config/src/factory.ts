@@ -110,6 +110,7 @@ export function petal(
 		configs.push(typescript({
 			...resolveSubOptions(options, 'typescript'),
 			componentExts,
+			overrides: getOverrides(options, 'typescript'),
 		}));
 	}
 
@@ -129,6 +130,7 @@ export function petal(
 	if (enableVue) {
 		configs.push(vue({
 			...resolveSubOptions(options, 'vue'),
+			overrides: getOverrides(options, 'vue'),
 			stylistic: stylisticOptions,
 			typescript: !!enableTypeScript,
 		}));

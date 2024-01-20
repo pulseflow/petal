@@ -28,6 +28,10 @@ export async function typescript(options: OptionsComponentExts &
 	];
 
 	const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX];
+	const tsconfigPath = options?.tsconfigPath
+		? toArray(options.tsconfigPath)
+		: undefined;
+	const isTypeAware = !!tsconfigPath;
 
 	const typeAwareRules: FlatConfigItem['rules'] = {
 		'dot-notation': 'off',
@@ -51,10 +55,6 @@ export async function typescript(options: OptionsComponentExts &
 		'ts/unbound-method': 'error',
 	};
 
-	const tsconfigPath = options?.tsconfigPath
-		? toArray(options.tsconfigPath)
-		: undefined;
-
 	const [
 		pluginTs,
 		parserTs,
@@ -63,16 +63,10 @@ export async function typescript(options: OptionsComponentExts &
 		interopDefault(import('@typescript-eslint/parser')),
 	] as const);
 
-	return [
-		{
-			name: 'petal:typescript:setup',
-			plugins: {
-				petal: pluginPetal,
-				ts: pluginTs as any,
-			},
-		},
-		{
+	function makeParser(typeAware: boolean, files: string[], ignores?: string[]): FlatConfigItem {
+		return {
 			files,
+			...ignores ? { ignores } : {},
 			languageOptions: {
 				parser: parserTs,
 				parserOptions: {
@@ -82,15 +76,35 @@ export async function typescript(options: OptionsComponentExts &
 					ecmaVersion: 'latest',
 					extraFileExtensions: componentExts.map(e => `.${e}`),
 					sourceType: 'module',
-					...(tsconfigPath
+					...(typeAware
 						? {
-								projevt: tsconfigPath,
+								project: tsconfigPath,
 								tsconfigRootDir: process.cwd(),
 							}
 						: {}),
 					...(parserOptions as any),
 				},
 			},
+			name: `petal:typescript:${typeAware ? 'type-aware-parser' : 'parser'}`,
+		};
+	};
+
+	return [
+		{
+			name: 'petal:typescript:setup',
+			plugins: {
+				petal: pluginPetal,
+				ts: pluginTs as any,
+			},
+		},
+		...isTypeAware
+			? [
+					makeParser(true, filesTypeAware),
+					makeParser(false, files, filesTypeAware),
+				]
+			: [makeParser(false, files)],
+		{
+			files,
 			name: 'petal:typescript:rules',
 			rules: {
 				...renameRules(

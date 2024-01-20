@@ -166,7 +166,7 @@ export default petal({
 
     // `.eslintignore` isn't supported in flat configs, use `ignores` instead
     ignores: [
-        './fixtures',
+        '**/fixtures',
         // ...globs
     ],
 });

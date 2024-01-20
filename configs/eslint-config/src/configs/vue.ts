@@ -91,6 +91,7 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 					'PascalCase',
 				],
 				'vue/component-options-name-casing': ['error', 'PascalCase'],
+				'vue/component-tags-order': 'off',
 				'vue/custom-event-name-casing': ['error', 'camelCase'],
 				'vue/define-macros-order': [
 					'error',
@@ -112,7 +113,6 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 				'vue/multi-word-component-names': 'off',
 				'vue/no-dupe-keys': 'off',
 				'vue/no-empty-pattern': 'error',
-				'vue/no-extra-parens': ['error', 'functions'],
 				'vue/no-irregular-whitespace': 'error',
 				'vue/no-loss-of-precision': 'error',
 				'vue/no-restricted-syntax': [
