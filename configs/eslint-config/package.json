@@ -72,7 +72,7 @@
 		"@flowr/petal-utils": "workspace:^",
 		"@stylistic/eslint-plugin": "^1.5.4",
 		"@typescript-eslint/eslint-plugin": "^6.19.0",
-		"@typescript-eslint/parser": "^6.19.0",
+		"@typescript-eslint/parser": "^7.0.2",
 		"astro-eslint-parser": "^0.16.2",
 		"eslint-config-flat-gitignore": "^0.1.2",
 		"eslint-merge-processors": "^0.1.0",
