@@ -40,20 +40,20 @@
 		"eslint": "*"
 	},
 	"devDependencies": {
-		"@types/eslint": "^8.56.2",
+		"@types/eslint": "^8.56.5",
 		"@types/lodash.merge": "^4.6.9",
-		"@types/node": "^20.11.5",
-		"@types/semver": "^7.5.5",
-		"@typescript-eslint/rule-tester": "^6.19.0",
-		"@typescript-eslint/typescript-estree": "^6.19.0",
-		"@typescript-eslint/utils": "^6.19.0",
+		"@types/node": "^20.11.28",
+		"@types/semver": "^7.5.8",
+		"@typescript-eslint/rule-tester": "^6.21.0",
+		"@typescript-eslint/typescript-estree": "^6.21.0",
+		"@typescript-eslint/utils": "^6.21.0",
 		"ajv": "^6.10.0",
-		"eslint": "^8.56.0",
+		"eslint": "^8.57.0",
 		"eslint-define-config": "^2.1.0",
 		"lodash.merge": "^4.6.2",
 		"rimraf": "^5.0.5",
-		"typescript": "^5.3.3",
-		"vitest": "^1.2.1"
+		"typescript": "^5.4.2",
+		"vitest": "^1.4.0"
 	},
 	"publishConfig": {
 		"access": "public"

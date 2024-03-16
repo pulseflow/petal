@@ -1,0 +1,21 @@
+{
+	"extends": "@flowr/tsconfig",
+	"compilerOptions": {
+		"jsx": "preserve",
+		"module": "NodeNext",
+		"paths": {
+			"~/*": ["./src/*"],
+			"~core/*": ["./src/core/*"],
+			"~debug/*": ["./src/debug/*"],
+			"~error/*": ["./src/error/*"],
+			"~inject/*": ["./src/inject/*"],
+			"~mixin/*": ["./src/mixin/*"],
+			"~req/*": ["src/inject/fetch/*"]
+		},
+		"declaration": false,
+		"noEmit": true,
+		"isolatedModules": false
+	},
+	"include": ["src"],
+	"exclude": ["test"]
+}

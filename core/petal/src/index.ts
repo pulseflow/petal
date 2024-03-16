@@ -13,6 +13,7 @@ import { auditTask } from './tasks/audit.js';
 // import {  } from './tasks/test.js';
 import { buildTask } from './tasks/build.js';
 import { lintTask } from './tasks/lint.js';
+import { cleanTask } from './tasks/clean.js';
 
 program
 	.command('build')
@@ -31,6 +32,14 @@ program
 		};
 
 		handlePromiseResult(buildTask(t));
+	});
+
+program
+	.command('clean')
+	.allowUnknownOption()
+	.description('Clean the working directory')
+	.action(() => {
+		handlePromiseResult(cleanTask());
 	});
 
 /*

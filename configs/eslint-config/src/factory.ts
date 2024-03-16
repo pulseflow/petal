@@ -31,6 +31,7 @@ import { combine, interopDefault } from './utils.js';
 import { formatters } from './configs/formatters.js';
 
 const flatConfigProps: (keyof FlatConfigItem)[] = [
+	'name',
 	'files',
 	'ignores',
 	'languageOptions',
@@ -56,7 +57,7 @@ export function petal(
 		componentExts = [],
 		gitignore: enableGitignore = true,
 		isInEditor = !!(
-			(process.env.VSCODE_PID || process.env.JETBRAINS_IDE || process.env.VIM)
+			(process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM)
 			&& !process.env.CI
 		),
 		jest: enableJest = JestPackages.some(i => isPackageExists(i)),

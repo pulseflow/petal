@@ -68,6 +68,14 @@ function TodoList() {
 			},
 		},
 	},
+
+	`
+const a = [
+	(1),
+	(2)
+];
+	`,
+	`const a = [(1), (2)];`,
 ];
 
 // Check snapshot for fixed code
@@ -115,7 +123,7 @@ const a = (
 			},
 		},
 	},
-] as const;
+];
 
 const ruleTester: RuleTester = new RuleTester({
 	parser: require.resolve('@typescript-eslint/parser'),

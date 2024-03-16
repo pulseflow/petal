@@ -55,6 +55,9 @@ export async function astro(options: OptionsHasTypeScript & OptionsOverrides & O
 			rules: {
 				...(pluginAstro.configs.recommended.rules as any),
 
+				'astro/no-set-html-directive': 'off',
+				'astro/semi': 'off',
+
 				'import/default': 'off',
 				'import/order': ['error', {
 					alphabetize: {

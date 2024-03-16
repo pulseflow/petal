@@ -29,7 +29,7 @@ export async function imports(options: OptionsStylistic = {}): Promise<FlatConfi
 					? {
 							'import/newline-after-import': [
 								'error',
-								{ considerComments: true, count: 1 },
+								{ count: 1 },
 							],
 						}
 					: {}),

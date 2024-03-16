@@ -133,6 +133,7 @@ export async function typescript(options: OptionsComponentExts &
 					'error',
 					{ disallowTypeAnnotations: false, prefer: 'type-imports' },
 				],
+				'ts/method-signature-style': ['error', 'property'], // https://www.totaltypescript.com/method-shorthand-syntax-considered-harmful
 				'ts/naming-convention': 'off',
 				'ts/no-dupe-class-members': 'error',
 				'ts/no-dynamic-delete': 'off',

@@ -31,6 +31,24 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 
 	return [
 		{
+			languageOptions: {
+				globals: {
+					computed: 'readonly',
+					defineEmits: 'readonly',
+					defineExpose: 'readonly',
+					defineProps: 'readonly',
+					onMounted: 'readonly',
+					onUnmounted: 'readonly',
+					reactive: 'readonly',
+					ref: 'readonly',
+					shallowReactive: 'readonly',
+					shallowRef: 'readonly',
+					toRef: 'readonly',
+					toRefs: 'readonly',
+					watch: 'readonly',
+					watchEffect: 'readonly',
+				},
+			},
 			name: 'petal:vue:setup',
 			plugins: {
 				vue: pluginVue,

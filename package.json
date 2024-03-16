@@ -15,8 +15,7 @@
 		"clean": "lerna run clean --stream",
 		"lint": "petal lint --no-typecheck",
 		"commit": "petal commit",
-		"release": "lerna publish --force-publish --ignore-scripts --conventional-commits --registry=https://registry.npmjs.org --no-private",
-		"prepare": "husky install"
+		"release": "lerna publish --force-publish --ignore-scripts --conventional-commits --registry=https://registry.npmjs.org --no-private"
 	},
 	"workspaces": {
 		"packages": [
@@ -27,11 +26,10 @@
 	"devDependencies": {
 		"@flowr/eslint-config": "workspace:^",
 		"@flowr/petal": "workspace:^",
-		"@stylistic/eslint-plugin-migrate": "^1.5.4",
+		"@stylistic/eslint-plugin-migrate": "^1.7.0",
 		"create-petal": "workspace:^",
-		"husky": "^8.0.3",
-		"lerna": "^8.0.2",
-		"typescript": "^5.3.3"
+		"lerna": "^8.1.2",
+		"typescript": "^5.4.2"
 	},
 	"pnpm": {
 		"overrides": {
