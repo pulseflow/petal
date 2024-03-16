@@ -1,7 +1,7 @@
 {
 	"name": "@flowr/petal",
 	"type": "module",
-	"version": "2.1.0",
+	"version": "2.2.0",
 	"description": "Lightweight tooling suite for TS/JS libraries",
 	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",
