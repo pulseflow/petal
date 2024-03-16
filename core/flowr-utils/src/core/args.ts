@@ -1,4 +1,5 @@
-export const str = Symbol('petal:arg:flag:string');
+/**
+ * export const str = Symbol('petal:arg:flag:string');
 export const int = Symbol('petal:arg:flag:integer');
 export const bool = Symbol('petal:arg:flag:boolean');
 const none = Symbol('petal:arg:match:none');
@@ -49,3 +50,5 @@ class Flag<K extends string, T extends FlagType> {
 		}[this.options.type] as (x: string) => ResolvedFlagType<T>;
 	}
 }
+
+ */

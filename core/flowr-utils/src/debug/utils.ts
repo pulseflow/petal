@@ -5,7 +5,8 @@ import { platform } from 'node:os';
 import process from 'node:process';
 
 import color from 'chalk';
-import { strip } from './prompt/index.js';
+
+// import { strip } from './prompt/index.js';
 
 let petalVersion: string;
 
@@ -58,7 +59,8 @@ export function getUserName() {
 	});
 }
 
-export function align(text: string, dir: 'start' | 'end' | 'center', len: number) {
+/**
+ * export function align(text: string, dir: 'start' | 'end' | 'center', len: number) {
 	const pad = Math.max(len - strip(text).length, 0);
 	switch (dir) {
 		case 'start': return text + ' '.repeat(pad);
@@ -67,3 +69,5 @@ export function align(text: string, dir: 'start' | 'end' | 'center', len: number
 		default: return text;
 	}
 }
+
+ */

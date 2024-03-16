@@ -1,4 +1,5 @@
-import readline from 'node:readline';
+/**
+ * import readline from 'node:readline';
 import chalk from 'chalk';
 import { createLogUpdate } from 'log-update';
 import { cursor, erase } from 'sisteransi';
@@ -36,3 +37,5 @@ function frame(offset = 0) {
 }
 
 const getGradientAnimFrames = () => GRADIENT.map(colors => ` ${colors.map(g => chalk.hex(g)('█')).join('')}`);
+
+ */
