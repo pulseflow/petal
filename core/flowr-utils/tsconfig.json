@@ -15,6 +15,7 @@
 		},
 		"declaration": false,
 		"noEmit": true,
+		"sourceMap": false,
 		"isolatedModules": false
 	},
 	"include": ["src"],

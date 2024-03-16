@@ -42,7 +42,7 @@
 	"devDependencies": {
 		"@types/eslint": "^8.56.5",
 		"@types/lodash.merge": "^4.6.9",
-		"@types/node": "^18.0.0",
+		"@types/node": "^20.11.28",
 		"@types/semver": "^7.5.8",
 		"@typescript-eslint/rule-tester": "^7.2.0",
 		"@typescript-eslint/typescript-estree": "^7.2.0",

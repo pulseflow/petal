@@ -1,4 +1,4 @@
-import glob from 'glob';
+import { sync } from 'glob';
 import { readPackageUpSync } from 'read-package-up';
 
 import { getConsumingRoot } from './get-consuming-root.js';
@@ -16,12 +16,12 @@ function getDependencyTypePath(dependency: string,	type?: 'dev' | 'peer'): strin
 }
 
 export function hasConfig(sources: (
-	| { type: 'file', pattern: string }
-	| { type: 'package.json', property: string }
+	| { type: 'file'; pattern: string }
+	| { type: 'package.json'; property: string }
 	| {
-		type: 'dependency'
-		dependency: string
-		dependencyType?: 'peer' | 'dev'
+		type: 'dependency';
+		dependency: string;
+		dependencyType?: 'peer' | 'dev';
 	}
 )[]): boolean {
 	const { path: pkgPath, packageJson } = readPackageUpSync({
@@ -31,7 +31,7 @@ export function hasConfig(sources: (
 	return sources.some((source) => {
 		switch (source.type) {
 			case 'file':
-				return !!glob.sync(source.pattern, { cwd: root }).length;
+				return !!sync(source.pattern, { cwd: root }).length;
 			case 'package.json':
 				return hasKeyInObj(source.property, packageJson);
 			case 'dependency':

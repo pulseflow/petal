@@ -111,7 +111,7 @@
 		"@types/eslint": "^8.56.5",
 		"@types/fs-extra": "^11.0.4",
 		"@types/jest": "^29.5.12",
-		"@types/node": "^18.0.0",
+		"@types/node": "^20.11.28",
 		"@types/prompts": "^2.4.9",
 		"@unocss/eslint-plugin": "^0.58.6",
 		"eslint": "^8.57.0",

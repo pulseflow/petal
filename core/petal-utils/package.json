@@ -33,13 +33,13 @@
 		"prepublishOnly": "pnpm run bootstrap && pnpm run build"
 	},
 	"dependencies": {
-		"glob": "^8.0.3",
+		"glob": "^10.3.10",
 		"read-package-up": "^11.0.0"
 	},
 	"devDependencies": {
 		"@flowr/tsconfig": "workspace:^",
 		"@types/glob": "^8.0.3",
-		"@types/node": "^18.0.0",
+		"@types/node": "^20.11.28",
 		"mock-fs": "^5.2.0",
 		"rimraf": "^5.0.5",
 		"typescript": "^5.3.3",

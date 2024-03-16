@@ -97,7 +97,8 @@ export function count(haystack: string, needle: string, allowOverlapping = false
 	assert(needle).neq('');
 	assert(allowOverlapping).is('boolean');
 
-	let n = 0; let pos = 0;
+	let n = 0;
+	let pos = 0;
 	const step = allowOverlapping ? 1 : needle.length;
 
 	// eslint-disable-next-line no-cond-assign
