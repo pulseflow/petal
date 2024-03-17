@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/pulseflow/petal/compare/v2.2.0...v2.2.1) (2024-03-17)
+
+
+### Features
+
+* **eslint:** add solidjs config ([085cc2e](https://github.com/pulseflow/petal/commit/085cc2e5a802ca9208e9dd7b29c11da2148d42db))
+
+
+
+
+
 # [2.2.0](https://github.com/pulseflow/petal/compare/v2.1.0...v2.2.0) (2024-03-16)
 
 
