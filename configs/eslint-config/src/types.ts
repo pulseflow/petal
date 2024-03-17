@@ -265,6 +265,13 @@ export interface OptionsConfig extends OptionsComponentExts {
 	vue?: boolean | OptionsVue;
 
 	/**
+	 * Enable Solid support.
+	 *
+	 * @default auto-detect based on the dependencies
+	 */
+	solid?: boolean | OptionsOverrides;
+
+	/**
 	 * Enable React rules.
 	 *
 	 * Requires installing:
@@ -370,6 +377,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 		test?: FlatConfigItem['rules'];
 		jest?: FlatConfigItem['rules'];
 		vue?: FlatConfigItem['rules'];
+		solid?: FlatConfigItem['rules'];
 		react?: FlatConfigItem['rules'];
 		astro?: FlatConfigItem['rules'];
 		jsonc?: FlatConfigItem['rules'];

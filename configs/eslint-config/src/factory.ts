@@ -15,6 +15,7 @@ import {
 	node,
 	perfectionist,
 	react,
+	solid,
 	sortPackageJson,
 	sortTsConfig,
 	stylistic,
@@ -44,6 +45,7 @@ const flatConfigProps: (keyof FlatConfigItem)[] = [
 
 const VuePackages = ['vue', 'nuxt', 'vitepress', '@slidev/cli'];
 const JestPackages = ['@jest/globals', '@types/jest', 'jest'];
+const SolidPackages = ['solid-js', 'vite-plugin-solid', 'solid-refresh'];
 
 /**
  * Construct a Petal ESLint config.
@@ -62,6 +64,7 @@ export function petal(
 		),
 		jest: enableJest = JestPackages.some(i => isPackageExists(i)),
 		react: enableReact = isPackageExists('react'),
+		solid: enableSolid = SolidPackages.some(i => isPackageExists(i)),
 		svelte: enableSvelte = false,
 		typescript: enableTypeScript = isPackageExists('typescript'),
 		unocss: enableUnoCSS = false,
@@ -133,6 +136,13 @@ export function petal(
 			...resolveSubOptions(options, 'vue'),
 			overrides: getOverrides(options, 'vue'),
 			stylistic: stylisticOptions,
+			typescript: !!enableTypeScript,
+		}));
+	}
+
+	if (enableSolid) {
+		configs.push(solid({
+			overrides: getOverrides(options, 'solid'),
 			typescript: !!enableTypeScript,
 		}));
 	}

@@ -21,3 +21,4 @@ export * from './yaml.js';
 export * from './toml.js';
 export * from './unocss.js';
 export * from './formatters.js';
+export * from './solid.js';
