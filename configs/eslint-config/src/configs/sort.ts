@@ -69,7 +69,7 @@ export async function sortPackageJson(): Promise<FlatConfigItem[]> {
 					{
 						order: { type: 'asc' },
 						pathPattern:
-						'^(?:dev|peer|optional|bundled)?[Dd]ependencies(Meta)?$',
+							'^(?:dev|peer|optional|bundled)?[Dd]ependencies(Meta)?$',
 					},
 					{
 						order: { type: 'asc' },
@@ -78,6 +78,21 @@ export async function sortPackageJson(): Promise<FlatConfigItem[]> {
 					{
 						order: ['types', 'import', 'require', 'default'],
 						pathPattern: '^exports.*$',
+					},
+					{
+						order: [
+							'pre-commit',
+							'prepare-commit-msg',
+							'commit-msg',
+							'post-commit',
+							'pre-rebase',
+							'post-rewrite',
+							'post-checkout',
+							'post-merge',
+							'pre-push',
+							'pre-auto-gc',
+						],
+						pathPattern: '^(?:gitHooks|husky|simple-git-hooks)$',
 					},
 				],
 			},
@@ -109,7 +124,7 @@ export async function sortTsConfig(): Promise<FlatConfigItem[]> {
 					},
 					{
 						order: [
-						/* Projects */
+							/* Projects */
 							'incremental',
 							'composite',
 							'tsBuildInfoFile',

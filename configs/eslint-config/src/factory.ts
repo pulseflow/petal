@@ -28,7 +28,7 @@ import {
 	vue,
 	yaml,
 } from './configs/index.js';
-import { combine, interopDefault } from './utils.js';
+import { combine, interopDefault, renamePluginInConfigs } from './utils.js';
 import { formatters } from './configs/formatters.js';
 
 const flatConfigProps: (keyof FlatConfigItem)[] = [
@@ -47,15 +47,33 @@ const VuePackages = ['vue', 'nuxt', 'vitepress', '@slidev/cli'];
 const JestPackages = ['@jest/globals', '@types/jest', 'jest'];
 const SolidPackages = ['solid-js', 'vite-plugin-solid', 'solid-refresh'];
 
+export const defaultPluginRenaming = {
+	'@stylistic': 'style',
+	'@typescript-eslint': 'ts',
+	'import-x': 'import',
+	'n': 'node',
+	'vitest': 'test',
+	'yml': 'yaml',
+};
+
 /**
  * Construct a Petal ESLint config.
+ *
+ *
+ * @param {OptionsConfig & FlatConfigItem} options
+ *  The options for generating the ESLint configurations.
+ * @param {Awaitable<UserConfigItem | UserConfigItem[]>[]} userConfigs
+ *  The user configurations to be merged with the generated configurations.
+ * @returns {Promise<UserConfigItem[]>}
+ *  The merged ESLint configurations.
  */
-export function petal(
+export async function petal(
 	options: OptionsConfig & FlatConfigItem = {},
 	...userConfigs: Awaitable<UserConfigItem | UserConfigItem[]>[]
 ): Promise<UserConfigItem[]> {
 	const {
 		astro: enableAstro = isPackageExists('astro'),
+		autoRenamePlugins = true,
 		componentExts = [],
 		gitignore: enableGitignore = true,
 		isInEditor = !!(
@@ -224,10 +242,13 @@ export function petal(
 	if (Object.keys(fusedConfig).length)
 		configs.push([fusedConfig]);
 
-	const merged = combine(
+	const merged = await combine(
 		...configs,
 		...userConfigs,
 	);
+
+	if (autoRenamePlugins)
+		return renamePluginInConfigs(merged, defaultPluginRenaming);
 
 	return merged;
 }

@@ -1,5 +1,5 @@
-/**
- * import readline from 'node:readline';
+/*
+import readline from 'node:readline';
 import chalk from 'chalk';
 import { createLogUpdate } from 'log-update';
 import { cursor, erase } from 'sisteransi';

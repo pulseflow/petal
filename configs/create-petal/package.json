@@ -44,16 +44,16 @@
 		"@astrojs/cli-kit": "^0.4.1",
 		"@flowr/tsconfig": "workspace:^",
 		"arg": "^5.0.2",
-		"giget": "^1.2.1",
+		"giget": "^1.2.3",
 		"log-update": "^6.0.0",
 		"strip-ansi": "^7.1.0",
 		"strip-json-comments": "^5.0.1"
 	},
 	"devDependencies": {
-		"@types/node": "20.11.28",
+		"@types/node": "20.11.30",
 		"rimraf": "^5.0.5",
 		"tempy": "^3.1.0",
-		"typescript": "^5.3.3",
+		"typescript": "^5.4.3",
 		"vitest": "^1.4.0"
 	},
 	"publishConfig": {

@@ -31,7 +31,7 @@
 		"lint": "petal lint"
 	},
 	"dependencies": {
-		"@catppuccin/palette": "^1.1.0",
+		"@catppuccin/palette": "^1.1.1",
 		"chalk": "^5.3.0",
 		"log-update": "^6.0.0",
 		"luxon": "^3.4.4",
@@ -45,7 +45,7 @@
 	"devDependencies": {
 		"@flowr/tsconfig": "workspace:^",
 		"@types/luxon": "^3.4.2",
-		"@types/node": "^20.11.28",
+		"@types/node": "^20.11.30",
 		"@types/tinycolor2": "^1.4.6",
 		"@types/zen-observable": "^0.8.7",
 		"mock-fs": "^5.2.0",

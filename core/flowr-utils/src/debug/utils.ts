@@ -59,8 +59,8 @@ export function getUserName() {
 	});
 }
 
-/**
- * export function align(text: string, dir: 'start' | 'end' | 'center', len: number) {
+/*
+export function align(text: string, dir: 'start' | 'end' | 'center', len: number) {
 	const pad = Math.max(len - strip(text).length, 0);
 	switch (dir) {
 		case 'start': return text + ' '.repeat(pad);

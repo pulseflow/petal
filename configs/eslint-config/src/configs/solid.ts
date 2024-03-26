@@ -13,7 +13,6 @@ export async function solid(options: OptionsHasTypeScript & OptionsOverrides & O
 	const [
 		pluginSolid,
 	] = await Promise.all([
-		// @ts-expect-error missing types
 		interopDefault(import('eslint-plugin-solid')),
 	] as const);
 
