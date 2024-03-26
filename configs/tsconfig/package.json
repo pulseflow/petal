@@ -1,6 +1,6 @@
 {
 	"name": "@flowr/tsconfig",
-	"version": "2.2.1",
+	"version": "2.2.2",
 	"description": "Common TSConfig to be used as a base config",
 	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",

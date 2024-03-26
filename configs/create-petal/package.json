@@ -1,7 +1,7 @@
 {
 	"name": "create-petal",
 	"type": "module",
-	"version": "2.2.1",
+	"version": "2.2.2",
 	"description": "A CLI utility to create a new petal app",
 	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",
