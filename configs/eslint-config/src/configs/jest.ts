@@ -1,14 +1,14 @@
 import globals from 'globals';
 import type {
-	FlatConfigItem,
 	OptionsFiles,
 	OptionsIsInEditor,
 	OptionsOverrides,
+	TypedFlatConfigItem,
 } from '../types.js';
 import { GLOB_TESTS } from '../globs.js';
 import { interopDefault } from '../utils.js';
 
-export async function jest(options: OptionsIsInEditor & OptionsOverrides & OptionsFiles = {}): Promise<FlatConfigItem[]> {
+export async function jest(options: OptionsIsInEditor & OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = GLOB_TESTS, isInEditor = false, overrides = {} } = options;
 
 	const [

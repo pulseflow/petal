@@ -1,11 +1,11 @@
 import process from 'node:process';
 import type {
-	FlatConfigItem,
 	OptionsComponentExts,
 	OptionsFiles,
 	OptionsOverrides,
 	OptionsTypeScriptParserOptions,
 	OptionsTypeScriptWithTypes,
+	TypedFlatConfigItem,
 } from '../types.js';
 import { GLOB_SRC, GLOB_TS, GLOB_TSX } from '../globs.js';
 import { pluginPetal } from '../plugins.js';
@@ -15,7 +15,7 @@ export async function typescript(options: OptionsComponentExts &
 	OptionsOverrides &
 	OptionsTypeScriptWithTypes &
 	OptionsTypeScriptParserOptions &
-	OptionsFiles = {}): Promise<FlatConfigItem[]> {
+	OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
 	const {
 		componentExts = [],
 		overrides = {},
@@ -33,7 +33,7 @@ export async function typescript(options: OptionsComponentExts &
 		: undefined;
 	const isTypeAware = !!tsconfigPath;
 
-	const typeAwareRules: FlatConfigItem['rules'] = {
+	const typeAwareRules: TypedFlatConfigItem['rules'] = {
 		'dot-notation': 'off',
 		'no-implied-eval': 'off',
 		'no-throw-literal': 'off',
@@ -63,7 +63,7 @@ export async function typescript(options: OptionsComponentExts &
 		interopDefault(import('@typescript-eslint/parser')),
 	] as const);
 
-	function makeParser(typeAware: boolean, files: string[], ignores?: string[]): FlatConfigItem {
+	function makeParser(typeAware: boolean, files: string[], ignores?: string[]): TypedFlatConfigItem {
 		return {
 			files,
 			...ignores ? { ignores } : {},

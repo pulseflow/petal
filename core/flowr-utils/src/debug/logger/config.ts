@@ -19,7 +19,7 @@ let pad_tab = 2;
 let pad_start = 1;
 let pad_end = 1;
 
-export function informScope(...scopes: string[]): ScopeData {
+export function reg_scope(...scopes: string[]): ScopeData {
 	if (scopes.length === 0)
 		scopes.push('main');
 	const len_scope_cur = scopes.reduce((acc, cur) => acc + graphemes(cur), 0)
@@ -37,12 +37,12 @@ export function informScope(...scopes: string[]): ScopeData {
 	};
 }
 
-export function informSymbol(symbol: string): string {
+export function reg_symbol(symbol: string): string {
 	len_sym_max = Math.max(len_sym_max, graphemes(symbol));
 	return ' '.repeat(pad_start) + symbol.padEnd(len_sym_max, ' ') + ' '.repeat(pad_sym);
 }
 
-export function configurePadding({
+export function pad({
 	scope = pad_scope,
 	symbol = pad_sym,
 	table = pad_tab,
@@ -56,6 +56,6 @@ export function configurePadding({
 	pad_end = end;
 }
 
-export function tablePadding() {
+export function pad_table_grid() {
 	return ' '.repeat(pad_tab);
 }

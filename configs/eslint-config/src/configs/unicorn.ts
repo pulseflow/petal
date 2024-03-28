@@ -1,7 +1,7 @@
-import type { FlatConfigItem } from '../types.js';
+import type { TypedFlatConfigItem } from '../types.js';
 import { pluginUnicorn } from '../plugins.js';
 
-export async function unicorn(): Promise<FlatConfigItem[]> {
+export async function unicorn(): Promise<TypedFlatConfigItem[]> {
 	return [
 		{
 			name: 'petal:unicorn',

@@ -1,16 +1,16 @@
 import { isPackageExists } from 'local-pkg';
 import type {
-	FlatConfigItem,
 	OptionsFiles,
 	OptionsHasTypeScript,
 	OptionsOverrides,
+	TypedFlatConfigItem,
 } from '../types.js';
 import { GLOB_JSX, GLOB_TSX } from '../globs.js';
 import { ensurePackages, interopDefault } from '../utils.js';
 
 const ReactRefreshAllowConstantExportPackages = ['vite'];
 
-export async function react(options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles = {}): Promise<FlatConfigItem[]> {
+export async function react(options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_JSX, GLOB_TSX], overrides = {}, typescript = true } = options;
 
 	await ensurePackages([

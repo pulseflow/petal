@@ -28,28 +28,28 @@ pnpm i -D eslint @flowr/eslint-config
 
 ### create config file
 
-with [`"type": "module"`][node-type] in `package.json` (recommended):
-
 ```js
-// eslint.config.js
+// eslint.config.mjs
 import petal from '@flowr/eslint-config';
 
 export default petal();
 ```
 
-> [!TIP]
-> eslint only detects `eslint.config.js` as the flat config entry, meaning you need to put `type: module` in your `package.json` or you have to use cjs in `eslint.config.js`. if you want explicit extensions like `.mjs` or `.cjs`, or even `.ts`, you can install [`eslint-patch`][eslint-patch].
-
+<details>
+<summary>
 combined with a legacy configuration:
+</summary>
+
+If you still use some configs from the legacy eslintrc format, you can use the [`@eslint/eslintrc`](https://www.npmjs.com/package/@eslint/eslintrc) package to convert them to the flat config.
 
 ```js
-// eslint.config.js
-const petal = require('@flowr/eslint-config').default
-const { FlatCompat } = require('@eslint/eslintrc')
+// eslint.config.mjs
+import petal from '@flowr/eslint-config';
+import { FlatCompat } from '@eslint/eslintrc';
 
 const compat = new FlatCompat()
 
-modules.exports = petal(
+export default petal(
     {
         ignores: [],
     },
@@ -65,6 +65,7 @@ modules.exports = petal(
 ```
 
 > note that `.eslintignore` no longer works in flat config, see [customization](#customization) for more details.
+</details>
 
 ### lint script
 
@@ -79,7 +80,7 @@ modules.exports = petal(
 
 ## ide integration
 
-### vscode support (auto fix)
+### vscode support (auto fix on save)
 
 install the [vscode eslint extension][vscode] and add the following settings to your `.vscode/settings.json`:
 
@@ -125,7 +126,9 @@ install the [vscode eslint extension][vscode] and add the following settings to 
         "jsonc",
         "yaml",
         "astro",
-        "toml"
+        "toml",
+        "graphql",
+        "gql"
     ]
 }
 ```
@@ -312,15 +315,33 @@ export default petal({
     },
 });
 ```
+### pipeline
+
+the factory function `petal()` returns a [pipeline object from `eslint-flat-config-utils`](https://github.com/antfu/eslint-flat-config-utils#pipe) where you can chain the methods to compose the config even more flexibly.
+
+```js
+// eslint.config.ks
+import petal from '@flowr/eslint-config';
+
+export default petal()
+    .prepend(
+        // some configs before the main config
+    )
+    .override(
+        'petal:imports'
+    )
+    .renamePlugins({
+        'old-prefix': 'new-prefix',
+        // ...
+    });
+// ...
+```
 
 ### optional configs
 
 we provide some additional configs for specific cases, that we don't include their dependencies by default to reduce package size:
 
 #### formatters
-
-> [!WARNING]
-> experimental feature, changes may not follow semver
 
 use external formatters to format files that eslint cannot handle yet (`.css`, `.html`, etc.)
 
@@ -406,7 +427,7 @@ we also provide some optional plugins and rules for extended/stricter usage:
 
 ### `prefectionist` sorting
 
-the plugin [`eslint-plugin-perfectionist`](https://github.com/azat-io/eslint-plugin-perfectionist) sorts object keys and imports with auto-fix. the plugin is installed but no rules are enabled by default. it's recommended to opt-in on each file individually using [configuration comments][config-comments].
+the plugin [`eslint-plugin-perfectionist`](https://github.com/azat-io/eslint-plugin-perfectionist) sorts object keys and imports with auto-fix. the plugin is installed, but no rules are enabled by default. it's recommended to opt-in on each file individually using [configuration comments][config-comments].
 
 ```js
 /* eslint perfectionist/sort-objects: "error" */
@@ -415,7 +436,6 @@ const objectWantedToSort = {
     b: 1,
     c: 3,
 };
-/* eslint perfectionist/sort-objects: "off" */
 ```
 
 ### type aware rules

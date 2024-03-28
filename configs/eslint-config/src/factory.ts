@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import process from 'node:process';
 import { isPackageExists } from 'local-pkg';
-import type { Awaitable, FlatConfigItem, OptionsConfig, UserConfigItem } from './types.js';
+import { FlatConfigPipeline } from 'eslint-flat-config-utils';
+import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from './types.js';
 import {
 	astro,
 	comments,
@@ -28,10 +29,10 @@ import {
 	vue,
 	yaml,
 } from './configs/index.js';
-import { combine, interopDefault, renamePluginInConfigs } from './utils.js';
+import { interopDefault } from './utils.js';
 import { formatters } from './configs/formatters.js';
 
-const flatConfigProps: (keyof FlatConfigItem)[] = [
+const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
 	'name',
 	'files',
 	'ignores',
@@ -60,17 +61,17 @@ export const defaultPluginRenaming = {
  * Construct a Petal ESLint config.
  *
  *
- * @param {OptionsConfig & FlatConfigItem} options
+ * @param {OptionsConfig & TypedFlatConfigItem} options
  *  The options for generating the ESLint configurations.
- * @param {Awaitable<UserConfigItem | UserConfigItem[]>[]} userConfigs
+ * @param {Awaitable<UserConfigItem>[]} userConfigs
  *  The user configurations to be merged with the generated configurations.
- * @returns {Promise<UserConfigItem[]>}
+ * @returns {Promise<TypedFlatConfigItem[]>}
  *  The merged ESLint configurations.
  */
-export async function petal(
-	options: OptionsConfig & FlatConfigItem = {},
-	...userConfigs: Awaitable<UserConfigItem | UserConfigItem[]>[]
-): Promise<UserConfigItem[]> {
+export function petal(
+	options: OptionsConfig & TypedFlatConfigItem = {},
+	...userConfigs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]
+): FlatConfigPipeline<TypedFlatConfigItem> {
 	const {
 		astro: enableAstro = isPackageExists('astro'),
 		autoRenamePlugins = true,
@@ -99,7 +100,7 @@ export async function petal(
 	if (stylisticOptions && !('jsx' in stylisticOptions))
 		stylisticOptions.jsx = options.jsx ?? true;
 
-	const configs: Awaitable<FlatConfigItem[]>[] = [];
+	const configs: Awaitable<TypedFlatConfigItem[]>[] = [];
 	if (enableGitignore) {
 		if (typeof enableGitignore !== 'boolean')
 			configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r(enableGitignore)]));
@@ -237,20 +238,19 @@ export async function petal(
 		if (key in options)
 			acc[key] = options[key] as any;
 		return acc;
-	}, {} as FlatConfigItem);
+	}, {} as TypedFlatConfigItem);
 
 	if (Object.keys(fusedConfig).length)
 		configs.push([fusedConfig]);
 
-	const merged = await combine(
-		...configs,
-		...userConfigs,
-	);
+	let pipeline = new FlatConfigPipeline<TypedFlatConfigItem>();
+
+	pipeline = pipeline.append(...configs, ...userConfigs);
 
 	if (autoRenamePlugins)
-		return renamePluginInConfigs(merged, defaultPluginRenaming);
+		pipeline = pipeline.renamePlugins(defaultPluginRenaming);
 
-	return merged;
+	return pipeline;
 }
 
 export type ResolveOptions<T> = T extends boolean

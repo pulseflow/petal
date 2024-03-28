@@ -1,8 +1,8 @@
 import { ensurePackages, interopDefault } from '../utils.js';
-import type { FlatConfigItem, OptionsFiles, OptionsHasTypeScript, OptionsOverrides, OptionsStylistic } from '../types.js';
+import type { OptionsFiles, OptionsHasTypeScript, OptionsOverrides, OptionsStylistic, TypedFlatConfigItem } from '../types.js';
 import { GLOB_SVELTE } from '../globs.js';
 
-export async function svelte(options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles = {}): Promise<FlatConfigItem[]> {
+export async function svelte(options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
 	const {
 		files = [GLOB_SVELTE],
 		overrides = {},

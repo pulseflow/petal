@@ -1,13 +1,13 @@
 import globals from 'globals';
 import type {
-	FlatConfigItem,
 	OptionsIsInEditor,
 	OptionsOverrides,
+	TypedFlatConfigItem,
 } from '../types.js';
 import { pluginPetal, pluginUnusedImports } from '../plugins.js';
 import { GLOB_SRC, GLOB_SRC_EXT } from '../globs.js';
 
-export async function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
+export async function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): Promise<TypedFlatConfigItem[]> {
 	const { isInEditor = false, overrides = {} } = options;
 
 	return [

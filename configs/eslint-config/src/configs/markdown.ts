@@ -1,14 +1,14 @@
 import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors';
 import type {
-	FlatConfigItem,
 	OptionsComponentExts,
 	OptionsFiles,
 	OptionsOverrides,
+	TypedFlatConfigItem,
 } from '../types.js';
 import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN } from '../globs.js';
 import { interopDefault, parserPlain } from '../utils.js';
 
-export async function markdown(options: OptionsFiles & OptionsComponentExts & OptionsOverrides = {}): Promise<FlatConfigItem[]> {
+export async function markdown(options: OptionsFiles & OptionsComponentExts & OptionsOverrides = {}): Promise<TypedFlatConfigItem[]> {
 	const { componentExts = [], files = [GLOB_MARKDOWN], overrides = {} } = options;
 
 	// @ts-expect-error missing types

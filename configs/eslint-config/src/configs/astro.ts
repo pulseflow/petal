@@ -1,15 +1,16 @@
 import globals from 'globals';
 import type {
-	FlatConfigItem,
 	OptionsFiles,
 	OptionsHasTypeScript,
 	OptionsOverrides,
+	OptionsStylistic,
+	TypedFlatConfigItem,
 } from '../types.js';
 import { interopDefault } from '../utils.js';
 import { GLOB_ASTRO } from '../globs.js';
 
-export async function astro(options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles = {}): Promise<FlatConfigItem[]> {
-	const { files = [GLOB_ASTRO], overrides = {}, typescript = true } = options;
+export async function astro(options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles & OptionsStylistic = {}): Promise<TypedFlatConfigItem[]> {
+	const { files = [GLOB_ASTRO], overrides = {}, stylistic = true, typescript = true } = options;
 
 	const [
 		pluginAstro,
@@ -67,12 +68,17 @@ export async function astro(options: OptionsHasTypeScript & OptionsOverrides & O
 					warnOnUnassignedImports: true,
 				}],
 				'node/prefer-global/process': 'off',
-				'style/implicit-arrow-linebreak': 'off',
-				'style/indent': 'off',
-				'style/jsx-closing-bracket-location': 'off',
-				'style/jsx-indent': 'off',
-				'style/jsx-one-expression-per-line': 'off',
-				'style/jsx-tag-spacing': 'off',
+
+				...stylistic
+					? {
+							'style/implicit-arrow-linebreak': 'off',
+							'style/indent': 'off',
+							'style/jsx-closing-bracket-location': 'off',
+							'style/jsx-indent': 'off',
+							'style/jsx-one-expression-per-line': 'off',
+							'style/jsx-tag-spacing': 'off',
+						}
+					: {},
 
 				...overrides,
 			},

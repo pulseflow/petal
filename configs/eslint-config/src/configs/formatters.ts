@@ -1,20 +1,30 @@
-import { GLOB_CSS, GLOB_LESS, GLOB_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS } from '../globs.js';
+import { isPackageExists } from 'local-pkg';
+import { GLOB_ASTRO, GLOB_CSS, GLOB_GRAPHQL, GLOB_LESS, GLOB_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS } from '../globs.js';
 import type { VendoredPrettierOptions } from '../vendor/prettier-types.js';
 import { ensurePackages, interopDefault, parserPlain } from '../utils.js';
-import type { FlatConfigItem, OptionsFormatters, StylisticConfig } from '../types.js';
+import type { OptionsFormatters, StylisticConfig, TypedFlatConfigItem } from '../types.js';
 import { StylisticConfigDefaults } from './stylistic.js';
 
-export async function formatters(options: OptionsFormatters | true = {}, stylistic: StylisticConfig = {}): Promise<FlatConfigItem[]> {
-	await ensurePackages(['eslint-plugin-format']);
-
+export async function formatters(options: OptionsFormatters | true = {}, stylistic: StylisticConfig = {}): Promise<TypedFlatConfigItem[]> {
 	if (options === true) {
 		options = {
+			astro: isPackageExists('astro'),
 			css: true,
 			graphql: true,
 			html: true,
 			markdown: true,
+			slidev: isPackageExists('@slidev/cli'),
 		};
 	}
+
+	await ensurePackages([
+		'eslint-plugin-format',
+		options.markdown && options.slidev ? 'prettier-plugin-slidev' : undefined,
+		options.astro ? 'prettier-plugin-astro' : undefined,
+	]);
+
+	if (options.slidev && options.markdown !== true && options.markdown !== 'prettier')
+		throw new Error('`slidev` option only works when `markdown` is enabled with `prettier`');
 
 	const { indent, quotes, semi } = { ...StylisticConfigDefaults, ...stylistic };
 
@@ -35,7 +45,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 
 	const pluginFormat = await interopDefault(import('eslint-plugin-format'));
 
-	const configs: FlatConfigItem[] = [
+	const configs: TypedFlatConfigItem[] = [
 		{
 			name: 'petal:formatters:setup',
 			plugins: {
@@ -121,8 +131,15 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 			? 'prettier'
 			: options.markdown;
 
+		const GLOB_SLIDEV = !options.slidev
+			? []
+			: options.slidev === true
+				? ['**/slides.md']
+				: options.slidev.files;
+
 		configs.push({
 			files: [GLOB_MARKDOWN],
+			ignores: GLOB_SLIDEV,
 			languageOptions: {
 				parser: parserPlain,
 			},
@@ -144,11 +161,53 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 				],
 			},
 		});
+
+		if (options.slidev) {
+			configs.push({
+				files: GLOB_SLIDEV,
+				languageOptions: {
+					parser: parserPlain,
+				},
+				name: 'petal:formatter:slidev',
+				rules: {
+					'format/prettier': [
+						'error',
+						{
+							printWidth: 120,
+							...prettierOptions,
+							embeddedLannguageFormatting: 'off',
+							parser: 'slidev',
+							plugins: ['prettier-plugin-slidev'],
+						},
+					],
+				},
+			});
+		}
+	}
+
+	if (options.astro) {
+		configs.push({
+			files: [GLOB_ASTRO],
+			languageOptions: {
+				parser: parserPlain,
+			},
+			name: 'petal:formatter:astro',
+			rules: {
+				'format/prettier': [
+					'error',
+					{
+						...prettierOptions,
+						parser: 'astro',
+						plugins: ['prettier-plugin-astro'],
+					},
+				],
+			},
+		});
 	}
 
 	if (options.graphql) {
 		configs.push({
-			files: ['**/*.graphql'],
+			files: [GLOB_GRAPHQL],
 			languageOptions: {
 				parser: parserPlain,
 			},

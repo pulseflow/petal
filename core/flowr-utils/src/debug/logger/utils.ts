@@ -1,6 +1,6 @@
 import { type ColorName, flavors } from '@catppuccin/palette';
 import tc2 from 'tinycolor2';
-import type { Modifier } from './types.js';
+import { type BackgroundModifier, LogLevel } from './types.js';
 
 export function c(color: ColorName = 'base', opacity = 100, base: ColorName = 'base') {
 	const { hex } = flavors.mocha.colors[color];
@@ -9,7 +9,17 @@ export function c(color: ColorName = 'base', opacity = 100, base: ColorName = 'b
 	return `#${tc2.mix(hex, base_hex, 100 - opacity).toHex()}`;
 }
 
-export function bg(modifier?: Modifier, default_color?: string) {
+export const textColors = {
+	[LogLevel.Verbose]: c('overlay0'),
+	[LogLevel.Trace]: c('overlay0'),
+	[LogLevel.Debug]: c('overlay0'),
+	[LogLevel.Info]: c('text'),
+	[LogLevel.Warn]: c('yellow'),
+	[LogLevel.Error]: c('red'),
+	[LogLevel.Success]: c('green'),
+};
+
+export function bg(modifier?: BackgroundModifier, default_color?: string) {
 	switch (modifier) {
 		case 'brightest':
 			return c('surface2');

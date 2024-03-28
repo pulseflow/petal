@@ -2,33 +2,33 @@
 import process from 'node:process';
 import util from 'node:util';
 
+import type { ColorName } from '@catppuccin/palette';
 import type { FunctionVoid, Key } from '../../index.js';
 import { M, get_dimension, graphemes } from '../../index.js';
-import { informScope, informSymbol, tablePadding } from './config.js';
+import { pad_table_grid, reg_scope, reg_symbol } from './config.js';
 import { LogLevel, modifiers, noop } from './types.js';
-import type { Modifier, Options } from './types.js';
-import { bg, c } from './utils.js';
+import type { BackgroundModifier, Options } from './types.js';
+import { bg, c, textColors } from './utils.js';
 
 export function log(_opts: Options, ...scopes: string[]) {
 	const opts = { ..._opts };
-	informScope(...scopes);
+	reg_scope(...scopes);
 
-	const print = (
-		_symbol: string,
-		color: string,
+	function print(
 		level: LogLevel,
-		mod?: Modifier,
+		symbol: string,
 		align = false,
-		col_bg?: string,
-		col_fg?: string,
-	) => {
-		informSymbol(_symbol);
+		col_symbol = c('overlay0'),
+		col_fg = textColors[level],
+		col_bg?: BackgroundModifier,
+	) {
+		reg_symbol(symbol);
 
 		return (...args: any[]) => {
-			const scope_data = informScope(...scopes);
-			const symbol = informSymbol(_symbol);
+			const scope_data = reg_scope(...scopes);
+			const symbol_padded = reg_symbol(symbol);
 			const columns = process.stdout.columns;
-			const maxLen = columns - scope_data.length - graphemes(symbol);
+			const maxLen = columns - scope_data.length - graphemes(symbol_padded);
 
 			const break_char = (s: string, n: number) =>
 				s.match(new RegExp(`.{1,${n}}`, 'g')) ?? [];
@@ -77,7 +77,7 @@ export function log(_opts: Options, ...scopes: string[]) {
 					return cur.map((v, i) => Math.max(acc[i], graphemes(v)));
 				}, Array(cols).fill(0));
 
-				const padding = tablePadding();
+				const padding = pad_table_grid();
 
 				const paddingLen = graphemes(padding) * (cols - 1);
 				const totalLen = colsLen.reduce((acc, cur) => acc + cur, 0)
@@ -157,7 +157,7 @@ export function log(_opts: Options, ...scopes: string[]) {
 
 			const [head, ...tail] = lines.map(line => line.padEnd(maxLen, ' '));
 
-			const fmt = (color: string) => `color: ${color}; background-color: ${bg(mod, col_bg)};`;
+			const fmt = (color: string) => `color: ${color}; background-color: ${bg(col_bg)};`;
 
 			const emit = (lev: string) => {
 				const e = new Set<string>();
@@ -186,16 +186,6 @@ export function log(_opts: Options, ...scopes: string[]) {
 				return e;
 			};
 
-			const textColors = {
-				[LogLevel.Verbose]: c('overlay0'),
-				[LogLevel.Trace]: c('overlay0'),
-				[LogLevel.Debug]: c('overlay0'),
-				[LogLevel.Info]: c('text'),
-				[LogLevel.Warn]: c('yellow'),
-				[LogLevel.Error]: c('red'),
-				[LogLevel.Success]: c('green'),
-			};
-
 			const con = (lev: string, native = lev) => (env: string) =>
 				emit(env).has(lev)
 					? (console as any as Record<string, FunctionVoid>)[native]
@@ -216,8 +206,8 @@ export function log(_opts: Options, ...scopes: string[]) {
 			const io = (_strings: TemplateStringsArray, ...args: string[]) => {
 				_io(
 					args.map(a => `%c${a}`).join(''),
-					fmt(color),
-					fmt(col_fg ?? textColors[level]),
+					fmt(col_symbol),
+					fmt(col_fg),
 					fmt(c('surface0')),
 					fmt(c('surface1')),
 					fmt(c('surface2')),
@@ -235,10 +225,10 @@ export function log(_opts: Options, ...scopes: string[]) {
 
 			const tertiary = pad + (rest.length > 0 ? rest.join(delim) + delim : '');
 
-			io`${symbol} ${head} ${tertiary} ${secondary} ${primary}`;
+			io`${symbol_padded} ${head} ${tertiary} ${secondary} ${primary}`;
 
 			tail.forEach((line) => {
-				const _symbol = ' '.repeat(graphemes(symbol));
+				const _symbol = ' '.repeat(graphemes(symbol_padded));
 				const _s1 = ' '.repeat(graphemes(primary));
 				const _s2 = ' '.repeat(graphemes(secondary));
 				const _s3 = ' '.repeat(graphemes(tertiary));
@@ -247,37 +237,69 @@ export function log(_opts: Options, ...scopes: string[]) {
 		};
 	};
 
-	const _print = (
-		s: string,
-		c: string,
-		l: LogLevel,
-		bg?: string,
-		fg?: string,
-	) => print(s, c, l, opts.mod, opts.align, bg, fg);
+	const wrap = (
+		lev: LogLevel,
+		sym: string = '',
+		c_sym: string = c(),
+		c_fg?: string,
+	) => print(lev, sym, opts.align, c_sym, c_fg, opts.mod);
+
+	const wrap_with = (lev: LogLevel, o_sym = 100, o_fg = 100) =>
+		(sym?: string, c_sym?: ColorName, c_fg?: ColorName) =>
+			wrap(lev, sym, c(c_sym, o_sym), c_fg && c(c_fg, o_fg, 'overlay0'));
+
+	const E = wrap_with(LogLevel.Error);
+	const W = wrap_with(LogLevel.Warn);
+	const D = wrap_with(LogLevel.Debug, 50, 20);
+	const V = wrap_with(LogLevel.Verbose);
+	const T = wrap_with(LogLevel.Trace);
+	const I = wrap_with(LogLevel.Info);
 
 	const variants = new M()
-		.set('error', _print('󰈸', c('red'), LogLevel.Error))
-		.set('warn', _print('󱐋', c('peach'), LogLevel.Warn))
-		.set('debug', _print('·', c('overlay2'), LogLevel.Debug))
-		.set('verbose', _print(' ', c('overlay2'), LogLevel.Verbose))
-		.set('trace', _print(' ', c('overlay2'), LogLevel.Trace))
-		.set('info', _print('•', c('blue'), LogLevel.Info))
-		.set('start', _print('󰮷', c('mauve'), LogLevel.Info))
-		.set('progress', _print('•', c('overlay2'), LogLevel.Info, c(), c('overlay2')))
-		.set('finish', _print('󰮽', c('green'), LogLevel.Info))
-		.set('launch', _print('󱓞', c('mauve'), LogLevel.Info))
-		.set('success', _print('󰄬', c('green'), LogLevel.Info))
-		.set('tilde', _print('󰜥', c('peach'), LogLevel.Debug))
-		.set('plus', _print('󰐕', c('green'), LogLevel.Debug))
-		.set('minus', _print('󰍴', c('red'), LogLevel.Debug))
-		.set('equal', _print('󰇼', c('blue'), LogLevel.Debug))
-		.set('unequal', _print('󰦎', c('peach'), LogLevel.Debug))
-		.set('added', _print('', c('green', 50, 'overlay0'), LogLevel.Debug, c(), c('green', 20, 'overlay0')))
-		.set('removed', _print('', c('red', 50, 'overlay0'), LogLevel.Debug, c(), c('red', 20, 'overlay0')))
-		.set('modified', _print('', c('blue', 50, 'overlay0'), LogLevel.Debug, c(), c('blue', 20, 'overlay0')))
-		.set('ignored', _print('', c('subtext0', 50, 'overlay0'), LogLevel.Debug));
+		.set('error', E('󰈸', 'red'))
+		.set('warn', W('󱐋', 'peach'))
+		.set('info', I('•', 'blue'))
+		.set('raw', I())
+		.set('start', I('󰮷', 'mauve'))
+		.set('progress', I('•', 'overlay2', 'overlay2'))
+		.set('finish', I('󰮽', 'green'))
+		.set('launch', I('󱓞', 'mauve'))
+		.set('success', I('󰄬', 'green'))
+		.set('insert', I('󰐕', 'green'))
+		.set('delete', I('󰍴', 'red'))
+		.set('match', I('󰇼', 'blue'))
+		.set('mismatch', I('󰦎', 'peach'))
+		.set('debug', D('·', 'overlay2'))
+		.set('tilde', D('󰜥', 'peach'))
+		.set('plus', D('󰐕', 'green'))
+		.set('minus', D('󰍴', 'red'))
+		.set('equal', D('󰇼', 'blue'))
+		.set('unequal', D('󰦎', 'peach'))
+		.set('question', D('?', 'subtext0'))
+		.set('answer', D('󰇼', 'blue'))
+		.set('added', D('', 'green', 'green'))
+		.set('removed', D('', 'red', 'red'))
+		.set('modified', D('', 'blue', 'blue'))
+		.set('ignored', D('', 'subtext0'))
+		.set('verbose', V(' ', 'overlay2'))
+		.set('trace', T(' ', 'overlay2'));
 
 	type Variant = Key<typeof variants>;
+
+	const custom_aliases = {
+		err: E,
+		warn: W,
+		info: I,
+		dbg: D,
+		verb: V,
+		trc: T,
+	};
+
+	type Level = keyof typeof custom_aliases;
+
+	function custom(level: Level, sym?: string, c_sym?: ColorName, c_fg?: ColorName) {
+		return custom_aliases[level](sym, c_sym, c_fg);
+	}
 
 	type Logger =
 		& {
@@ -285,11 +307,11 @@ export function log(_opts: Options, ...scopes: string[]) {
 		}
 		& {
 			aligned: Logger;
-			custom: typeof _print;
+			custom: typeof custom;
 			extend: (...scopes: string[]) => Logger;
 		}
 		& {
-			[K in Modifier]: Logger;
+			[K in BackgroundModifier]: Logger;
 		}
 		& FunctionVoid;
 
@@ -308,11 +330,11 @@ export function log(_opts: Options, ...scopes: string[]) {
 				return variants.get(prop as Variant);
 			if (prop === 'aligned')
 				return log({ ...opts, align: true }, ...scopes);
-			if (modifiers.has(prop as Modifier))
-				return log({ ...opts, mod: prop as Modifier }, ...scopes);
+			if (modifiers.has(prop as BackgroundModifier))
+				return log({ ...opts, mod: prop as BackgroundModifier }, ...scopes);
 
 			if (prop === 'custom')
-				return _print;
+				return custom;
 
 			return target[prop];
 		},

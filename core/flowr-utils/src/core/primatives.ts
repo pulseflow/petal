@@ -33,12 +33,20 @@ export function max_by<T>(arr: T[], prop: ExtractKeysByType<T, number>) {
 	return arr.reduce((a, b) => a[prop] > b[prop] ? a : b);
 }
 
+export function max_map<T, U>(arr: T[], fn: (a: T) => U) {
+	return arr.reduce((a, b) => fn(a) > fn(b) ? a : b);
+}
+
 export function min<T>(arr: T[], prop: ExtractKeysByType<T, number>) {
 	return Math.min(...arr.map(a => a[prop] as number));
 }
 
 export function min_by<T>(arr: T[], prop: ExtractKeysByType<T, number>) {
 	arr.reduce((a, b) => a[prop] < b[prop] ? a : b);
+}
+
+export function min_map<T, U>(arr: T[], fn: (a: T) => U) {
+	return arr.reduce((a, b) => fn(a) < fn(b) ? a : b);
 }
 
 export function group_by<T>(arr: T[], prop: keyof T) {
@@ -108,4 +116,8 @@ export function count(haystack: string, needle: string, allowOverlapping = false
 	}
 
 	return n;
+}
+
+export function pluralize(n: number, singular: string, plural = `${singular}s`) {
+	return n === 1 ? singular : plural;
 }

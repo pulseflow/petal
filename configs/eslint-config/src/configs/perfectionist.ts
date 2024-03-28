@@ -1,4 +1,4 @@
-import type { FlatConfigItem } from '../types.js';
+import type { TypedFlatConfigItem } from '../types.js';
 import { pluginPerfectionist } from '../plugins.js';
 
 /**
@@ -6,7 +6,7 @@ import { pluginPerfectionist } from '../plugins.js';
  *
  * @see https://github.com/azat-io/eslint-plugin-perfectionist
  */
-export async function perfectionist(): Promise<FlatConfigItem[]> {
+export async function perfectionist(): Promise<TypedFlatConfigItem[]> {
 	return [
 		{
 			name: 'petal:perfectionist',

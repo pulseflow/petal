@@ -1,8 +1,8 @@
-import type { FlatConfigItem, OptionsFiles, OptionsOverrides, OptionsStylistic } from '../types.js';
+import type { OptionsFiles, OptionsOverrides, OptionsStylistic, TypedFlatConfigItem } from '../types.js';
 import { GLOB_TOML } from '../globs.js';
 import { interopDefault } from '../utils.js';
 
-export async function toml(options: OptionsOverrides & OptionsStylistic & OptionsFiles = {}): Promise<FlatConfigItem[]> {
+export async function toml(options: OptionsOverrides & OptionsStylistic & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_TOML], overrides = {}, stylistic = true } = options;
 	const { indent = 2 } = typeof stylistic === 'boolean' ? {} : stylistic;
 

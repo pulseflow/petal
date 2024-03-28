@@ -2,63 +2,15 @@ import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { ParserOptions } from '@typescript-eslint/parser';
 import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks';
 import type { Linter } from 'eslint';
-import type {
-	EslintCommentsRules,
-	EslintRules,
-	FlatESLintConfigItem,
-	ImportRules,
-	JsoncRules,
-	JsxA11yRules,
-	MergeIntersection,
-	NRules,
-	Prefix,
-	ReactHooksRules,
-	ReactRules,
-	RenamePrefix,
-	RuleConfig,
-	VitestRules,
-	VueRules,
-	YmlRules,
-} from '@antfu/eslint-define-config';
-import type { RuleOptions as JSDocRules } from '@eslint-types/jsdoc/types';
-import type { RuleOptions as TypeScriptRules } from '@eslint-types/typescript-eslint/types';
-import type { RuleOptions as UnicornRules } from '@eslint-types/unicorn/types';
-import type { Rules as PetalRules } from 'eslint-plugin-petal';
-import type { StylisticCustomizeOptions, UnprefixedRuleOptions as StylisticRules } from '@stylistic/eslint-plugin';
+import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { VendoredPrettierOptions } from './vendor/prettier-types.js';
-import type { AstroRules } from './vendor/astro-types.js';
-import type { JestRules } from './vendor/jest-types.js';
-
-export type WrapRuleConfig<T extends { [key: string]: any }> = {
-	[K in keyof T]: T[K] extends RuleConfig ? T[K] : RuleConfig<T[K]>;
-};
+import type { RuleOptions } from './typegen.js';
 
 export type Awaitable<T> = T | Promise<T>;
 
-export type Rules = WrapRuleConfig<
-	MergeIntersection<
-		RenamePrefix<TypeScriptRules, '@typescript-eslint/', 'ts/'> &
-		RenamePrefix<VitestRules, 'vitest/', 'test/'> &
-		RenamePrefix<YmlRules, 'yml/', 'yaml/'> &
-		RenamePrefix<NRules, 'n/', 'node/'> &
-		Prefix<StylisticRules, 'style/'> &
-		Prefix<PetalRules, 'petal/'> &
-		AstroRules &
-		JestRules &
-		JSDocRules &
-		ImportRules &
-		EslintRules &
-		JsoncRules &
-		VueRules &
-		UnicornRules &
-		EslintCommentsRules &
-		JsxA11yRules &
-		ReactHooksRules &
-		ReactRules & { 'test/no-only-tests': RuleConfig<[]> }
-	>
->;
+export type Rules = RuleOptions;
 
-export type FlatConfigItem = Omit<FlatESLintConfigItem<Rules, false>, 'plugins'> & {
+export type TypedFlatConfigItem = Omit<Linter.FlatConfig, 'plugins'> & {
 	/**
 	 * Custom name of each config item.
 	 */
@@ -68,9 +20,12 @@ export type FlatConfigItem = Omit<FlatESLintConfigItem<Rules, false>, 'plugins'>
 	 * An object containing a name-value mapping of plugin names to plugin objects.
 	 */
 	plugins?: Record<string, any>;
-};
 
-export type UserConfigItem = FlatConfigItem | Linter.FlatConfig;
+	/**
+	 * An object containing a name-value mapping of rules to use.
+	 */
+	rules?: Linter.RulesRecord & Rules;
+};
 
 export interface OptionsVue extends OptionsOverrides {
 	/**
@@ -135,6 +90,22 @@ export interface OptionsFormatters {
 	 * By default it's controlled by out own config.
 	 */
 	dprintOptions?: boolean;
+
+	/**
+	 * Install the prettier plugin for handle Slidev markdown
+	 *
+	 * Only works when `markdown` is enabled with `prettier`.
+	 */
+	slidev?: boolean | {
+		files?: string[];
+	};
+
+	/**
+	 * Enable formatting support for Astro.
+	 *
+	 * Currently only support Prettier.
+	 */
+	astro?: 'prettier' | boolean;
 }
 
 export interface OptionsFiles {
@@ -186,7 +157,7 @@ export interface OptionsStylistic {
 export interface StylisticConfig extends Pick<StylisticCustomizeOptions, 'indent' | 'quotes' | 'jsx' | 'semi'> { }
 
 export interface OptionsOverrides {
-	overrides?: FlatConfigItem['rules'];
+	overrides?: TypedFlatConfigItem['rules'];
 }
 
 export interface OptionsIsInEditor {
@@ -378,19 +349,19 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * @deprecated use `overrides` option in each integration key instead
 	 */
 	overrides?: {
-		stylistic?: FlatConfigItem['rules'];
-		javascript?: FlatConfigItem['rules'];
-		typescript?: FlatConfigItem['rules'];
-		test?: FlatConfigItem['rules'];
-		jest?: FlatConfigItem['rules'];
-		vue?: FlatConfigItem['rules'];
-		solid?: FlatConfigItem['rules'];
-		react?: FlatConfigItem['rules'];
-		astro?: FlatConfigItem['rules'];
-		jsonc?: FlatConfigItem['rules'];
-		toml?: FlatConfigItem['rules'];
-		markdown?: FlatConfigItem['rules'];
-		yaml?: FlatConfigItem['rules'];
-		svelte?: FlatConfigItem['rules'];
+		stylistic?: TypedFlatConfigItem['rules'];
+		javascript?: TypedFlatConfigItem['rules'];
+		typescript?: TypedFlatConfigItem['rules'];
+		test?: TypedFlatConfigItem['rules'];
+		jest?: TypedFlatConfigItem['rules'];
+		vue?: TypedFlatConfigItem['rules'];
+		solid?: TypedFlatConfigItem['rules'];
+		react?: TypedFlatConfigItem['rules'];
+		astro?: TypedFlatConfigItem['rules'];
+		jsonc?: TypedFlatConfigItem['rules'];
+		toml?: TypedFlatConfigItem['rules'];
+		markdown?: TypedFlatConfigItem['rules'];
+		yaml?: TypedFlatConfigItem['rules'];
+		svelte?: TypedFlatConfigItem['rules'];
 	};
 }
