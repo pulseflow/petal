@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/pulseflow/petal/compare/v2.2.2...v2.3.0) (2024-03-28)
+
+
+### Features
+
+* **eslint:** update to eslint v9 ([f311a57](https://github.com/pulseflow/petal/commit/f311a574db134bdc94ba08508fafdafea7d0f9c9))
+
+
+
+
+
 ## [2.2.2](https://github.com/pulseflow/petal/compare/v2.2.1...v2.2.2) (2024-03-26)
 
 
