@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1](https://github.com/pulseflow/petal/compare/v2.3.0...v2.3.1) (2024-04-01)
+
+
+### Bug Fixes
+
+* **eslint:** stop using deprecated typegen type ([3efff64](https://github.com/pulseflow/petal/commit/3efff643744ae0016cd2fb59d9c2e242eab78e60))
+
+
+### Features
+
+* **eslint:** standardize everything and bump deps ([ab2cd0b](https://github.com/pulseflow/petal/commit/ab2cd0ba8fa7211c4b781ba04474ea1c269f7ce8))
+
+
+
+
+
 # [2.3.0](https://github.com/pulseflow/petal/compare/v2.2.2...v2.3.0) (2024-03-28)
 
 
