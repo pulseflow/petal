@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import process from 'node:process';
 import { isPackageExists } from 'local-pkg';
-import { FlatConfigPipeline } from 'eslint-flat-config-utils';
+import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from './types.js';
 import {
 	astro,
@@ -71,7 +71,7 @@ export const defaultPluginRenaming = {
 export function petal(
 	options: OptionsConfig & TypedFlatConfigItem = {},
 	...userConfigs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]
-): FlatConfigPipeline<TypedFlatConfigItem> {
+): FlatConfigComposer<TypedFlatConfigItem> {
 	const {
 		astro: enableAstro = isPackageExists('astro'),
 		autoRenamePlugins = true,
@@ -243,7 +243,7 @@ export function petal(
 	if (Object.keys(fusedConfig).length)
 		configs.push([fusedConfig]);
 
-	let pipeline = new FlatConfigPipeline<TypedFlatConfigItem>();
+	let pipeline = new FlatConfigComposer<TypedFlatConfigItem>();
 
 	pipeline = pipeline.append(...configs, ...userConfigs);
 
