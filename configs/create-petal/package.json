@@ -50,7 +50,7 @@
 		"strip-json-comments": "^5.0.1"
 	},
 	"devDependencies": {
-		"@types/node": "20.11.30",
+		"@types/node": "20.12.2",
 		"rimraf": "^5.0.5",
 		"tempy": "^3.1.0",
 		"typescript": "^5.4.3",

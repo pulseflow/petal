@@ -47,7 +47,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 
 	const configs: TypedFlatConfigItem[] = [
 		{
-			name: 'petal:formatters:setup',
+			name: 'petal:formatter:setup',
 			plugins: {
 				format: pluginFormat,
 			},

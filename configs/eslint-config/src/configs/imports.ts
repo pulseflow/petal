@@ -37,7 +37,7 @@ export async function imports(options: OptionsStylistic = {}): Promise<TypedFlat
 		},
 		{
 			files: ['**/bin/**/*', `**/bin.${GLOB_SRC_EXT}`],
-			name: 'petal:imports:bin',
+			name: 'petal:disables:imports-bin',
 			rules: {
 				'petal/no-import-dist': 'off',
 				'petal/no-import-node-modules-by-path': 'off',

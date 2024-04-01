@@ -280,7 +280,7 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 		},
 		{
 			files: [`scripts/${GLOB_SRC}`, `cli.${GLOB_SRC_EXT}`],
-			name: 'petal:scripts-overrides',
+			name: 'petal:disables:cli',
 			rules: {
 				'no-console': 'off',
 			},

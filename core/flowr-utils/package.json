@@ -45,7 +45,7 @@
 	"devDependencies": {
 		"@flowr/tsconfig": "workspace:^",
 		"@types/luxon": "^3.4.2",
-		"@types/node": "^20.11.30",
+		"@types/node": "^20.12.2",
 		"@types/tinycolor2": "^1.4.6",
 		"@types/zen-observable": "^0.8.7",
 		"mock-fs": "^5.2.0",
