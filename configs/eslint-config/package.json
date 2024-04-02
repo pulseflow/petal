@@ -124,7 +124,7 @@
 	},
 	"devDependencies": {
 		"@antfu/eslint-plugin-prettier": "^5.0.1-1",
-		"@eslint/config-inspector": "^0.1.0",
+		"@eslint/config-inspector": "^0.2.1",
 		"@types/eslint": "^8.56.6",
 		"@types/fs-extra": "^11.0.4",
 		"@types/jest": "^29.5.12",
