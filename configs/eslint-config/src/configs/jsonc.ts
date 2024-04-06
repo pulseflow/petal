@@ -21,7 +21,7 @@ export async function jsonc(options: OptionsFiles & OptionsStylistic & OptionsOv
 
 	return [
 		{
-			name: 'petal:jsonc:setup',
+			name: 'petal/jsonc/setup',
 			plugins: {
 				jsonc: pluginJsonc as any,
 			},
@@ -31,7 +31,7 @@ export async function jsonc(options: OptionsFiles & OptionsStylistic & OptionsOv
 			languageOptions: {
 				parser: parserJsonc,
 			},
-			name: 'petal:jsonc:rules',
+			name: 'petal/jsonc/rules',
 			rules: {
 				'jsonc/no-bigint-literals': 'error',
 				'jsonc/no-binary-expression': 'error',

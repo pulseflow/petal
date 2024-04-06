@@ -16,7 +16,7 @@ export async function markdown(options: OptionsFiles & OptionsComponentExts & Op
 
 	return [
 		{
-			name: 'petal:markdown:setup',
+			name: 'petal/markdown/setup',
 			plugins: {
 				markdown,
 			},
@@ -24,7 +24,7 @@ export async function markdown(options: OptionsFiles & OptionsComponentExts & Op
 		{
 			files,
 			ignores: [GLOB_MARKDOWN_IN_MARKDOWN],
-			name: 'petal:markdown:processor',
+			name: 'petal/markdown/processor',
 			// `eslint-plugin-markdown` only creates virtual files for code blocks,
 			// but not the markdown file itself. we use `eslint-merge-processors` to
 			// add a pass-through processor for themarkdown file itself.
@@ -38,7 +38,7 @@ export async function markdown(options: OptionsFiles & OptionsComponentExts & Op
 			languageOptions: {
 				parser: parserPlain,
 			},
-			name: 'petal:markdown:parser',
+			name: 'petal/markdown/parser',
 		},
 		{
 			files: [
@@ -52,7 +52,7 @@ export async function markdown(options: OptionsFiles & OptionsComponentExts & Op
 					},
 				},
 			},
-			name: 'petal:markdown:disables',
+			name: 'petal/markdown/disables',
 			rules: {
 				'import/newline-after-import': 'off',
 				'no-alert': 'off',

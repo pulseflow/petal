@@ -85,13 +85,13 @@ export async function typescript(options: OptionsComponentExts &
 					...(parserOptions as any),
 				},
 			},
-			name: `petal:typescript:${typeAware ? 'type-aware-parser' : 'parser'}`,
+			name: `petal/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`,
 		};
 	};
 
 	return [
 		{
-			name: 'petal:typescript:setup',
+			name: 'petal/typescript/setup',
 			plugins: {
 				petal: pluginPetal,
 				ts: pluginTs as any,
@@ -105,7 +105,7 @@ export async function typescript(options: OptionsComponentExts &
 			: [makeParser(false, files)],
 		{
 			files,
-			name: 'petal:typescript:rules',
+			name: 'petal/typescript/rules',
 			rules: {
 				...renameRules(
 					pluginTs.configs['eslint-recommended'].overrides![0].rules!,
@@ -155,17 +155,19 @@ export async function typescript(options: OptionsComponentExts &
 				...overrides,
 			},
 		},
-		{
-			files: filesTypeAware,
-			name: 'petal:typescript:rules-type-aware',
-			rules: {
-				...(tsconfigPath ? typeAwareRules : {}),
-				...overrides,
-			},
-		},
+		...isTypeAware
+			? [{
+					files: filesTypeAware,
+					name: 'petal/typescript/rules-type-aware',
+					rules: {
+						...(tsconfigPath ? typeAwareRules : {}),
+						...overrides,
+					},
+				}]
+			: [],
 		{
 			files: ['**/*.d.ts'],
-			name: 'petal:typescript:dts-overrides',
+			name: 'petal/typescript/disables/dts',
 			rules: {
 				'eslint-comments/no-unlimited-disable': 'off',
 				'import/no-duplicates': 'off',
@@ -175,14 +177,14 @@ export async function typescript(options: OptionsComponentExts &
 		},
 		{
 			files: ['**/*.{test,spec}.ts?(x)'],
-			name: 'petal:typescript:tests-overrides',
+			name: 'petal/typescript/disables/tests',
 			rules: {
 				'no-unused-expressions': 'off',
 			},
 		},
 		{
 			files: ['**/*.js', '**/*.cjs'],
-			name: 'petal:typescript:javascript-overrides',
+			name: 'petal/typescript/disables/cjs',
 			rules: {
 				'ts/no-require-imports': 'off',
 				'ts/no-var-requires': 'off',

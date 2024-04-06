@@ -6,7 +6,7 @@ export async function jsdoc(options: OptionsStylistic = {}): Promise<TypedFlatCo
 
 	return [
 		{
-			name: 'petal:jsdoc',
+			name: 'petal/jsdoc/rules',
 			plugins: {
 				jsdoc: await interopDefault(import('eslint-plugin-jsdoc')),
 			},

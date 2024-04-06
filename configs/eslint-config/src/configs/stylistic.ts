@@ -18,7 +18,7 @@ export async function stylistic(options: StylisticConfig & OptionsOverrides = {}
 
 	return [
 		{
-			name: 'petal:stylistic',
+			name: 'petal/stylistic/rules',
 			plugins: {
 				petal: pluginPetal,
 				style: pluginStylistic,

@@ -1,8 +1,8 @@
 /*
-export const str = Symbol('petal:arg:flag:string');
-export const int = Symbol('petal:arg:flag:integer');
-export const bool = Symbol('petal:arg:flag:boolean');
-const none = Symbol('petal:arg:match:none');
+export const str = Symbol('petal/arg/flag/string');
+export const int = Symbol('petal/arg/flag/integer');
+export const bool = Symbol('petal/arg/flag/boolean');
+const none = Symbol('petal/arg/match/none');
 
 type FlagType = typeof str | typeof int | typeof bool;
 

@@ -49,7 +49,7 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 					watchEffect: 'readonly',
 				},
 			},
-			name: 'petal:vue:setup',
+			name: 'petal/vue/setup',
 			plugins: {
 				vue: pluginVue,
 			},
@@ -69,7 +69,7 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 					sourceType: 'module',
 				},
 			},
-			name: 'petal:vue:rules',
+			name: 'petal/vue/rules',
 			processor: sfcBlocks === false
 				? pluginVue.processors['.vue']
 				: mergeProcessors([

@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-export const dir = Symbol('petal:io:is_dir');
+export const dir = Symbol('petal/io/is_dir');
 
 const _ls = (path: string) => readdirSync(path, { withFileTypes: true, encoding: 'utf-8' });
 type Files = Awaited<ReturnType<typeof _ls>>;

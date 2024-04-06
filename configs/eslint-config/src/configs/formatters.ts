@@ -47,7 +47,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 
 	const configs: TypedFlatConfigItem[] = [
 		{
-			name: 'petal:formatter:setup',
+			name: 'petal/formatter/setup',
 			plugins: {
 				format: pluginFormat,
 			},
@@ -61,7 +61,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 				languageOptions: {
 					parser: parserPlain,
 				},
-				name: 'petal:formatter:css',
+				name: 'petal/formatter/css',
 				rules: {
 					'format/prettier': [
 						'error',
@@ -77,7 +77,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 				languageOptions: {
 					parser: parserPlain,
 				},
-				name: 'petal:formatter:scss',
+				name: 'petal/formatter/scss',
 				rules: {
 					'format/prettier': [
 						'error',
@@ -93,7 +93,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 				languageOptions: {
 					parser: parserPlain,
 				},
-				name: 'petal:formatter:less',
+				name: 'petal/formatter/less',
 				rules: {
 					'format/prettier': [
 						'error',
@@ -113,7 +113,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 			languageOptions: {
 				parser: parserPlain,
 			},
-			name: 'petal:formatter:html',
+			name: 'petal/formatter/html',
 			rules: {
 				'format/prettier': [
 					'error',
@@ -143,7 +143,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 			languageOptions: {
 				parser: parserPlain,
 			},
-			name: 'petal:formatter:markdown',
+			name: 'petal/formatter/markdown',
 			rules: {
 				[`format/${formatter}`]: [
 					'error',
@@ -168,7 +168,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 				languageOptions: {
 					parser: parserPlain,
 				},
-				name: 'petal:formatter:slidev',
+				name: 'petal/formatter/slidev',
 				rules: {
 					'format/prettier': [
 						'error',
@@ -191,7 +191,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 			languageOptions: {
 				parser: parserPlain,
 			},
-			name: 'petal:formatter:astro',
+			name: 'petal/formatter/astro',
 			rules: {
 				'format/prettier': [
 					'error',
@@ -211,7 +211,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 			languageOptions: {
 				parser: parserPlain,
 			},
-			name: 'petal:formatter:graphql',
+			name: 'petal/formatter/graphql',
 			rules: {
 				'format/prettier': [
 					'error',

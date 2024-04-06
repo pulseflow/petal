@@ -18,7 +18,7 @@ export async function solid(options: OptionsHasTypeScript & OptionsOverrides & O
 
 	return [
 		{
-			name: 'petal:solid:setup',
+			name: 'petal/solid/setup',
 			plugins: {
 				solid: pluginSolid,
 			},
@@ -40,7 +40,7 @@ export async function solid(options: OptionsHasTypeScript & OptionsOverrides & O
 				},
 				sourceType: 'module',
 			},
-			name: 'petal:solid:rules',
+			name: 'petal/solid/rules',
 			rules: {
 				'node/prefer-global/process': 'off',
 

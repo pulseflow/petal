@@ -22,7 +22,7 @@ export async function yaml(options: OptionsOverrides & OptionsStylistic & Option
 
 	return [
 		{
-			name: 'petal:yaml:setup',
+			name: 'petal/yaml/setup',
 			plugins: {
 				yaml: pluginYaml,
 			},
@@ -32,7 +32,7 @@ export async function yaml(options: OptionsOverrides & OptionsStylistic & Option
 			languageOptions: {
 				parser: parserYaml,
 			},
-			name: 'petal:yaml:rules',
+			name: 'petal/yaml/rules',
 			rules: {
 				'style/spaced-comment': 'off',
 

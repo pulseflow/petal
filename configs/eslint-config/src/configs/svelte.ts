@@ -28,7 +28,7 @@ export async function svelte(options: OptionsHasTypeScript & OptionsOverrides & 
 
 	return [
 		{
-			name: 'petal:svelte:setup',
+			name: 'petal/svelte/setup',
 			plugins: {
 				svelte: pluginSvelte,
 			},
@@ -44,7 +44,7 @@ export async function svelte(options: OptionsHasTypeScript & OptionsOverrides & 
 						: null,
 				},
 			},
-			name: 'petal:svelte:rules',
+			name: 'petal/svelte/rules',
 			processor: pluginSvelte.processors['.svelte'],
 			rules: {
 				'import/no-mutable-exports': 'off',

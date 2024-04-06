@@ -328,7 +328,7 @@ export default petal()
         // some configs before the main config
     )
     .override(
-        'petal:imports'
+        'petal/imports'
     )
     .renamePlugins({
         'old-prefix': 'new-prefix',

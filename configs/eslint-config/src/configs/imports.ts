@@ -7,7 +7,7 @@ export async function imports(options: OptionsStylistic = {}): Promise<TypedFlat
 
 	return [
 		{
-			name: 'petal:imports',
+			name: 'petal/imports/rules',
 			plugins: {
 				import: pluginImport,
 				petal: pluginPetal,
@@ -37,7 +37,7 @@ export async function imports(options: OptionsStylistic = {}): Promise<TypedFlat
 		},
 		{
 			files: ['**/bin/**/*', `**/bin.${GLOB_SRC_EXT}`],
-			name: 'petal:disables:imports-bin',
+			name: 'petal/imports/disables/bin',
 			rules: {
 				'petal/no-import-dist': 'off',
 				'petal/no-import-node-modules-by-path': 'off',

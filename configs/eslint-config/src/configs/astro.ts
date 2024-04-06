@@ -25,7 +25,7 @@ export async function astro(options: OptionsHasTypeScript & OptionsOverrides & O
 
 	return [
 		{
-			name: 'petal:astro:setup',
+			name: 'petal/astro/setup',
 			plugins: {
 				'astro': pluginAstro,
 				'jsx-a11y': pluginA11y,
@@ -51,7 +51,7 @@ export async function astro(options: OptionsHasTypeScript & OptionsOverrides & O
 					sourceType: 'module',
 				},
 			},
-			name: 'petal:astro:rules',
+			name: 'petal/astro/rules',
 			processor: pluginAstro.processors['.astro'],
 			rules: {
 				...(pluginAstro.configs.recommended.rules as any),

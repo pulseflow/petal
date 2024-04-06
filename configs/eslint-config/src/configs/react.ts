@@ -36,7 +36,7 @@ export async function react(options: OptionsHasTypeScript & OptionsOverrides & O
 
 	return [
 		{
-			name: 'petal:react:setup',
+			name: 'petal/react/setup',
 			plugins: {
 				a11y: pluginA11y,
 				react: pluginReact,
@@ -62,7 +62,7 @@ export async function react(options: OptionsHasTypeScript & OptionsOverrides & O
 				},
 				sourceType: 'module',
 			},
-			name: 'petal:react:rules',
+			name: 'petal/react/rules',
 			rules: {
 				...(pluginA11y.configs.recommended.rules as any),
 

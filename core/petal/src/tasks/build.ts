@@ -2,7 +2,7 @@ import Debug from 'debug';
 import { execa } from 'execa';
 import type { BuildTaskDesc } from '../lib/types.js';
 
-const dbg = Debug('petal:build');
+const dbg = Debug('petal/build');
 
 export async function buildTask(task: BuildTaskDesc): Promise<string[]> {
 	const fns = [];

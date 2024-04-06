@@ -34,7 +34,7 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 			linterOptions: {
 				reportUnusedDisableDirectives: true,
 			},
-			name: 'petal:javascript',
+			name: 'petal/javascript/rules',
 			plugins: {
 				'petal': pluginPetal,
 				'unused-imports': pluginUnusedImports,
@@ -102,7 +102,7 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 				'no-multi-str': 'error',
 				'no-new': 'error',
 				'no-new-func': 'error',
-				'no-new-symbol': 'error',
+				'no-new-native-nonconstructor': 'error',
 				'no-new-wrappers': 'error',
 				'no-obj-calls': 'error',
 				'no-octal': 'error',
@@ -280,7 +280,7 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 		},
 		{
 			files: [`scripts/${GLOB_SRC}`, `cli.${GLOB_SRC_EXT}`],
-			name: 'petal:disables:cli',
+			name: 'petal/javascript/disables/cli',
 			rules: {
 				'no-console': 'off',
 			},

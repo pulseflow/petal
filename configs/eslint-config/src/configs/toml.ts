@@ -16,7 +16,7 @@ export async function toml(options: OptionsOverrides & OptionsStylistic & Option
 
 	return [
 		{
-			name: 'petal:toml:setup',
+			name: 'petal/toml/setup',
 			plugins: {
 				toml: pluginToml,
 			},
@@ -26,7 +26,7 @@ export async function toml(options: OptionsOverrides & OptionsStylistic & Option
 			languageOptions: {
 				parser: parserToml,
 			},
-			name: 'petal:toml:rules',
+			name: 'petal/toml/rules',
 			rules: {
 				'style/spaced-comment': 'off',
 

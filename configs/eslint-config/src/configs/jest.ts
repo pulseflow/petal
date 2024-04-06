@@ -23,7 +23,7 @@ export async function jest(options: OptionsIsInEditor & OptionsOverrides & Optio
 
 	return [
 		{
-			name: 'petal:jest:setup',
+			name: 'petal/jest/setup',
 			plugins: {
 				jest: {
 					...pluginJest,
@@ -51,7 +51,7 @@ export async function jest(options: OptionsIsInEditor & OptionsOverrides & Optio
 					sourceType: 'module',
 				},
 			},
-			name: 'petal:test:rules',
+			name: 'petal/test/rules',
 			rules: {
 				'node/prefer-global/process': 'off',
 				'test/no-only-tests': isInEditor ? 'off' : 'error',

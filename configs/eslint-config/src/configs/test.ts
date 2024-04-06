@@ -21,7 +21,7 @@ export async function test(options: OptionsIsInEditor & OptionsOverrides & Optio
 
 	return [
 		{
-			name: 'petal:test:setup',
+			name: 'petal/test/setup',
 			plugins: {
 				test: {
 					...pluginVitest,
@@ -34,7 +34,7 @@ export async function test(options: OptionsIsInEditor & OptionsOverrides & Optio
 		},
 		{
 			files,
-			name: 'petal:test:rules',
+			name: 'petal/test/rules',
 			rules: {
 				'node/prefer-global/process': 'off',
 

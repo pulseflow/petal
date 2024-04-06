@@ -7,7 +7,7 @@ export async function sortPackageJson(): Promise<TypedFlatConfigItem[]> {
 	return [
 		{
 			files: ['**/package.json'],
-			name: 'petal:sort:package-json',
+			name: 'petal/sort/package-json',
 			rules: {
 				'jsonc/sort-array-values': [
 					'error',
@@ -107,7 +107,7 @@ export async function sortTsConfig(): Promise<TypedFlatConfigItem[]> {
 	return [
 		{
 			files: ['**/tsconfig.json', '**/tsconfig.*.json'],
-			name: 'petal:sort:tsconfig',
+			name: 'petal/sort/tsconfig-json',
 			rules: {
 				'jsonc/sort-keys': [
 					'error',

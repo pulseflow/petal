@@ -5,7 +5,7 @@ import { execa } from 'execa';
 import type { AuditTaskDesc } from '../lib/types.js';
 import { CONSUMING_ROOT } from '../lib/paths.js';
 
-const dbg = Debug('petal:audit');
+const dbg = Debug('petal/audit');
 
 enum ThresholdLimits {
 	info = 1,

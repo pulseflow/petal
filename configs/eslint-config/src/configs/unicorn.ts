@@ -4,7 +4,7 @@ import { pluginUnicorn } from '../plugins.js';
 export async function unicorn(): Promise<TypedFlatConfigItem[]> {
 	return [
 		{
-			name: 'petal:unicorn',
+			name: 'petal/unicorn/rules',
 			plugins: {
 				unicorn: pluginUnicorn,
 			},

@@ -12,7 +12,7 @@ export async function unocss(options: OptionsUnoCSS = {}): Promise<TypedFlatConf
 
 	return [
 		{
-			name: 'petal:unocss',
+			name: 'petal/unocss',
 			plugins: {
 				unocss: pluginUnoCSS,
 			},

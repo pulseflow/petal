@@ -4,7 +4,7 @@ import { pluginNode } from '../plugins.js';
 export async function node(): Promise<TypedFlatConfigItem[]> {
 	return [
 		{
-			name: 'petal:node',
+			name: 'petal/node/rules',
 			plugins: {
 				node: pluginNode,
 			},

@@ -8,7 +8,7 @@ import { CONSUMING_ROOT, ESLINT_CONFIG } from '../lib/paths.js';
 
 const { FlatESLint } = eslintCore;
 
-const dbg = Debug('petal:lint');
+const dbg = Debug('petal/lint');
 
 export function getEslintConfig(): string | undefined {
 	if (!hasConfig([

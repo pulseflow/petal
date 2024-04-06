@@ -29,7 +29,7 @@
 		"@stylistic/eslint-plugin-migrate": "^1.7.0",
 		"create-petal": "workspace:^",
 		"lerna": "^8.1.2",
-		"typescript": "^5.4.3"
+		"typescript": "^5.4.4"
 	},
 	"pnpm": {
 		"overrides": {
