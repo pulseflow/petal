@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/pulseflow/petal/compare/v2.3.1...v2.3.2) (2024-04-11)
+
+
+### Bug Fixes
+
+* **eslint:** bump and fix test config slowing down preformance ([81055fd](https://github.com/pulseflow/petal/commit/81055fd014e675c11eaf1899936626754722b41a))
+* **eslint:** bump deps and rename config paths ([cdcf5b0](https://github.com/pulseflow/petal/commit/cdcf5b07356369f987ef77d8b44e3834493dc038))
+
+
+
+
+
 ## [2.3.1](https://github.com/pulseflow/petal/compare/v2.3.0...v2.3.1) (2024-04-01)
 
 
