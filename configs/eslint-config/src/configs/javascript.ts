@@ -263,6 +263,7 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 					{
 						args: 'after-used',
 						argsIgnorePattern: '^_',
+						ignoreRestSiblings: true,
 						vars: 'all',
 						varsIgnorePattern: '^_',
 					},

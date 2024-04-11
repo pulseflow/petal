@@ -29,11 +29,12 @@
 		"@stylistic/eslint-plugin-migrate": "^1.7.0",
 		"create-petal": "workspace:^",
 		"lerna": "^8.1.2",
-		"typescript": "^5.4.4"
+		"typescript": "^5.4.5"
 	},
 	"pnpm": {
 		"overrides": {
-			"follow-redirects@<1.15.4": ">=1.15.4"
+			"tar@<6.2.1": ">=6.2.1",
+			"vite@>=5.1.0 <=5.1.6": ">=5.1.7"
 		}
 	},
 	"overrides": {

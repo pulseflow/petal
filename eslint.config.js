@@ -2,24 +2,31 @@
 import petal from '@flowr/eslint-config';
 import styleMigrate from '@stylistic/eslint-plugin-migrate';
 
-export default petal({
-	typescript: true,
-	ignores: [
-		'fixtures',
-		'_fixtures',
-		'**/fixtures/**',
-	],
-}, {
-	files: ['configs/eslint-config/src/**/*.ts'],
-	rules: {
-		'perfectionist/sort-objects': 'error',
+export default petal(
+	{
+		typescript: true,
 	},
-}, {
-	files: ['configs/eslint-config/src/configs/*.ts'],
-	plugins: {
-		'style-migrate': styleMigrate,
+	{
+		ignores: [
+			'fixtures',
+			'_fixtures',
+			'**/fixtures/**',
+		],
 	},
-	rules: {
-		'style-migrate/migrate': ['error', { namespaceTo: 'style' }],
+	// @ts-expect-error perfectionist type error
+	{
+		files: ['configs/eslint-config/src/**/*.ts'],
+		rules: {
+			'perfectionist/sort-objects': 'error',
+		},
 	},
-});
+	{
+		files: ['configs/eslint-config/src/configs/*.ts'],
+		plugins: {
+			'style-migrate': styleMigrate,
+		},
+		rules: {
+			'style-migrate/migrate': ['error', { namespaceTo: 'style' }],
+		},
+	},
+);

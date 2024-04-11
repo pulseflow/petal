@@ -7,6 +7,8 @@ import type {
 import { GLOB_TESTS } from '../globs.js';
 import { interopDefault } from '../utils.js';
 
+let _pluginTest: any;
+
 export async function test(options: OptionsIsInEditor & OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = GLOB_TESTS, isInEditor = false, overrides = {} } = options;
 
@@ -19,17 +21,19 @@ export async function test(options: OptionsIsInEditor & OptionsOverrides & Optio
 		interopDefault(import('eslint-plugin-no-only-tests')),
 	] as const);
 
+	_pluginTest = _pluginTest || {
+		...pluginVitest,
+		rules: {
+			...pluginVitest.rules,
+			...pluginNoOnlyTests.rules,
+		},
+	};
+
 	return [
 		{
 			name: 'petal/test/setup',
 			plugins: {
-				test: {
-					...pluginVitest,
-					rules: {
-						...pluginVitest.rules,
-						...pluginNoOnlyTests.rules,
-					},
-				},
+				test: _pluginTest,
 			},
 		},
 		{
