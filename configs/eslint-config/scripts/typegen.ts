@@ -39,6 +39,7 @@ const configs = await combine(
 	comments(),
 	imports(),
 	javascript(),
+	solid(),
 	jest(),
 	jsdoc(),
 	jsonc(),

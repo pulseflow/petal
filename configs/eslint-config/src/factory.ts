@@ -162,6 +162,7 @@ export function petal(
 	if (enableSolid) {
 		configs.push(solid({
 			overrides: getOverrides(options, 'solid'),
+			tsconfigPath: getOverrides(options, 'typescript').tsconfigPath,
 			typescript: !!enableTypeScript,
 		}));
 	}
