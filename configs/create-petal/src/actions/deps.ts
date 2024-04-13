@@ -53,8 +53,8 @@ async function install({
 	packageManager,
 	cwd,
 }: {
-	packageManager: string
-	cwd: string
+	packageManager: string;
+	cwd: string;
 }) {
 	if (packageManager === 'yarn')
 		await ensureYarnLock({ cwd });

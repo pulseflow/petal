@@ -1,6 +1,6 @@
 import { posix, win32 } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { __dirname, isChildPath } from '../../src/index.js';
+import { isChildPath } from '../../src/index.js';
 
 describe('isChildPath', () => {
 	afterEach(() => {

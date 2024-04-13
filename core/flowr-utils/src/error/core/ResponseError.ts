@@ -47,7 +47,7 @@ export class ResponseError extends Error {
 	 * been consumed before.
 	 */
 	static async fromResponse(
-		response: ConsumedResponse & { text(): Promise<string> },
+		response: ConsumedResponse & { text: () => Promise<string> },
 	): Promise<ResponseError> {
 		const data = await parseErrorResponseBody(response);
 
@@ -65,10 +65,10 @@ export class ResponseError extends Error {
 	}
 
 	private constructor(props: {
-		message: string
-		response: ConsumedResponse
-		data: ErrorResponseBody
-		cause: Error
+		message: string;
+		response: ConsumedResponse;
+		data: ErrorResponseBody;
+		cause: Error;
 	}) {
 		super(props.message);
 		this.name = 'ResponseError';

@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest';
-import { __filename } from '../../src/index.js';
 import * as errors from '../../src/error/core/common.js';
 
 describe('common', () => {

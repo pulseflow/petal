@@ -40,9 +40,9 @@ export async function say(messages: string | string[], { clear = false, hat = ''
 }
 
 export async function spinner(args: {
-	start: string
-	end: string
-	while: (...args: any) => Promise<any>
+	start: string;
+	end: string;
+	while: (...args: any) => Promise<any>;
 }) {
 	await load(args, { stdout });
 }
@@ -147,8 +147,8 @@ export async function nextSteps({
 	projectDir,
 	devCmd,
 }: {
-	projectDir: string
-	devCmd: string
+	projectDir: string;
+	devCmd: string;
 }) {
 	const max = stdout.columns;
 	const prefix = max < 80 ? ' ' : ' '.repeat(9);
@@ -188,11 +188,11 @@ export function printHelp({
 	tables,
 	description,
 }: {
-	commandName: string
-	headline?: string
-	usage?: string
-	tables?: Record<string, [command: string, help: string][]>
-	description?: string
+	commandName: string;
+	headline?: string;
+	usage?: string;
+	tables?: Record<string, [command: string, help: string][]>;
+	description?: string;
 }) {
 	const linebreak = () => '';
 	const calculatePadding = (rows: [string, string][]) =>

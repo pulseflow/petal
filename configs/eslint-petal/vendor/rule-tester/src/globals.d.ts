@@ -11,9 +11,9 @@ declare module '@eslint/eslintrc' {
 		ConfigOps: {
 			normalizeConfigGlobal: (
 				configuredValue: boolean | string | null,
-			) => Linter.GlobalVariableOptionBase
-		}
-		environments: Map<string, Linter.Environment>
+			) => Linter.GlobalVariableOptionBase;
+		};
+		environments: Map<string, Linter.Environment>;
 	};
 }
 

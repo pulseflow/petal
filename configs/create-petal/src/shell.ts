@@ -8,15 +8,15 @@ import { spawn } from 'node:child_process';
 import { text as textFromStream } from 'node:stream/consumers';
 
 export interface ExecaOptions {
-	cwd?: string | URL
-	stdio?: StdioOptions
-	timeout?: number
+	cwd?: string | URL;
+	stdio?: StdioOptions;
+	timeout?: number;
 }
 
 export interface Output {
-	stdout: string
-	stderr: string
-	exitCode: number
+	stdout: string;
+	stderr: string;
+	exitCode: number;
 }
 
 function text(stream: NodeJS.ReadableStream | Readable | null) {

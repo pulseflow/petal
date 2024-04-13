@@ -8,21 +8,21 @@ import type { SerializedError } from './error.js';
  */
 export interface ErrorResponseBody {
 	/** Details of the error that was caught */
-	error: SerializedError
+	error: SerializedError;
 
 	/** Details about the incoming request */
 	request?: {
 		/** The HTTP method of the request */
-		method: string
+		method: string;
 		/** The URL of the request (excluding protocol and host/port) */
-		url: string
-	}
+		url: string;
+	};
 
 	/** Details about the response */
 	response: {
 		/** The numeric HTTP status code that was returned */
-		statusCode: number
-	}
+		statusCode: number;
+	};
 }
 
 /**
@@ -37,7 +37,7 @@ export interface ErrorResponseBody {
  * @public
  * @param response - The response of a failed request
  */
-export async function parseErrorResponseBody(response: ConsumedResponse & { text(): Promise<string> }): Promise<ErrorResponseBody> {
+export async function parseErrorResponseBody(response: ConsumedResponse & { text: () => Promise<string> }): Promise<ErrorResponseBody> {
 	try {
 		const text = await response.text();
 		if (text) {

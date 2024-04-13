@@ -1,130 +1,130 @@
 name: CI
 
 on:
-    workflow_dispatch:
-    push:
-        branches:
-            - main
-    merge_group:
-    pull_request:
-        paths-ignore:
-            - '.vscode/**'
-            - '**/*.md'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  merge_group:
+  pull_request:
+    paths-ignore:
+      - '.vscode/**'
+      - '**/*.md'
 
 concurrency:
-    group: ${{ github.workflow }}-${{ github.event_name == 'pull_request_target' && github.head_ref || github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request_target' && github.head_ref || github.ref }}
+  cancel-in-progress: true
 defaults:
-    run:
-        shell: bash
+  run:
+    shell: bash
 
 jobs:
-    build:
-        name: 'Build: ${{matrix.os}} (node@${{ matrix.NODE_VERSION }})'
-        runs-on: ${{ matrix.os }}
-        timeout-minutes: 5
-        strategy:
-            matrix:
-                OS: [ubuntu-latest, windows-latest]
-                NODE_VERSION: ['lts/*']
-            fail-fast: true
-        steps:
-            - name: disable git crlf
-              run: git config --global core.autocrlf false
+  build:
+    name: 'Build: ${{matrix.os}} (node@${{ matrix.NODE_VERSION }})'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        OS: [ubuntu-latest, windows-latest]
+        NODE_VERSION: ['lts/*']
+      fail-fast: true
+    steps:
+      - name: disable git crlf
+        run: git config --global core.autocrlf false
 
-            - name: checkout
-              uses: actions/checkout@v4
+      - name: checkout
+        uses: actions/checkout@v4
 
-            - name: setup pnpm
-              uses: pnpm/action-setup@v2
-              with:
-                  version: latest
+      - name: setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
 
-            - name: setup node@${{ matrix.NODE_VERSION }}
-              uses: actions/setup-node@v4
-              with:
-                  node-version: ${{ matrix.NODE_VERSION }}
-                  cache: 'pnpm'
+      - name: setup node@${{ matrix.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.NODE_VERSION }}
+          cache: pnpm
 
-            - name: install dependencies
-              run: pnpm install && pnpm install
+      - name: install dependencies
+        run: pnpm install && pnpm install
 
-            - name: build packages
-              if: ${{ matrix.os == 'ubuntu-latest' && github.repository_owner == 'pulseflow' }}
-              run: pnpm build
+      - name: build packages
+        if: ${{ matrix.os == 'ubuntu-latest' && github.repository_owner == 'pulseflow' }}
+        run: pnpm build
 
-    lint:
-        name: 'Lint: ubuntu-latest (node@18)'
-        runs-on: ubuntu-latest
-        timeout-minutes: 7
-        needs: build
-        steps:
-            - name: disable git crlf
-              run: git config --global core.autocrlf false
+  lint:
+    name: 'Lint: ubuntu-latest (node@18)'
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    needs: build
+    steps:
+      - name: disable git crlf
+        run: git config --global core.autocrlf false
 
-            - name: checkout
-              uses: actions/checkout@v4
+      - name: checkout
+        uses: actions/checkout@v4
 
-            - name: setup pnpm
-              uses: pnpm/action-setup@v2
-              with:
-                  version: latest
+      - name: setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
 
-            - name: setup node
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 18
-                  cache: 'pnpm'
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
 
-            - name: install dependencies
-              run: pnpm install && pnpm install
+      - name: install dependencies
+        run: pnpm install && pnpm install
 
-            - name: build packages
-              run: pnpm build
+      - name: build packages
+        run: pnpm build
 
-            - name: lint and format
-              run: pnpm lint
+      - name: lint and format
+        run: pnpm lint
 
-    test:
-        name: 'Test: ${{matrix.os}} (node@${{ matrix.NODE_VERSION }})'
-        runs-on: ${{ matrix.os }}
-        timeout-minutes: 25
-        needs: build
-        strategy:
-            matrix:
-                OS: [ubuntu-latest]
-                NODE_VERSION: [18, 20]
-                include:
-                    - os: macos-latest
-                      NODE_VERSION: 18
-                    - os: windows-latest
-                      NODE_VERSION: 18
-            fail-fast: false
-        env:
-            NODE_VERSION: ${{ matrix.NODE_VERSION }}
-        steps:
-            - name: disable git crlf
-              run: git config --global core.autocrlf false
+  test:
+    name: 'Test: ${{matrix.os}} (node@${{ matrix.NODE_VERSION }})'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    needs: build
+    strategy:
+      matrix:
+        OS: [ubuntu-latest]
+        NODE_VERSION: [18, 20]
+        include:
+          - os: macos-latest
+            NODE_VERSION: 18
+          - os: windows-latest
+            NODE_VERSION: 18
+      fail-fast: false
+    env:
+      NODE_VERSION: ${{ matrix.NODE_VERSION }}
+    steps:
+      - name: disable git crlf
+        run: git config --global core.autocrlf false
 
-            - name: checkout
-              uses: actions/checkout@v4
+      - name: checkout
+        uses: actions/checkout@v4
 
-            - name: setup pnpm
-              uses: pnpm/action-setup@v2
-              with:
-                  version: latest
+      - name: setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
 
-            - name: setup node@${{ matrix.NODE_VERSION }}
-              uses: actions/setup-node@v4
-              with:
-                  node-version: ${{ matrix.NODE_VERSION }}
-                  cache: 'pnpm'
+      - name: setup node@${{ matrix.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.NODE_VERSION }}
+          cache: pnpm
 
-            - name: install dependencies
-              run: pnpm install && pnpm install
+      - name: install dependencies
+        run: pnpm install && pnpm install
 
-            - name: build packages
-              run: pnpm run build
+      - name: build packages
+        run: pnpm run build
 
-            - name: test
-              run: pnpm test
+      - name: test
+        run: pnpm test

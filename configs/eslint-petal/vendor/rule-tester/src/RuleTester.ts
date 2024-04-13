@@ -25,8 +25,6 @@ import { Linter } from '@typescript-eslint/utils/ts-eslint';
 import { SourceCode } from 'eslint';
 import merge from 'lodash.merge';
 
-import { validate } from './utils/config-validator.js';
-
 import { TestFramework } from './TestFramework.js';
 import type {
 	InvalidTestCase,
@@ -315,9 +313,9 @@ export class RuleTester extends TestFramework {
 
 		if (
 			this.#testerConfig.dependencyConstraints
-				&& !satisfiesAllDependencyConstraints(
-					this.#testerConfig.dependencyConstraints,
-				)
+			&& !satisfiesAllDependencyConstraints(
+				this.#testerConfig.dependencyConstraints,
+			)
 		) {
 			// for frameworks like mocha or jest that have a "skip" version of their function
 			// we can provide a nice skipped test!
@@ -444,10 +442,10 @@ export class RuleTester extends TestFramework {
 		rule: RuleModule<TMessageIds, TOptions>,
 		item: InvalidTestCase<TMessageIds, TOptions> | ValidTestCase<TOptions>,
 	): Promise<{
-		messages: Linter.LintMessage[]
-		output: string
-		beforeAST: TSESTree.Program
-		afterAST: TSESTree.Program
+		messages: Linter.LintMessage[];
+		output: string;
+		beforeAST: TSESTree.Program;
+		afterAST: TSESTree.Program;
 	}> {
 		let config: TesterConfigWithDefaults = merge({}, this.#testerConfig);
 		let code;
@@ -878,7 +876,7 @@ export class RuleTester extends TestFramework {
 							error.suggestions.forEach((expectedSuggestion: SuggestionOutput<TMessageIds>, index: number) => {
 								assert.ok(
 									typeof expectedSuggestion === 'object'
-										&& expectedSuggestion != null,
+									&& expectedSuggestion != null,
 									'Test suggestion in \'suggestions\' array must be an object.',
 								);
 								Object.keys(expectedSuggestion).forEach((propertyName) => {

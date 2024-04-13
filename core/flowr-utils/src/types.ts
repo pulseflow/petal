@@ -115,19 +115,19 @@ export interface ReadonlyMap<T extends Record<string, any>> {
 		thisArg?: any,
 	) => void;
 
-	get<K extends string>(key: K): K extends keyof T ? T[K] : undefined;
-	has<K extends string>(key: K): K extends keyof T ? true : false;
-	set<K extends string, V>(key: K, value: V): ReadonlyMap< & { [P in K]: V } & { [P in Exclude<keyof T, K> ]: T[P] }>;
+	get: <K extends string>(key: K) => K extends keyof T ? T[K] : undefined;
+	has: <K extends string>(key: K) => K extends keyof T ? true : false;
+	set: <K extends string, V>(key: K, value: V) => ReadonlyMap< & { [P in K]: V } & { [P in Exclude<keyof T, K> ]: T[P] }>;
 
-	clear(): ReadonlyMap<{}>;
-	keys(): IterableIterator<keyof T>;
-	values(): IterableIterator<T[keyof T]>;
-	entries(): IterableIterator<{ [K in keyof T]-?: [K, T[K]] }[keyof T]>;
+	clear: () => ReadonlyMap<{}>;
+	keys: () => IterableIterator<keyof T>;
+	values: () => IterableIterator<T[keyof T]>;
+	entries: () => IterableIterator<{ [K in keyof T]-?: [K, T[K]] }[keyof T]>;
 
 	readonly size: number;
 	readonly [Symbol.toStringTag]: string;
 
-	[Symbol.iterator](): IterableIterator<{ [K in keyof T]-?: [K, T[K]] }[keyof T]>;
+	[Symbol.iterator]: () => IterableIterator<{ [K in keyof T]-?: [K, T[K]] }[keyof T]>;
 }
 
 export interface ReadonlyMapConstructor {

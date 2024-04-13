@@ -7,26 +7,26 @@ import arg from 'arg';
 import { getName, getVersion } from '../messages.js';
 
 export interface Context {
-	help: boolean
-	prompt: typeof prompt
-	cwd: string
-	packageManager: string
-	username: Promise<string>
-	version: Promise<string>
-	skipFlower: boolean
-	fancy?: boolean
-	dryRun?: boolean
-	yes?: boolean
-	projectName?: string
-	template?: string
-	ref: string
-	install?: boolean
-	git?: boolean
-	typescript?: string
-	stdin?: typeof process.stdin
-	stdout?: typeof process.stdout
-	exit(code: number): never
-	hat?: string
+	help: boolean;
+	prompt: typeof prompt;
+	cwd: string;
+	packageManager: string;
+	username: Promise<string>;
+	version: Promise<string>;
+	skipFlower: boolean;
+	fancy?: boolean;
+	dryRun?: boolean;
+	yes?: boolean;
+	projectName?: string;
+	template?: string;
+	ref: string;
+	install?: boolean;
+	git?: boolean;
+	typescript?: string;
+	stdin?: typeof process.stdin;
+	stdout?: typeof process.stdout;
+	exit: (code: number) => never;
+	hat?: string;
 }
 
 export async function getContext(argv: string[]): Promise<Context> {

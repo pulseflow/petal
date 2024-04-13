@@ -4,9 +4,9 @@
  * @public
  */
 export interface Observer<T> {
-	next?(value: T): void;
-	error?(error: Error): void;
-	complete?(): void;
+	next?: (value: T) => void;
+	error?: (error: Error) => void;
+	complete?: () => void;
 }
 
 /**
@@ -18,7 +18,7 @@ export interface Subscription {
 	/**
 	 * Cancels the subscription
 	 */
-	unsubscribe(): void;
+	unsubscribe: () => void;
 
 	/**
 	 * Value indicating whether the subscription is closed.
@@ -45,15 +45,14 @@ declare global {
  * @public
  */
 export interface Observable<T> {
-	[Symbol.observable](): Observable<T>;
+	[Symbol.observable]: () => Observable<T>;
 
 	/**
 	 * Subscribes to this observable to start receiving new values.
 	 */
-	subscribe(observer: Observer<T>): Subscription;
-	subscribe(
+	subscribe: ((observer: Observer<T>) => Subscription) & ((
 		onNext?: (value: T) => void,
 		onError?: (error: Error) => void,
 		onComplete?: () => void,
-	): Subscription;
+	) => Subscription);
 }

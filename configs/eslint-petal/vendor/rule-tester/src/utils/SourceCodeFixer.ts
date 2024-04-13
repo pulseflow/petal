@@ -40,9 +40,9 @@ export function applyFixes(
 	sourceText: string,
 	messages: readonly LintMessage[],
 ): {
-		fixed: boolean
-		messages: readonly LintMessage[]
-		output: string
+		fixed: boolean;
+		messages: readonly LintMessage[];
+		output: string;
 	} {
 	// clone the array
 	const remainingMessages: LintMessage[] = [];

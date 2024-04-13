@@ -11,18 +11,18 @@ export type RuleTesterTestFrameworkFunction =
 		/**
 		 * Skips running the tests inside this `describe` for the current file
 		 */
-		skip?: RuleTesterTestFrameworkFunctionBase
+		skip?: RuleTesterTestFrameworkFunctionBase;
 	};
 export type RuleTesterTestFrameworkItFunction =
 	RuleTesterTestFrameworkFunctionBase & {
 		/**
 		 * Only runs this test in the current file.
 		 */
-		only?: RuleTesterTestFrameworkFunctionBase
+		only?: RuleTesterTestFrameworkFunctionBase;
 		/**
 		 * Skips running this test in the current file.
 		 */
-		skip?: RuleTesterTestFrameworkFunctionBase
+		skip?: RuleTesterTestFrameworkFunctionBase;
 	};
 
 type Maybe<T> = T | null | undefined;
@@ -99,7 +99,7 @@ export abstract class TestFramework {
 
 		if (
 			typeof OVERRIDE_DESCRIBE === 'function'
-				&& typeof OVERRIDE_DESCRIBE.skip === 'function'
+			&& typeof OVERRIDE_DESCRIBE.skip === 'function'
 		)
 			return OVERRIDE_DESCRIBE.skip.bind(OVERRIDE_DESCRIBE);
 
@@ -108,7 +108,7 @@ export abstract class TestFramework {
 
 		if (
 			typeof OVERRIDE_DESCRIBE === 'function'
-				|| typeof OVERRIDE_IT === 'function'
+			|| typeof OVERRIDE_IT === 'function'
 		) {
 			throw new TypeError(
 				'Set `RuleTester.describeSkip` to use `dependencyConstraints` with a custom test framework.',
@@ -156,7 +156,7 @@ export abstract class TestFramework {
 
 		if (
 			typeof OVERRIDE_IT === 'function'
-				&& typeof OVERRIDE_IT.only === 'function'
+			&& typeof OVERRIDE_IT.only === 'function'
 		)
 			return OVERRIDE_IT.only.bind(OVERRIDE_IT);
 
@@ -165,7 +165,7 @@ export abstract class TestFramework {
 
 		if (
 			typeof OVERRIDE_DESCRIBE === 'function'
-				|| typeof OVERRIDE_IT === 'function'
+			|| typeof OVERRIDE_IT === 'function'
 		) {
 			throw new TypeError(
 				'Set `RuleTester.itOnly` to use `only` with a custom test framework.\n'
@@ -195,7 +195,7 @@ export abstract class TestFramework {
 
 		if (
 			typeof OVERRIDE_IT === 'function'
-				&& typeof OVERRIDE_IT.skip === 'function'
+			&& typeof OVERRIDE_IT.skip === 'function'
 		)
 			return OVERRIDE_IT.skip.bind(OVERRIDE_IT);
 
@@ -204,7 +204,7 @@ export abstract class TestFramework {
 
 		if (
 			typeof OVERRIDE_DESCRIBE === 'function'
-				|| typeof OVERRIDE_IT === 'function'
+			|| typeof OVERRIDE_IT === 'function'
 		) {
 			throw new TypeError(
 				'Set `RuleTester.itSkip` to use `only` with a custom test framework.',

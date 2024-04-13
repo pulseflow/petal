@@ -7,7 +7,7 @@ const blobUrl: string = 'https://github.com/pulseflow/petal/blob/main/configs/es
 export interface RuleModule<
 	T extends readonly unknown[],
 > extends Rule.RuleModule {
-	defaultOptions: T
+	defaultOptions: T;
 };
 
 /**
