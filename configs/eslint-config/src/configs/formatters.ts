@@ -1,5 +1,5 @@
 import { isPackageExists } from 'local-pkg';
-import { GLOB_ASTRO, GLOB_CSS, GLOB_GRAPHQL, GLOB_LESS, GLOB_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS } from '../globs.js';
+import { GLOB_ASTRO, GLOB_CSS, GLOB_GRAPHQL, GLOB_HTML, GLOB_LESS, GLOB_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS } from '../globs.js';
 import type { VendoredPrettierOptions } from '../vendor/prettier-types.js';
 import { ensurePackages, interopDefault, parserPlain } from '../utils.js';
 import type { OptionsFormatters, StylisticConfig, TypedFlatConfigItem } from '../types.js';
@@ -109,7 +109,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 
 	if (options.html) {
 		configs.push({
-			files: ['**/*.html'],
+			files: [GLOB_HTML],
 			languageOptions: {
 				parser: parserPlain,
 			},

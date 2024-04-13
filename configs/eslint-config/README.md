@@ -291,7 +291,7 @@ export default petal(
 );
 ```
 
-we also provide an `overrides` option for each integration to use our default globs:
+we also provide the `overrides` option for each integration to use our default globs:
 
 ```js
 // eslint.config.js
@@ -315,9 +315,10 @@ export default petal({
     },
 });
 ```
-### pipeline
 
-the factory function `petal()` returns a [pipeline object from `eslint-flat-config-utils`](https://github.com/antfu/eslint-flat-config-utils#pipe) where you can chain the methods to compose the config even more flexibly.
+### composer
+
+the factory function `petal()` returns a [`FlatConfigComposer` object from `eslint-flat-config-utils`](https://github.com/antfu/eslint-flat-config-utils#composer) where you can chain the methods to compose the config even more flexibly.
 
 ```js
 // eslint.config.ks
@@ -336,6 +337,36 @@ export default petal()
     });
 // ...
 ```
+
+### vue
+
+vue support is auto-detected. you can also explicitly enable it:
+
+```js
+// eslint.config.js
+import petal from '@flowr/eslint-config';
+
+export default petal({
+    vue: true,
+});
+```
+
+#### vue 2
+
+we have limited support for vue 2 (as it's already [reached eol](https://v2.vuejs.org/eol/)). if you are still using vue 2, you can set it manually by setting `vueVersion` to `2`.
+
+```js
+// eslint.config.js
+import petal from '@flowr/eslint-config';
+
+export default petal({
+    vue: {
+        vueVersion: 2,
+    },
+});
+```
+
+this support may be removed when `eslint-plugin-vue` drops support for vue 2. i recommend updating to vue 3.
 
 ### optional configs
 
@@ -469,8 +500,6 @@ however, we do have dprint integration for formatting other files such as `.md` 
 [factory]: https://github.com/pulseflow/petal/blob/main/configs/eslint-config/src/factory.ts
 [eslint-flat]: https://eslint.org/docs/latest/use/configure/configuration-files-new
 [stylistic]: https://github.com/eslint-stylistic/eslint-stylistic
-[node-type]: https://nodejs.org/api/packages.html#type
-[eslint-patch]: https://github.com/antfu/eslint-ts-patch
 [vscode]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 [config-comments]: https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1
 [type-aware]: https://typescript-eslint.io/linting/typed-linting

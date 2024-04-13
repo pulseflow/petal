@@ -244,14 +244,14 @@ export function petal(
 	if (Object.keys(fusedConfig).length)
 		configs.push([fusedConfig]);
 
-	let pipeline = new FlatConfigComposer<TypedFlatConfigItem>();
+	let composer = new FlatConfigComposer<TypedFlatConfigItem>();
 
-	pipeline = pipeline.append(...configs, ...userConfigs);
+	composer = composer.append(...configs, ...userConfigs);
 
 	if (autoRenamePlugins)
-		pipeline = pipeline.renamePlugins(defaultPluginRenaming);
+		composer = composer.renamePlugins(defaultPluginRenaming);
 
-	return pipeline;
+	return composer;
 }
 
 export type ResolveOptions<T> = T extends boolean
