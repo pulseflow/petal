@@ -1,7 +1,7 @@
 {
 	"name": "@flowr/petal-utils",
 	"type": "module",
-	"version": "2.3.3",
+	"version": "2.4.0",
 	"description": "Package that contains shared utils within Petal projects",
 	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",
