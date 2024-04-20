@@ -4,27 +4,22 @@ import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks';
 import type { Linter } from 'eslint';
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { VendoredPrettierOptions } from './vendor/prettier-types.js';
-import type { RuleOptions } from './typegen.js';
+import type { ConfigNames, RuleOptions } from './typegen.js';
 
 export type Awaitable<T> = T | Promise<T>;
 
 export type Rules = RuleOptions;
 
-export type TypedFlatConfigItem = Omit<Linter.FlatConfig, 'plugins'> & {
-	/**
-	 * Custom name of each config item.
-	 */
-	name?: string;
+export type { ConfigNames };
 
+export type TypedFlatConfigItem = Omit<Linter.FlatConfig<Linter.RulesRecord & Rules>, 'plugins'> & {
 	/**
 	 * An object containing a name-value mapping of plugin names to plugin objects.
+	 * For now, these types are simply a relaxed `Record<string, any>`, but in the future they will use a strict ESLint plugin type.
+	 *
+	 * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
 	 */
 	plugins?: Record<string, any>;
-
-	/**
-	 * An object containing a name-value mapping of rules to use.
-	 */
-	rules?: Linter.RulesRecord & Rules;
 };
 
 export interface OptionsVue extends OptionsOverrides {
@@ -192,6 +187,13 @@ export interface OptionsConfig extends OptionsComponentExts {
 	gitignore?: boolean | FlatGitignoreOptions;
 
 	/**
+	 * Enable opinionated stylistic rules.
+	 *
+	 * @default true
+	 */
+	opinionated?: boolean;
+
+	/**
 	 * Core rules. Can't be disabled.
 	 */
 	javascript?: OptionsOverrides;
@@ -246,7 +248,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * Enable React rules.
 	 *
 	 * Requires installing:
-	 * - `eslint-plugin-react`
+	 * - `@eslint-react/eslint-plugin`
 	 * - `eslint-plugin-react-hooks`
 	 * - `eslint-plugin-react-refresh`
 	 *
@@ -346,7 +348,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 	/**
 	 * Provide overrides for rules for each integration.
 	 *
-	 * @deprecated use `overrides` option in each integration key instead
+	 * @deprecated since 2.3.0 use `overrides` option in each integration key instead
 	 */
 	overrides?: {
 		stylistic?: TypedFlatConfigItem['rules'];

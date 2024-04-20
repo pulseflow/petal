@@ -1,7 +1,5 @@
-import globals from 'globals';
 import type {
 	OptionsFiles,
-	OptionsHasTypeScript,
 	OptionsOverrides,
 	OptionsStylistic,
 	TypedFlatConfigItem,
@@ -9,74 +7,48 @@ import type {
 import { interopDefault } from '../utils.js';
 import { GLOB_ASTRO } from '../globs.js';
 
-export async function astro(options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles & OptionsStylistic = {}): Promise<TypedFlatConfigItem[]> {
-	const { files = [GLOB_ASTRO], overrides = {}, stylistic = true, typescript = true } = options;
+export async function astro(options: OptionsOverrides & OptionsFiles & OptionsStylistic = {}): Promise<TypedFlatConfigItem[]> {
+	const { files = [GLOB_ASTRO], overrides = {}, stylistic = true } = options;
 
 	const [
 		pluginAstro,
-		pluginA11y,
 		parserAstro,
+		parserTs,
 	] = await Promise.all([
 		interopDefault(import('eslint-plugin-astro')),
-		// @ts-expect-error missing types
-		interopDefault(import('eslint-plugin-jsx-a11y')),
 		interopDefault(import('astro-eslint-parser')),
+		interopDefault(import('@typescript-eslint/parser')),
 	] as const);
 
 	return [
 		{
 			name: 'petal/astro/setup',
 			plugins: {
-				'astro': pluginAstro,
-				'jsx-a11y': pluginA11y,
+				astro: pluginAstro,
 			},
 		},
 		{
 			files,
 			languageOptions: {
-				globals: {
-					...globals.browser,
-					...globals.es2020,
-					'astro/astro': true,
-				},
 				parser: parserAstro,
 				parserOptions: {
-					ecmaFeatures: {
-						jsx: true,
-					},
 					extraFileExtensions: ['.astro'],
-					parser: typescript
-						? await interopDefault(import('@typescript-eslint/parser')) as any
-						: null,
-					sourceType: 'module',
+					parser: parserTs as any,
 				},
 			},
 			name: 'petal/astro/rules',
 			processor: pluginAstro.processors['.astro'],
 			rules: {
-				...(pluginAstro.configs.recommended.rules as any),
-
 				'astro/no-set-html-directive': 'off',
 				'astro/semi': 'off',
 
-				'import/default': 'off',
-				'import/order': ['error', {
-					alphabetize: {
-						caseInsensitive: true,
-						order: 'asc',
-					},
-					warnOnUnassignedImports: true,
-				}],
-				'node/prefer-global/process': 'off',
-
 				...stylistic
 					? {
-							'style/implicit-arrow-linebreak': 'off',
 							'style/indent': 'off',
-							'style/jsx-closing-bracket-location': 'off',
+							'style/jsx-closing-tag-location': 'off',
 							'style/jsx-indent': 'off',
 							'style/jsx-one-expression-per-line': 'off',
-							'style/jsx-tag-spacing': 'off',
+							'style/no-multiple-empty-lines': 'off',
 						}
 					: {},
 

@@ -6,7 +6,6 @@ import {
 	comments,
 	imports,
 	javascript,
-	jest,
 	jsdoc,
 	jsonc,
 	markdown,
@@ -40,7 +39,6 @@ const configs = await combine(
 	imports(),
 	javascript(),
 	solid(),
-	jest(),
 	jsdoc(),
 	jsonc(),
 	markdown(),
@@ -60,8 +58,14 @@ const configs = await combine(
 	yaml(),
 );
 
-const dts = await flatConfigsToRulesDTS(configs, {
+const configNames = configs.map(c => c.name).filter(Boolean) as string[];
+let dts = await flatConfigsToRulesDTS(configs, {
 	includeAugmentation: false,
 });
+
+dts += `
+// All configuration names
+export type ConfigNames = ${configNames.map(i => `'${i}'`).join(' | ')}
+`;
 
 await fs.writeFile('src/typegen.d.ts', dts);

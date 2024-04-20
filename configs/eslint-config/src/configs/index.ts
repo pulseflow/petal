@@ -3,7 +3,6 @@ export * from './comments.js';
 export * from './ignores.js';
 export * from './imports.js';
 export * from './javascript.js';
-export * from './jest.js';
 export * from './jsdoc.js';
 export * from './jsonc.js';
 export * from './markdown.js';

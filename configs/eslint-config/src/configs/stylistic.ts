@@ -9,8 +9,12 @@ export const StylisticConfigDefaults: StylisticConfig = {
 	semi: true,
 };
 
-export async function stylistic(options: StylisticConfig & OptionsOverrides = {}): Promise<TypedFlatConfigItem[]> {
-	const { indent, jsx, overrides = {}, quotes, semi } = { ...StylisticConfigDefaults, ...options };
+export interface StylisticOptions extends StylisticConfig, OptionsOverrides {
+	opinionated?: boolean;
+}
+
+export async function stylistic(options: StylisticOptions = {}): Promise<TypedFlatConfigItem[]> {
+	const { indent, jsx, opinionated = true, overrides = {}, quotes, semi } = { ...StylisticConfigDefaults, ...options };
 
 	const pluginStylistic = await interopDefault(import('@stylistic/eslint-plugin'));
 
@@ -26,12 +30,18 @@ export async function stylistic(options: StylisticConfig & OptionsOverrides = {}
 			rules: {
 				...config.rules,
 
-				'curly': ['error', 'multi-or-nest', 'consistent'],
 				'petal/consistent-list-newline': 'error',
-				'petal/if-newline': 'error',
 
-				'petal/top-level-function': 'error',
-				'style/implicit-arrow-linebreak': 'off',
+				...(opinionated
+					? {
+							'curly': ['error', 'multi-or-nest', 'consistent'],
+							'petal/if-newline': 'error',
+							'petal/top-level-function': 'error',
+						}
+					: {
+							curly: 'error',
+						}
+				),
 
 				...overrides,
 			},

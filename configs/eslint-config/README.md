@@ -420,7 +420,7 @@ export default petal({
 });
 ```
 
-the required dev dependencies are: `eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh eslint-plugin-astro` (you should be prompted to install these when running eslint)
+the required dev dependencies are: `@eslint-react/eslint-plugin eslint-plugin-react-hooks eslint-plugin-react-refresh eslint-plugin-astro` (you should be prompted to install these when running eslint - astro is only required with astro integration)
 
 #### svelte
 

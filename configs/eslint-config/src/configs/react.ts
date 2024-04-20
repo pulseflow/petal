@@ -1,171 +1,133 @@
 import { isPackageExists } from 'local-pkg';
 import type {
 	OptionsFiles,
-	OptionsHasTypeScript,
 	OptionsOverrides,
+	OptionsTypeScriptWithTypes,
 	TypedFlatConfigItem,
 } from '../types.js';
-import { GLOB_JSX, GLOB_TSX } from '../globs.js';
-import { ensurePackages, interopDefault } from '../utils.js';
+import { GLOB_TS, GLOB_TSX } from '../globs.js';
+import { ensurePackages, interopDefault, toArray } from '../utils.js';
 
 const ReactRefreshAllowConstantExportPackages = ['vite'];
 
-export async function react(options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
-	const { files = [GLOB_JSX, GLOB_TSX], overrides = {}, typescript = true } = options;
+export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
+	const { files = [GLOB_TS, GLOB_TSX], overrides = {} } = options;
 
 	await ensurePackages([
-		'eslint-plugin-react',
+		'@eslint-react/eslint-plugin',
 		'eslint-plugin-react-hooks',
 		'eslint-plugin-react-refresh',
 	]);
 
+	const tsconfigPath = options?.tsconfigPath
+		? toArray(options.tsconfigPath)
+		: undefined;
+	const isTypeAware = !!tsconfigPath;
+
 	const [
-		pluginA11y,
 		pluginReact,
 		pluginReactHooks,
 		pluginReactRefresh,
+		parserTs,
 	] = await Promise.all([
-		// @ts-expect-error missing types
-		interopDefault(import('eslint-plugin-jsx-a11y')),
-		interopDefault(import('eslint-plugin-react')),
+		interopDefault(import('@eslint-react/eslint-plugin')),
 		interopDefault(import('eslint-plugin-react-hooks')),
 		interopDefault(import('eslint-plugin-react-refresh')),
+		interopDefault(import('@typescript-eslint/parser')),
 	] as const);
 
 	const isAllowConstantExport = ReactRefreshAllowConstantExportPackages.some(p => isPackageExists(p));
+	const plugins = pluginReact.configs.all.plugins;
 
 	return [
 		{
 			name: 'petal/react/setup',
 			plugins: {
-				a11y: pluginA11y,
-				react: pluginReact,
-				reactHooks: pluginReactHooks,
-				reactRefresh: pluginReactRefresh,
-			},
-			settings: {
-				react: {
-					version: 'detect',
-				},
+				'react': plugins['@eslint-react'],
+				'react-dom': plugins['@eslint-react/dom'],
+				'react-hooks': pluginReactHooks,
+				'react-hooks-extra': plugins['@eslint-react/hooks-extra'],
+				'react-naming-convention': plugins['@eslint-react/naming-convention'],
+				'react-refresh': pluginReactRefresh,
 			},
 		},
 		{
 			files,
 			languageOptions: {
-				parser: options.typescript
-					? await interopDefault(import('@typescript-eslint/parser')) as any
-					: null,
+				parser: parserTs,
 				parserOptions: {
 					ecmaFeatures: {
 						jsx: true,
 					},
+					...isTypeAware ? { project: tsconfigPath } : {},
 				},
 				sourceType: 'module',
 			},
 			name: 'petal/react/rules',
 			rules: {
-				...(pluginA11y.configs.recommended.rules as any),
+				'react-dom/no-children-in-void-dom-elements': 'warn',
+				'react-dom/no-dangerously-set-innerhtml': 'warn',
+				'react-dom/no-dangerously-set-innerhtml-with-children': 'error',
+				'react-dom/no-find-dom-node': 'error',
+				'react-dom/no-missing-button-type': 'warn',
+				'react-dom/no-missing-iframe-sandbox': 'warn',
+				'react-dom/no-namespace': 'error',
+				'react-dom/no-render-return-value': 'error',
+				'react-dom/no-script-url': 'warn',
+				'react-dom/no-unsafe-iframe-sandbox': 'warn',
+				'react-dom/no-unsafe-target-blank': 'warn',
 
-				// Enforce the list of dependencies for hooks is correct
-				'react-hooks/exhaustive-deps': 2,
-				// Enforce react rules of hooks
-				'react-hooks/rules-of-hooks': 2,
-				// react refresh
+				'react-hooks/exhaustive-deps': 'warn',
+				'react-hooks/rules-of-hooks': 'error',
+
 				'react-refresh/only-export-components': [
 					'warn',
 					{ allowConstantExport: isAllowConstantExport },
 				],
-				// Prevent missing displayName in a React component definition
-				'react/display-name': 0,
-				// Enforce boolean attributes notation in JSX
-				'react/jsx-boolean-value': 2,
-				// recommended rules react
-				'react/jsx-key': 'error',
-				'react/jsx-no-comment-textnodes': 'error',
-				// Prevent duplicate props in JSX
-				'react/jsx-no-duplicate-props': 0,
-				'react/jsx-no-target-blank': 'error',
-				// Disallow undeclared variables in JSX
-				'react/jsx-no-undef': 0,
-				// Enforce quote style for JSX attributes
-				'react/jsx-quotes': 0,
-				// Enforce propTypes declarations alphabetical sorting
-				'react/jsx-sort-prop-types': 0,
-				// Prevent React to be incorrectly marked as unused
-				'react/jsx-uses-react': 2,
-				// Prevent variables used in JSX to be incorrectly marked as unused
-				'react/jsx-uses-vars': 2,
-				'react/no-children-prop': 'error',
-				// Prevent usage of dangerous JSX properties
-				'react/no-danger': 0,
-				'react/no-danger-with-children': 'error',
-				'react/no-deprecated': 'error',
-				// Prevent usage of setState in componentDidMount
-				'react/no-did-mount-set-state': 0,
-				// Prevent usage of setState in componentDidUpdate
-				'react/no-did-update-set-state': 2,
+
+				'react/ensure-forward-ref-using-ref': 'warn',
+				'react/no-access-state-in-setstate': 'error',
+				'react/no-array-index-key': 'warn',
+				'react/no-children-count': 'warn',
+				'react/no-children-for-each': 'warn',
+				'react/no-children-map': 'warn',
+				'react/no-children-only': 'warn',
+				'react/no-children-prop': 'warn',
+				'react/no-children-to-array': 'warn',
+				'react/no-clone-element': 'warn',
+				'react/no-comment-textnodes': 'warn',
+				'react/no-component-will-mount': 'error',
+				'react/no-component-will-receive-props': 'error',
+				'react/no-component-will-update': 'error',
+				'react/no-create-ref': 'error',
 				'react/no-direct-mutation-state': 'error',
-				'react/no-find-dom-node': 'error',
-				'react/no-is-mounted': 'error',
-				// Prevent multiple component definition per file
-				'react/no-multi-comp': [2, { ignoreStateless: true }],
-				'react/no-render-return-value': 'error',
-
+				'react/no-duplicate-key': 'error',
+				'react/no-implicit-key': 'error',
+				'react/no-missing-key': 'error',
+				'react/no-nested-components': 'warn',
+				'react/no-redundant-should-component-update': 'error',
+				'react/no-set-state-in-component-did-mount': 'warn',
+				'react/no-set-state-in-component-did-update': 'warn',
+				'react/no-set-state-in-component-will-update': 'warn',
 				'react/no-string-refs': 'error',
+				'react/no-unsafe-component-will-mount': 'warn',
+				'react/no-unsafe-component-will-receive-props': 'warn',
+				'react/no-unsafe-component-will-update': 'warn',
+				'react/no-unstable-context-value': 'error',
+				'react/no-unstable-default-props': 'error',
+				'react/no-unused-class-component-members': 'warn',
+				'react/no-unused-state': 'warn',
+				'react/no-useless-fragment': 'warn',
+				'react/prefer-destructuring-assignment': 'warn',
+				'react/prefer-shorthand-boolean': 'warn',
+				'react/prefer-shorthand-fragment': 'warn',
 
-				'react/no-unescaped-entities': 'error',
-				// Prevent usage of unknown DOM property
-				'react/no-unknown-property': 2,
-				'react/no-unsafe': 'off',
-				// Prevent missing props validation in a React component definition
-				'react/prop-types': 0,
-				// Prevent missing React when using JSX
-				'react/react-in-jsx-scope': 2,
-				// Restrict file extensions that may be required
-				'react/require-extension': 0,
-				'react/require-render-return': 'error',
-				// Prevent extra closing tags for components without children
-				'react/self-closing-comp': 2,
-				// Enforce component methods order
-				'react/sort-comp': [
-					2,
-					{
-						order: [
-							'statics',
-							'static-variables',
-							'static-methods',
-							'instance-variables',
-							'constructor',
-							'getChildContext',
-							'componentDidMount',
-							'shouldComponentUpdate',
-							'getSnapshotBeforeUpdate',
-							'componentDidUpdate',
-							'componentWillUnmount',
-							'componentDidCatch',
-							'/^handle.+$/',
-							'/^on.+$/',
-							'everything-else',
-							'/^render.+$/',
-							'render',
-						],
-					},
-				],
-				// Enforce or disallow react string props to be wrapped in curly braces
-				'style/jsx-curly-brace-presence': 2,
-				// Enforce or disallow spaces inside of curly braces in JSX attributes
-				'style/jsx-curly-spacing': 0,
-				// Enforce props alphabetical sorting
-				'style/jsx-sort-props': 0,
-				// Prevent missing parentheses around multilines JSX
-				'style/jsx-wrap-multilines': 2,
-
-				...typescript
+				...isTypeAware
 					? {
-							'react/jsx-no-undef': 'off',
-							'react/prop-type': 'off',
+							'react/no-leaked-conditional-rendering': 'warn',
 						}
 					: {},
+
 				...overrides,
 			},
 		},

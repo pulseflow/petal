@@ -2,14 +2,14 @@ import fs from 'node:fs';
 import process from 'node:process';
 import { isPackageExists } from 'local-pkg';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
-import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from './types.js';
+import type { Linter } from 'eslint';
+import type { Awaitable, ConfigNames, OptionsConfig, TypedFlatConfigItem } from './types.js';
 import {
 	astro,
 	comments,
 	ignores,
 	imports,
 	javascript,
-	jest,
 	jsdoc,
 	jsonc,
 	markdown,
@@ -45,10 +45,14 @@ const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
 ];
 
 const VuePackages = ['vue', 'nuxt', 'vitepress', '@slidev/cli'];
-const JestPackages = ['@jest/globals', '@types/jest', 'jest'];
 const SolidPackages = ['solid-js', 'vite-plugin-solid', 'solid-refresh'];
 
 export const defaultPluginRenaming = {
+	'@eslint-react': 'react',
+	'@eslint-react/dom': 'react-dom',
+	'@eslint-react/hooks-extra': 'react-hooks-extra',
+	'@eslint-react/naming-convention': 'react-naming-convention',
+
 	'@stylistic': 'style',
 	'@typescript-eslint': 'ts',
 	'import-x': 'import',
@@ -63,15 +67,15 @@ export const defaultPluginRenaming = {
  *
  * @param {OptionsConfig & TypedFlatConfigItem} options
  *  The options for generating the ESLint configurations.
- * @param {Awaitable<UserConfigItem>[]} userConfigs
+ * @param {Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]} userConfigs
  *  The user configurations to be merged with the generated configurations.
  * @returns {Promise<TypedFlatConfigItem[]>}
  *  The merged ESLint configurations.
  */
 export function petal(
 	options: OptionsConfig & TypedFlatConfigItem = {},
-	...userConfigs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]
-): FlatConfigComposer<TypedFlatConfigItem> {
+	...userConfigs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.FlatConfig[]>[]
+): FlatConfigComposer<TypedFlatConfigItem, ConfigNames> {
 	const {
 		astro: enableAstro = isPackageExists('astro'),
 		autoRenamePlugins = true,
@@ -81,8 +85,7 @@ export function petal(
 			(process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM)
 			&& !process.env.CI
 		),
-		jest: enableJest = JestPackages.some(i => isPackageExists(i)),
-		react: enableReact = isPackageExists('react'),
+		react: enableReact = false,
 		solid: enableSolid = SolidPackages.some(i => isPackageExists(i)),
 		svelte: enableSvelte = false,
 		typescript: enableTypeScript = isPackageExists('typescript'),
@@ -140,15 +143,13 @@ export function petal(
 	if (stylisticOptions) {
 		configs.push(stylistic({
 			...stylisticOptions,
+			opinionated: options.opinionated,
 			overrides: getOverrides(options, 'stylistic'),
 		}));
 	}
 
 	if (options.test ?? true)
 		configs.push(test({ isInEditor, overrides: getOverrides(options, 'test') }));
-
-	if (enableJest)
-		configs.push(jest({ isInEditor, overrides: getOverrides(options, 'jest') }));
 
 	if (enableVue) {
 		configs.push(vue({
@@ -167,17 +168,13 @@ export function petal(
 		}));
 	}
 
-	if (enableAstro) {
-		configs.push(astro({
-			overrides: getOverrides(options, 'astro'),
-			typescript: !!enableTypeScript,
-		}));
-	}
+	if (enableAstro)
+		configs.push(astro({ overrides: getOverrides(options, 'astro') }));
 
 	if (enableReact) {
 		configs.push(react({
 			overrides: getOverrides(options, 'react'),
-			typescript: !!enableTypeScript,
+			tsconfigPath: getOverrides(options, 'typescript').tsconfigPath,
 		}));
 	}
 
@@ -244,9 +241,9 @@ export function petal(
 	if (Object.keys(fusedConfig).length)
 		configs.push([fusedConfig]);
 
-	let composer = new FlatConfigComposer<TypedFlatConfigItem>();
+	let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>();
 
-	composer = composer.append(...configs, ...userConfigs);
+	composer = composer.append(...configs, ...userConfigs as any);
 
 	if (autoRenamePlugins)
 		composer = composer.renamePlugins(defaultPluginRenaming);

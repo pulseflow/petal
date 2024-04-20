@@ -2,7 +2,7 @@
 	"name": "@flowr/eslint-config",
 	"type": "module",
 	"version": "2.3.3",
-	"packageManager": "pnpm@8.15.5",
+	"packageManager": "pnpm@9.0.4",
 	"description": "Combined ESLint config for Petal",
 	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",
@@ -35,12 +35,12 @@
 		"typegen": "esno scripts/typegen.ts"
 	},
 	"peerDependencies": {
+		"@eslint-react/eslint-plugin": "^1.5.9",
 		"@unocss/eslint-plugin": "^0.59.0",
 		"astro-eslint-parser": "^0.17.0",
 		"eslint": ">=8.40.0",
 		"eslint-plugin-astro": "^0.33.1",
 		"eslint-plugin-format": "^0.1.0",
-		"eslint-plugin-react": "^7.34.1",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-react-refresh": "^0.4.6",
 		"eslint-plugin-solid": "^0.13.2",
@@ -50,6 +50,9 @@
 		"svelte-eslint-parser": "^0.33.1"
 	},
 	"peerDependenciesMeta": {
+		"@eslint-react/eslint-plugin": {
+			"optional": true
+		},
 		"@unocss/eslint-plugin": {
 			"optional": true
 		},
@@ -60,9 +63,6 @@
 			"optional": true
 		},
 		"eslint-plugin-format": {
-			"optional": true
-		},
-		"eslint-plugin-react": {
 			"optional": true
 		},
 		"eslint-plugin-react-hooks": {
@@ -90,30 +90,29 @@
 	"dependencies": {
 		"@antfu/install-pkg": "^0.3.2",
 		"@flowr/petal-utils": "workspace:^",
-		"@stylistic/eslint-plugin": "^1.7.0",
-		"@typescript-eslint/eslint-plugin": "^7.6.0",
-		"@typescript-eslint/parser": "^7.6.0",
+		"@stylistic/eslint-plugin": "^1.7.2",
+		"@typescript-eslint/eslint-plugin": "^7.7.0",
+		"@typescript-eslint/parser": "^7.7.0",
 		"eslint-config-flat-gitignore": "^0.1.5",
-		"eslint-flat-config-utils": "^0.2.2",
+		"eslint-flat-config-utils": "^0.2.3",
 		"eslint-merge-processors": "^0.1.0",
 		"eslint-plugin-eslint-comments": "^3.2.0",
 		"eslint-plugin-import-x": "^0.5.0",
 		"eslint-plugin-jest": "^28.2.0",
 		"eslint-plugin-jsdoc": "^48.2.3",
 		"eslint-plugin-jsonc": "^2.15.1",
-		"eslint-plugin-jsx-a11y": "^6.8.0",
 		"eslint-plugin-markdown": "^4.0.1",
-		"eslint-plugin-n": "^17.2.0",
+		"eslint-plugin-n": "^17.2.1",
 		"eslint-plugin-no-only-tests": "^3.1.0",
 		"eslint-plugin-perfectionist": "^2.9.0",
 		"eslint-plugin-petal": "workspace:^",
 		"eslint-plugin-toml": "^0.11.0",
 		"eslint-plugin-unicorn": "^52.0.0",
 		"eslint-plugin-unused-imports": "^3.1.0",
-		"eslint-plugin-vitest": "0.5.2",
-		"eslint-plugin-vue": "^9.24.1",
+		"eslint-plugin-vitest": "0.5.3",
+		"eslint-plugin-vue": "^9.25.0",
 		"eslint-plugin-yml": "^1.14.0",
-		"eslint-processor-vue-blocks": "^0.1.1",
+		"eslint-processor-vue-blocks": "^0.1.2",
 		"globals": "^15.0.0",
 		"jsonc-eslint-parser": "^2.4.0",
 		"local-pkg": "^0.5.0",
@@ -125,23 +124,23 @@
 	},
 	"devDependencies": {
 		"@antfu/eslint-plugin-prettier": "^5.0.1-1",
+		"@eslint-react/eslint-plugin": "^1.5.9",
 		"@eslint/config-inspector": "^0.4.6",
-		"@types/eslint": "^8.56.9",
+		"@types/eslint": "^8.56.10",
 		"@types/fs-extra": "^11.0.4",
 		"@types/jest": "^29.5.12",
 		"@types/node": "^20.12.7",
 		"@types/prompts": "^2.4.9",
-		"@unocss/eslint-plugin": "^0.59.2",
+		"@unocss/eslint-plugin": "^0.59.4",
 		"astro-eslint-parser": "^0.17.0",
-		"eslint": "9.0.0",
+		"eslint": "9.1.0",
 		"eslint-plugin-astro": "^0.34.0",
-		"eslint-plugin-format": "^0.1.0",
-		"eslint-plugin-react": "^7.34.1",
+		"eslint-plugin-format": "^0.1.1",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-react-refresh": "^0.4.6",
 		"eslint-plugin-solid": "^0.13.2",
 		"eslint-plugin-svelte": "^2.37.0",
-		"eslint-typegen": "^0.2.2",
+		"eslint-typegen": "^0.2.3",
 		"esno": "^4.7.0",
 		"execa": "^8.0.1",
 		"fast-glob": "^3.3.2",
@@ -149,7 +148,7 @@
 		"prettier-plugin-astro": "^0.13.0",
 		"prettier-plugin-slidev": "^1.0.5",
 		"rimraf": "^5.0.5",
-		"svelte": "^4.2.14",
+		"svelte": "^4.2.15",
 		"svelte-eslint-parser": "^0.34.1",
 		"typescript": "^5.2.2",
 		"vitest": "^1.5.0"
