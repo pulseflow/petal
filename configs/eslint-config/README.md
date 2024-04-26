@@ -252,7 +252,6 @@ since [flat config][eslint-flat] requires us to explicitly provide the plugin na
 | `ts/*`     | `@typescript-eslint/*` | [@typescript-eslint/eslint-plugin](https://github.com/typescript-eslint/typescript-eslint) |
 | `style/*`  | `@stylistic/*`         | [@stylistic/eslint-plugin](https://github.com/eslint-stylistic/eslint-stylistic)           |
 | `test/*`   | `vitest/*`             | [eslint-plugin-vitest](https://github.com/veritem/eslint-plugin-vitest)                    |
-| `test/*`   | `no-only-tests/*`      | [eslint-plugin-no-only-tests](https://github.com/levibuzolic/eslint-plugin-no-only-tests)  |
 
 when you want to override rules, or disable them inline, you need to update to the new prefix (unfortunately the vscode eslint extension doesn't automatically rewrite this):
 
@@ -456,7 +455,7 @@ the required dev dependencies are: `@unocss/eslint-plugin` (you should be prompt
 
 we also provide some optional plugins and rules for extended/stricter usage:
 
-### `prefectionist` sorting
+### `perfectionist` sorting
 
 the plugin [`eslint-plugin-perfectionist`](https://github.com/azat-io/eslint-plugin-perfectionist) sorts object keys and imports with auto-fix. the plugin is installed, but no rules are enabled by default. it's recommended to opt-in on each file individually using [configuration comments][config-comments].
 
@@ -468,6 +467,38 @@ const objectWantedToSort = {
     c: 3,
 };
 ```
+
+### `command`
+
+the plugin by [`eslint-plugin-command`](https://github.com/antfu/eslint-plugin-command) allows you to add on-demand micro codemods that trigger on specific comment commands:
+
+- `/// to-function` - converts an arrow function to a normal function
+- `/// to-arrow` - converts a normal function to an arrow function
+- `/// to-for-each` - converts a for-in/for-of loop to `.forEach()`
+- `/// to-for-of` - converts `.forEach()` to a for-in/for-of loop
+- `/// keep-sorted` - sorts an object/array/interface
+- ... etc. - refer to the [docs](https://github.com/antfu/eslint-plugin-command#built-in-commands)
+
+you can add the trigger comment one line above the code you want to transform (note the triple slash):
+
+<!-- eslint-skip -->
+
+```ts
+/// to-function
+const foo = async (bar: string): void => {
+    console.log(bar);
+};
+```
+
+will be transformed into the following upon saving or running `eslint . --fix`:
+
+```ts
+async function foo(bar: string): void {
+    console.log(bar);
+}
+```
+
+the command comments are one-off and removed with the codemod transformation.
 
 ### type aware rules
 

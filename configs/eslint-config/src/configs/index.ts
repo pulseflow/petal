@@ -1,4 +1,5 @@
 export * from './astro.js';
+export * from './command.js';
 export * from './comments.js';
 export * from './ignores.js';
 export * from './imports.js';

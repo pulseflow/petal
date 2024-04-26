@@ -9,6 +9,8 @@ import { GLOB_TS, GLOB_TSX } from '../globs.js';
 import { ensurePackages, interopDefault, toArray } from '../utils.js';
 
 const ReactRefreshAllowConstantExportPackages = ['vite'];
+const RemixPackages = ['@remix-run/node', '@remix-run/react', '@remix-run/serve', '@remix-run/dev'];
+const NextJsPackages = ['next'];
 
 export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_TS, GLOB_TSX], overrides = {} } = options;
@@ -37,6 +39,8 @@ export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrid
 	] as const);
 
 	const isAllowConstantExport = ReactRefreshAllowConstantExportPackages.some(p => isPackageExists(p));
+	const isUsingRemix = RemixPackages.some(p => isPackageExists(p));
+	const isUsingNext = NextJsPackages.some(p => isPackageExists(p));
 	const plugins = pluginReact.configs.all.plugins;
 
 	return [
@@ -82,7 +86,32 @@ export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrid
 
 				'react-refresh/only-export-components': [
 					'warn',
-					{ allowConstantExport: isAllowConstantExport },
+					{
+						allowConstantExport: isAllowConstantExport,
+						allowExportNames: [
+							...(isUsingNext
+								? [
+										'config',
+										'generateStaticParams',
+										'metadata',
+										'generateMetadata',
+										'viewport',
+										'generateViewport',
+									]
+								: []
+							),
+							...(isUsingRemix
+								? [
+										'meta',
+										'links',
+										'headers',
+										'loader',
+										'action',
+									]
+								: []
+							),
+						],
+					},
 				],
 
 				'react/ensure-forward-ref-using-ref': 'warn',

@@ -6,6 +6,7 @@ import type { Linter } from 'eslint';
 import type { Awaitable, ConfigNames, OptionsConfig, TypedFlatConfigItem } from './types.js';
 import {
 	astro,
+	command,
 	comments,
 	ignores,
 	imports,
@@ -126,6 +127,7 @@ export function petal(
 			stylistic: stylisticOptions,
 		}),
 		unicorn(),
+		command(),
 		perfectionist(),
 	);
 
