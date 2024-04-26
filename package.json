@@ -2,7 +2,7 @@
 	"name": "@flowr/petal-monorepo",
 	"type": "module",
 	"private": true,
-	"packageManager": "pnpm@9.0.4",
+	"packageManager": "pnpm@9.0.6",
 	"license": "Apache-2.0",
 	"repository": {
 		"type": "git",
@@ -27,16 +27,9 @@
 		"@flowr/eslint-config": "workspace:^",
 		"@flowr/petal": "workspace:^",
 		"@stylistic/eslint-plugin-migrate": "^1.7.2",
+		"@types/node": "^20.12.7",
 		"create-petal": "workspace:^",
 		"lerna": "^8.1.2",
 		"typescript": "^5.4.5"
-	},
-	"pnpm": {
-		"overrides": {
-			"tar@<6.2.1": ">=6.2.1"
-		}
-	},
-	"overrides": {
-		"@types/node": "^18.0.0"
 	}
 }
