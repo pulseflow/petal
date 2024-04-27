@@ -1,6 +1,6 @@
 {
 	"name": "@flowr/tsconfig",
-	"version": "2.4.0",
+	"version": "2.4.1",
 	"description": "Common TSConfig to be used as a base config",
 	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",
@@ -13,7 +13,12 @@
 	"bugs": {
 		"url": "https://github.com/pulseflow/petal/issues"
 	},
-	"keywords": ["config", "tsconfig", "tsconfigs", "typescript"],
+	"keywords": [
+		"config",
+		"tsconfig",
+		"tsconfigs",
+		"typescript"
+	],
 	"sideEffects": false,
 	"main": "tsconfig.strict.json",
 	"files": [

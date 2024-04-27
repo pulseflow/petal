@@ -1,7 +1,7 @@
 {
 	"name": "@flowr/utils",
 	"type": "module",
-	"version": "2.4.0",
+	"version": "2.4.1",
 	"description": "Package that contains shared utils for any projects",
 	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",
@@ -14,7 +14,11 @@
 	"bugs": {
 		"url": "https://github.com/pulseflow/petal/issues"
 	},
-	"keywords": ["utils", "flowr", "petal"],
+	"keywords": [
+		"utils",
+		"flowr",
+		"petal"
+	],
 	"sideEffects": false,
 	"exports": {
 		".": {
