@@ -99,7 +99,7 @@ jobs:
             NODE_VERSION: 18
           - os: windows-latest
             NODE_VERSION: 18
-      fail-fast: false
+      fail-fast: true
     env:
       NODE_VERSION: ${{ matrix.NODE_VERSION }}
     steps:
