@@ -43,6 +43,7 @@
 	"scripts": {
 		"build": "pnpm typegen && tsup --format esm,cjs --clean --dts",
 		"build:inspector": "pnpm build && pnpx @eslint/config-inspector build",
+		"stub": "tsup --format esm",
 		"dev": "pnpm build && pnpx @eslint/config-inspector",
 		"watch": "tsup --format esm,cjs --watch",
 		"test": "vitest",

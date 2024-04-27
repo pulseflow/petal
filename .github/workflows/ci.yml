@@ -30,7 +30,9 @@ jobs:
       fail-fast: true
     steps:
       - name: disable git crlf
-        run: git config --global core.autocrlf false
+        run: |
+            git config --global core.autocrlf false
+            git config --global core.eol lf
 
       - name: checkout
         uses: actions/checkout@v4
@@ -63,7 +65,9 @@ jobs:
     needs: build
     steps:
       - name: disable git crlf
-        run: git config --global core.autocrlf false
+        run: |
+            git config --global core.autocrlf false
+            git config --global core.eol lf
 
       - name: checkout
         uses: actions/checkout@v4
