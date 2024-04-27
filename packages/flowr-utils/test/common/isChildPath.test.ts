@@ -1,4 +1,3 @@
-import { posix, win32 } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { isChildPath } from '../../src/index';
 
@@ -8,10 +7,13 @@ describe('isChildPath', () => {
 	});
 
 	it('should check child posix paths', () => {
-		vi.mock('node:path', () => {
+		vi.mock('node:path', async (importer) => {
+			const origin = await importer<typeof import('node:path')>();
+
 			return {
-				isAbsolute: posix.isAbsolute,
-				relative: posix.relative,
+				...origin,
+				isAbsolute: origin.posix.isAbsolute,
+				relative: origin.posix.relative,
 			};
 		});
 
@@ -34,10 +36,13 @@ describe('isChildPath', () => {
 	});
 
 	it('should check child win32 paths', () => {
-		vi.mock('node:path', () => {
+		vi.mock('node:path', async (importer) => {
+			const origin = await importer<typeof import('node:path')>();
+
 			return {
-				isAbsolute: win32.isAbsolute,
-				relative: win32.relative,
+				...origin,
+				isAbsolute: origin.win32.isAbsolute,
+				relative: origin.win32.relative,
 			};
 		});
 

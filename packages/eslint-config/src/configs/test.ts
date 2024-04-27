@@ -17,6 +17,7 @@ export async function test(options: OptionsIsInEditor & OptionsOverrides & Optio
 		pluginNoOnlyTests,
 	] = await Promise.all([
 		interopDefault(import('eslint-plugin-vitest')),
+		// @ts-expect-error missing types
 		interopDefault(import('eslint-plugin-no-only-tests')),
 	] as const);
 

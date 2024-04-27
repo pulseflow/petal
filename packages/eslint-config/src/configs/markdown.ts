@@ -11,6 +11,7 @@ import { interopDefault, parserPlain } from '../utils';
 export async function markdown(options: OptionsFiles & OptionsComponentExts & OptionsOverrides = {}): Promise<TypedFlatConfigItem[]> {
 	const { componentExts = [], files = [GLOB_MARKDOWN], overrides = {} } = options;
 
+	// @ts-expect-error missing types
 	const markdown = await interopDefault(import('eslint-plugin-markdown'));
 
 	return [

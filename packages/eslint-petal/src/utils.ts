@@ -45,9 +45,7 @@ function createRule<TOptions extends readonly unknown[], TMessageIds extends str
 		): RuleListener => {
 			const optionsWithDefault = context.options.map((opts, idx) => {
 				return {
-					// @ts-expect-error idk
 					...defaultOptions[idx] || {},
-					// @ts-expect-error idk
 					...opts || {},
 				};
 			}) as unknown as TOptions;

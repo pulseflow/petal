@@ -1,6 +1,6 @@
 import { resolve as resolvePath } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
-import { __dirname,	findOwnDir,	findOwnRootDir,	findPaths,	findRootPath } from '../../src/index';
+import { __dirname,	findOwnDir,	findOwnRootDir,	findPaths, findRootPath } from '../../src/index';
 
 describe('paths', () => {
 	it('findOwnDir and findOwnRootDir should find owns paths', () => {

@@ -23,8 +23,8 @@ import {
 	unocss,
 	vue,
 	yaml,
-} from '../src/index.js';
-import { combine } from '../src/utils.js';
+} from '../src/index';
+import { combine } from '../src/utils';
 
 const configs = await combine(
 	{

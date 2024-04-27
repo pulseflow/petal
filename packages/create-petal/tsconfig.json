@@ -1,5 +1,0 @@
-{
-	"extends": "@flowr/tsconfig/tsconfig.base.json",
-	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.mts", "src/**/*.cts"],
-	"exclude": ["node_modules", "dist", "build", "./fixtures/**/*.*", "./.fixtures/**/*.*"]
-}

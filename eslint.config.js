@@ -1,31 +1,6 @@
 // @ts-check
-import petal from '@flowr/eslint-config';
-import styleMigrate from '@stylistic/eslint-plugin-migrate';
+import { bundleRequire } from 'bundle-require';
 
-export default petal(
-	{
-		typescript: true,
-	},
-	{
-		ignores: [
-			'fixtures',
-			'_fixtures',
-			'**/fixtures/**',
-		],
-	},
-	{
-		files: ['configs/eslint-config/src/**/*.ts'],
-		rules: {
-			'perfectionist/sort-objects': 'error',
-		},
-	},
-	{
-		files: ['configs/eslint-config/src/configs/*.ts'],
-		plugins: {
-			'style-migrate': styleMigrate,
-		},
-		rules: {
-			'style-migrate/migrate': ['error', { namespaceTo: 'style' }],
-		},
-	},
-);
+export default bundleRequire({
+	filepath: './eslint.config.ts',
+}).then(r => r.mod.default);

@@ -1,7 +1,4 @@
-import { defineProject } from 'vitest/config';
+import { defineProject, mergeConfig } from 'vitest/config';
+import sharedConfig from '../../vitest.shared';
 
-export default defineProject({
-	test: {
-		globals: true,
-	},
-});
+export default mergeConfig(sharedConfig, defineProject({}));

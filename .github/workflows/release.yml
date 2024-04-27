@@ -1,52 +1,52 @@
 name: release
 
 on:
-    push:
-        tags:
-            - 'v*'
+  push:
+    tags:
+      - 'v*'
 
 jobs:
-    release:
-        permissions:
-            id-token: write
-            contents: write
-        runs-on: ubuntu-latest
-        steps:
-            - name: disable git crlf
-              run: |
-                git config --global core.autocrlf false
-                git config --global core.eol lf
+  release:
+    permissions:
+      id-token: write
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: disable git crlf
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
 
-            - name: checkout
-              uses: actions/checkout@v4
-              with:
-                fetch-depth: 0
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            - name: setup pnpm
-              uses: pnpm/action-setup@v3
-              with:
-                version: latest
+      - name: setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: latest
 
-            - name: setup node
-              uses: actions/setup-node@v4
-              with:
-                node-version: 20
-                cache: pnpm
-                registry-url: 'https://registry.npmjs.org'
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          registry-url: 'https://registry.npmjs.org'
 
-            - name: generate changelog
-              run: pnpm dlx changelogithub
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: generate changelog
+        run: pnpm dlx changelogithub
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: install dependencies
-              run: pnpm install
+      - name: install dependencies
+        run: pnpm install
 
-            - name: build packages
-              run: pnpm build
-            
-            - name: publish packages
-              run: pnpm -r publish --access public --no-git-checks
-              env:
-                NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-                NPM_CONFIG_PROVENANCE: true
+      - name: build packages
+        run: pnpm build
+
+      - name: publish packages
+        run: pnpm -r publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
