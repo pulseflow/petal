@@ -16,7 +16,7 @@ export function ajvBuilder(additionalOptions = {}): Ajv.Ajv {
 
 	ajv.addMetaSchema(metaSchema);
 
-	// @ts-expect-error this is an untyped part of the ajv api. (idk why)
+	// @ts-expect-error -- this is an untyped part of the ajv API
 	ajv._opts.defaultMeta = metaSchema.id;
 
 	return ajv;

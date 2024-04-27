@@ -7,11 +7,10 @@ export type {
 	SuggestionOutput,
 	TestCaseError,
 	ValidTestCase,
-} from './types/index';
+} from './types';
 export type {
 	AtLeastVersionConstraint,
 	DependencyConstraint,
 	SemverVersionConstraint,
 	VersionConstraint,
 } from './types/DependencyConstraint';
-export { validate } from './utils/config-validator';

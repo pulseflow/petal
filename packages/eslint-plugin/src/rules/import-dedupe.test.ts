@@ -1,5 +1,5 @@
-import { RuleTester } from '../vendor/rule-tester/src/RuleTester';
-import rule, { RULE_NAME } from '../src/rules/import-dedupe';
+import { RuleTester } from '../../vendor/rule-tester/src/RuleTester';
+import rule, { RULE_NAME } from './import-dedupe';
 
 const valids = [
 	'import { a } from \'foo\'',

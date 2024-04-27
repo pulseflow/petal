@@ -9,10 +9,10 @@ const BASE_SATISFIES_OPTIONS: semver.RangeOptions = {
 	includePrerelease: true,
 };
 
-async function satisfiesDependencyConstraint(
+function satisfiesDependencyConstraint(
 	packageName: string,
 	constraintIn: DependencyConstraint[string],
-): Promise<boolean> {
+): boolean {
 	const constraint: SemverVersionConstraint
 		= typeof constraintIn === 'string'
 			? {
@@ -21,7 +21,7 @@ async function satisfiesDependencyConstraint(
 			: constraintIn;
 
 	return semver.satisfies(
-		(await import(`${packageName}/package.json`) as { version: string }).version,
+		(require(`${packageName}/package.json`) as { version: string }).version,
 		constraint.range,
 		typeof constraint.options === 'object'
 			? { ...BASE_SATISFIES_OPTIONS, ...constraint.options }
@@ -29,16 +29,16 @@ async function satisfiesDependencyConstraint(
 	);
 }
 
-export async function satisfiesAllDependencyConstraints(
+export function satisfiesAllDependencyConstraints(
 	dependencyConstraints: DependencyConstraint | undefined,
-): Promise<boolean> {
+): boolean {
 	if (dependencyConstraints == null)
 		return true;
 
 	for (const [packageName, constraint] of Object.entries(
 		dependencyConstraints,
 	)) {
-		if (!await satisfiesDependencyConstraint(packageName, constraint))
+		if (!satisfiesDependencyConstraint(packageName, constraint))
 			return false;
 	}
 

@@ -40,10 +40,10 @@ let OVERRIDE_IT_ONLY: Maybe<RuleTesterTestFrameworkFunctionBase> = null;
 let OVERRIDE_IT_SKIP: Maybe<RuleTesterTestFrameworkFunctionBase> = null;
 
 /*
-   * NOTE - If people use `mocha test.js --watch` command, the test function
-   * instances are different for each execution.
-   * This is why the getters get fresh instance always.
-   */
+ * NOTE - If people use `mocha test.js --watch` command, the test function
+ * instances are different for each execution.
+ * This is why the getters get fresh instance always.
+ */
 
 /**
  * Defines a test framework used by the rule tester

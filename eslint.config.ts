@@ -10,6 +10,7 @@ export default petal(
 		ignores: [
 			'fixtures',
 			'_fixtures',
+			'**/_fixtures/**',
 			'**/fixtures/**',
 		],
 	},

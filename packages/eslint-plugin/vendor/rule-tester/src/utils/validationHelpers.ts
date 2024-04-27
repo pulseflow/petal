@@ -35,10 +35,10 @@ export const ERROR_OBJECT_PARAMETERS: ReadonlySet<string> = new Set([
 	'type',
 ]);
 export const FRIENDLY_ERROR_OBJECT_PARAMETER_LIST = `[${[
-  ...ERROR_OBJECT_PARAMETERS,
+	...ERROR_OBJECT_PARAMETERS,
 ]
-  .map(key => `'${key}'`)
-  .join(', ')}]`;
+	.map(key => `'${key}'`)
+	.join(', ')}]`;
 
 /*
  * All allowed property names in suggestion objects.
@@ -50,10 +50,10 @@ export const SUGGESTION_OBJECT_PARAMETERS: ReadonlySet<string> = new Set([
 	'output',
 ]);
 export const FRIENDLY_SUGGESTION_OBJECT_PARAMETER_LIST = `[${[
-  ...SUGGESTION_OBJECT_PARAMETERS,
+	...SUGGESTION_OBJECT_PARAMETERS,
 ]
-  .map(key => `'${key}'`)
-  .join(', ')}]`;
+	.map(key => `'${key}'`)
+	.join(', ')}]`;
 
 /**
  * Replace control characters by `\u00xx` form.
@@ -89,7 +89,7 @@ export function wrapParser(parser: Linter.ParserModule): Linter.ParserModule {
 				start: {
 					get() {
 						throw new Error(
-              `Use ${objName}.range[0] instead of ${objName}.start`,
+							`Use ${objName}.range[0] instead of ${objName}.start`,
 						);
 					},
 					configurable: true,
@@ -98,7 +98,7 @@ export function wrapParser(parser: Linter.ParserModule): Linter.ParserModule {
 				end: {
 					get() {
 						throw new Error(
-              `Use ${objName}.range[1] instead of ${objName}.end`,
+							`Use ${objName}.range[1] instead of ${objName}.end`,
 						);
 					},
 					configurable: true,
@@ -120,7 +120,7 @@ export function wrapParser(parser: Linter.ParserModule): Linter.ParserModule {
 			// @ts-expect-error -- see above
 			[parserSymbol]: parser,
 			parseForESLint(...args): Linter.ESLintParseResult {
-				const ret = parser.parseForESLint(...args);
+				const ret = parser.parseForESLint(...args) as Linter.ESLintParseResult;
 
 				defineStartEndAsErrorInTree(ret.ast, ret.visitorKeys);
 				return ret;
@@ -132,7 +132,7 @@ export function wrapParser(parser: Linter.ParserModule): Linter.ParserModule {
 		// @ts-expect-error -- see above
 		[parserSymbol]: parser,
 		parse(...args): TSESTree.Program {
-			const ast = parser.parse(...args);
+			const ast = parser.parse(...args) as TSESTree.Program;
 
 			defineStartEndAsErrorInTree(ast);
 			return ast;
@@ -157,8 +157,8 @@ export function emitLegacyRuleAPIWarning(ruleName: string): void {
 	if (!EMIT_LEGACY_RULE_API_WARNING[`warned-${ruleName}`]) {
 		EMIT_LEGACY_RULE_API_WARNING[`warned-${ruleName}`] = true;
 		process.emitWarning(
-      `"${ruleName}" rule is using the deprecated function-style format and will stop working in ESLint v9. Please use object-style format: https://eslint.org/docs/latest/extend/custom-rules`,
-      'DeprecationWarning',
+			`"${ruleName}" rule is using the deprecated function-style format and will stop working in ESLint v9. Please use object-style format: https://eslint.org/docs/latest/extend/custom-rules`,
+			'DeprecationWarning',
 		);
 	}
 }
@@ -171,8 +171,8 @@ export function emitMissingSchemaWarning(ruleName: string): void {
 	if (!EMIT_MISSING_SCHEMA_WARNING[`warned-${ruleName}`]) {
 		EMIT_MISSING_SCHEMA_WARNING[`warned-${ruleName}`] = true;
 		process.emitWarning(
-      `"${ruleName}" rule has options but is missing the "meta.schema" property and will stop working in ESLint v9. Please add a schema: https://eslint.org/docs/latest/extend/custom-rules#options-schemas`,
-      'DeprecationWarning',
+			`"${ruleName}" rule has options but is missing the "meta.schema" property and will stop working in ESLint v9. Please add a schema: https://eslint.org/docs/latest/extend/custom-rules#options-schemas`,
+			'DeprecationWarning',
 		);
 	}
 }

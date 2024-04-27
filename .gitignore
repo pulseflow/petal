@@ -1,5 +1,6 @@
 packages/eslint-config/src/typegen.d.ts
 packages/eslint-config/.eslint-config-inspector
+packages/eslint-config/_fixtures
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,yarn,git,macos,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,yarn,git,macos,visualstudiocode

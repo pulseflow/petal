@@ -1,6 +1,5 @@
-import { expect } from 'vitest';
-import { RuleTester } from '../vendor/rule-tester/src/RuleTester';
-import rule, { RULE_NAME } from '../src/rules/consistent-list-newline';
+import { RuleTester } from '../../vendor/rule-tester/src/RuleTester';
+import rule, { RULE_NAME } from './consistent-list-newline';
 
 const valids = [
 	'const a = { foo: "bar", bar: 2 }',

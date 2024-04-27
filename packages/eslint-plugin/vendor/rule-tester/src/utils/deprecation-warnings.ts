@@ -6,7 +6,7 @@ import process from 'node:process';
 // Definitions for deprecation warnings.
 const deprecationWarningMessages = {
 	ESLINT_LEGACY_ECMAFEATURES:
-    'The \'ecmaFeatures\' config file property is deprecated and has no effect.',
+		'The \'ecmaFeatures\' config file property is deprecated and has no effect.',
 } as const;
 
 const sourceFileErrorCache = new Set<string>();
@@ -33,8 +33,8 @@ export function emitDeprecationWarning(
 	const message = deprecationWarningMessages[errorCode];
 
 	process.emitWarning(
-    `${message} (found in "${rel}")`,
-    'DeprecationWarning',
-    errorCode,
+		`${message} (found in "${rel}")`,
+		'DeprecationWarning',
+		errorCode,
 	);
 }

@@ -10,9 +10,8 @@ import type {
 	ValidateFunction,
 } from 'ajv';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
-import type { Rule } from 'eslint';
 
-import type { TesterConfigWithDefaults } from '../types/index';
+import type { TesterConfigWithDefaults } from '../types';
 import { ajvBuilder } from './ajv';
 import { configSchema } from './config-schema';
 import { emitDeprecationWarning } from './deprecation-warnings';
@@ -157,11 +156,11 @@ function validateRules(
 		return;
 
 	Object.keys(rulesConfig).forEach((id) => {
-		const rule: AnyRuleModule | Rule.RuleModule | null = getAdditionalRule(id) ?? builtinRules.get(id) ?? null;
+		const rule = getAdditionalRule(id) ?? builtinRules.get(id) ?? null;
 		if (rule == null)
 			return;
 
-		validateRuleOptions((rule as AnyRuleModule), id, rulesConfig[id]!, source);
+		validateRuleOptions(rule, id, rulesConfig[id]!, source);
 	});
 }
 
@@ -180,7 +179,7 @@ function validateGlobals(
 	Object.entries(globalsConfig).forEach(
 		([configuredGlobal, configuredValue]) => {
 			try {
-				ConfigOps.normalizeConfigGlobal(configuredValue as any);
+				ConfigOps.normalizeConfigGlobal(configuredValue);
 			}
 			catch (err) {
 				throw new Error(
@@ -264,13 +263,13 @@ export function validate(
 	getAdditionalRule: GetAdditionalRule,
 ): void {
 	validateConfigSchema(config, source);
-	validateRules((config.rules as Record<string, Linter.RuleEntry>), source, getAdditionalRule);
-	validateEnvironment((config.env as Linter.EnvironmentConfig), source);
-	validateGlobals((config.globals as Linter.GlobalsConfig), source);
+	validateRules(config.rules, source, getAdditionalRule);
+	validateEnvironment(config.env, source);
+	validateGlobals(config.globals, source);
 
-	for (const override of (config.overrides as Linter.ConfigOverride[]) ?? []) {
+	for (const override of config.overrides ?? []) {
 		validateRules(override.rules, source, getAdditionalRule);
 		validateEnvironment(override.env, source);
-		validateGlobals((config.globals as Linter.GlobalsConfig), source);
+		validateGlobals(config.globals, source);
 	}
 }

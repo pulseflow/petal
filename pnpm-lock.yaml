@@ -143,7 +143,7 @@ importers:
         version: 2.10.0(astro-eslint-parser@1.0.1(typescript@5.4.5))(eslint@9.1.1)(svelte-eslint-parser@0.35.0(svelte@4.2.15))(svelte@4.2.15)(typescript@5.4.5)(vue-eslint-parser@9.4.2(eslint@9.1.1))
       eslint-plugin-petal:
         specifier: workspace:^
-        version: link:../eslint-petal
+        version: link:../eslint-plugin
       eslint-plugin-toml:
         specifier: ^0.11.0
         version: 0.11.0(eslint@9.1.1)
@@ -218,7 +218,7 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1(typescript@5.4.5)
       eslint:
-        specifier: 9.1.1
+        specifier: ^9.1.1
         version: 9.1.1
       eslint-plugin-astro:
         specifier: ^1.0.3
@@ -263,7 +263,7 @@ importers:
         specifier: ^0.35.0
         version: 0.35.0(svelte@4.2.15)
 
-  packages/eslint-petal:
+  packages/eslint-plugin:
     devDependencies:
       '@flowr/tsconfig':
         specifier: workspace:^
@@ -302,7 +302,13 @@ importers:
         specifier: ^5.3.3
         version: 5.4.5
 
-  packages/flowr-utils:
+  packages/tsconfig:
+    devDependencies:
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
+  packages/utils:
     dependencies:
       '@catppuccin/palette':
         specifier: ^1.1.1
@@ -353,12 +359,6 @@ importers:
       zen-observable:
         specifier: ^0.10.0
         version: 0.10.0
-
-  packages/tsconfig:
-    devDependencies:
-      typescript:
-        specifier: ^5.4.5
-        version: 5.4.5
 
 packages:
 

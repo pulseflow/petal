@@ -1,40 +1,38 @@
 // Forked from https://github.com/eslint/eslint/blob/ad9dd6a933fd098a0d99c6a9aa059850535c23ee/lib/rule-tester/rule-tester.js
+// eslint-disable-next-line ts/ban-ts-comment
+// @ts-nocheck
+
+import process from 'node:process';
 import assert from 'node:assert';
 import path from 'node:path';
 import util from 'node:util';
 
-import process from 'node:process';
 import type * as ParserType from '@typescript-eslint/parser';
 import type { TSESTree } from '@typescript-eslint/utils';
 import { deepMerge } from '@typescript-eslint/utils/eslint-utils';
-
 import type {
-	// @ts-expect-error idk
 	AnyRuleCreateFunction,
-	// @ts-expect-error idk
 	AnyRuleModule,
-	// @ts-expect-error idk
 	ParserOptions,
-	// @ts-expect-error idk
 	RuleContext,
 	RuleModule,
-} from '@typescript-eslint/utils/eslint-utils';
-import type { SuggestionOutput, TestCaseError } from '@typescript-eslint/utils/ts-eslint';
+} from '@typescript-eslint/utils/ts-eslint';
 import { Linter } from '@typescript-eslint/utils/ts-eslint';
 
+// we intentionally import from eslint here because we need to use the same class
+// that ESLint uses, not our custom override typed version
 import { SourceCode } from 'eslint';
 import merge from 'lodash.merge';
 
 import { TestFramework } from './TestFramework';
 import type {
 	InvalidTestCase,
-	Mutable,
 	NormalizedRunTests,
 	RuleTesterConfig,
 	RunTests,
 	TesterConfigWithDefaults,
 	ValidTestCase,
-} from './types/index';
+} from './types';
 import { ajvBuilder } from './utils/ajv';
 import { cloneDeeplyExcludesParent } from './utils/cloneDeeplyExcludesParent';
 import { satisfiesAllDependencyConstraints } from './utils/dependencyConstraints';
@@ -75,7 +73,6 @@ let defaultConfig = deepMerge(
 	{},
 	testerDefaultConfig,
 ) as TesterConfigWithDefaults;
-type RuleConfigWithDefaults = Mutable<RuleTesterConfig>;
 
 export class RuleTester extends TestFramework {
 	readonly #testerConfig: TesterConfigWithDefaults;
@@ -103,11 +100,11 @@ export class RuleTester extends TestFramework {
 		// make sure that the parser doesn't hold onto file handles between tests
 		// on linux (i.e. our CI env), there can be very a limited number of watch handles available
 		const constructor = this.constructor as typeof RuleTester;
-		constructor.afterAll(async () => {
+		constructor.afterAll(() => {
 			try {
 				// instead of creating a hard dependency, just use a soft require
 				// a bit weird, but if they're using this tooling, it'll be installed
-				const parser = await import(TYPESCRIPT_ESLINT_PARSER) as typeof ParserType;
+				const parser = require(TYPESCRIPT_ESLINT_PARSER) as typeof ParserType;
 				parser.clearCaches();
 			}
 			catch {
@@ -119,7 +116,7 @@ export class RuleTester extends TestFramework {
 	/**
 	 * Set the configuration to use for all future tests
 	 */
-	static setDefaultConfig(config: RuleConfigWithDefaults): void {
+	static setDefaultConfig(config: RuleTesterConfig): void {
 		if (typeof config !== 'object' || config == null) {
 			throw new TypeError(
 				'RuleTester.setDefaultConfig: config must be an object',
@@ -128,6 +125,7 @@ export class RuleTester extends TestFramework {
 		// Make sure the rules object exists since it is assumed to exist later
 		defaultConfig = deepMerge(
 			defaultConfig,
+			// @ts-expect-error -- no index signature
 			config,
 		) as TesterConfigWithDefaults;
 	}
@@ -178,12 +176,12 @@ export class RuleTester extends TestFramework {
 		this.#rules[name] = rule;
 	}
 
-	async #normalizeTests<
+	#normalizeTests<
 		TMessageIds extends string,
 		TOptions extends readonly unknown[],
 	>(
 		rawTests: RunTests<TMessageIds, TOptions>,
-	): Promise<NormalizedRunTests<TMessageIds, TOptions>> {
+	): NormalizedRunTests<TMessageIds, TOptions> {
 		/*
 	Automatically add a filename to the tests to enable type-aware tests to "just work".
 	This saves users having to verbosely and manually add the filename to every
@@ -283,20 +281,20 @@ export class RuleTester extends TestFramework {
 	test framework the opportunity to log the test as skipped rather than the test
 	just disappearing without a trace.
 	*/
-		const maybeMarkAsOnly = async <
+		const maybeMarkAsOnly = <
 			T extends
 			| InvalidTestCase<TMessageIds, TOptions>
 			| ValidTestCase<TOptions>,
 		>(
-			test: T,
-		): Promise<T> => {
+				test: T,
+			): T => {
 			return {
 				...test,
-				skip: !(await satisfiesAllDependencyConstraints(test.dependencyConstraints)),
+				skip: !satisfiesAllDependencyConstraints(test.dependencyConstraints),
 			};
 		};
-		normalizedTests.valid = await Promise.all(normalizedTests.valid.map(maybeMarkAsOnly));
-		normalizedTests.invalid = await Promise.all(normalizedTests.invalid.map(maybeMarkAsOnly));
+		normalizedTests.valid = normalizedTests.valid.map(maybeMarkAsOnly);
+		normalizedTests.invalid = normalizedTests.invalid.map(maybeMarkAsOnly);
 
 		return normalizedTests;
 	}
@@ -394,10 +392,10 @@ export class RuleTester extends TestFramework {
 	 * This creates a test suite and pipes all supplied info through
 	 * one of the templates above.
 	 */
-		constructor.describe(ruleName, async () => {
-			if ((await normalizedTests).valid.length) {
-				constructor.describe('valid', async () => {
-					(await normalizedTests).valid.forEach((valid) => {
+		constructor.describe(ruleName, () => {
+			if (normalizedTests.valid.length) {
+				constructor.describe('valid', () => {
+					normalizedTests.valid.forEach((valid) => {
 						const testName = ((): string => {
 							if (valid.name == null || valid.name.length === 0)
 								return valid.code;
@@ -411,9 +409,9 @@ export class RuleTester extends TestFramework {
 				});
 			}
 
-			if ((await normalizedTests).invalid.length) {
-				constructor.describe('invalid', async () => {
-					(await normalizedTests).invalid.forEach((invalid) => {
+			if (normalizedTests.invalid.length) {
+				constructor.describe('invalid', () => {
+					normalizedTests.invalid.forEach((invalid) => {
 						const name = ((): string => {
 							if (invalid.name == null || invalid.name.length === 0)
 								return invalid.code;
@@ -434,19 +432,19 @@ export class RuleTester extends TestFramework {
 	 * @throws {Error} If an invalid schema.
 	 * Use @private instead of #private to expose it for testing purposes
 	 */
-	private async runRuleForItem<
+	private runRuleForItem<
 		TMessageIds extends string,
 		TOptions extends readonly unknown[],
 	>(
 		ruleName: string,
 		rule: RuleModule<TMessageIds, TOptions>,
 		item: InvalidTestCase<TMessageIds, TOptions> | ValidTestCase<TOptions>,
-	): Promise<{
-		messages: Linter.LintMessage[];
-		output: string;
-		beforeAST: TSESTree.Program;
-		afterAST: TSESTree.Program;
-	}> {
+	): {
+			messages: Linter.LintMessage[];
+			output: string;
+			beforeAST: TSESTree.Program;
+			afterAST: TSESTree.Program;
+		} {
 		let config: TesterConfigWithDefaults = merge({}, this.#testerConfig);
 		let code;
 		let filename;
@@ -526,7 +524,7 @@ export class RuleTester extends TestFramework {
 
 		this.#linter.defineParser(
 			config.parser,
-			wrapParser(await import(config.parser) as Linter.ParserModule),
+			wrapParser(require(config.parser) as Linter.ParserModule),
 		);
 
 		if (schema) {
@@ -579,7 +577,8 @@ export class RuleTester extends TestFramework {
 			messages = this.#linter.verify(code, config, filename);
 		}
 		finally {
-			SourceCode.prototype.getComments = (getComments as any);
+			// @ts-expect-error -- we don't define deprecated members on our types
+			SourceCode.prototype.getComments = getComments;
 		}
 
 		const fatalErrorMessage = messages.find(m => m.fatal);
@@ -624,14 +623,14 @@ export class RuleTester extends TestFramework {
 	 * Check if the template is valid or not
 	 * all valid cases go through this
 	 */
-	async #testValidTemplate<
+	#testValidTemplate<
 		TMessageIds extends string,
 		TOptions extends readonly unknown[],
 	>(
 		ruleName: string,
 		rule: RuleModule<TMessageIds, TOptions>,
 		itemIn: ValidTestCase<TOptions> | string,
-	): Promise<void> {
+	): void {
 		const item: ValidTestCase<TOptions>
 			= typeof itemIn === 'object' ? itemIn : { code: itemIn };
 
@@ -646,7 +645,7 @@ export class RuleTester extends TestFramework {
 			);
 		}
 
-		const result = await this.runRuleForItem(ruleName, rule, item);
+		const result = this.runRuleForItem(ruleName, rule, item);
 		const messages = result.messages;
 
 		assert.strictEqual(
@@ -666,14 +665,14 @@ export class RuleTester extends TestFramework {
 	 * Check if the template is invalid or not
 	 * all invalid cases go through this.
 	 */
-	async #testInvalidTemplate<
+	#testInvalidTemplate<
 		TMessageIds extends string,
 		TOptions extends readonly unknown[],
 	>(
 		ruleName: string,
 		rule: RuleModule<TMessageIds, TOptions>,
 		item: InvalidTestCase<TMessageIds, TOptions>,
-	): Promise<void> {
+	): void {
 		assert.ok(
 			typeof item.code === 'string',
 			'Test case must specify a string value for \'code\'',
@@ -684,19 +683,23 @@ export class RuleTester extends TestFramework {
 				'Optional test case property \'name\' must be a string',
 			);
 		}
+		// assert.ok(
+		//   item.errors || item.errors === 0,
+		//   `Did not specify errors for an invalid test of ${ruleName}`,
+		// )
 
 		if (Array.isArray(item.errors) && item.errors.length === 0)
 			assert.fail('Invalid cases must have at least one error');
 
 		const ruleHasMetaMessages
 			= hasOwnProperty(rule, 'meta') && hasOwnProperty(rule.meta, 'messages');
-		const friendlyIDList: string | null = ruleHasMetaMessages
+		const friendlyIDList = ruleHasMetaMessages
 			? `[${Object.keys(rule.meta.messages)
 				.map(key => `'${key}'`)
 				.join(', ')}]`
 			: null;
 
-		const result = await this.runRuleForItem(ruleName, rule, item);
+		const result = this.runRuleForItem(ruleName, rule, item);
 		const messages = result.messages;
 
 		if (item.errors == null) {
@@ -734,7 +737,7 @@ export class RuleTester extends TestFramework {
 			const hasMessageOfThisRule = messages.some(m => m.ruleId === ruleName);
 
 			for (let i = 0, l = item.errors.length; i < l; i++) {
-				const error: TestCaseError<TMessageIds> = item.errors[i];
+				const error = item.errors[i] as any;
 				const message = messages[i];
 
 				assert(
@@ -759,7 +762,23 @@ export class RuleTester extends TestFramework {
 							`Invalid error property name '${propertyName}'. Expected one of ${FRIENDLY_ERROR_OBJECT_PARAMETER_LIST}.`,
 						);
 					});
-					if (hasOwnProperty(error, 'messageId')) {
+
+					if (hasOwnProperty(error, 'message')) {
+						assert.ok(
+							!hasOwnProperty(error, 'messageId'),
+							'Error should not specify both \'message\' and a \'messageId\'.',
+						);
+						assert.ok(
+							!hasOwnProperty(error, 'data'),
+							'Error should not specify both \'data\' and \'message\'.',
+						);
+						assertMessageMatches(
+							message.message,
+							// @ts-expect-error -- we purposely don't define `message` on our types as the current standard is `messageId`
+							error.message as unknown,
+						);
+					}
+					else if (hasOwnProperty(error, 'messageId')) {
 						assert.ok(
 							ruleHasMetaMessages,
 							'Error can not use \'messageId\' if rule under test doesn\'t define \'meta.messages\'.',
@@ -873,7 +892,7 @@ export class RuleTester extends TestFramework {
 								`Error should have ${error.suggestions.length} suggestions. Instead found ${messageSuggestions.length} suggestions`,
 							);
 
-							error.suggestions.forEach((expectedSuggestion: SuggestionOutput<TMessageIds>, index: number) => {
+							error.suggestions.forEach((expectedSuggestion, index) => {
 								assert.ok(
 									typeof expectedSuggestion === 'object'
 									&& expectedSuggestion != null,
@@ -888,6 +907,21 @@ export class RuleTester extends TestFramework {
 
 								const actualSuggestion = messageSuggestions[index];
 								const suggestionPrefix = `Error Suggestion at index ${index} :`;
+
+								// @ts-expect-error -- we purposely don't define `desc` on our types as the current standard is `messageId`
+								if (hasOwnProperty(expectedSuggestion, 'desc')) {
+									assert.ok(
+										!hasOwnProperty(expectedSuggestion, 'data'),
+										`${suggestionPrefix} Test should not specify both 'desc' and 'data'.`,
+									);
+									// @ts-expect-error -- we purposely don't define `desc` on our types as the current standard is `messageId`
+									const expectedDesc = expectedSuggestion.desc as string;
+									assert.strictEqual(
+										actualSuggestion.desc,
+										expectedDesc,
+										`${suggestionPrefix} desc should be "${expectedDesc}" but got "${actualSuggestion.desc}" instead.`,
+									);
+								}
 
 								if (hasOwnProperty(expectedSuggestion, 'messageId')) {
 									assert.ok(

@@ -1,5 +1,5 @@
-import { RuleTester } from '../vendor/rule-tester/src/RuleTester';
-import rule, { RULE_NAME } from '../src/rules/if-newline';
+import { RuleTester } from '../../vendor/rule-tester/src/RuleTester';
+import rule, { RULE_NAME } from './if-newline';
 
 const valids = [
   `if (true)

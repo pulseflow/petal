@@ -1,5 +1,5 @@
-import { RuleTester } from '../vendor/rule-tester/src/RuleTester';
-import rule, { RULE_NAME } from '../src/rules/prefer-inline-type-import';
+import { RuleTester } from '../../vendor/rule-tester/src/RuleTester';
+import rule, { RULE_NAME } from './prefer-inline-type-import';
 
 const valids = [
 	'import { type Foo } from \'foo\'',

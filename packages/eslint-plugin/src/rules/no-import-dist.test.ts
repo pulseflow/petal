@@ -1,5 +1,5 @@
-import { RuleTester } from '../vendor/rule-tester/src/RuleTester';
-import rule, { RULE_NAME } from '../src/rules/no-import-dist';
+import { RuleTester } from '../../vendor/rule-tester/src/RuleTester';
+import rule, { RULE_NAME } from './no-import-dist';
 
 const valids = [
 	'import xxx from "a"',

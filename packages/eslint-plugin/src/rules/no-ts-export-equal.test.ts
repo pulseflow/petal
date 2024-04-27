@@ -1,5 +1,5 @@
-import { RuleTester } from '../vendor/rule-tester/src/RuleTester';
-import rule, { RULE_NAME } from '../src/rules/no-ts-export-equal';
+import { RuleTester } from '../../vendor/rule-tester/src/RuleTester';
+import rule, { RULE_NAME } from './no-ts-export-equal';
 
 const valids = [
 	{ code: 'export default {}', filename: 'test.ts' },

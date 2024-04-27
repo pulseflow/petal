@@ -6,11 +6,11 @@ import fg from 'fast-glob';
 import type { OptionsConfig, TypedFlatConfigItem } from '../src/types';
 
 beforeAll(async () => {
-	await fs.rm('_fixtures', { recursive: true, force: true });
+	await fs.rm('packages/eslint-config/_fixtures', { recursive: true, force: true });
 });
 
 afterAll(async () => {
-	await fs.rm('_fixtures', { recursive: true, force: true });
+	await fs.rm('packages/eslint-config/_fixtures', { recursive: true, force: true });
 });
 
 runWithConfig('js', {
@@ -21,6 +21,8 @@ runWithConfig('js', {
 runWithConfig('all', {
 	typescript: true,
 	vue: true,
+	svelte: true,
+	astro: true,
 });
 
 runWithConfig('no-style', {
@@ -29,62 +31,79 @@ runWithConfig('no-style', {
 	stylistic: false,
 });
 
-runWithConfig('tab-double-quotes', {
-	typescript: true,
-	vue: true,
-	stylistic: {
-		indent: 'tab',
-		quotes: 'double',
+runWithConfig(
+	'tab-double-quotes',
+	{
+		typescript: true,
+		vue: true,
+		stylistic: {
+			indent: 'tab',
+			quotes: 'double',
+		},
 	},
-}, {
-	rules: {
-		'style/no-mixed-spaces-and-tabs': 'off',
+	{
+		rules: {
+			'style/no-mixed-spaces-and-tabs': 'off',
+		},
 	},
-});
+);
 
-runWithConfig('ts-override', {
-	typescript: true,
-}, {
-	rules: {
-		'ts/consistent-type-definitions': ['error', 'type'],
+runWithConfig(
+	'ts-override',
+	{
+		typescript: true,
 	},
-});
-
-runWithConfig('with-formatters', {
-	typescript: true,
-	vue: true,
-	formatters: true,
-});
-
-runWithConfig('no-markdown-with-formatters', {
-	jsx: false,
-	vue: false,
-	markdown: false,
-	formatters: {
-		markdown: true,
+	{
+		rules: {
+			'ts/consistent-type-definitions': ['error', 'type'],
+		},
 	},
-});
+);
+
+runWithConfig(
+	'with-formatters',
+	{
+		typescript: true,
+		vue: true,
+		astro: true,
+		formatters: true,
+	},
+);
+
+runWithConfig(
+	'no-markdown-with-formatters',
+	{
+		jsx: false,
+		vue: false,
+		markdown: false,
+		formatters: {
+			markdown: true,
+		},
+	},
+);
 
 function runWithConfig(name: string, configs: OptionsConfig, ...items: TypedFlatConfigItem[]) {
 	it.concurrent(name, async ({ expect }) => {
-		const from = resolve('fixtures/input');
-		const output = resolve('fixtures/output', name);
-		const target = resolve('_fixtures', name);
+		const from = resolve('packages/eslint-config/fixtures/input');
+		const output = resolve('packages/eslint-config/fixtures/output', name);
+		const target = resolve('packages/eslint-config/_fixtures', name);
 
 		await fs.copy(from, target, {
-			filter: src => !src.includes('node_modules'),
+			filter: (src) => {
+				return !src.includes('node_modules');
+			},
 		});
-		await fs.writeFile(join(target, 'eslint.config'), `
+		await fs.writeFile(join(target, 'eslint.config.js'), `
 // @eslint-disable
 import petal from '@flowr/eslint-config'
 
 export default petal(
-	${JSON.stringify(configs)},
-	...${JSON.stringify(items) ?? []},
+  ${JSON.stringify(configs)},
+  ...${JSON.stringify(items) ?? []},
 )
-		`);
+  `);
 
-		await execa('pnpm', ['dlx', 'eslint', '.', '--fix'], {
+		await execa('pnpx', ['eslint', '.', '--fix'], {
 			cwd: target,
 			stdio: 'pipe',
 		});
@@ -92,24 +111,21 @@ export default petal(
 		const files = await fg('**/*', {
 			ignore: [
 				'node_modules',
-				'eslint.config',
+				'eslint.config.js',
 			],
 			cwd: target,
 		});
 
-		await Promise.all(files.map(async (f) => {
-			const content = await fs.readFile(join(target, f), 'utf-8');
-			const source = await fs.readFile(join(from, f), 'utf-8');
-			const outputPath = join(output, f);
-
+		await Promise.all(files.map(async (file) => {
+			const content = await fs.readFile(join(target, file), 'utf-8');
+			const source = await fs.readFile(join(from, file), 'utf-8');
+			const outputPath = join(output, file);
 			if (content === source) {
 				if (fs.existsSync(outputPath))
 					fs.remove(outputPath);
-
 				return;
 			}
-
-			await expect.soft(content).toMatchFileSnapshot(join(output, f));
+			await expect.soft(content).toMatchFileSnapshot(join(output, file));
 		}));
 	}, 30_000);
 }

@@ -32,10 +32,11 @@ It will check the newline style of the **first** property or item and apply to t
 
 This rule might conflicts with the [object-curly-newline](https://eslint.org/docs/rules/object-curly-newline). You can turn if off.
 
+<!-- eslint-skip -->
 ```ts
 export default {
-	rules: {
-		'object-curly-newline': 'off',
-	}
+    rules: {
+        'object-curly-newline': 'off',
+    }
 };
 ```

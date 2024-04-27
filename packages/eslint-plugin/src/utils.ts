@@ -57,7 +57,7 @@ function createRule<TOptions extends readonly unknown[], TMessageIds extends str
 	};
 }
 
-export const createEslintRule = RuleCreator(ruleName => `${blobUrl}/docs/${ruleName}.md`) as any as <TOptions extends readonly unknown[], TMessageIds extends string>
+export const createEslintRule = RuleCreator(ruleName => `${blobUrl}/${ruleName}.md`) as any as <TOptions extends readonly unknown[], TMessageIds extends string>
 ({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>) => RuleModule<TOptions>;
 
 const warned = new Set<string>();
