@@ -54,7 +54,7 @@ jobs:
         run: pnpm build
 
   lint:
-    name: 'Lint: ubuntu-latest (node@18)'
+    name: 'Lint: ubuntu-latest (node@20)'
     runs-on: ubuntu-latest
     timeout-minutes: 7
     needs: build
@@ -73,7 +73,7 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: pnpm
 
       - name: install dependencies

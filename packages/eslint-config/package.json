@@ -41,10 +41,10 @@
 		"node": ">=20"
 	},
 	"scripts": {
-		"build": "tsup --format esm,cjs --clean --dts",
-		"build:inspector": "pnpm typegen && pnpm build && pnpx @eslint/config-inspector build",
-		"dev": "pnpm typegen && pnpm build && pnpx @eslint/config-inspector",
-		"watch": "pnpm typegen && tsup --format esm,cjs --watch",
+		"build": "pnpm typegen && tsup --format esm,cjs --clean --dts",
+		"build:inspector": "pnpm build && pnpx @eslint/config-inspector build",
+		"dev": "pnpm build && pnpx @eslint/config-inspector",
+		"watch": "tsup --format esm,cjs --watch",
 		"test": "vitest",
 		"clean": "rimraf dist",
 		"typegen": "esno ./scripts/typegen.ts"
