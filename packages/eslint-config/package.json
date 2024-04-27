@@ -1,0 +1,169 @@
+{
+	"name": "@flowr/eslint-config",
+	"type": "module",
+	"version": "2.4.0",
+	"description": "Combined ESLint config for Petal",
+	"license": "Apache-2.0",
+	"funding": "https://ko-fi.com/pauliesnug",
+	"homepage": "https://petal.dyn.gay",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal.git",
+		"directory": "packages/eslint-config"
+	},
+	"bugs": {
+		"url": "https://github.com/pulseflow/petal/issues"
+	},
+	"keywords": [
+		"eslint-config",
+		"eslint",
+		"style"
+	],
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"CHANGELOG.md",
+		"LICENSE",
+		"README.md",
+		"dist/**/*.cjs",
+		"dist/**/*.d.ts",
+		"dist/**/*.js",
+		"dist/**/*.mjs"
+	],
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"build": "tsup --format esm,cjs --clean --dts",
+		"build:inspector": "pnpm typegen && pnpm build && pnpx @eslint/config-inspector build",
+		"dev": "pnpm typegen && pnpm build && pnpx @eslint/config-inspector",
+		"watch": "pnpm typegen && tsup --format esm,cjs --watch",
+		"test": "vitest",
+		"clean": "rimraf dist",
+		"typegen": "esno ./scripts/typegen.ts"
+	},
+	"peerDependencies": {
+		"@eslint-react/eslint-plugin": "^1.5.9",
+		"@unocss/eslint-plugin": "^0.59.0",
+		"astro-eslint-parser": "^0.17.0",
+		"eslint": ">=8.40.0",
+		"eslint-plugin-astro": "^0.33.1",
+		"eslint-plugin-format": "^0.1.0",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.6",
+		"eslint-plugin-solid": "^0.13.2",
+		"eslint-plugin-svelte": "^2.35.1",
+		"prettier-plugin-astro": "^0.13.0",
+		"prettier-plugin-slidev": "^1.0.5",
+		"svelte-eslint-parser": "^0.33.1"
+	},
+	"peerDependenciesMeta": {
+		"@eslint-react/eslint-plugin": {
+			"optional": true
+		},
+		"@unocss/eslint-plugin": {
+			"optional": true
+		},
+		"astro-eslint-parser": {
+			"optional": true
+		},
+		"eslint-plugin-astro": {
+			"optional": true
+		},
+		"eslint-plugin-format": {
+			"optional": true
+		},
+		"eslint-plugin-react-hooks": {
+			"optional": true
+		},
+		"eslint-plugin-react-refresh": {
+			"optional": true
+		},
+		"eslint-plugin-solid": {
+			"optional": true
+		},
+		"eslint-plugin-svelte": {
+			"optional": true
+		},
+		"prettier-plugin-astro": {
+			"optional": true
+		},
+		"prettier-plugin-slidev": {
+			"optional": true
+		},
+		"svelte-eslint-parser": {
+			"optional": true
+		}
+	},
+	"dependencies": {
+		"@antfu/install-pkg": "^0.3.3",
+		"@stylistic/eslint-plugin": "^1.7.2",
+		"@typescript-eslint/eslint-plugin": "^7.7.1",
+		"@typescript-eslint/parser": "^7.7.1",
+		"eslint-config-flat-gitignore": "^0.1.5",
+		"eslint-flat-config-utils": "^0.2.4",
+		"eslint-merge-processors": "^0.1.0",
+		"eslint-plugin-command": "^0.1.2",
+		"eslint-plugin-eslint-comments": "^3.2.0",
+		"eslint-plugin-import-x": "^0.5.0",
+		"eslint-plugin-jsdoc": "^48.2.3",
+		"eslint-plugin-jsonc": "^2.15.1",
+		"eslint-plugin-markdown": "^4.0.1",
+		"eslint-plugin-n": "^17.3.1",
+		"eslint-plugin-no-only-tests": "^3.1.0",
+		"eslint-plugin-perfectionist": "^2.10.0",
+		"eslint-plugin-petal": "workspace:^",
+		"eslint-plugin-toml": "^0.11.0",
+		"eslint-plugin-unicorn": "^52.0.0",
+		"eslint-plugin-unused-imports": "^3.1.0",
+		"eslint-plugin-vitest": "0.5.4",
+		"eslint-plugin-vue": "^9.25.0",
+		"eslint-plugin-yml": "^1.14.0",
+		"eslint-processor-vue-blocks": "^0.1.2",
+		"globals": "^15.0.0",
+		"jsonc-eslint-parser": "^2.4.0",
+		"local-pkg": "^0.5.0",
+		"prompts": "^2.4.2",
+		"toml-eslint-parser": "^0.9.3",
+		"typescript": "^5.4.5",
+		"vue-eslint-parser": "^9.4.2",
+		"yaml-eslint-parser": "^1.2.2"
+	},
+	"devDependencies": {
+		"@antfu/eslint-plugin-prettier": "^5.0.1-1",
+		"@eslint-react/eslint-plugin": "^1.5.9",
+		"@eslint/config-inspector": "^0.4.7",
+		"@flowr/tsconfig": "workspace:^",
+		"@types/eslint": "^8.56.10",
+		"@types/fs-extra": "^11.0.4",
+		"@types/prompts": "^2.4.9",
+		"@unocss/eslint-plugin": "^0.59.4",
+		"astro-eslint-parser": "^1.0.1",
+		"eslint": "9.1.1",
+		"eslint-plugin-astro": "^1.0.3",
+		"eslint-plugin-format": "^0.1.1",
+		"eslint-plugin-react-hooks": "^4.6.2",
+		"eslint-plugin-react-refresh": "^0.4.6",
+		"eslint-plugin-solid": "^0.13.2",
+		"eslint-plugin-svelte": "^2.38.0",
+		"eslint-typegen": "^0.2.4",
+		"execa": "^8.0.1",
+		"fast-glob": "^3.3.2",
+		"fs-extra": "^11.2.0",
+		"prettier-plugin-astro": "^0.13.0",
+		"prettier-plugin-slidev": "^1.0.5",
+		"svelte": "^4.2.15",
+		"svelte-eslint-parser": "^0.35.0",
+		"typescript": "^5.2.2"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}

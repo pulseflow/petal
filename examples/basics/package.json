@@ -1,16 +1,22 @@
 {
-	"name": "@example/basics",
+	"name": "@example/flowr-basics",
 	"type": "module",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"build": "petal build",
-		"test": "petal test",
-		"lint": "petal lint",
-		"release": "petal release"
+		"build": "unbuild",
+		"stub": "unbuild --stub",
+		"test": "vitest",
+		"lint": "eslint --cache .",
+		"lint:fix": "nr lint --fix"
 	},
 	"devDependencies": {
-		"@flowr/petal": "^2.0.2",
-		"typescript": "^5.2.2"
+		"@antfu/ni": "^0.21.12",
+		"@flowr/eslint-config": "^2.4.0",
+		"@flowr/tsconfig": "^2.4.0",
+		"@types/node": "^20.12.7",
+		"typescript": "^5.4.5",
+		"unbuild": "^2.0.0",
+		"vitest": "^1.5.2"
 	}
 }

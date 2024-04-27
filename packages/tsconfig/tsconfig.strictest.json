@@ -1,0 +1,15 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"display": "Strictest",
+	"_version": "1.0.0",
+
+	"extends": "./tsconfig.strict.json",
+
+	"compilerOptions": {
+		"strict": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true
+	}
+}

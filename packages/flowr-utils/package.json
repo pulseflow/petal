@@ -1,0 +1,89 @@
+{
+	"name": "@flowr/utils",
+	"type": "module",
+	"version": "2.4.0",
+	"description": "Package that contains shared utils for any projects",
+	"license": "Apache-2.0",
+	"funding": "https://ko-fi.com/pauliesnug",
+	"homepage": "https://petal.dyn.gay",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal.git",
+		"directory": "packages/flowr-utils"
+	},
+	"bugs": {
+		"url": "https://github.com/pulseflow/petal/issues"
+	},
+	"keywords": ["utils", "flowr", "petal"],
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"types": "./dist/index.d.mts",
+			"default": "./dist/index.mjs"
+		},
+		"./core": {
+			"types": "./dist/core.d.mts",
+			"default": "./dist/core.mjs"
+		},
+		"./debug": {
+			"types": "./dist/debug.d.mts",
+			"default": "./dist/debug.mjs"
+		},
+		"./inject": {
+			"types": "./dist/inject.d.mts",
+			"default": "./dist/inject.mjs"
+		},
+		"./req": {
+			"types": "./dist/req.d.mts",
+			"default": "./dist/req.mjs"
+		},
+		"./mixin": {
+			"types": "./dist/mixin.d.mts",
+			"default": "./dist/mixin.mjs"
+		}
+	},
+	"main": "./dist/index.mjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"CHANGELOG.md",
+		"LICENSE",
+		"README.md",
+		"dist/**/*.cjs",
+		"dist/**/*.d.ts",
+		"dist/**/*.js",
+		"dist/**/*.mjs"
+	],
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"clean": "rimraf dist",
+		"build": "unbuild",
+		"test": "vitest",
+		"stub": "unbuild --stub"
+	},
+	"dependencies": {
+		"@catppuccin/palette": "^1.1.1",
+		"chalk": "^5.3.0",
+		"log-update": "^6.0.0",
+		"luxon": "^3.4.4",
+		"semver": "^7.6.0",
+		"serialize-error": "^11.0.3",
+		"sisteransi": "^1.0.5",
+		"tinycolor2": "^1.6.0",
+		"tweetnacl": "^1.0.3",
+		"zod": "^3.23.4"
+	},
+	"devDependencies": {
+		"@flowr/tsconfig": "workspace:^",
+		"@types/luxon": "^3.4.2",
+		"@types/tinycolor2": "^1.4.6",
+		"@types/zen-observable": "^0.8.7",
+		"mock-fs": "^5.2.0",
+		"zen-observable": "^0.10.0"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}

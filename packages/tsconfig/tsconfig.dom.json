@@ -1,0 +1,13 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"display": "DOM",
+	"_version": "1.0.0",
+
+	"extends": "./tsconfig.strict.json",
+
+	"compilerOptions": {
+		"jsx": "preserve",
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
+		"skipLibCheck": true
+	}
+}

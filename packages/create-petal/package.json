@@ -1,0 +1,72 @@
+{
+	"name": "create-petal",
+	"type": "module",
+	"version": "2.4.0",
+	"description": "A CLI utility to create a new petal app",
+	"license": "Apache-2.0",
+	"funding": "https://ko-fi.com/pauliesnug",
+	"homepage": "https://petal.dyn.gay",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal",
+		"directory": "packages/create-petal"
+	},
+	"bugs": {
+		"url": "https://github.com/pulseflow/petal/issues"
+	},
+	"keywords": [
+		"create-app",
+		"petal",
+		"tooling",
+		"build"
+	],
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"types": "./dist/index.d.mts",
+			"default": "./dist/index.mjs"
+		}
+	},
+	"main": "./dist/index.mjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"bin": {
+		"create-petal": "./bin/create-petal.mjs"
+	},
+	"files": [
+		"CHANGELOG.md",
+		"LICENSE",
+		"README.md",
+		"bin/**/*.mjs",
+		"dist/**/*.cjs",
+		"dist/**/*.d.ts",
+		"dist/**/*.js",
+		"dist/**/*.mjs"
+	],
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"build": "unbuild",
+		"test": "vitest",
+		"stub": "unbuild --stub",
+		"clean": "rimraf dist"
+	},
+	"dependencies": {
+		"@astrojs/cli-kit": "^0.4.1",
+		"arg": "^5.0.2",
+		"consola": "^3.2.3",
+		"giget": "^1.2.3",
+		"log-update": "^6.0.0",
+		"strip-ansi": "^7.1.0",
+		"strip-json-comments": "^5.0.1"
+	},
+	"devDependencies": {
+		"@flowr/tsconfig": "workspace:^",
+		"tempy": "^3.1.0",
+		"typescript": "^5.4.5"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}

@@ -1,19 +1,5 @@
 {
-	"extends": "@flowr/petal/config/tsconfig.json",
-	"compilerOptions": {
-		"jsx": "react",
-		"lib": [
-			"DOM",
-			"ESNext"
-		],
-		"declaration": true,
-		"sourceMap": false,
-		"isolatedModules": false
-	},
-	"include": [
-		"src"
-	],
-	"exclude": [
-		"node_modules"
-	]
+	"extends": "@flowr/tsconfig/tsconfig.dom.json",
+	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.mts", "src/**/*.cts"],
+	"exclude": ["node_modules", "dist", "build", "./fixtures/**/*.*", "./.fixtures/**/*.*"]
 }

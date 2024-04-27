@@ -1,0 +1,21 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"display": "Base",
+	"_version": "1.0.0",
+
+	"compilerOptions": {
+		"target": "ESNext",
+		"jsx": "preserve",
+		"lib": ["ESNext"],
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"resolveJsonModule": true,
+		"allowJs": true,
+		"removeComments": true,
+		"stripInternal": true,
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"isolatedModules": true,
+		"skipDefaultLibCheck": true
+	}
+}

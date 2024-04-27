@@ -1,1 +1,0 @@
-This folder contains the configuration files for consumers of this CLI. Right now, they are simply symlinks to what the CLI itself uses. In the future they could drift. Even if they do, this folder ensures that consumers will not have to change their paths.

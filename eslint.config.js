@@ -13,7 +13,6 @@ export default petal(
 			'**/fixtures/**',
 		],
 	},
-	// @ts-expect-error perfectionist type error
 	{
 		files: ['configs/eslint-config/src/**/*.ts'],
 		rules: {

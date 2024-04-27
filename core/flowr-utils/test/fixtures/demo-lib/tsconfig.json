@@ -1,4 +1,0 @@
-{
-	"extends": "@flowr/tsconfig",
-	"include": ["src"]
-}

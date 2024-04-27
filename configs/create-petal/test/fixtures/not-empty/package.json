@@ -1,7 +1,0 @@
-{
-	"name": "@fixtures/create-petal-not-empty",
-	"private": true,
-	"scripts": {
-		"build": "petal build"
-	}
-}

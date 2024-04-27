@@ -6,30 +6,40 @@
 	"license": "Apache-2.0",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/pulseflow/petal.git"
+		"url": "https://github.com/pulseflow/petal.git",
+		"directory": "/"
 	},
 	"scripts": {
-		"postinstall": "lerna run bootstrap && petal audit",
-		"test": "NODE_OPTIONS=--experimental-vm-modules lerna run test --stream",
-		"build": "lerna run build --stream",
-		"clean": "lerna run clean --stream",
-		"lint": "petal lint --no-typecheck",
-		"commit": "petal commit",
-		"release": "lerna publish --force-publish --ignore-scripts --conventional-commits --registry=https://registry.npmjs.org --no-private"
+		"test": "vitest",
+		"test:update": "vitest -u",
+		"test:ci": "pnpm build && pnpm lint && pnpm test",
+		"typegen": "pnpm --filter @flowr/eslint-config typegen",
+		"build": "pnpm typegen && pnpm --filter=./packages/* run build",
+		"clean": "pnpm --filter=./packages/* run clean",
+		"stub": "pnpm typegen && pnpm --filter=./packages/* run stub",
+		"lint": "pnpm eslint --cache .",
+		"release": "bumpp -r",
+		"lint:fix": "pnpm lint --fix",
+		"dev": "pnpm stub"
 	},
 	"workspaces": {
 		"packages": [
-			"core/*",
-			"configs/*"
+			"packages/*"
 		]
 	},
 	"devDependencies": {
 		"@flowr/eslint-config": "workspace:^",
-		"@flowr/petal": "workspace:^",
+		"@flowr/tsconfig": "workspace:^",
 		"@stylistic/eslint-plugin-migrate": "^1.7.2",
 		"@types/node": "^20.12.7",
-		"create-petal": "workspace:^",
-		"lerna": "^8.1.2",
-		"typescript": "^5.4.5"
+		"bumpp": "^9.4.0",
+		"esno": "^4.7.0",
+		"rimraf": "^5.0.5",
+		"rollup": "^4.16.4",
+		"semver": "^7.6.0",
+		"tsup": "^8.0.2",
+		"typescript": "^5.4.5",
+		"unbuild": "^2.0.0",
+		"vitest": "^1.5.2"
 	}
 }
