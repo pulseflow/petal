@@ -1,7 +1,7 @@
 // adapted from https://github.com/levibuzolic/eslint-plugin-no-only-tests/blob/main/rules/no-only-tests.js
 
 import type { JSONSchema4 } from '@typescript-eslint/utils/json-schema';
-import { createEslintRule } from 'src/utils';
+import { createEslintRule } from '../utils';
 
 export const RULE_NAME = 'no-only-tests';
 export type MessageIds = 'noOnlyTests';

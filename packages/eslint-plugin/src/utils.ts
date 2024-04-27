@@ -2,7 +2,7 @@ import type { RuleListener, RuleWithMeta, RuleWithMetaAndName } from '@typescrip
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 import type { Rule } from 'eslint';
 
-const blobUrl: string = 'https://github.com/pulseflow/petal/blob/main/configs/eslint-petal/src/rules';
+const blobUrl: string = 'https://github.com/pulseflow/petal/blob/main/configs/eslint-plugin/src/rules';
 
 export interface RuleModule<
 	T extends readonly unknown[],

@@ -5,7 +5,7 @@
 
 This contains all Petal-specific eslint rules for [eslint-config](https://github.com/pulseflow/petal/blob/main/configs/eslint-config).
 
-[Rules List](https://github.com/pulseflow/petal/blob/main/configs/eslint-petal/src/rules/)
+[Rules List](https://github.com/pulseflow/petal/blob/main/configs/eslint-plugin/src/rules/)
 
 <!-- Badges -->
 
