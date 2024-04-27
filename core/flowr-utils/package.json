@@ -22,7 +22,7 @@
 		"types/**/*.d.ts"
 	],
 	"engines": {
-		"node": ">=18"
+		"node": ">=20"
 	},
 	"scripts": {
 		"clean": "rimraf build && rimraf types",
