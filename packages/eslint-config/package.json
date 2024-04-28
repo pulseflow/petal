@@ -1,7 +1,7 @@
 {
 	"name": "@flowr/eslint-config",
 	"type": "module",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"description": "Combined ESLint config for Petal",
 	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",
