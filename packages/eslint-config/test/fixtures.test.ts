@@ -102,7 +102,6 @@ export default petal(
   ...${JSON.stringify(items) ?? []},
 )
   `);
-
 		await execa('pnpx', ['eslint', '.', '--fix'], {
 			cwd: target,
 			stdio: 'pipe',
