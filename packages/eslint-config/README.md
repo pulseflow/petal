@@ -2,18 +2,20 @@
 
 [![npm](https://img.shields.io/npm/v/@flowr/eslint-config?color=444&label=)](https://npmjs.com/package/@flowr/eslint-config)
 
-- single quotea and semicolons
-- sorted imports and best practices
 - easy reasonable defaults with only one line of config
-- auto fix for formatting (without prettier)
-- designed to work with typescript, jsx and vue out of the box
-- lints also for json, yaml, toml and markdown
+- auto fix for formatting (**without** prettier)
+- designed to work with typescript, jsx, vue, json, yaml, toml, markdown, etc. out of the box
 - optional [react and astro](#non-vue-ui-frameworks), [unocss](#unocss) and [svelte](#svelte) support
-- heavily opinionated very [customizable](#customization)
+- heavily opinionated, but very [customizable](#customization)
 - easily composable [eslint flat config][eslint-flat]
-- uses [eslint stylistic][stylistic] standards by default
 - respects `.gitignore` by default, without the need for `.eslintignore`
-- optional [formatter](#formatters) support for css, html, graphql, etc
+- optional [formatter](#formatters) support for css, html, graphql, etc.
+- best practices for minimal, stable, consistent code
+  - sorted imports, dangling commas
+  - single quotes, semicolons
+  - uses [eslint stylistic][stylistic]
+- respects `.gitignore` by default, without the need for `.eslintignore`
+- supports eslint v9 or v8.50.0+
 
 > [!IMPORTANT]
 > this config uses the new [eslint flat config][eslint-flat]. this may require new integeration configuration and some adjustments.
@@ -87,6 +89,7 @@ install the [vscode eslint extension][vscode] and add the following settings to 
 ```jsonc
 {
     // enable the eslint flat config support
+    // (remove this if your ESLint extension above v3.0.5)
     "eslint.experimental.useFlatConfig": true,
     
     // disable the default formatter, use eslint

@@ -16,7 +16,7 @@ export interface RuleModule<
  * @param urlCreator Creates a documentation URL for a given rule name.
  * @returns Function to create a rule with the docs URL format.
  */
-function RuleCreator(urlCreator: (ruleName: string) => string) {
+function RuleCreator(urlCreator: (name: string) => string) {
 	return <TOptions extends readonly unknown[], TMessageIds extends string>
 	({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>,
 	): RuleModule<TOptions> =>

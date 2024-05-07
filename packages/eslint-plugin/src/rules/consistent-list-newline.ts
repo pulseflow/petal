@@ -21,6 +21,7 @@ export type Options = [{
 	TSTypeParameterInstantiation?: boolean;
 	ObjectPattern?: boolean;
 	ArrayPattern?: boolean;
+	JSXOpeningElement?: boolean;
 }];
 
 export default createEslintRule<Options, MessageIds>({
@@ -51,6 +52,7 @@ export default createEslintRule<Options, MessageIds>({
 				TSTypeParameterInstantiation: { type: 'boolean' },
 				ObjectPattern: { type: 'boolean' },
 				ArrayPattern: { type: 'boolean' },
+				JSXOpeningElement: { type: 'boolean' },
 			} satisfies Record<keyof Options[0], { type: 'boolean' }>,
 			additionalProperties: false,
 		}],
@@ -115,16 +117,19 @@ export default createEslintRule<Options, MessageIds>({
 					const lastItem = items[idx - 1];
 					if (context.sourceCode.getCommentsBefore(item).length > 0)
 						return;
-					context.report({
-						node: item,
-						messageId: 'shouldNotWrap',
-						data: {
-							name: node.type,
-						},
-						*fix(fixer) {
-							yield removeLines(fixer, lastItem!.range[1], item.range[0]);
-						},
-					});
+					const content = context.sourceCode.text.slice(lastItem!.range[1], item.range[0]);
+					if (content.includes('\n')) {
+						context.report({
+							node: item,
+							messageId: 'shouldNotWrap',
+							data: {
+								name: node.type,
+							},
+							*fix(fixer) {
+								yield removeLines(fixer, lastItem!.range[1], item.range[0]);
+							},
+						});
+					}
 				}
 
 				lastLine = item.loc.end.line;
@@ -171,7 +176,7 @@ export default createEslintRule<Options, MessageIds>({
 							yield removeLines(fixer, lastItem.range[1], endRange);
 						},
 					});
-				};
+				}
 			}
 		}
 
@@ -203,6 +208,8 @@ export default createEslintRule<Options, MessageIds>({
 				);
 			},
 			ArrowFunctionExpression: (node) => {
+				if (node.params.length <= 1)
+					return;
 				check(
 					node,
 					node.params,
@@ -236,6 +243,12 @@ export default createEslintRule<Options, MessageIds>({
 			ArrayPattern(node) {
 				check(node, node.elements);
 			},
+			JSXOpeningElement(node) {
+				if (node.attributes.some(attr => attr.loc.start.line !== attr.loc.end.line))
+					return;
+
+				check(node, node.attributes);
+			},
 		} satisfies RuleListener;
 
 		type KeysListener = keyof typeof listenser;
@@ -244,6 +257,7 @@ export default createEslintRule<Options, MessageIds>({
 		// Type assertion to check if all keys are exported
 		exportType<KeysListener, KeysOptions>();
 		exportType<KeysOptions, KeysListener>();
+
 		(Object.keys(options) as KeysOptions[])
 			.forEach((key) => {
 				if (options[key] === false)
