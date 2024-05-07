@@ -2,7 +2,7 @@ import { expect } from 'vitest';
 import type { InvalidTestCase, ValidTestCase } from 'eslint-vitest-rule-tester';
 import { unindent as $ } from 'eslint-vitest-rule-tester';
 import rule, { RULE_NAME } from './consistent-list-newline';
-import { createRuleTester } from './_test';
+import { run } from './_test';
 
 const valids: ValidTestCase[] = [
 	'const a = { foo: "bar", bar: 2 }',
@@ -289,12 +289,9 @@ const invalid: InvalidTestCase[] = [
 	},
 ];
 
-const ruleTester = createRuleTester({
+run({
 	name: RULE_NAME,
 	rule,
-});
-
-ruleTester.run({
 	valid: valids,
 	invalid: invalid.map((i): InvalidTestCase =>
 		typeof i === 'string'
