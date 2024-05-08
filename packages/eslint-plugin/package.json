@@ -62,7 +62,7 @@
 		"ajv": "^6.10.0",
 		"eslint": "9.2.0",
 		"eslint-define-config": "^2.1.0",
-		"eslint-vitest-rule-tester": "^0.3.0",
+		"eslint-vitest-rule-tester": "^0.3.1",
 		"lodash.merge": "^4.6.2",
 		"typescript": "^5.3.3"
 	},
