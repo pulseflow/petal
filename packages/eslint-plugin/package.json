@@ -59,7 +59,7 @@
 		"@types/semver": "^7.5.8",
 		"@typescript-eslint/typescript-estree": "^7.8.0",
 		"@typescript-eslint/utils": "^7.8.0",
-		"ajv": "^6.10.0",
+		"ajv": "^8.13.0",
 		"eslint": "9.2.0",
 		"eslint-define-config": "^2.1.0",
 		"eslint-vitest-rule-tester": "^0.3.0",
