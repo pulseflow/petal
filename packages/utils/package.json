@@ -76,7 +76,7 @@
 		"sisteransi": "^1.0.5",
 		"tinycolor2": "^1.6.0",
 		"tweetnacl": "^1.0.3",
-		"zod": "^3.23.7"
+		"zod": "^3.23.8"
 	},
 	"devDependencies": {
 		"@flowr/tsconfig": "workspace:^",
