@@ -1,7 +1,7 @@
 {
 	"name": "@flowr/petal-monorepo",
 	"type": "module",
-	"version": "3.2.0",
+	"version": "3.2.1",
 	"private": true,
 	"packageManager": "pnpm@9.1.0",
 	"license": "Apache-2.0",
