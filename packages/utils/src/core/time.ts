@@ -14,6 +14,9 @@ export interface HumanDuration {
 	milliseconds?: number;
 }
 
+/** Get `Date.now()` as a timestamp. */
+export const timestamp = () => +Date.now();
+
 /**
  * Converts a {@link HumanDuration} to milliseconds.
  *
@@ -47,8 +50,4 @@ export function durationToMilliseconds(duration: HumanDuration): number {
 	const totalMilliseconds = totalSeconds * 1000 + milliseconds;
 
 	return totalMilliseconds;
-}
-
-export function sleep(ms: number): Promise<void> {
-	return new Promise(resolve => setTimeout(resolve, ms));
 }

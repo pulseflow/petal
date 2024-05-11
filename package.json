@@ -11,8 +11,9 @@
 		"directory": "/"
 	},
 	"scripts": {
-		"test": "vitest",
+		"test": "vitest run",
 		"test:update": "vitest -u",
+		"test:ui": "vitest --ui",
 		"test:ci": "pnpm build && pnpm lint && pnpm test",
 		"build": "pnpm --filter=./packages/* run build",
 		"clean": "pnpm --filter=./packages/* run clean",

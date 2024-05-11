@@ -1,4 +1,3 @@
-import { expect } from 'vitest';
 import type { InvalidTestCase, ValidTestCase } from 'eslint-vitest-rule-tester';
 import { unindent as $ } from 'eslint-vitest-rule-tester';
 import rule, { RULE_NAME } from './consistent-list-newline';

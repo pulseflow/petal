@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import * as errors from './common';
 
 describe('common', () => {

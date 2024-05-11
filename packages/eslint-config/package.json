@@ -33,6 +33,8 @@
 		"LICENSE",
 		"README.md",
 		"dist/**/*.cjs",
+		"dist/**/*.d.cts",
+		"dist/**/*.d.mts",
 		"dist/**/*.d.ts",
 		"dist/**/*.js",
 		"dist/**/*.mjs"

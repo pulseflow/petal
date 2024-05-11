@@ -1,5 +1,4 @@
 /* eslint-disable unused-imports/no-unused-vars */
-import { describe, expect, it } from 'vitest';
 import type { JsonArray, JsonObject, JsonPrimitive, JsonValue } from './json';
 
 describe('json', () => {

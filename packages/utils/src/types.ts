@@ -1,5 +1,54 @@
 /* eslint-disable ts/ban-types */
 
+import { isFunction, isString } from './core';
+
+/** Possibly a `Promise<T>` */
+export type Awaitable<T> = T | PromiseLike<T>;
+
+/** Possibly a `null` */
+export type Nullable<T> = T | null | undefined;
+
+/** Possibly an `Array<T>` */
+export type Arrayable<T> = T | Array<T>;
+
+/** Possibly a Function */
+export type Fn<T = void> = () => T;
+
+/** Possibly a Constructor */
+export type Constructor<T = void, A extends any[] = any[]> = new (...args: A) => T;
+
+/** Infers the eleement type of an Array */
+export type ElementOf<T> = T extends (infer E)[] ? E : never;
+
+/**
+ * Defines an intersection type of all union items.
+ *
+ * @param U Union of any types that will be intersected.
+ * @returns U items intersected
+ * @see https://stackoverflow.com/a/50375286/9259330
+ */
+export type UnionToIntersection<U> = (U extends unknown ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
+
+/**
+ * Infers the arguments type of a function
+ */
+export type ArgumentsType<T> = T extends ((...args: infer A) => any) ? A : never;
+
+export type MergeInsertions<T> =
+	T extends object
+		? { [K in keyof T]: MergeInsertions<T[K]> }
+		: T;
+
+export type DeepMerge<F, S> = MergeInsertions<{
+	[K in keyof F | keyof S]: K extends keyof S & keyof F
+		? DeepMerge<F[K], S[K]>
+		: K extends keyof S
+			? S[K]
+			: K extends keyof F
+				? F[K]
+				: never;
+}>;
+
 export type Key<T> = T extends ReadonlyMap<infer U> ? keyof U
 	: T extends Record<infer U, any> ? U
 		: never;
@@ -14,6 +63,31 @@ export type ParametersExceptFirst<F> =
 	F extends (arg0: any, ...rest: infer R) => any ? R : never;
 
 export const identity = <T>(arg: T): T => arg;
+
+class _EmptyClass {}
+
+export function boundMethods<T extends _EmptyClass>(t: T): {
+	[K in keyof T & string as T[K] extends (...any: any[]) => any ? K : never]: T[K]
+} {
+	const methods: Record<string, Function> = {};
+	let result = t as any;
+
+	while (result && result !== Object.prototype) {
+		const keys = Reflect.ownKeys(result);
+		keys.forEach((key) => {
+			if (!isString(key))
+				return;
+			if (!Reflect.has(t, key))
+				return;
+			if (isFunction((t as any)[key]) && key !== 'constructor')
+				methods[key] = (t as any)[key].bind();
+		});
+
+		result = Reflect.getPrototypeOf(result);
+	}
+
+	return methods as any;
+}
 
 export function pick<T extends object, K extends keyof T>(obj: T, ...keys: K[]) {
 	return Object.fromEntries(
@@ -66,14 +140,38 @@ export function rename<T extends Record<string | number | symbol, any>, K extend
 	return ({ ...omit(obj, from), [to]: obj[from] }) as Rename<T, K, V>;
 }
 
-export interface ArrayPosN<T> extends Array<ArrayPosN<T> | T> {}
+export interface ArrayPosN<T> extends Array<ArrayPosN<T> | T> { }
 export type ArrayN<T> = ArrayPosN<T> | T;
-export interface ArrayInf<T> extends Array<ArrayInf<T>> {}
+export interface ArrayInf<T> extends Array<ArrayInf<T>> { }
 
 export type Dict<T> = Record<string, T>;
-export interface DictPosN<T> extends Dict<DictPosN<T> | T> {}
+export interface DictPosN<T> extends Dict<DictPosN<T> | T> { }
 export type DictN<T> = DictPosN<T> | T;
-export interface DictInf<T> extends Dict<DictInf<T>> {}
+export interface DictInf<T> extends Dict<DictInf<T>> { }
+
+export type LastOf<T> = UnionToIntersection<
+	T extends any
+		? () => T
+		: never
+> extends () => infer R
+	? R
+	: never;
+
+export type Push<T extends any[], V> = [...T, V];
+
+/**
+ * @description THIS IS A BAD IDEA. ONLY USE THIS IF YOU KNOW WHAT YOU'RE DOING.
+ * @copyright CC BY-SA 4.0 https://stackoverflow.com/a/55128956
+ */
+export type TuplifyUnion<
+	T,
+	L = LastOf<T>,
+	N = [T] extends [never]
+		? true
+		: false,
+> = true extends N
+	? []
+	: Push<TuplifyUnion<Exclude<T, L>>, L>;
 
 export interface MethodDictInf<T> extends Dict<MethodDictInf<T>> {
 	(): T;
@@ -89,7 +187,7 @@ export interface ReadonlyMap<T extends Record<string, any>> {
 
 	get: <K extends string>(key: K) => K extends keyof T ? T[K] : undefined;
 	has: <K extends string>(key: K) => K extends keyof T ? true : false;
-	set: <K extends string, V>(key: K, value: V) => ReadonlyMap< & { [P in K]: V } & { [P in Exclude<keyof T, K> ]: T[P] }>;
+	set: <K extends string, V>(key: K, value: V) => ReadonlyMap< & { [P in K]: V } & { [P in Exclude<keyof T, K>]: T[P] }>;
 
 	clear: () => ReadonlyMap<{}>;
 	keys: () => IterableIterator<keyof T>;

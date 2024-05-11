@@ -23,7 +23,6 @@
 	"sideEffects": false,
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
 			"import": "./dist/index.mjs",
 			"require": "./dist/index.cjs"
 		}
@@ -36,6 +35,8 @@
 		"LICENSE",
 		"README.md",
 		"dist/**/*.cjs",
+		"dist/**/*.d.cts",
+		"dist/**/*.d.mts",
 		"dist/**/*.d.ts",
 		"dist/**/*.js",
 		"dist/**/*.mjs"

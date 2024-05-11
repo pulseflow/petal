@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { NotModifiedError, deserializeError, serializeError, stringifyError } from '../../index';
 
 class CustomError extends Error {

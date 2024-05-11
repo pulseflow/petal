@@ -7,25 +7,25 @@ exports[`unindent > base 1`] = `
 `;
 
 exports[`unindent > indent deep 1`] = `
-"	if (a) {
-	b()
+"    if (a) {
+    b()
 }"
 `;
 
 exports[`unindent > multi-start and end 1`] = `
-"	if (a) {
+"    if (a) {
   b()
 }"
 `;
 
 exports[`unindent > no start or end 1`] = `
 "if (a) {
-	b()
-  }"
+  b()
+}"
 `;
 
 exports[`unindent > with leading indent 1`] = `
-"	if (a) {
+"    if (a) {
   b()
 }"
 `;

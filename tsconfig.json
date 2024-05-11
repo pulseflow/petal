@@ -4,6 +4,7 @@
 		"types": ["vitest/globals", "node", "vite/client"],
 		"exactOptionalPropertyTypes": false,
 		"noPropertyAccessFromIndexSignature": false,
+		"removeComments": false,
 		"skipDefaultLibCheck": true,
 		"skipLibCheck": true
 	},
