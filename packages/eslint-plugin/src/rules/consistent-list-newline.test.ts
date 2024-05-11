@@ -26,98 +26,100 @@ const valids: ValidTestCase[] = [
 	'function foo<T = {\na: 1,\nb: 2\n}>(a, b) {}',
 	'foo(() =>\nbar())',
 	'foo(() =>\nbar()\n)',
-  `call<{\nfoo: 'bar'\n}>('')`,
-  $`
-  (Object.keys(options) as KeysOptions[])
-  .forEach((key) => {
-    if (options[key] === false)
-      delete listenser[key]
-  })
-  `,
-  `function fn({ foo, bar }: {\nfoo: 'foo'\nbar: 'bar'\n}) {}`,
-  {
-  	code: 'foo(\na, b\n)',
-  	options: [{ CallExpression: false }],
-  },
-  {
-  	code: $`
-      const a = (
-        <div>
-          {text.map((item, index) => (
-            <p>
-            </p>
-          ))}
-        </div>
-      )
-    `,
-  	parserOptions: {
-  		ecmaFeatures: {
-  			jsx: true,
-  		},
-  	},
-  },
-  $`
-  export const getTodoList = request.post<
-    Params,
-    ResponseData,
-  >('/api/todo-list')
-  `,
-  {
-  	code: $`
-      function TodoList() {
-        const { data, isLoading } = useSwrInfinite(
-          (page) => ['/api/todo/list', { page }],
-          ([, params]) => getToDoList(params),
-        )
-        return <div></div>
-      }`,
-  	parserOptions: {
-  		ecmaFeatures: {
-  			jsx: true,
-  		},
-  	},
-  },
-  $`
-  bar(
-    foo => foo
-      ? ''
-      : ''
-  )
-  `,
-  $`
-  bar(
-    (ruleName, foo) => foo
-      ? ''
-      : ''
-  )
-  `,
-  $`
-  const a = [
-    (1),
-    (2)
-  ];
-  `,
-  `const a = [(1), (2)];`,
-  {
-  	code: $`
-    function Foo() {
-      return (
-        <div 
-          className="text-white" onClick="bar"
-          style={{
-            color: 'red' 
-          }}
-        >
-          hi
-        </div>
-      );
-    }`,
-  	parserOptions: {
-  		ecmaFeatures: {
-  			jsx: true,
-  		},
-  	},
-  },
+	`call<{\nfoo: 'bar'\n}>('')`,
+	$`
+	  (Object.keys(options) as KeysOptions[])
+	     .forEach((key) => {
+	       if (options[key] === false)
+	         delete listenser[key]
+	     })
+	`,
+	`function fn({ foo, bar }: {\nfoo: 'foo'\nbar: 'bar'\n}) {}`,
+	{
+		code: 'foo(\na, b\n)',
+		options: [{ CallExpression: false }],
+	},
+	{
+		code: $`
+		  const a = (
+		    <div>
+		      {text.map((item, index) => (
+		        <p>
+		        </p>
+		      ))}
+		    </div>
+		  )
+		`,
+		parserOptions: {
+			ecmaFeatures: {
+				jsx: true,
+			},
+		},
+	},
+	$`
+	  export const getTodoList = request.post<
+	    Params,
+	    ResponseData,
+	  >('/api/todo-list')
+	`,
+	{
+		code: $`
+		  function TodoList() {
+		    const { data, isLoading } = useSwrInfinite(
+		      (page) => ['/api/todo/list', { page }],
+		      ([, params]) => getToDoList(params),
+		    )
+		    return <div></div>
+		  }
+		`,
+		parserOptions: {
+			ecmaFeatures: {
+				jsx: true,
+			},
+		},
+	},
+	$`
+	  bar(
+	    foo => foo
+	      ? ''
+	      : ''
+	  )
+	`,
+	$`
+	  bar(
+	    (ruleName, foo) => foo
+	      ? ''
+	      : ''
+	  )
+	`,
+	$`
+	  const a = [
+	    (1),
+	    (2)
+	  ];
+	`,
+	`const a = [(1), (2)];`,
+	{
+		code: $`
+		  function Foo() {
+		    return (
+		      <div 
+		        className="text-white" onClick="bar"
+		        style={{
+		          color: 'red' 
+		        }}
+		      >
+		        hi
+		      </div>
+		    );
+		  }
+		`,
+		parserOptions: {
+			ecmaFeatures: {
+				jsx: true,
+			},
+		},
+	},
 ];
 
 // Check snapshot for fixed code
@@ -155,16 +157,16 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-      const a = (
-        <div>
-          {text.map((
-            item, index) => (
-            <p>
-            </p>
-          ))}
-        </div>
-      )
-    `,
+		  const a = (
+		    <div>
+		      {text.map((
+		        item, index) => (
+		        <p>
+		        </p>
+		      ))}
+		    </div>
+		  )
+		`,
 		output: o => expect(o).toMatchInlineSnapshot(`
       "const a = (
         <div>
@@ -186,15 +188,15 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-      export default petal({
-      },
-      {
-        foo: 'bar'
-      }
-        // some comment
-        // hello
-      )
-    `,
+		  export default petal({
+		  },
+		  {
+		    foo: 'bar'
+		  }
+		    // some comment
+		    // hello
+		  )
+		`,
 		output: o => expect(o).toMatchInlineSnapshot(`
       "export default petal({
       },{
@@ -207,16 +209,17 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-      function Foo() {
-        return (
-          <div className="text-white"
-            onClick="bar"
-            style={{ color: 'red' }}
-          >
-            hi
-          </div>
-        );
-      }`,
+		  function Foo() {
+		    return (
+		      <div className="text-white"
+		        onClick="bar"
+		        style={{ color: 'red' }}
+		      >
+		        hi
+		      </div>
+		    );
+		  }
+		`,
 		output: o => expect(o).toMatchInlineSnapshot(`
       "function Foo() {
         return (
@@ -234,16 +237,17 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-      function Foo() {
-        return (
-          <div 
-            className="text-white" onClick="bar"
-            style={{ color: 'red' }}
-          >
-            hi
-          </div>
-        );
-      }`,
+		  function Foo() {
+		    return (
+		      <div 
+		        className="text-white" onClick="bar"
+		        style={{ color: 'red' }}
+		      >
+		        hi
+		      </div>
+		    );
+		  }
+		`,
 		output: o => expect(o).toMatchInlineSnapshot(`
       "function Foo() {
         return (
@@ -265,16 +269,17 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-      export default petal({
-      },
-      // some comment
-      {
-        foo: 'bar'
-      },
-      {
-      }
-        // hello
-      )`,
+		  export default petal({
+		  },
+		  // some comment
+		  {
+		    foo: 'bar'
+		  },
+		  {
+		  }
+		    // hello
+		  )
+		`,
 		output: o => expect(o).toMatchInlineSnapshot(`
       "export default petal({
       },
@@ -292,6 +297,7 @@ const invalid: InvalidTestCase[] = [
 run({
 	name: RULE_NAME,
 	rule,
+
 	valid: valids,
 	invalid: invalid.map((i): InvalidTestCase =>
 		typeof i === 'string'

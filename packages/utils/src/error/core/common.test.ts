@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import * as errors from '../../src/error/core/common';
+import * as errors from './common';
 
 describe('common', () => {
 	it('extends Error properly', () => {

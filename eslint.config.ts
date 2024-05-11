@@ -29,4 +29,11 @@ export default petal(
 			'style-migrate/migrate': ['error', { namespaceTo: 'style' }],
 		},
 	},
+	{
+		name: 'tests',
+		files: ['packages/eslint-plugin/src/rules/**/*.test.ts'],
+		rules: {
+			'petal/indent-unindent': 'error',
+		},
+	},
 );

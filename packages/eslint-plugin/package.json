@@ -52,18 +52,15 @@
 	"peerDependencies": {
 		"eslint": "*"
 	},
+	"dependencies": {
+		"@flowr/utils": "workspace:^"
+	},
 	"devDependencies": {
-		"@flowr/tsconfig": "workspace:^",
 		"@types/eslint": "^8.56.10",
-		"@types/lodash.merge": "^4.6.9",
-		"@types/semver": "^7.5.8",
 		"@typescript-eslint/typescript-estree": "^7.8.0",
 		"@typescript-eslint/utils": "^7.8.0",
-		"ajv": "^6.10.0",
 		"eslint": "9.2.0",
-		"eslint-define-config": "^2.1.0",
-		"eslint-vitest-rule-tester": "^0.3.0",
-		"lodash.merge": "^4.6.2",
+		"eslint-vitest-rule-tester": "^0.3.2",
 		"typescript": "^5.3.3"
 	},
 	"publishConfig": {

@@ -2,7 +2,7 @@
 	"name": "@flowr/utils",
 	"type": "module",
 	"version": "3.1.0",
-	"description": "Package that contains shared utils for any projects",
+	"description": "Opinionated collection of common TypeScript utilities",
 	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
@@ -22,31 +22,11 @@
 	"sideEffects": false,
 	"exports": {
 		".": {
-			"types": "./dist/index.d.mts",
-			"default": "./dist/index.mjs"
-		},
-		"./core": {
-			"types": "./dist/core.d.mts",
-			"default": "./dist/core.mjs"
-		},
-		"./debug": {
-			"types": "./dist/debug.d.mts",
-			"default": "./dist/debug.mjs"
-		},
-		"./inject": {
-			"types": "./dist/inject.d.mts",
-			"default": "./dist/inject.mjs"
-		},
-		"./req": {
-			"types": "./dist/req.d.mts",
-			"default": "./dist/req.mjs"
-		},
-		"./mixin": {
-			"types": "./dist/mixin.d.mts",
-			"default": "./dist/mixin.mjs"
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs"
 		}
 	},
-	"main": "./dist/index.mjs",
+	"main": "./dist/index.cjs",
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
 	"files": [
@@ -75,15 +55,15 @@
 		"serialize-error": "^11.0.3",
 		"sisteransi": "^1.0.5",
 		"tinycolor2": "^1.6.0",
-		"tweetnacl": "^1.0.3",
-		"zod": "^3.23.7"
+		"tweetnacl": "^1.0.3"
 	},
 	"devDependencies": {
 		"@flowr/tsconfig": "workspace:^",
 		"@types/luxon": "^3.4.2",
 		"@types/tinycolor2": "^1.4.6",
 		"@types/zen-observable": "^0.8.7",
-		"mock-fs": "^5.2.0",
+		"p-limit": "^5.0.0",
+		"throttle-debounce": "^5.0.0",
 		"zen-observable": "^0.10.0"
 	},
 	"publishConfig": {

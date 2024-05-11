@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CustomErrorBase, NotFoundError, assertError, isError } from '../../src/index';
+import { CustomErrorBase, NotFoundError, assertError, isError } from './index';
 
 const areErrors = [
 	{ name: 'e', message: '' },

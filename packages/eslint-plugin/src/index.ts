@@ -7,6 +7,7 @@ import noImportNodeModulesByPath from './rules/no-import-node-modules-by-path';
 import noImportDist from './rules/no-import-dist';
 import noTsExportEqual from './rules/no-ts-export-equal';
 import consistentListNewline from './rules/consistent-list-newline';
+import indentUnindent from './rules/indent-unindent';
 
 const { version } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf-8'));
 
@@ -19,6 +20,7 @@ const plugin = {
 		'consistent-list-newline': consistentListNewline,
 		'if-newline': ifNewline,
 		'import-dedupe': importDedupe,
+		'indent-unindent': indentUnindent,
 		'no-import-node-modules-by-path': noImportNodeModulesByPath,
 		'no-import-dist': noImportDist,
 		'no-ts-export-equal': noTsExportEqual,

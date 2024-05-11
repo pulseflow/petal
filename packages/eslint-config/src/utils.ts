@@ -102,24 +102,18 @@ export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { de
 	return (resolved as any).default || resolved;
 }
 
-export async function ensurePackages(pkgs: (string | undefined)[]) {
+export async function ensurePackages(packages: (string | undefined)[]) {
 	if (process.env.CI || process.stdout.isTTY === false)
 		return;
 
-	const absentPkgs = pkgs.filter(p => p && !isPackageExists(p)) as string[];
-	if (absentPkgs.length === 0)
+	const nonExistingPackages = packages.filter(i => i && !isPackageExists(i)) as string[];
+	if (nonExistingPackages.length === 0)
 		return;
 
-	const { default: prompts } = await import('prompts');
-	const { result } = await prompts([
-		{
-			message: `${absentPkgs.length === 1 ? 'A package is' : 'Packages are'} required for this config:
-			${absentPkgs.join(', ')}. Do you want to install them?`,
-			name: 'result',
-			type: 'confirm',
-		},
-	]);
-
+	const p = await import('@clack/prompts');
+	const result = await p.confirm({
+		message: `${nonExistingPackages.length === 1 ? 'Package is' : 'Packages are'} required for this config: ${nonExistingPackages.join(', ')}. Do you want to install them?`,
+	});
 	if (result)
-		await import('@antfu/install-pkg').then(i => i.installPackage(absentPkgs, { dev: true }));
+		await import('@antfu/install-pkg').then(i => i.installPackage(nonExistingPackages, { dev: true }));
 }
