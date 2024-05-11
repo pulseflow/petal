@@ -1,9 +1,9 @@
 import { unindent as $ } from 'eslint-vitest-rule-tester';
-import rule from './indent-unindent';
+import rule, { RULE_NAME } from './indent-unindent';
 import { run } from './_test';
 
 run({
-	name: 'indent-unindent',
+	name: RULE_NAME,
 	rule,
 
 	valid: [

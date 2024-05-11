@@ -1,6 +1,7 @@
 import { unindent } from '@flowr/utils';
 import { createEslintRule } from '../utils';
 
+export const RULE_NAME = 'indent-unindent';
 export type MessageIds = 'indent-unindent';
 export type Options = [{
 	indent?: number;
@@ -8,7 +9,7 @@ export type Options = [{
 }];
 
 export default createEslintRule<Options, MessageIds>({
-	name: 'indent-unindent',
+	name: RULE_NAME,
 	meta: {
 		type: 'layout',
 		docs: {
