@@ -143,7 +143,7 @@
 		"@eslint/config-inspector": "^0.4.8",
 		"@types/eslint": "^8.56.10",
 		"@types/fs-extra": "^11.0.4",
-		"@unocss/eslint-plugin": "^0.60.0",
+		"@unocss/eslint-plugin": "^0.60.2",
 		"astro-eslint-parser": "^1.0.2",
 		"eslint": "^9.2.0",
 		"eslint-plugin-astro": "^1.1.2",
