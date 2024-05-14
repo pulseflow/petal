@@ -22,3 +22,4 @@ export * from './toml';
 export * from './unocss';
 export * from './formatters';
 export * from './solid';
+export * from './regexp';

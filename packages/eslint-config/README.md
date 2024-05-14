@@ -9,7 +9,7 @@
 - heavily opinionated, but very [customizable](#customization)
 - easily composable [eslint flat config][eslint-flat]
 - respects `.gitignore` by default, without the need for `.eslintignore`
-- optional [formatter](#formatters) support for css, html, graphql, etc.
+- optional [formatter](#formatters) support for css, html, xml, graphql, etc.
 - best practices for minimal, stable, consistent code
   - sorted imports, dangling commas
   - single quotes, semicolons
@@ -131,7 +131,8 @@ install the [vscode eslint extension][vscode] and add the following settings to 
         "astro",
         "toml",
         "graphql",
-        "gql"
+        "gql",
+        "xml",
     ]
 }
 ```

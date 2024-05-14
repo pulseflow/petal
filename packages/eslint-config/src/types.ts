@@ -59,6 +59,13 @@ export interface OptionsFormatters {
 	html?: 'prettier' | boolean;
 
 	/**
+	 * Enable formatting support for XML.
+	 *
+	 * Currently only support Prettier.
+	 */
+	xml?: 'prettier' | boolean;
+
+	/**
 	 * Enable formatting support for Markdown.
 	 *
 	 * Supports both Prettier and dprint.
@@ -157,6 +164,11 @@ export interface OptionsOverrides {
 
 export interface OptionsIsInEditor {
 	isInEditor?: boolean;
+}
+
+export interface OptionsRegExp {
+	/** Override rulelevels */
+	level?: 'error' | 'warn';
 }
 
 export interface OptionsUnoCSS extends OptionsOverrides {
@@ -299,9 +311,18 @@ export interface OptionsConfig extends OptionsComponentExts {
 	/**
 	 * Enable stylistic rules.
 	 *
+	 * @see https://eslint.style
 	 * @default true
 	 */
 	stylistic?: boolean | (StylisticConfig & OptionsOverrides);
+
+	/**
+	 * Enable regexp rules
+	 *
+	 * @see https://ota-meshi.github.io/eslint-plugin-regexp/
+	 * @default true
+	 */
+	regexp?: boolean | (OptionsRegExp & OptionsOverrides);
 
 	/**
 	 * Enable UnoCSS rules.

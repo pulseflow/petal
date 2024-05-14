@@ -32,6 +32,7 @@ import {
 } from './configs/index';
 import { interopDefault } from './utils';
 import { formatters } from './configs/formatters';
+import { regexp } from './configs/regexp';
 
 const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
 	'name',
@@ -87,6 +88,7 @@ export function petal(
 			&& !process.env.CI
 		),
 		react: enableReact = false,
+		regexp: enableRegexp = true,
 		solid: enableSolid = SolidPackages.some(i => isPackageExists(i)),
 		svelte: enableSvelte = false,
 		typescript: enableTypeScript = isPackageExists('typescript'),
@@ -152,6 +154,9 @@ export function petal(
 
 	if (options.test ?? true)
 		configs.push(test({ isInEditor, overrides: getOverrides(options, 'test') }));
+
+	if (enableRegexp)
+		configs.push(regexp(typeof enableRegexp === 'boolean' ? {} : enableRegexp));
 
 	if (enableVue) {
 		configs.push(vue({

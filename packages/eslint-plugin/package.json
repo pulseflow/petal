@@ -58,8 +58,8 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "^8.56.10",
-		"@typescript-eslint/typescript-estree": "^7.8.0",
-		"@typescript-eslint/utils": "^7.8.0",
+		"@typescript-eslint/typescript-estree": "^7.9.0",
+		"@typescript-eslint/utils": "^7.9.0",
 		"eslint": "9.2.0",
 		"eslint-vitest-rule-tester": "^0.3.2",
 		"typescript": "^5.3.3"
