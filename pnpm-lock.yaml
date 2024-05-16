@@ -87,8 +87,8 @@ importers:
         specifier: ^0.1.0
         version: 0.1.0(eslint@9.2.0)
       eslint-plugin-command:
-        specifier: ^0.2.0
-        version: 0.2.0(eslint@9.2.0)
+        specifier: ^0.2.1
+        version: 0.2.1(eslint@9.2.0)
       eslint-plugin-eslint-comments:
         specifier: ^3.2.0
         version: 3.2.0(eslint@9.2.0)
@@ -1810,8 +1810,8 @@ packages:
     peerDependencies:
       eslint: '>=8.57.0'
 
-  eslint-plugin-command@0.2.0:
-    resolution: {integrity: sha512-SGOMTs6Pu5HQKwCF9uZ214cdVlJ99U+6GRoUS01zeLZmcQcFU4YXy2KTKqXaEsNCvaFY91OrHRZbh4/1xt9Yzw==}
+  eslint-plugin-command@0.2.1:
+    resolution: {integrity: sha512-dA44MFCzjNpGlKa1xRA+qi2bTbpf5+zr2JgWUp9IFPteN+qCIS8DHu4EGmPs1680STcwQPvYBANFudpvIOeCYA==}
     peerDependencies:
       eslint: '*'
 
@@ -3883,7 +3883,7 @@ snapshots:
     dependencies:
       '@types/eslint': 8.56.10
       '@types/estree': 1.0.5
-      '@typescript-eslint/types': 7.8.0
+      '@typescript-eslint/types': 7.9.0
       comment-parser: 1.4.1
       esquery: 1.5.0
       jsdoc-type-pratt-parser: 4.0.0
@@ -4113,7 +4113,7 @@ snapshots:
       '@eslint-react/tools': 1.5.11
       '@eslint-react/types': 1.5.11(eslint@9.2.0)(typescript@5.4.5)
       '@typescript-eslint/scope-manager': 7.8.0
-      '@typescript-eslint/types': 7.8.0
+      '@typescript-eslint/types': 7.9.0
       '@typescript-eslint/utils': 7.8.0(eslint@9.2.0)(typescript@5.4.5)
       string-ts: 2.1.1
     transitivePeerDependencies:
@@ -4131,7 +4131,7 @@ snapshots:
       '@eslint-react/var': 1.5.11(eslint@9.2.0)(typescript@5.4.5)
       '@typescript-eslint/scope-manager': 7.8.0
       '@typescript-eslint/type-utils': 7.8.0(eslint@9.2.0)(typescript@5.4.5)
-      '@typescript-eslint/types': 7.8.0
+      '@typescript-eslint/types': 7.9.0
       '@typescript-eslint/utils': 7.8.0(eslint@9.2.0)(typescript@5.4.5)
       short-unique-id: 5.2.0
       valibot: 0.30.0
@@ -4167,7 +4167,7 @@ snapshots:
       '@eslint-react/types': 1.5.11(eslint@9.2.0)(typescript@5.4.5)
       '@eslint-react/var': 1.5.11(eslint@9.2.0)(typescript@5.4.5)
       '@typescript-eslint/scope-manager': 7.8.0
-      '@typescript-eslint/types': 7.8.0
+      '@typescript-eslint/types': 7.9.0
       '@typescript-eslint/utils': 7.8.0(eslint@9.2.0)(typescript@5.4.5)
       micro-memoize: 4.1.2
     transitivePeerDependencies:
@@ -4202,7 +4202,7 @@ snapshots:
       '@eslint-react/tools': 1.5.11
       '@eslint-react/types': 1.5.11(eslint@9.2.0)(typescript@5.4.5)
       '@typescript-eslint/scope-manager': 7.8.0
-      '@typescript-eslint/types': 7.8.0
+      '@typescript-eslint/types': 7.9.0
       '@typescript-eslint/utils': 7.8.0(eslint@9.2.0)(typescript@5.4.5)
       string-ts: 2.1.1
       valibot: 0.30.0
@@ -5344,8 +5344,9 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-command@0.2.0(eslint@9.2.0):
+  eslint-plugin-command@0.2.1(eslint@9.2.0):
     dependencies:
+      '@es-joy/jsdoccomment': 0.43.0
       eslint: 9.2.0
 
   eslint-plugin-es-x@7.6.0(eslint@9.2.0):
