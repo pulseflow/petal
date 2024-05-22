@@ -22,6 +22,8 @@ export type Options = [{
 	ObjectPattern?: boolean;
 	ArrayPattern?: boolean;
 	JSXOpeningElement?: boolean;
+	JSONArrayExpression?: boolean;
+	JSONObjectExpression?: boolean;
 }];
 
 export default createEslintRule<Options, MessageIds>({
@@ -53,6 +55,8 @@ export default createEslintRule<Options, MessageIds>({
 				ObjectPattern: { type: 'boolean' },
 				ArrayPattern: { type: 'boolean' },
 				JSXOpeningElement: { type: 'boolean' },
+				JSONArrayExpression: { type: 'boolean' },
+				JSONObjectExpression: { type: 'boolean' },
 			} satisfies Record<keyof Options[0], { type: 'boolean' }>,
 			additionalProperties: false,
 		}],
@@ -73,7 +77,22 @@ export default createEslintRule<Options, MessageIds>({
 			if (root.type !== 'TSInterfaceDeclaration' && root.type !== 'TSTypeLiteral')
 				return;
 			const currentContent = context.sourceCode.text.slice(current.range[0], current.range[1]);
-			return currentContent.match(/,|;$/) ? undefined : ',';
+			return currentContent.match(/(?:,|;)$/) ? undefined : ',';
+		}
+
+		function hasComments(current: TSESTree.Node) {
+			let program: TSESTree.Node = current;
+			while (program.type !== 'Program')
+				program = program.parent;
+			const currentRange = current.range;
+
+			return program.comments?.some((comment) => {
+				const commentRange = comment.range;
+				return (
+					commentRange[0] > currentRange[0]
+					&& commentRange[1] < currentRange[1]
+				);
+			});
 		}
 
 		function check(
@@ -195,7 +214,12 @@ export default createEslintRule<Options, MessageIds>({
 				check(node, node.elements);
 			},
 			ImportDeclaration: (node) => {
-				check(node, node.specifiers);
+				check(
+					node,
+					node.specifiers[0]?.type === 'ImportDefaultSpecifier'
+						? node.specifiers.slice(1)
+						: node.specifiers,
+				);
 			},
 			ExportNamedDeclaration: (node) => {
 				check(node, node.specifiers);
@@ -238,23 +262,35 @@ export default createEslintRule<Options, MessageIds>({
 			NewExpression: (node) => {
 				check(node, node.arguments);
 			},
-			TSTypeParameterDeclaration(node) {
+			TSTypeParameterDeclaration: (node) => {
 				check(node, node.params);
 			},
-			TSTypeParameterInstantiation(node) {
+			TSTypeParameterInstantiation: (node) => {
 				check(node, node.params);
 			},
-			ObjectPattern(node) {
+			ObjectPattern: (node) => {
 				check(node, node.properties, node.typeAnnotation);
 			},
-			ArrayPattern(node) {
+			ArrayPattern: (node) => {
 				check(node, node.elements);
 			},
-			JSXOpeningElement(node) {
+			JSXOpeningElement: (node) => {
 				if (node.attributes.some(attr => attr.loc.start.line !== attr.loc.end.line))
 					return;
 
 				check(node, node.attributes);
+			},
+			JSONArrayExpression: (node: TSESTree.ArrayExpression) => {
+				if (hasComments(node))
+					return;
+
+				check(node, node.elements);
+			},
+			JSONObjectExpression: (node: TSESTree.ObjectExpression) => {
+				if (hasComments(node))
+					return;
+
+				check(node, node.properties);
 			},
 		} satisfies RuleListener;
 
