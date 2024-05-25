@@ -1,15 +1,16 @@
 import { join, resolve } from 'node:path';
+import { afterAll, beforeAll, it } from 'vitest';
 import fs from 'fs-extra';
 import { execa } from 'execa';
 import fg from 'fast-glob';
 import type { OptionsConfig, TypedFlatConfigItem } from '../src/types';
 
 beforeAll(async () => {
-	await fs.rm('packages/eslint-config/_fixtures', { recursive: true, force: true });
+	await fs.rm('_fixtures', { recursive: true, force: true });
 });
 
 afterAll(async () => {
-	await fs.rm('packages/eslint-config/_fixtures', { recursive: true, force: true });
+	await fs.rm('_fixtures', { recursive: true, force: true });
 });
 
 runWithConfig('js', {
@@ -83,9 +84,9 @@ runWithConfig(
 
 function runWithConfig(name: string, configs: OptionsConfig, ...items: TypedFlatConfigItem[]) {
 	it.concurrent(name, async ({ expect }) => {
-		const from = resolve('packages/eslint-config/fixtures/input');
-		const output = resolve('packages/eslint-config/fixtures/output', name);
-		const target = resolve('packages/eslint-config/_fixtures', name);
+		const from = resolve('./packages/eslint-config/fixtures/input');
+		const output = resolve('./packages/eslint-config/fixtures/output', name);
+		const target = resolve('./packages/eslint-config/_fixtures', name);
 
 		await fs.copy(from, target, {
 			filter: (src) => {
@@ -101,7 +102,17 @@ export default petal(
   ...${JSON.stringify(items) ?? []},
 )
   `);
-		await execa('pnpx', ['eslint', '.', '--fix'], {
+
+		await execa('pnpm', [
+			'dlx',
+			'--package',
+			'eslint',
+			'eslint',
+			'--config',
+			'./eslint.config.js',
+			'.',
+			'--fix',
+		], {
 			cwd: target,
 			stdio: 'pipe',
 		});
@@ -110,6 +121,7 @@ export default petal(
 			ignore: [
 				'node_modules',
 				'eslint.config.js',
+				'eslint.config.ts',
 			],
 			cwd: target,
 		});
