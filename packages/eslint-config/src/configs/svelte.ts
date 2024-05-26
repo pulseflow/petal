@@ -48,7 +48,7 @@ export async function svelte(options: OptionsHasTypeScript & OptionsOverrides & 
 			processor: pluginSvelte.processors['.svelte'],
 			rules: {
 				'import/no-mutable-exports': 'off',
-				'no-undef': 'off',
+				'no-undef': 'off', // incompatible with most recent (attribute-form) generic types RFC
 				'no-unused-vars': ['error', {
 					args: 'none',
 					caughtErrors: 'none',
@@ -86,7 +86,8 @@ export async function svelte(options: OptionsHasTypeScript & OptionsOverrides & 
 
 				...stylistic
 					? {
-							'style/no-trailing-spaces': 'off',
+							'style/indent': 'off', // superseded by svelte/indent
+							'style/no-trailing-spaces': 'off', // superseded by svelte/no-trailing-spaces
 							'svelte/derived-has-same-inputs-outputs': 'error',
 							'svelte/html-closing-bracket-spacing': 'error',
 							'svelte/html-quotes': ['error', { prefer: quotes }],

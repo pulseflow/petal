@@ -4,7 +4,6 @@ import { createEslintRule } from '../utils';
 export const RULE_NAME = 'indent-unindent';
 export type MessageIds = 'indent-unindent';
 export type Options = [{
-	indent?: number;
 	tags?: string[];
 }];
 
@@ -20,11 +19,6 @@ export default createEslintRule<Options, MessageIds>({
 			{
 				type: 'object',
 				properties: {
-					indent: {
-						type: 'number',
-						minimum: 0,
-						default: 2,
-					},
 					tags: {
 						type: 'array',
 						items: {
@@ -43,7 +37,6 @@ export default createEslintRule<Options, MessageIds>({
 	create(context) {
 		const {
 			tags = ['$', 'unindent', 'unIndent'],
-			indent = 2,
 		} = context.options?.[0] ?? {};
 
 		return {
@@ -62,7 +55,7 @@ export default createEslintRule<Options, MessageIds>({
 					column: 0,
 				});
 				const baseIndent = context.sourceCode.text.slice(lineStartIndex).match(/^\s*/)?.[0] ?? '';
-				const targetIndent = baseIndent + ' '.repeat(indent);
+				const targetIndent = `${baseIndent}	`;
 				const pure = unindent([value] as any);
 				let final = pure
 					.split('\n')

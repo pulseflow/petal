@@ -55,6 +55,7 @@ export async function markdown(options: OptionsFiles & OptionsComponentExts & Op
 			name: 'petal/markdown/disables',
 			rules: {
 				'import/newline-after-import': 'off',
+
 				'no-alert': 'off',
 				'no-console': 'off',
 				'no-labels': 'off',
@@ -64,8 +65,8 @@ export async function markdown(options: OptionsFiles & OptionsComponentExts & Op
 				'no-unused-expressions': 'off',
 				'no-unused-labels': 'off',
 				'no-unused-vars': 'off',
-				'node/prefer-global/process': 'off',
 
+				'node/prefer-global/process': 'off',
 				'style/comma-dangle': 'off',
 
 				'style/eol-last': 'off',

@@ -44,7 +44,6 @@
 		"node": ">=20"
 	},
 	"scripts": {
-		"clean": "rimraf dist",
 		"build": "unbuild",
 		"stub": "unbuild --stub"
 	},

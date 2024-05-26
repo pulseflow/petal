@@ -37,7 +37,6 @@ export async function astro(options: OptionsOverrides & OptionsFiles & OptionsSt
 				},
 			},
 			name: 'petal/astro/rules',
-			processor: pluginAstro.processors['.astro'],
 			rules: {
 				'astro/no-set-html-directive': 'off',
 				'astro/semi': 'off',

@@ -21,7 +21,6 @@ const plugin = {
 		'if-newline': ifNewline,
 		'import-dedupe': importDedupe,
 		'indent-unindent': indentUnindent,
-		// 'no-only-tests': noOnlyTests,
 		'no-import-node-modules-by-path': noImportNodeModulesByPath,
 		'no-import-dist': noImportDist,
 		'no-ts-export-equal': noTsExportEqual,

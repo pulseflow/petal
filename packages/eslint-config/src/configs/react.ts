@@ -69,6 +69,7 @@ export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrid
 			},
 			name: 'petal/react/rules',
 			rules: {
+				// recommended rules from @eslint-react/dom
 				'react-dom/no-children-in-void-dom-elements': 'warn',
 				'react-dom/no-dangerously-set-innerhtml': 'warn',
 				'react-dom/no-dangerously-set-innerhtml-with-children': 'error',
@@ -81,9 +82,11 @@ export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrid
 				'react-dom/no-unsafe-iframe-sandbox': 'warn',
 				'react-dom/no-unsafe-target-blank': 'warn',
 
+				// recommended rules react-hooks
 				'react-hooks/exhaustive-deps': 'warn',
 				'react-hooks/rules-of-hooks': 'error',
 
+				// react refresh
 				'react-refresh/only-export-components': [
 					'warn',
 					{
@@ -98,8 +101,7 @@ export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrid
 										'viewport',
 										'generateViewport',
 									]
-								: []
-							),
+								: []),
 							...(isUsingRemix
 								? [
 										'meta',
@@ -108,12 +110,12 @@ export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrid
 										'loader',
 										'action',
 									]
-								: []
-							),
+								: []),
 						],
 					},
 				],
 
+				// recommended rules from @eslint-react
 				'react/ensure-forward-ref-using-ref': 'warn',
 				'react/no-access-state-in-setstate': 'error',
 				'react/no-array-index-key': 'warn',
@@ -157,6 +159,7 @@ export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrid
 						}
 					: {},
 
+				// overrides
 				...overrides,
 			},
 		},

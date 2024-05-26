@@ -28,21 +28,21 @@ const valids: ValidTestCase[] = [
 	'foo(() =>\nbar()\n)',
 	`call<{\nfoo: 'bar'\n}>('')`,
 	$`
-	  (Object.keys(options) as KeysOptions[])
-	     .forEach((key) => {
-	       if (options[key] === false)
-	         delete listenser[key]
-	     })
+		(Object.keys(options) as KeysOptions[])
+			.forEach((key) => {
+				if (options[key] === false)
+					delete listenser[key]
+			})
 	`,
 	`function fn({ foo, bar }: {\nfoo: 'foo'\nbar: 'bar'\n}) {}`,
 	$`
-	  import Icon, {
-	    MailOutlined,
-	    NumberOutlined,
-	    QuestionCircleOutlined,
-	    QuestionOutlined,
-	    UserOutlined,
-	  } from '@ant-design/icons';
+		import Icon, {
+			MailOutlined,
+			NumberOutlined,
+		  QuestionCircleOutlined,
+		  QuestionOutlined,
+		  UserOutlined,
+		} from '@ant-design/icons';
 	`,
 	{
 		code: 'foo(\na, b\n)',
@@ -50,14 +50,14 @@ const valids: ValidTestCase[] = [
 	},
 	{
 		code: $`
-		  const a = (
-		    <div>
-		      {text.map((item, index) => (
-		        <p>
-		        </p>
-		      ))}
-		    </div>
-		  )
+			const a = (
+			  <div>
+			    {text.map((item, index) => (
+			      <p>
+			      </p>
+			    ))}
+			  </div>
+			)
 		`,
 		parserOptions: {
 			ecmaFeatures: {
@@ -66,20 +66,20 @@ const valids: ValidTestCase[] = [
 		},
 	},
 	$`
-	  export const getTodoList = request.post<
-	    Params,
-	    ResponseData,
-	  >('/api/todo-list')
+		export const getTodoList = request.post<
+		  Params,
+		  ResponseData,
+		>('/api/todo-list')
 	`,
 	{
 		code: $`
-		  function TodoList() {
-		    const { data, isLoading } = useSwrInfinite(
-		      (page) => ['/api/todo/list', { page }],
-		      ([, params]) => getToDoList(params),
-		    )
-		    return <div></div>
-		  }
+			function TodoList() {
+			  const { data, isLoading } = useSwrInfinite(
+			    (page) => ['/api/todo/list', { page }],
+			    ([, params]) => getToDoList(params),
+			  )
+			  return <div></div>
+			}
 		`,
 		parserOptions: {
 			ecmaFeatures: {
@@ -88,40 +88,40 @@ const valids: ValidTestCase[] = [
 		},
 	},
 	$`
-	  bar(
-	    foo => foo
-	      ? ''
-	      : ''
-	  )
+		bar(
+		  foo => foo
+		    ? ''
+		    : ''
+		)
 	`,
 	$`
-	  bar(
-	    (ruleName, foo) => foo
-	      ? ''
-	      : ''
-	  )
+		bar(
+		  (ruleName, foo) => foo
+		    ? ''
+		    : ''
+		)
 	`,
 	$`
-	  const a = [
-	    (1),
-	    (2)
-	  ];
+		const a = [
+		  (1),
+		  (2)
+		];
 	`,
 	`const a = [(1), (2)];`,
 	{
 		code: $`
-		  function Foo() {
-		    return (
-		      <div 
-		        className="text-white" onClick="bar"
-		        style={{
-		          color: 'red' 
-		        }}
-		      >
-		        hi
-		      </div>
-		    );
-		  }
+			function Foo() {
+			  return (
+			    <div 
+			      className="text-white" onClick="bar"
+			      style={{
+			        color: 'red' 
+			      }}
+			    >
+			      hi
+			    </div>
+			  );
+			}
 		`,
 		parserOptions: {
 			ecmaFeatures: {
@@ -131,9 +131,9 @@ const valids: ValidTestCase[] = [
 	},
 	{
 		code: $`
-		   {
-		  "foo": ["bar", "baz"]
-		   }
+			 {
+			"foo": ["bar", "baz"]
+			 }
 		`,
 		languageOptions: {
 			parser: jsoncParser,
@@ -141,12 +141,12 @@ const valids: ValidTestCase[] = [
 	},
 	{
 		code: $`
-		   {
-		  "foo": [
-		    "bar", 
-		    "baz"
-		  ]
-		   }
+			 {
+			"foo": [
+			  "bar", 
+			  "baz"
+			]
+			 }
 		`,
 		languageOptions: {
 			parser: jsoncParser,
@@ -154,9 +154,9 @@ const valids: ValidTestCase[] = [
 	},
 	{
 		code: $`
-		   {
-		  "foo": {"a": "1", "b": "2"}
-		   }
+			 {
+			"foo": {"a": "1", "b": "2"}
+			 }
 		`,
 		languageOptions: {
 			parser: jsoncParser,
@@ -164,12 +164,12 @@ const valids: ValidTestCase[] = [
 	},
 	{
 		code: $`
-		   {
-		  "foo": {
-		    "a": "1",
-		    "b": "2"
-		  }
-		   }
+			 {
+			"foo": {
+			  "a": "1",
+			  "b": "2"
+			}
+			 }
 		`,
 		languageOptions: {
 			parser: jsoncParser,
@@ -178,12 +178,12 @@ const valids: ValidTestCase[] = [
 	{
 		description: 'Ignore when there is a comment',
 		code: $`
-		   {
-		  "foo": {          "a": "1",
-		    // comment
-		    "b": "2"
-		  },
-		   }
+			 {
+			"foo": {          "a": "1",
+			  // comment
+			  "b": "2"
+			},
+			 }
 		`,
 		languageOptions: {
 			parser: jsoncParser,
@@ -220,10 +220,10 @@ const invalid: InvalidTestCase[] = [
 	{
 		description: 'Delimiter in the middle',
 		code: $`
-		  export interface Foo {        a: 1
-		   b: Pick<Bar, 'baz'>
-		   c: 3
-		  }
+			export interface Foo {        a: 1
+			 b: Pick<Bar, 'baz'>
+			 c: 3
+			}
 		`,
 		output: o => expect(o)
 			.toMatchInlineSnapshot(`"export interface Foo {        a: 1, b: Pick<Bar, 'baz'>, c: 3,}"`),
@@ -255,15 +255,15 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-		  const a = (
-		    <div>
-		      {text.map((
-		        item, index) => (
-		        <p>
-		        </p>
-		      ))}
-		    </div>
-		  )
+			const a = (
+			  <div>
+			    {text.map((
+			      item, index) => (
+			      <p>
+			      </p>
+			    ))}
+			  </div>
+			)
 		`,
 		output: o => expect(o).toMatchInlineSnapshot(`
       "const a = (
@@ -286,14 +286,14 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-		  export default petal({
-		  },
-		  {
-		    foo: 'bar'
-		  }
-		    // some comment
-		    // hello
-		  )
+			export default petal({
+			},
+			{
+			  foo: 'bar'
+			}
+			  // some comment
+			  // hello
+			)
 		`,
 		output: o => expect(o).toMatchInlineSnapshot(`
       "export default petal({
@@ -307,16 +307,16 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-		  function Foo() {
-		    return (
-		      <div className="text-white"
-		        onClick="bar"
-		        style={{ color: 'red' }}
-		      >
-		        hi
-		      </div>
-		    );
-		  }
+			function Foo() {
+			  return (
+			    <div className="text-white"
+			      onClick="bar"
+			      style={{ color: 'red' }}
+			    >
+			      hi
+			    </div>
+			  );
+			}
 		`,
 		output: o => expect(o).toMatchInlineSnapshot(`
       "function Foo() {
@@ -335,16 +335,16 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-		  function Foo() {
-		    return (
-		      <div 
-		        className="text-white" onClick="bar"
-		        style={{ color: 'red' }}
-		      >
-		        hi
-		      </div>
-		    );
-		  }
+			function Foo() {
+			  return (
+			    <div 
+			      className="text-white" onClick="bar"
+			      style={{ color: 'red' }}
+			    >
+			      hi
+			    </div>
+			  );
+			}
 		`,
 		output: o => expect(o).toMatchInlineSnapshot(`
       "function Foo() {
@@ -367,16 +367,16 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-		  export default petal({
-		  },
-		  // some comment
-		  {
-		    foo: 'bar'
-		  },
-		  {
-		  }
-		    // hello
-		  )
+			export default petal({
+			},
+			// some comment
+			{
+			  foo: 'bar'
+			},
+			{
+			}
+			  // hello
+			)
 		`,
 		output: o => expect(o).toMatchInlineSnapshot(`
       "export default petal({
@@ -392,10 +392,10 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-		   {
-		  "foo": ["bar",
-		  "baz"],
-		   }
+			 {
+			"foo": ["bar",
+			"baz"],
+			 }
 		`,
 		languageOptions: {
 			parser: jsoncParser,
@@ -408,11 +408,11 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-		   {
-		  "foo": [
-		    "bar","baz"
-		  ],
-		   }
+			 {
+			"foo": [
+			  "bar","baz"
+			],
+			 }
 		`,
 		languageOptions: {
 			parser: jsoncParser,
@@ -428,10 +428,10 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-		   {
-		  "foo": {"a": "1",
-		   "b": "2"}
-		   }
+			 {
+			"foo": {"a": "1",
+			 "b": "2"}
+			 }
 		`,
 		languageOptions: {
 			parser: jsoncParser,
@@ -444,11 +444,11 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-		   {
-		  "foo": {
-		    "a": "1",         "b": "2"
-		  }
-		   }
+			 {
+			"foo": {
+			  "a": "1",         "b": "2"
+			}
+			 }
 		`,
 		languageOptions: {
 			parser: jsoncParser,
@@ -465,14 +465,14 @@ const invalid: InvalidTestCase[] = [
 	{
 		description: 'Only ignore when there is a comment',
 		code: $`
-		   {
-		  "foo": {          "a": "1",
-		    // comment
-		    "b": "2"
-		  },
-		  "bar": ["1",
-		  "2"]
-		   }
+			 {
+			"foo": {          "a": "1",
+			  // comment
+			  "b": "2"
+			},
+			"bar": ["1",
+			"2"]
+			 }
 		`,
 		languageOptions: {
 			parser: jsoncParser,

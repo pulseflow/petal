@@ -50,8 +50,7 @@
 	},
 	"scripts": {
 		"build": "unbuild",
-		"stub": "unbuild --stub",
-		"clean": "rimraf dist"
+		"stub": "unbuild --stub"
 	},
 	"dependencies": {
 		"consola": "^3.2.3"

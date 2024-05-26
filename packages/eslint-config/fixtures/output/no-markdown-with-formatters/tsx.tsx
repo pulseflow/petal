@@ -1,10 +1,10 @@
 export function Component1() {
-  return <div/>
+	return <div/>;
 }
 
 export function jsx2() {
-  const props = { a: 1, b: 2 }
-  return < a foo= 'bar' bar={`foo` } >
+	const props = { a: 1, b: 2 };
+	return < a foo= 'bar' bar={`foo` } >
      <div {...props } a={1} b="2">Inline Text</div>
     <Component1>
       Block Text
@@ -17,5 +17,5 @@ export function jsx2() {
         <p>
           foo<i>bar</i><b>baz</b>
         </p>
-      </ a >
+      </ a >;
 }

@@ -16,7 +16,6 @@
 		"test:ui": "vitest --ui",
 		"test:ci": "pnpm build && pnpm lint && pnpm test",
 		"build": "pnpm --filter=./packages/* run build",
-		"clean": "pnpm --filter=./packages/* run clean",
 		"stub": "pnpm --filter=./packages/* run stub",
 		"lint": "pnpm eslint --cache .",
 		"release": "bumpp -r",
@@ -31,6 +30,7 @@
 	"devDependencies": {
 		"@flowr/eslint-config": "workspace:^",
 		"@flowr/tsconfig": "workspace:^",
+		"@stylistic/eslint-plugin": "^2.1.0",
 		"@stylistic/eslint-plugin-migrate": "^2.1.0",
 		"@types/node": "^20.12.12",
 		"bumpp": "^9.4.1",

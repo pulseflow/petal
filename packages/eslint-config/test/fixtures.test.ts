@@ -6,11 +6,11 @@ import fg from 'fast-glob';
 import type { OptionsConfig, TypedFlatConfigItem } from '../src/types';
 
 beforeAll(async () => {
-	await fs.rm('_fixtures', { recursive: true, force: true });
+	await fs.rm('./packages/eslint-config/_fixtures', { recursive: true, force: true });
 });
 
 afterAll(async () => {
-	await fs.rm('_fixtures', { recursive: true, force: true });
+	await fs.rm('./packages/eslint-config/_fixtures', { recursive: true, force: true });
 });
 
 runWithConfig('js', {
@@ -89,33 +89,19 @@ function runWithConfig(name: string, configs: OptionsConfig, ...items: TypedFlat
 		const target = resolve('./packages/eslint-config/_fixtures', name);
 
 		await fs.copy(from, target, {
-			filter: (src) => {
-				return !src.includes('node_modules');
-			},
+			filter: src => !src.includes('node_modules'),
 		});
 		await fs.writeFile(join(target, 'eslint.config.js'), `
 // @eslint-disable
-import petal from '@flowr/eslint-config'
+import petal from '@flowr/eslint-config';
 
 export default petal(
-  ${JSON.stringify(configs)},
-  ...${JSON.stringify(items) ?? []},
-)
-  `);
+	${JSON.stringify(configs)},
+	...${JSON.stringify(items) ?? []},
+);
+`, 'utf-8');
 
-		await execa('pnpm', [
-			'dlx',
-			'--package',
-			'eslint',
-			'eslint',
-			'--config',
-			'./eslint.config.js',
-			'.',
-			'--fix',
-		], {
-			cwd: target,
-			stdio: 'pipe',
-		});
+		await execa({ stdio: 'pipe', cwd: target })`pnpm dlx eslint --config ./eslint.config.js . --fix`;
 
 		const files = await fg('**/*', {
 			ignore: [
@@ -137,5 +123,5 @@ export default petal(
 			}
 			await expect.soft(content).toMatchFileSnapshot(join(output, file));
 		}));
-	}, 30_000);
+	}, 40_000);
 }
