@@ -96,8 +96,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(eslint-ts-patch@9.2.0-6)
       eslint-plugin-import-x:
-        specifier: ^0.5.0
-        version: 0.5.0(eslint-ts-patch@9.2.0-6)(typescript@5.4.5)
+        specifier: ^0.5.1
+        version: 0.5.1(eslint-ts-patch@9.2.0-6)(typescript@5.4.5)
       eslint-plugin-jsdoc:
         specifier: ^48.2.5
         version: 48.2.6(eslint-ts-patch@9.2.0-6)
@@ -1826,8 +1826,8 @@ packages:
     peerDependencies:
       eslint: ^8.40.0 || ^9.0.0
 
-  eslint-plugin-import-x@0.5.0:
-    resolution: {integrity: sha512-C7R8Z4IzxmsoOPMtSzwuOBW5FH6iRlxHR6iTks+MzVlrk3r3TUxokkWTx3ypdj9nGOEP+CG/5e6ebZzHbxgbbQ==}
+  eslint-plugin-import-x@0.5.1:
+    resolution: {integrity: sha512-2JK8bbFOLes+gG6tgdnM8safCxMAj4u2wjX8X1BRFPfnY7Ct2hFYESoIcVwABX/DDcdpQFLGtKmzbNEWJZD9iQ==}
     engines: {node: '>=16'}
     peerDependencies:
       eslint: ^8.56.0 || ^9.0.0-0
@@ -5342,7 +5342,7 @@ snapshots:
       prettier: 3.2.5
       synckit: 0.9.0
 
-  eslint-plugin-import-x@0.5.0(eslint-ts-patch@9.2.0-6)(typescript@5.4.5):
+  eslint-plugin-import-x@0.5.1(eslint-ts-patch@9.2.0-6)(typescript@5.4.5):
     dependencies:
       '@typescript-eslint/utils': 7.10.0(eslint-ts-patch@9.2.0-6)(typescript@5.4.5)
       debug: 4.3.4
@@ -5353,6 +5353,7 @@ snapshots:
       is-glob: 4.0.3
       minimatch: 9.0.4
       semver: 7.6.2
+      tslib: 2.6.2
     transitivePeerDependencies:
       - supports-color
       - typescript
