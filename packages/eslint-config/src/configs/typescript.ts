@@ -23,10 +23,7 @@ export async function typescript(
 		parserOptions = {},
 	} = options;
 
-	const files = options.files ?? [
-		GLOB_SRC,
-		...componentExts.map(f => `**/*.${f}`),
-	];
+	const files = options.files ?? [GLOB_SRC, ...componentExts.map(f => `**/*.${f}`)];
 
 	const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX];
 	const tsconfigPath = options?.tsconfigPath
@@ -53,6 +50,7 @@ export async function typescript(
 		'ts/no-unsafe-return': 'error',
 		'ts/restrict-plus-operands': 'error',
 		'ts/restrict-template-expressions': 'error',
+		'ts/strict-boolean-expressions': 'error',
 		'ts/unbound-method': 'error',
 	};
 
@@ -75,13 +73,13 @@ export async function typescript(
 				parserOptions: {
 					extraFileExtensions: componentExts.map(e => `.${e}`),
 					sourceType: 'module',
-					...(typeAware
+					...typeAware
 						? {
 								project: tsconfigPath,
 								tsconfigRootDir: process.cwd(),
 							}
-						: {}),
-					...(parserOptions as any),
+						: {},
+					...parserOptions as any,
 				},
 			},
 			name: `petal/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`,
@@ -106,14 +104,8 @@ export async function typescript(
 			files,
 			name: 'petal/typescript/rules',
 			rules: {
-				...renameRules(
-					pluginTs.configs['eslint-recommended'].overrides![0].rules!,
-					{ '@typescript-eslint': 'ts' },
-				),
-				...renameRules(
-					pluginTs.configs.strict.rules!,
-					{ '@typescript-eslint': 'ts' },
-				),
+				...renameRules(pluginTs.configs['eslint-recommended'].overrides![0].rules!, { '@typescript-eslint': 'ts' }),
+				...renameRules(pluginTs.configs.strict.rules!, { '@typescript-eslint': 'ts' }),
 				'no-dupe-class-members': 'off',
 				'no-loss-of-precision': 'off',
 				'no-redeclare': 'off',
@@ -148,7 +140,7 @@ export async function typescript(
 					files: filesTypeAware,
 					name: 'petal/typescript/rules-type-aware',
 					rules: {
-						...(tsconfigPath ? typeAwareRules : {}),
+						...tsconfigPath ? typeAwareRules : {},
 						...overrides,
 					},
 				}]

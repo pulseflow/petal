@@ -23,12 +23,14 @@ runWithConfig('all', {
 	vue: true,
 	svelte: true,
 	astro: true,
+	unocss: false,
 });
 
 runWithConfig('no-style', {
 	typescript: true,
 	vue: true,
 	stylistic: false,
+	unocss: false,
 });
 
 runWithConfig(
@@ -40,6 +42,7 @@ runWithConfig(
 			indent: 'tab',
 			quotes: 'double',
 		},
+		unocss: false,
 	},
 	{
 		rules: {
@@ -52,6 +55,7 @@ runWithConfig(
 	'ts-override',
 	{
 		typescript: true,
+		unocss: false,
 	},
 	{
 		rules: {
@@ -67,6 +71,7 @@ runWithConfig(
 		vue: true,
 		astro: true,
 		formatters: true,
+		unocss: false,
 	},
 );
 
@@ -76,6 +81,7 @@ runWithConfig(
 		jsx: false,
 		vue: false,
 		markdown: false,
+		unocss: false,
 		formatters: {
 			markdown: true,
 		},

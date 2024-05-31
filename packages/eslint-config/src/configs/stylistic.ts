@@ -32,7 +32,7 @@ export async function stylistic(options: StylisticOptions = {}): Promise<TypedFl
 
 				'petal/consistent-list-newline': 'error',
 
-				...(opinionated
+				...opinionated
 					? {
 							'curly': ['error', 'multi', 'consistent'],
 							'petal/if-newline': 'error',
@@ -40,8 +40,7 @@ export async function stylistic(options: StylisticOptions = {}): Promise<TypedFl
 						}
 					: {
 							curly: 'error',
-						}
-				),
+						},
 
 				...overrides,
 			},

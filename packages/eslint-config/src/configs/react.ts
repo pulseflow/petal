@@ -92,7 +92,7 @@ export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrid
 					{
 						allowConstantExport: isAllowConstantExport,
 						allowExportNames: [
-							...(isUsingNext
+							...isUsingNext
 								? [
 										'config',
 										'generateStaticParams',
@@ -101,8 +101,8 @@ export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrid
 										'viewport',
 										'generateViewport',
 									]
-								: []),
-							...(isUsingRemix
+								: [],
+							...isUsingRemix
 								? [
 										'meta',
 										'links',
@@ -110,7 +110,7 @@ export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrid
 										'loader',
 										'action',
 									]
-								: []),
+								: [],
 						],
 					},
 				],

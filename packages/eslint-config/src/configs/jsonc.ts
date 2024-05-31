@@ -60,7 +60,7 @@ export async function jsonc(options: OptionsFiles & OptionsStylistic & OptionsOv
 				'jsonc/valid-json-number': 'error',
 				'jsonc/vue-custom-block/no-parsing-error': 'error',
 
-				...(stylistic
+				...stylistic
 					? {
 							'jsonc/array-bracket-spacing': ['error', 'never'],
 							'jsonc/comma-dangle': ['error', 'never'],
@@ -73,7 +73,7 @@ export async function jsonc(options: OptionsFiles & OptionsStylistic & OptionsOv
 							'jsonc/quote-props': 'error',
 							'jsonc/quotes': 'error',
 						}
-					: {}),
+					: {},
 
 				...overrides,
 			},

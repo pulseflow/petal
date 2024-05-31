@@ -112,6 +112,9 @@ export function petal(
 		else if (fs.existsSync('.gitignore'))
 			configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r()]));
 
+	const typescriptOptions = resolveSubOptions(options, 'typescript');
+	const tsconfigPath = 'tsconfigPath' in typescriptOptions ? typescriptOptions.tsconfigPath : undefined;
+
 	configs.push(
 		ignores(),
 		javascript({
@@ -136,7 +139,7 @@ export function petal(
 
 	if (enableTypeScript)
 		configs.push(typescript({
-			...resolveSubOptions(options, 'typescript'),
+			...typescriptOptions,
 			componentExts,
 			overrides: getOverrides(options, 'typescript'),
 		}));
@@ -165,7 +168,7 @@ export function petal(
 	if (enableSolid)
 		configs.push(solid({
 			overrides: getOverrides(options, 'solid'),
-			tsconfigPath: getOverrides(options, 'typescript').tsconfigPath,
+			tsconfigPath,
 			typescript: !!enableTypeScript,
 		}));
 
@@ -175,7 +178,7 @@ export function petal(
 	if (enableReact)
 		configs.push(react({
 			overrides: getOverrides(options, 'react'),
-			tsconfigPath: getOverrides(options, 'typescript').tsconfigPath,
+			tsconfigPath,
 		}));
 
 	if (enableSvelte)
@@ -243,20 +246,14 @@ export function petal(
 
 export type ResolveOptions<T> = T extends boolean ? never : NonNullable<T>;
 
-export function resolveSubOptions<K extends keyof OptionsConfig>(options: OptionsConfig, key: K):
-ResolveOptions<OptionsConfig[K]> {
+export function resolveSubOptions<K extends keyof OptionsConfig>(options: OptionsConfig, key: K): ResolveOptions<OptionsConfig[K]> {
 	return typeof options[key] === 'boolean' ? {} as any : options[key] || {};
 }
 
-export function getOverrides<K extends keyof OptionsConfig>(
-	options: OptionsConfig,
-	key: K,
-) {
+export function getOverrides<K extends keyof OptionsConfig>(options: OptionsConfig, key: K) {
 	const sub = resolveSubOptions(options, key);
 	return {
 		...(options.overrides as any)?.[key],
-		...'overrides' in sub
-			? sub.overrides
-			: {},
+		...'overrides' in sub ? sub.overrides : {},
 	};
 }

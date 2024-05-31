@@ -83,7 +83,8 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 					}),
 				]),
 			rules: {
-				...(pluginVue.configs.base.rules as any),
+				...pluginVue.configs.base.rules as any,
+
 				...vueVersion === 2
 					? {
 							...pluginVue.configs.essential.rules as any,

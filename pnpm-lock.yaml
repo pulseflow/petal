@@ -32,6 +32,9 @@ importers:
       eslint:
         specifier: npm:eslint-ts-patch@9.2.0-6
         version: eslint-ts-patch@9.2.0-6
+      eslint-ts-patch:
+        specifier: 9.2.0-6
+        version: 9.2.0-6
       esno:
         specifier: ^4.7.0
         version: 4.7.0
@@ -90,7 +93,7 @@ importers:
         specifier: ^0.1.0
         version: 0.1.0(eslint-ts-patch@9.2.0-6)
       eslint-plugin-command:
-        specifier: ^0.2.2
+        specifier: ^0.2.3
         version: 0.2.3(eslint-ts-patch@9.2.0-6)
       eslint-plugin-eslint-comments:
         specifier: ^3.2.0
@@ -99,10 +102,10 @@ importers:
         specifier: ^0.5.1
         version: 0.5.1(eslint-ts-patch@9.2.0-6)(typescript@5.4.5)
       eslint-plugin-jsdoc:
-        specifier: ^48.2.7
+        specifier: ^48.2.6
         version: 48.2.7(eslint-ts-patch@9.2.0-6)
       eslint-plugin-jsonc:
-        specifier: ^2.15.1
+        specifier: ^2.16.0
         version: 2.16.0(eslint-ts-patch@9.2.0-6)
       eslint-plugin-markdown:
         specifier: ^5.0.0
@@ -117,7 +120,7 @@ importers:
         specifier: workspace:^
         version: link:../eslint-plugin
       eslint-plugin-regexp:
-        specifier: ^2.5.0
+        specifier: ^2.6.0
         version: 2.6.0(eslint-ts-patch@9.2.0-6)
       eslint-plugin-toml:
         specifier: ^0.11.0
@@ -141,7 +144,7 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2(@vue/compiler-sfc@3.4.27)(eslint-ts-patch@9.2.0-6)
       globals:
-        specifier: ^15.2.0
+        specifier: ^15.3.0
         version: 15.3.0
       jsonc-eslint-parser:
         specifier: ^2.4.0
@@ -177,8 +180,11 @@ importers:
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
+      '@types/prompts':
+        specifier: ^2.4.9
+        version: 2.4.9
       '@unocss/eslint-plugin':
-        specifier: ^0.60.2
+        specifier: ^0.60.3
         version: 0.60.3(eslint-ts-patch@9.2.0-6)(typescript@5.4.5)
       astro-eslint-parser:
         specifier: ^1.0.2
@@ -204,6 +210,9 @@ importers:
       eslint-plugin-svelte:
         specifier: ^2.39.0
         version: 2.39.0(eslint-ts-patch@9.2.0-6)(svelte@4.2.17)
+      eslint-ts-patch:
+        specifier: 9.2.0-6
+        version: 9.2.0-6
       eslint-typegen:
         specifier: ^0.2.4
         version: 0.2.4(eslint-ts-patch@9.2.0-6)
@@ -229,7 +238,7 @@ importers:
         specifier: ^0.36.0
         version: 0.36.0(svelte@4.2.17)
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.4.5
         version: 5.4.5
       vue:
         specifier: ^3.4.27
@@ -429,10 +438,6 @@ packages:
 
   '@dprint/toml@0.6.1':
     resolution: {integrity: sha512-1fmGui+BNLKNonG3fvjT+thtL8u0pL1GsIuRbhgRnP+UOkcfPgoUsgNFctDmOE13y6MX4TVvxXKKrMY/qwXqkA==}
-
-  '@es-joy/jsdoccomment@0.43.0':
-    resolution: {integrity: sha512-Q1CnsQrytI3TlCB1IVWXWeqUIPGVEKGaE7IbVdt13Nq/3i0JESAkQQERrfiQkmlpijl+++qyqPgaS31Bvc1jRQ==}
-    engines: {node: '>=16'}
 
   '@es-joy/jsdoccomment@0.43.1':
     resolution: {integrity: sha512-I238eDtOolvCuvtxrnqtlBaw0BwdQuYqK7eA6XIonicMdOOOb75mqdIzkGDUbS04+1Di007rgm9snFRNeVrOog==}
@@ -1203,6 +1208,9 @@ packages:
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
+
+  '@types/prompts@2.4.9':
+    resolution: {integrity: sha512-qTxFi6Buiu8+50/+3DGIWLHM6QuWsEKugJnnP6iv2Mc4ncxE4A/OJkjuVOA+5X0X1S/nq5VJRa8Lu+nwcvbrKA==}
 
   '@types/resolve@1.20.2':
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
@@ -3922,15 +3930,6 @@ snapshots:
 
   '@dprint/toml@0.6.1': {}
 
-  '@es-joy/jsdoccomment@0.43.0':
-    dependencies:
-      '@types/eslint': 8.56.10
-      '@types/estree': 1.0.5
-      '@typescript-eslint/types': 7.10.0
-      comment-parser: 1.4.1
-      esquery: 1.5.0
-      jsdoc-type-pratt-parser: 4.0.0
-
   '@es-joy/jsdoccomment@0.43.1':
     dependencies:
       '@types/eslint': 8.56.10
@@ -4584,6 +4583,11 @@ snapshots:
 
   '@types/normalize-package-data@2.4.4': {}
 
+  '@types/prompts@2.4.9':
+    dependencies:
+      '@types/node': 20.12.13
+      kleur: 3.0.3
+
   '@types/resolve@1.20.2': {}
 
   '@types/unist@2.0.10': {}
@@ -4729,7 +4733,7 @@ snapshots:
 
   '@unocss/eslint-plugin@0.60.3(eslint-ts-patch@9.2.0-6)(typescript@5.4.5)':
     dependencies:
-      '@typescript-eslint/utils': 7.10.0(eslint-ts-patch@9.2.0-6)(typescript@5.4.5)
+      '@typescript-eslint/utils': 7.11.0(eslint-ts-patch@9.2.0-6)(typescript@5.4.5)
       '@unocss/config': 0.60.3
       '@unocss/core': 0.60.3
       magic-string: 0.30.10
@@ -5402,7 +5406,7 @@ snapshots:
 
   eslint-plugin-command@0.2.3(eslint-ts-patch@9.2.0-6):
     dependencies:
-      '@es-joy/jsdoccomment': 0.43.0
+      '@es-joy/jsdoccomment': 0.43.1
       eslint: eslint-ts-patch@9.2.0-6
 
   eslint-plugin-es-x@7.6.0(eslint-ts-patch@9.2.0-6):

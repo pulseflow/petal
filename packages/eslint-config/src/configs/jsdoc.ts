@@ -29,12 +29,12 @@ export async function jsdoc(options: OptionsStylistic = {}): Promise<TypedFlatCo
 				'jsdoc/require-returns-description': 'warn',
 				'jsdoc/require-yields-check': 'warn',
 
-				...(stylistic
+				...stylistic
 					? {
 							'jsdoc/check-alignment': 'warn',
 							'jsdoc/multiline-blocks': 'warn',
 						}
-					: {}),
+					: {},
 			},
 		},
 	];
