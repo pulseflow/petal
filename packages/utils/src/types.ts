@@ -4,18 +4,20 @@ import { isFunction, isString } from './core';
 
 /** Possibly a `Promise<T>` */
 export type Awaitable<T> = T | PromiseLike<T>;
+export type StrictAwaitable<T> = T | Promise<T>;
 
 /** Possibly a `null` */
 export type Nullable<T> = T | null | undefined;
+export type StrictNullable<T> = T | null;
 
 /** Possibly an `Array<T>` */
 export type Arrayable<T> = T | Array<T>;
 
 /** Possibly a Function */
-export type Fn<T = void> = () => T;
+export type Fn<Return = void> = () => Return;
+export type ArgsFn<Return = void, Args extends any[] = any[]> = (...args: Args) => Return;
 
-/** Possibly a Constructor */
-export type Constructor<T = void, A extends any[] = any[]> = new (...args: A) => T;
+export type ClassConstructor<Return = void, Args extends any[] = any[]> = new (...args: Args) => Return;
 
 /** Infers the eleement type of an Array */
 export type ElementOf<T> = T extends (infer E)[] ? E : never;
@@ -34,24 +36,14 @@ export type UnionToIntersection<U> = (U extends unknown ? (k: U) => void : never
  */
 export type ArgumentsType<T> = T extends ((...args: infer A) => any) ? A : never;
 
-export type MergeInsertions<T> =
-	T extends object
-		? { [K in keyof T]: MergeInsertions<T[K]> }
-		: T;
+export type MergeInsertions<T> = T extends object ? { [K in keyof T]: MergeInsertions<T[K]> } : T;
 
 export type DeepMerge<F, S> = MergeInsertions<{
 	[K in keyof F | keyof S]: K extends keyof S & keyof F
-		? DeepMerge<F[K], S[K]>
-		: K extends keyof S
-			? S[K]
-			: K extends keyof F
-				? F[K]
-				: never;
+		? DeepMerge<F[K], S[K]> : K extends keyof S ? S[K] : K extends keyof F ? F[K] : never;
 }>;
 
-export type Key<T> = T extends ReadonlyMap<infer U> ? keyof U
-	: T extends Record<infer U, any> ? U
-		: never;
+export type Key<T> = T extends ReadonlyMap<infer U> ? keyof U : T extends Record<infer U, any> ? U : never;
 
 export type FunctionVoid = (...args: any[]) => void;
 
@@ -59,8 +51,7 @@ export type ExtractKeysByType<T, U> = {
 	[K in Extract<keyof T, string>]: T[K] extends U ? K : never;
 }[Extract<keyof T, string>];
 
-export type ParametersExceptFirst<F> =
-	F extends (arg0: any, ...rest: infer R) => any ? R : never;
+export type ParametersExceptFirst<F> = F extends (arg0: any, ...rest: infer R) => any ? R : never;
 
 export const identity = <T>(arg: T): T => arg;
 
@@ -90,51 +81,25 @@ export function boundMethods<T extends _EmptyClass>(t: T): {
 }
 
 export function pick<T extends object, K extends keyof T>(obj: T, ...keys: K[]) {
-	return Object.fromEntries(
-		Object.entries(obj).filter(([k]) => keys.includes(k as K)),
-	) as Pick<T, K>;
+	return Object.fromEntries(Object.entries(obj).filter(([k]) => keys.includes(k as K))) as Pick<T, K>;
 }
 
 export function omit<T extends object, K extends keyof T>(obj: T, ...keys: K[]) {
-	return Object.fromEntries(
-		Object.entries(obj).filter(([k]) => !keys.includes(k as K)),
-	) as Omit<T, K>;
+	return Object.fromEntries(Object.entries(obj).filter(([k]) => !keys.includes(k as K))) as Omit<T, K>;
 }
 
-export type Optional<T, K extends keyof T> =
-	& Omit<T, K>
-	& Partial<Pick<T, K>>;
+export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+export type Necessary<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;
+export type OptionalExcept<T, K extends keyof T> = Partial<Omit<T, K>> & Required<Pick<T, K>>;
+export type NecessaryExcept<T, K extends keyof T> = Required<Omit<T, K>> & Partial<Pick<T, K>>;
+export type Swap<T, K extends keyof T, V> = Omit<T, K> & Record<K, V>;
 
-export type Necessary<T, K extends keyof T> =
-	& Omit<T, K>
-	& Required<Pick<T, K>>;
+export const swap = <T, K extends keyof T, V>(obj: T, key: K, value: V): Swap<T, K, V> => ({ ...obj, [key]: value });
 
-export type OptionalExcept<T, K extends keyof T> =
-	& Partial<Omit<T, K>>
-	& Required<Pick<T, K>>;
-export type NecessaryExcept<T, K extends keyof T> =
-	& Required<Omit<T, K>>
-	& Partial<Pick<T, K>>;
+export type PickNecessary<T> = Pick<T, { [K in keyof T]-?: {} extends Pick<T, K> ? never : K; }[keyof T]>;
+export type PickOptional<T> = Pick<T, { [K in keyof T]-?: {} extends Pick<T, K> ? K : never; }[keyof T]>;
 
-export type Swap<T, K extends keyof T, V> =
-	& Omit<T, K>
-	& Record<K, V>;
-
-export function swap<T, K extends keyof T, V>(obj: T, key: K, value: V): Swap<T, K, V> {
-	return { ...obj, [key]: value };
-}
-
-export type PickNecessary<T> = Pick<T, {
-	[K in keyof T]-?: {} extends Pick<T, K> ? never : K;
-}[keyof T]>;
-
-export type PickOptional<T> = Pick<T, {
-	[K in keyof T]-?: {} extends Pick<T, K> ? K : never;
-}[keyof T]>;
-
-export type Rename<T, K extends keyof T, V extends string> =
-	& Omit<T, K>
-	& Record<V, T[K]>;
+export type Rename<T, K extends keyof T, V extends string> = Omit<T, K> & Record<V, T[K]>;
 
 export function rename<T extends Record<string | number | symbol, any>, K extends keyof T, V extends string>(obj: T, from: K, to: V): Rename<T, K, V> {
 	return ({ ...omit(obj, from), [to]: obj[from] }) as Rename<T, K, V>;
@@ -149,29 +114,14 @@ export interface DictPosN<T> extends Dict<DictPosN<T> | T> { }
 export type DictN<T> = DictPosN<T> | T;
 export interface DictInf<T> extends Dict<DictInf<T>> { }
 
-export type LastOf<T> = UnionToIntersection<
-	T extends any
-		? () => T
-		: never
-> extends () => infer R
-	? R
-	: never;
-
+export type LastOf<T> = UnionToIntersection<T extends any ? () => T : never> extends () => infer R ? R : never;
 export type Push<T extends any[], V> = [...T, V];
 
 /**
  * @description THIS IS A BAD IDEA. ONLY USE THIS IF YOU KNOW WHAT YOU'RE DOING.
  * @copyright CC BY-SA 4.0 https://stackoverflow.com/a/55128956
  */
-export type TuplifyUnion<
-	T,
-	L = LastOf<T>,
-	N = [T] extends [never]
-		? true
-		: false,
-> = true extends N
-	? []
-	: Push<TuplifyUnion<Exclude<T, L>>, L>;
+export type TuplifyUnion<T, L = LastOf<T>, N = [T] extends [never] ? true : false> = true extends N ? [] : Push<TuplifyUnion<Exclude<T, L>>, L>;
 
 export interface MethodDictInf<T> extends Dict<MethodDictInf<T>> {
 	(): T;

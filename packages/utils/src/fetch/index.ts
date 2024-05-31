@@ -11,7 +11,6 @@ declare global {
 
 export function req(url: string | URL, options?: Options) {
 	const request = new RequestBuilder(url, toDefault, options);
-
 	return proxy(request);
 }
 

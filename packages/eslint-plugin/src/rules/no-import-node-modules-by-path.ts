@@ -21,21 +21,19 @@ export default createEslintRule<Options, MessageIds>({
 	create: (context) => {
 		return {
 			'ImportDeclaration': (node) => {
-				if (node.source.value.includes('/node_modules/')) {
+				if (node.source.value.includes('/node_modules/'))
 					context.report({
 						node,
 						messageId: 'noImportNodeModulesByPath',
 					});
-				}
 			},
 			'CallExpression[callee.name="require"]': (node: any) => {
 				const value = node.arguments[0]?.value;
-				if (typeof value === 'string' && value.includes('/node_modules/')) {
+				if (typeof value === 'string' && value.includes('/node_modules/'))
 					context.report({
 						node,
 						messageId: 'noImportNodeModulesByPath',
 					});
-				}
 			},
 		};
 	},

@@ -2,6 +2,8 @@ import type { DeepMerge } from '../types';
 import { notNullish } from './guards';
 import { isObject } from './assert';
 
+const isMergableObject = (item: any): item is object => isObject(item) && !Array.isArray(item);
+
 /**
  * Map key/value pairs for an object, and construct a new one
  *
@@ -30,11 +32,7 @@ import { isObject } from './assert';
  * ```
  */
 export function objectMap<K extends string, V, NK = K, NV = V>(obj: Record<K, V>, fn: (key: K, value: V) => [NK, NV] | undefined): Record<K, V> {
-	return Object.fromEntries(
-		Object.entries(obj)
-			.map(([k, v]) => fn(k as K, v as V))
-			.filter(notNullish),
-	);
+	return Object.fromEntries(Object.entries(obj).map(([k, v]) => fn(k as K, v as V)).filter(notNullish));
 }
 
 /**
@@ -45,9 +43,7 @@ export function objectMap<K extends string, V, NK = K, NV = V>(obj: Record<K, V>
  * @param obj object to query for key `k`
  * @param k key to check existence in `obj`
  */
-export function isKeyOf<T extends object>(obj: T, k: keyof any): k is keyof T {
-	return k in obj;
-}
+export const isKeyOf = <T extends object>(obj: T, k: keyof any): k is keyof T => k in obj;
 
 /**
  * Strict typed `Object.keys`
@@ -63,9 +59,7 @@ export function objectKeys<T extends object>(obj: T) {
  *
  * @category Object
  */
-export function objectEntries<T extends object>(obj: T) {
-	return Object.entries(obj) as Array<[keyof T, T[keyof T]]>;
-}
+export const objectEntries = <T extends object>(obj: T) => Object.entries(obj) as Array<[keyof T, T[keyof T]]>;
 
 /**
  * Deep merge
@@ -83,7 +77,7 @@ export function deepMerge<T extends object = object, S extends object = T>(targe
 	if (source === undefined)
 		return target as any;
 
-	if (isMergableObject(target) && isMergableObject(source)) {
+	if (isMergableObject(target) && isMergableObject(source))
 		objectKeys(source).forEach((key) => {
 			if (key === '__proto__' || key === 'constructor' || key === 'prototype')
 				return;
@@ -92,25 +86,18 @@ export function deepMerge<T extends object = object, S extends object = T>(targe
 			if (isMergableObject(source[key])) {
 				// @ts-expect-error indexing error
 				if (!target[key])
-				// @ts-expect-error indexing error
+					// @ts-expect-error indexing error
 					target[key] = {};
-
 				// @ts-expect-error indexing error
-				if (isMergableObject(target[key])) {
+				if (isMergableObject(target[key]))
 					// @ts-expect-error indexing error
 					deepMerge(target[key], source[key]);
-				}
-				else {
-					// @ts-expect-error indexing error
-					target[key] = source[key];
-				}
-			}
-			else {
 				// @ts-expect-error indexing error
-				target[key] = source[key];
+				else target[key] = source[key];
 			}
+			// @ts-expect-error indexing error
+			else { target[key] = source[key]; }
 		});
-	}
 
 	return deepMerge(target, ...sources);
 }
@@ -132,11 +119,10 @@ export function deepMergeWithArray<T extends object = object, S extends object =
 	const source = sources.shift();
 	if (source === undefined)
 		return target as any;
-
 	if (Array.isArray(target) && Array.isArray(source))
 		target.push(...source);
 
-	if (isMergableObject(target) && isMergableObject(source)) {
+	if (isMergableObject(target) && isMergableObject(source))
 		objectKeys(source).forEach((key) => {
 			if (key === '__proto__' || key === 'constructor' || key === 'prototype')
 				return;
@@ -145,7 +131,7 @@ export function deepMergeWithArray<T extends object = object, S extends object =
 			if (Array.isArray(source[key])) {
 				// @ts-expect-error indexing error
 				if (!target[key])
-				// @ts-expect-error indexing error
+					// @ts-expect-error indexing error
 					target[key] = [];
 
 				// @ts-expect-error indexing error
@@ -155,24 +141,17 @@ export function deepMergeWithArray<T extends object = object, S extends object =
 			else if (isMergableObject(source[key])) {
 				// @ts-expect-error indexing error
 				if (!target[key])
-				// @ts-expect-error indexing error
+					// @ts-expect-error indexing error
 					target[key] = {};
 
 				// @ts-expect-error indexing error
 				deepMergeWithArray(target[key], source[key]);
 			}
-			else {
-				// @ts-expect-error indexing error
-				target[key] = source[key];
-			}
+			// @ts-expect-error indexing error
+			else { target[key] = source[key]; }
 		});
-	}
 
 	return deepMergeWithArray(target, ...sources);
-}
-
-function isMergableObject(item: any): item is object {
-	return isObject(item) && !Array.isArray(item);
 }
 
 /**
@@ -182,10 +161,9 @@ function isMergableObject(item: any): item is object {
  */
 export function objectPick<O extends object, T extends keyof O>(obj: O, keys: T[], omitUndefined = false) {
 	return keys.reduce((n, k) => {
-		if (k in obj) {
+		if (k in obj)
 			if (!omitUndefined || obj[k] !== undefined)
 				n[k] = obj[k];
-		}
 		return n;
 	}, {} as Pick<O, T>);
 }

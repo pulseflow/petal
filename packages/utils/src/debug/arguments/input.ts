@@ -32,7 +32,7 @@ export function parseInput<T extends Record<string, UnknownOptionFlag>>(
 			const name = _name.startsWith('--') ? _name.slice(2) : _name.slice(1);
 			const alias = aliases[name];
 			const flag = flags[name] ?? flags[alias];
-			if (!flag) {
+			if (!flag)
 				return parseInput(
 					rest,
 					flags,
@@ -40,7 +40,6 @@ export function parseInput<T extends Record<string, UnknownOptionFlag>>(
 					[...outArgs, _name],
 					outFlags,
 				);
-			}
 
 			return parseInput(rest, flags, aliases, outArgs, outFlags, flag.name);
 		}

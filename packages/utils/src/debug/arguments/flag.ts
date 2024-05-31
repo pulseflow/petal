@@ -42,11 +42,11 @@ export class Flag<N extends string, T extends FlagType, A extends boolean, F ext
 	match(existing?: OuterFlagType<T, A>): OuterFlagType<T, A> | FallbackFlagType<T, A, true>;
 
 	match(existing?: OuterFlagType<T, A>) {
-		if (this.options.type === sym_bool) {
+		if (this.options.type === sym_bool)
 			return this.options.array
 				? [...(existing ?? []) as OuterFlagType<T, true>, true]
 				: true;
-		}
+
 		if (!isUndefined(existing))
 			return existing;
 		if (!isUndefined(this.options.fallback))

@@ -31,9 +31,7 @@ export class CustomErrorBase extends Error {
 			const causeStr = stringifyError(cause);
 			if (fullMessage)
 				fullMessage += `; caused by ${causeStr}`;
-
-			else
-				fullMessage = `caused by ${causeStr}`;
+			else fullMessage = `caused by ${causeStr}`;
 		}
 
 		super(fullMessage);

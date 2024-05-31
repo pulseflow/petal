@@ -10,7 +10,6 @@ export async function fetchWrapper(url: string | URL, redirectCount: number, tim
 			const location = res.headers.get('location');
 			if (!location)
 				return res;
-
 			url = new URL(location, url);
 
 			if (redirectCount > 0)
@@ -18,9 +17,7 @@ export async function fetchWrapper(url: string | URL, redirectCount: number, tim
 			else
 				return res;
 		}
-		else {
-			return res;
-		}
+		else { return res; }
 	}
 	finally {
 		clearTimeout(timeout);

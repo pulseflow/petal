@@ -16,18 +16,14 @@ export function toArray<T>(array?: Nullable<Arrayable<T>>): Array<T> {
  *
  * @category Array
  */
-export function flattenArrayable<T>(array?: Nullable<Arrayable<T | Array<T>>>): Array<T> {
-	return toArray(array).flat(1) as Array<T>;
-}
+export const flattenArrayable = <T>(array?: Nullable<Arrayable<T | Array<T>>>): Array<T> => toArray(array).flat(1) as Array<T>;
 
 /**
  * Use rest arguments to merge arrays
  *
  * @category Array
  */
-export function mergeArrayable<T>(...args: Nullable<Arrayable<T>>[]): Array<T> {
-	return args.flatMap(i => toArray(i));
-}
+export const mergeArrayable = <T>(...args: Nullable<Arrayable<T>>[]): Array<T> => args.flatMap(i => toArray(i));
 
 export type PartitionFilter<T> = (i: T, idx: number, arr: readonly T[]) => any;
 
@@ -65,9 +61,7 @@ export function partition<T>(array: readonly T[], ...filters: PartitionFilter<T>
  *
  * @category Array
  */
-export function uniq<T>(array: readonly T[]): T[] {
-	return Array.from(new Set(array));
-}
+export const uniq = <T>(array: readonly T[]): T[] => Array.from(new Set(array));
 
 /**
  * Unique an Array by a custom equality function
@@ -76,8 +70,7 @@ export function uniq<T>(array: readonly T[]): T[] {
  */
 export function uniqueBy<T>(array: readonly T[], equalFn: (a: any, b: any) => boolean): T[] {
 	return array.reduce((acc: T[], cur: any) => {
-		const index = acc.findIndex((item: any) => equalFn(cur, item));
-		if (index === -1)
+		if (acc.findIndex((item: any) => equalFn(cur, item)) === -1)
 			acc.push(cur);
 		return acc;
 	}, []);
@@ -121,10 +114,8 @@ export function at<T>(array: readonly T[] | [], index: number): T | undefined {
 	const len = array.length;
 	if (!len)
 		return undefined;
-
 	if (index < 0)
 		index += len;
-
 	return array[index];
 }
 
@@ -175,9 +166,7 @@ export function move<T>(arr: T[], from: number, to: number) {
  *
  * @category Array
  */
-export function clampArrayRange(n: number, arr: readonly unknown[]) {
-	return clamp(n, 0, arr.length - 1);
-}
+export const clampArrayRange = (n: number, arr: readonly unknown[]) => clamp(n, 0, arr.length - 1);
 
 /**
  * Get random item(s) from an array
@@ -202,38 +191,14 @@ export function shuffle<T>(array: T[]): T[] {
 	return array;
 }
 
-export function max<T>(arr: T[], prop: ExtractKeysByType<T, number>) {
-	return Math.max(...arr.map(a => a[prop] as number));
-}
-
-export function max_by<T>(arr: T[], prop: ExtractKeysByType<T, number>) {
-	return arr.reduce((a, b) => a[prop] > b[prop] ? a : b);
-}
-
-export function max_map<T, U>(arr: T[], fn: (a: T) => U) {
-	return arr.reduce((a, b) => fn(a) > fn(b) ? a : b);
-}
-
-export function min<T>(arr: T[], prop: ExtractKeysByType<T, number>) {
-	return Math.max(...arr.map(a => a[prop] as number));
-}
-
-export function min_by<T>(arr: T[], prop: ExtractKeysByType<T, number>) {
-	return arr.reduce((a, b) => a[prop] < b[prop] ? a : b);
-}
-
-export function min_map<T, U>(arr: T[], fn: (a: T) => U) {
-	return arr.reduce((a, b) => fn(a) < fn(b) ? a : b);
-}
-
-export function zip<T>(...arr: T[][]): T[][] {
-	return Array(max(arr, 'length'))
-		.fill(null).map((_, i) => arr.map(a => a[i]));
-}
-
-export function get_dimension(a: any, d = 0): number {
-	return Array.isArray(a) ? get_dimension(a[0], d + 1) : d;
-}
+export const max = <T>(arr: T[], prop: ExtractKeysByType<T, number>) => Math.max(...arr.map(a => a[prop] as number));
+export const max_by = <T>(arr: T[], prop: ExtractKeysByType<T, number>) => arr.reduce((a, b) => a[prop] > b[prop] ? a : b);
+export const max_map = <T, U>(arr: T[], fn: (a: T) => U) => arr.reduce((a, b) => fn(a) > fn(b) ? a : b);
+export const min = <T>(arr: T[], prop: ExtractKeysByType<T, number>) => Math.max(...arr.map(a => a[prop] as number));
+export const min_by = <T>(arr: T[], prop: ExtractKeysByType<T, number>) => arr.reduce((a, b) => a[prop] < b[prop] ? a : b);
+export const min_map = <T, U>(arr: T[], fn: (a: T) => U) => arr.reduce((a, b) => fn(a) < fn(b) ? a : b);
+export const zip = <T>(...arr: T[][]): T[][] => Array(max(arr, 'length')).fill(null).map((_, i) => arr.map(a => a[i]));
+export const get_dimension = (a: any, d = 0): number => Array.isArray(a) ? get_dimension(a[0], d + 1) : d;
 
 export function group_by<T>(arr: T[], prop: keyof T) {
 	const groups = new Map<any, T[]>();

@@ -133,6 +133,11 @@ install the [vscode eslint extension][vscode] and add the following settings to 
         "graphql",
         "gql",
         "xml",
+        "css",
+        "less",
+        "scss",
+        "pcss",
+        "postcss"
     ]
 }
 ```

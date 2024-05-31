@@ -57,7 +57,6 @@ export function deserializeError<T extends Error = Error>(data: SerializedError)
 	const result = deserializeErrorInternal(data) as T;
 	if (!data.stack)
 		result.stack = undefined;
-
 	return result;
 }
 
@@ -71,9 +70,7 @@ export function stringifyError(error: unknown): string {
 	if (isError(error)) {
 		// Prefer error.toString, but if it's not implemented we use a nicer fallback
 		const str = String(error);
-		return str !== '[object Object]'
-			? str
-			: `${error.name}: ${error.message}`;
+		return str !== '[object Object]' ? str : `${error.name}: ${error.message}`;
 	}
 
 	return `unknown error '${error}'`;

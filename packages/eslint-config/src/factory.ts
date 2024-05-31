@@ -96,23 +96,21 @@ export function petal(
 		vue: enableVue = VuePackages.some(i => isPackageExists(i)),
 	} = options;
 
-	const stylisticOptions
-		= options.stylistic === false
-			? false
-			: typeof options.stylistic === 'object'
-				? options.stylistic
-				: {};
+	const stylisticOptions = options.stylistic === false
+		? false
+		: typeof options.stylistic === 'object'
+			? options.stylistic
+			: {};
 
 	if (stylisticOptions && !('jsx' in stylisticOptions))
 		stylisticOptions.jsx = options.jsx ?? true;
 
 	const configs: Awaitable<TypedFlatConfigItem[]>[] = [];
-	if (enableGitignore) {
+	if (enableGitignore)
 		if (typeof enableGitignore !== 'boolean')
 			configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r(enableGitignore)]));
 		else if (fs.existsSync('.gitignore'))
 			configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r()]));
-	}
 
 	configs.push(
 		ignores(),
@@ -136,71 +134,64 @@ export function petal(
 	if (enableVue)
 		componentExts.push('vue');
 
-	if (enableTypeScript) {
+	if (enableTypeScript)
 		configs.push(typescript({
 			...resolveSubOptions(options, 'typescript'),
 			componentExts,
 			overrides: getOverrides(options, 'typescript'),
 		}));
-	}
 
-	if (stylisticOptions) {
+	if (stylisticOptions)
 		configs.push(stylistic({
 			...stylisticOptions,
 			opinionated: options.opinionated,
 			overrides: getOverrides(options, 'stylistic'),
 		}));
-	}
 
 	if (options.test ?? true)
-		configs.push(test({ isInEditor, overrides: getOverrides(options, 'test') }));
+		configs.push(test({ overrides: getOverrides(options, 'test') }));
 
 	if (enableRegexp)
 		configs.push(regexp(typeof enableRegexp === 'boolean' ? {} : enableRegexp));
 
-	if (enableVue) {
+	if (enableVue)
 		configs.push(vue({
 			...resolveSubOptions(options, 'vue'),
 			overrides: getOverrides(options, 'vue'),
 			stylistic: stylisticOptions,
 			typescript: !!enableTypeScript,
 		}));
-	}
 
-	if (enableSolid) {
+	if (enableSolid)
 		configs.push(solid({
 			overrides: getOverrides(options, 'solid'),
 			tsconfigPath: getOverrides(options, 'typescript').tsconfigPath,
 			typescript: !!enableTypeScript,
 		}));
-	}
 
 	if (enableAstro)
 		configs.push(astro({ overrides: getOverrides(options, 'astro') }));
 
-	if (enableReact) {
+	if (enableReact)
 		configs.push(react({
 			overrides: getOverrides(options, 'react'),
 			tsconfigPath: getOverrides(options, 'typescript').tsconfigPath,
 		}));
-	}
 
-	if (enableSvelte) {
+	if (enableSvelte)
 		configs.push(svelte({
 			overrides: getOverrides(options, 'svelte'),
 			stylistic: stylisticOptions,
 			typescript: !!enableTypeScript,
 		}));
-	}
 
-	if (enableUnoCSS) {
+	if (enableUnoCSS)
 		configs.push(unocss({
 			...resolveSubOptions(options, 'unocss'),
 			overrides: getOverrides(options, 'unocss'),
 		}));
-	}
 
-	if (options.jsonc ?? true) {
+	if (options.jsonc ?? true)
 		configs.push(
 			jsonc({
 				overrides: getOverrides(options, 'jsonc'),
@@ -209,35 +200,30 @@ export function petal(
 			sortPackageJson(),
 			sortTsConfig(),
 		);
-	}
 
-	if (options.yaml ?? true) {
+	if (options.yaml ?? true)
 		configs.push(yaml({
 			overrides: getOverrides(options, 'yaml'),
 			stylistic: stylisticOptions,
 		}));
-	}
 
-	if (options.toml ?? true) {
+	if (options.toml ?? true)
 		configs.push(toml({
 			overrides: getOverrides(options, 'toml'),
 			stylistic: stylisticOptions,
 		}));
-	}
 
-	if (options.markdown ?? true) {
+	if (options.markdown ?? true)
 		configs.push(markdown({
 			componentExts,
 			overrides: getOverrides(options, 'markdown'),
 		}));
-	}
 
-	if (options.formatters) {
+	if (options.formatters)
 		configs.push(formatters(
 			options.formatters,
 			typeof stylisticOptions === 'boolean' ? {} : stylisticOptions,
 		));
-	}
 
 	const fusedConfig = flatConfigProps.reduce((acc, key) => {
 		if (key in options)
@@ -247,28 +233,19 @@ export function petal(
 
 	if (Object.keys(fusedConfig).length)
 		configs.push([fusedConfig]);
-
 	let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>();
-
 	composer = composer.append(...configs, ...userConfigs as any);
-
 	if (autoRenamePlugins)
 		composer = composer.renamePlugins(defaultPluginRenaming);
 
 	return composer;
 }
 
-export type ResolveOptions<T> = T extends boolean
-	? never
-	: NonNullable<T>;
+export type ResolveOptions<T> = T extends boolean ? never : NonNullable<T>;
 
-export function resolveSubOptions<K extends keyof OptionsConfig>(
-	options: OptionsConfig,
-	key: K,
-): ResolveOptions<OptionsConfig[K]> {
-	return typeof options[key] === 'boolean'
-		? {} as any
-		: options[key] || {};
+export function resolveSubOptions<K extends keyof OptionsConfig>(options: OptionsConfig, key: K):
+ResolveOptions<OptionsConfig[K]> {
+	return typeof options[key] === 'boolean' ? {} as any : options[key] || {};
 }
 
 export function getOverrides<K extends keyof OptionsConfig>(

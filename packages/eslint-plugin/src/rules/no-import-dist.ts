@@ -26,7 +26,7 @@ export default createEslintRule<Options, MessageIds>({
 
 		return {
 			ImportDeclaration: (node) => {
-				if (isDist(node.source.value)) {
+				if (isDist(node.source.value))
 					context.report({
 						node,
 						messageId: 'noImportDist',
@@ -34,7 +34,6 @@ export default createEslintRule<Options, MessageIds>({
 							path: node.source.value,
 						},
 					});
-				}
 			},
 		};
 	},

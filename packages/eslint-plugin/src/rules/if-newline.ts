@@ -26,7 +26,7 @@ export default createEslintRule<Options, MessageIds>({
 					return;
 				if (node.consequent.type === 'BlockStatement')
 					return;
-				if (node.test.loc.end.line === node.consequent.loc.start.line) {
+				if (node.test.loc.end.line === node.consequent.loc.start.line)
 					context.report({
 						node,
 						loc: {
@@ -38,7 +38,6 @@ export default createEslintRule<Options, MessageIds>({
 							return fixer.replaceTextRange([node.consequent.range[0], node.consequent.range[0]], '\n');
 						},
 					});
-				}
 			},
 		};
 	},

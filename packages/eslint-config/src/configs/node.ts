@@ -1,7 +1,9 @@
 import type { TypedFlatConfigItem } from '../types';
-import { pluginNode } from '../plugins';
+import { interopDefault } from '../utils';
 
 export async function node(): Promise<TypedFlatConfigItem[]> {
+	const pluginNode = await interopDefault(import('eslint-plugin-n'));
+
 	return [
 		{
 			name: 'petal/node/rules',

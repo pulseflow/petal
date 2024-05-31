@@ -144,7 +144,7 @@ export default createEslintRule<Options, MessageIds>({
 					if (context.sourceCode.getCommentsBefore(item).length > 0)
 						return;
 					const content = context.sourceCode.text.slice(lastItem!.range[1], item.range[0]);
-					if (content.includes('\n')) {
+					if (content.includes('\n'))
 						context.report({
 							node: item,
 							messageId: 'shouldNotWrap',
@@ -155,7 +155,6 @@ export default createEslintRule<Options, MessageIds>({
 								yield removeLines(fixer, lastItem!.range[1], item.range[0], getDelimiter(node, lastItem));
 							},
 						});
-					}
 				}
 
 				lastLine = item.loc.end.line;
@@ -191,7 +190,7 @@ export default createEslintRule<Options, MessageIds>({
 
 				const content = context.sourceCode.text.slice(lastItem.range[1], endRange);
 
-				if (content.includes('\n')) {
+				if (content.includes('\n'))
 					context.report({
 						node: lastItem,
 						messageId: 'shouldNotWrap',
@@ -202,7 +201,6 @@ export default createEslintRule<Options, MessageIds>({
 							yield removeLines(fixer, lastItem.range[1], endRange, getDelimiter(node, lastItem));
 						},
 					});
-				}
 			}
 		}
 

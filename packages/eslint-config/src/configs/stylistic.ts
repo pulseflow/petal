@@ -1,5 +1,4 @@
 import type { OptionsOverrides, StylisticConfig, TypedFlatConfigItem } from '../types';
-import { pluginPetal } from '../plugins';
 import { interopDefault } from '../utils';
 
 export const StylisticConfigDefaults: StylisticConfig = {
@@ -17,6 +16,7 @@ export async function stylistic(options: StylisticOptions = {}): Promise<TypedFl
 	const { indent, jsx, opinionated = true, overrides = {}, quotes, semi } = { ...StylisticConfigDefaults, ...options };
 
 	const pluginStylistic = await interopDefault(import('@stylistic/eslint-plugin'));
+	const pluginPetal = await interopDefault(import('eslint-plugin-petal'));
 
 	const config = pluginStylistic.configs.customize({ flat: true, indent, jsx, pluginName: 'style', quotes, semi });
 
@@ -34,7 +34,7 @@ export async function stylistic(options: StylisticOptions = {}): Promise<TypedFl
 
 				...(opinionated
 					? {
-							'curly': ['error', 'multi-or-nest', 'consistent'],
+							'curly': ['error', 'multi', 'consistent'],
 							'petal/if-newline': 'error',
 							'petal/top-level-function': 'error',
 						}

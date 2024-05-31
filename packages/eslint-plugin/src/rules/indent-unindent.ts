@@ -64,13 +64,12 @@ export default createEslintRule<Options, MessageIds>({
 
 				final = `\n${final}\n${baseIndent}`;
 
-				if (final !== value) {
+				if (final !== value)
 					context.report({
 						node: quasi,
 						messageId: 'indent-unindent',
 						fix: fixer => fixer.replaceText(quasi, `\`${final}\``),
 					});
-				}
 			},
 		};
 	},

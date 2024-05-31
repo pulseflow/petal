@@ -8,7 +8,7 @@ import { StylisticConfigDefaults } from './stylistic';
 type VendoredPrettierXMLOptions = Pick<VendoredPrettierOptions, 'xmlQuoteAttributes' | 'xmlSelfClosingSpace' | 'xmlSortAttributesByKey' | 'xmlWhitespaceSensitivity'>;
 
 export async function formatters(options: OptionsFormatters | true = {}, stylistic: StylisticConfig = {}): Promise<TypedFlatConfigItem[]> {
-	if (options === true) {
+	if (options === true)
 		options = {
 			astro: isPackageExists('astro'),
 			css: true,
@@ -18,7 +18,6 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 			slidev: isPackageExists('@slidev/cli'),
 			xml: isPackageExists('@prettier/plugin-xml'),
 		};
-	}
 
 	await ensurePackages([
 		'eslint-plugin-format',
@@ -65,7 +64,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 		},
 	];
 
-	if (options.css) {
+	if (options.css)
 		configs.push(
 			{
 				files: [GLOB_CSS, GLOB_POSTCSS],
@@ -116,9 +115,8 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 				},
 			},
 		);
-	}
 
-	if (options.html) {
+	if (options.html)
 		configs.push({
 			files: [GLOB_HTML],
 			languageOptions: {
@@ -135,9 +133,8 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 				],
 			},
 		});
-	}
 
-	if (options.xml) {
+	if (options.xml)
 		configs.push({
 			files: [GLOB_XML],
 			languageOptions: {
@@ -156,7 +153,6 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 				],
 			},
 		});
-	}
 
 	if (options.markdown) {
 		const formatter = options.markdown === true
@@ -194,7 +190,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 			},
 		});
 
-		if (options.slidev) {
+		if (options.slidev)
 			configs.push({
 				files: GLOB_SLIDEV,
 				languageOptions: {
@@ -214,10 +210,9 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 					],
 				},
 			});
-		}
 	}
 
-	if (options.astro) {
+	if (options.astro)
 		configs.push({
 			files: [GLOB_ASTRO],
 			languageOptions: {
@@ -235,9 +230,8 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 				],
 			},
 		});
-	}
 
-	if (options.graphql) {
+	if (options.graphql)
 		configs.push({
 			files: [GLOB_GRAPHQL],
 			languageOptions: {
@@ -254,7 +248,6 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 				],
 			},
 		});
-	}
 
 	return configs;
 }

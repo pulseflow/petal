@@ -40,7 +40,6 @@ export function proxy<T>(request: RequestBuilder<T>, prop?: keyof RequestBuilder
 
 			if (direct.has(prop))
 				return request[prop].bind(request);
-
 			if (promise.has(prop as Followup)) {
 				const res = request.send.bind(request)();
 				return res[prop as Followup].bind(res);
@@ -55,10 +54,8 @@ export function proxy<T>(request: RequestBuilder<T>, prop?: keyof RequestBuilder
 		apply(_target, _thisArg, args) {
 			if (prop)
 				return proxy(request[prop](...args));
-
 			if (!args.length)
 				return request.send.bind(request);
-
 			return proxy(chain.bind(request)(...args));
 		},
 	});

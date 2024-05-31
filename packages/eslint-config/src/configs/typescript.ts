@@ -8,7 +8,6 @@ import type {
 	TypedFlatConfigItem,
 } from '../types';
 import { GLOB_SRC, GLOB_TS, GLOB_TSX } from '../globs';
-import { pluginPetal } from '../plugins';
 import { interopDefault, renameRules, toArray } from '../utils';
 
 export async function typescript(
@@ -58,9 +57,11 @@ export async function typescript(
 	};
 
 	const [
+		pluginPetal,
 		pluginTs,
 		parserTs,
 	] = await Promise.all([
+		interopDefault(import('eslint-plugin-petal')),
 		interopDefault(import('@typescript-eslint/eslint-plugin')),
 		interopDefault(import('@typescript-eslint/parser')),
 	] as const);

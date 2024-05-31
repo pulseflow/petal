@@ -1,9 +1,12 @@
 import type { OptionsStylistic, TypedFlatConfigItem } from '../types';
-import { pluginImport, pluginPetal } from '../plugins';
 import { GLOB_SRC_EXT } from '../globs';
+import { interopDefault } from '../utils';
 
 export async function imports(options: OptionsStylistic = {}): Promise<TypedFlatConfigItem[]> {
 	const { stylistic = true } = options;
+
+	const pluginImport = await interopDefault(import('eslint-plugin-import-x'));
+	const pluginPetal = await interopDefault(import('eslint-plugin-petal'));
 
 	return [
 		{

@@ -1,39 +1,21 @@
 import type {
 	OptionsFiles,
-	OptionsIsInEditor,
 	OptionsOverrides,
 	TypedFlatConfigItem,
 } from '../types';
 import { GLOB_TESTS } from '../globs';
 import { interopDefault } from '../utils';
 
-let _pluginTest: any;
+export async function test(options: OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
+	const { files = GLOB_TESTS, overrides = {} } = options;
 
-export async function test(options: OptionsIsInEditor & OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
-	const { files = GLOB_TESTS, isInEditor = false, overrides = {} } = options;
-
-	const [
-		pluginVitest,
-		pluginNoOnlyTests,
-	] = await Promise.all([
-		interopDefault(import('eslint-plugin-vitest')),
-		// @ts-expect-error missing types
-		interopDefault(import('eslint-plugin-no-only-tests')),
-	] as const);
-
-	_pluginTest = _pluginTest || {
-		...pluginVitest,
-		rules: {
-			...pluginVitest.rules,
-			...pluginNoOnlyTests.rules,
-		},
-	};
+	const pluginTest = await interopDefault(import('eslint-plugin-vitest'));
 
 	return [
 		{
 			name: 'petal/test/setup',
 			plugins: {
-				test: _pluginTest,
+				test: pluginTest,
 			},
 		},
 		{
@@ -45,7 +27,6 @@ export async function test(options: OptionsIsInEditor & OptionsOverrides & Optio
 				'test/consistent-test-it': ['error', { fn: 'it', withinDescribe: 'it' }],
 				'test/no-identical-title': 'error',
 				'test/no-import-node-test': 'error',
-				'test/no-only-tests': isInEditor ? 'off' : 'error',
 				'test/prefer-hooks-in-order': 'error',
 				'test/prefer-lowercase-title': 'error',
 

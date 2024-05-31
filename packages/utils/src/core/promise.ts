@@ -26,9 +26,7 @@ class PInstance<T = any> extends Promise<Awaited<T>[]> {
 			const limit = pLimit(this.options.concurrency);
 			batch = Promise.all(items.map(p => limit(() => p)));
 		}
-		else {
-			batch = Promise.all(items);
-		}
+		else { batch = Promise.all(items); }
 
 		return batch.then(l => l.filter((i: any) => i !== VOID));
 	}
@@ -38,34 +36,30 @@ class PInstance<T = any> extends Promise<Awaited<T>[]> {
 	}
 
 	add(...args: (T | Promise<T>)[]) {
-		args.forEach((i) => {
-			this.promises.add(i);
-		});
+		args.forEach(f => this.promises.add(f));
 	}
 
 	map<U>(fn: (value: Awaited<T>, index: number) => U): PInstance<Promise<U>> {
 		return new PInstance(
-			Array.from(this.items)
-				.map(async (i, idx) => {
-					const v = await i;
-					if ((v as any) === VOID)
-						return VOID as unknown as U;
-					return fn(v, idx);
-				}),
+			Array.from(this.items).map(async (i, idx) => {
+				const v = await i;
+				if ((v as any) === VOID)
+					return VOID as unknown as U;
+				return fn(v, idx);
+			}),
 			this.options,
 		);
 	}
 
 	filter(fn: (value: Awaited<T>, index: number) => boolean | Promise<boolean>): PInstance<Promise<T>> {
 		return new PInstance(
-			Array.from(this.items)
-				.map(async (i, idx) => {
-					const v = await i;
-					const r = await fn(v, idx);
-					if (!r)
-						return VOID as unknown as T;
-					return v;
-				}),
+			Array.from(this.items).map(async (i, idx) => {
+				const v = await i;
+				const r = await fn(v, idx);
+				if (!r)
+					return VOID as unknown as T;
+				return v;
+			}),
 			this.options,
 		);
 	}

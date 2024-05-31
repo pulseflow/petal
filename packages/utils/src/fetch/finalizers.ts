@@ -10,14 +10,8 @@ async function statusWrapper<T>(fn: Awaitable<T>, status: number) {
 }
 
 export type Finalizer<T> = (res: Response) => Awaitable<T>;
-
-export function toJson<T = any>(res: Response) {
-	return statusWrapper(res.json<T>(), res.status);
-}
-export function toJsonPick<T, K extends keyof T & string>(res: Response, key: K) {
-	return statusWrapper(res.json<T>().then(it => it[key]), res.status);
-}
-
+export const toJson = <T = any>(res: Response) => statusWrapper(res.json<T>(), res.status);
+export const toJsonPick = <T, K extends keyof T & string>(res: Response, key: K) => statusWrapper(res.json<T>().then(it => it[key]), res.status);
 export const toText = (res: Response) => res.text();
 export const toBlob = (res: Response) => statusWrapper(res.blob(), res.status);
 export const toArrayBuffer = (res: Response) => statusWrapper(res.arrayBuffer(), res.status);
@@ -34,17 +28,14 @@ export async function toWrapped(res: Response) {
 			if (prop === 'headers') {
 				const banned = Object.getOwnPropertyNames(Object.getPrototypeOf(target.headers));
 				return new Proxy(target.headers, {
-					get(target: Headers, prop: keyof Headers) {
+					get: (target: Headers, prop: keyof Headers) => {
 						if (!isString(prop) || banned.includes(prop))
 							return value;
-						else
-							return target.get(prop);
+						else return target.get(prop);
 					},
 				});
 			}
-			else {
-				return value;
-			}
+			else { return value; }
 		},
 	}) as WrappedResponse;
 }

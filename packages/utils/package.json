@@ -50,7 +50,8 @@
 	"dependencies": {
 		"luxon": "^3.4.4",
 		"pathe": "^1.1.2",
-		"serialize-error": "^11.0.3"
+		"serialize-error": "^11.0.3",
+		"ufo": "^1.5.3"
 	},
 	"devDependencies": {
 		"@flowr/tsconfig": "workspace:^",

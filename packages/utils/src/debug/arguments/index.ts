@@ -14,10 +14,9 @@ export function parseArgs<T extends OptionFlags>(args: string[], optionFlags: T)
 
 	const [outArgs, outFlags] = parseInput(args, flags, aliases, []);
 
-	for (const [name, flag] of flagList) {
+	for (const [name, flag] of flagList)
 		if (!outFlags[name])
 			(outFlags as any)[name] = flag.fallback();
-	}
 
 	return [outArgs, outFlags as ParsedFlags<T>] as const;
 }

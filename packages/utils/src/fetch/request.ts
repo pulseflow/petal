@@ -71,17 +71,12 @@ export class RequestBuilder<T> {
 	}
 
 	path(...relativePaths: string[]) {
-		for (const relativePath of relativePaths)
-			this._url.pathname = join(this._url.pathname, relativePath);
-
+		for (const relativePath of relativePaths) this._url.pathname = join(this._url.pathname, relativePath);
 		return this;
 	}
 
 	body(data: any, sendAs?: BodyType) {
-		this._dataType = sendAs
-		?? (typeof data === 'object' && !(data instanceof ArrayBuffer)
-			? 'json'
-			: 'buffer');
+		this._dataType = sendAs ?? (typeof data === 'object' && !(data instanceof ArrayBuffer) ? 'json' : 'buffer');
 
 		switch (this._dataType) {
 			case 'json':
@@ -92,9 +87,7 @@ export class RequestBuilder<T> {
 				break;
 			case 'multipart': {
 				const fd = new FormData();
-
 				for (const key in data) fd.append(key, data[key]);
-
 				this._data = fd;
 				break;
 			}
@@ -105,10 +98,7 @@ export class RequestBuilder<T> {
 
 		if (sendAs === 'multipart') {
 			const fd = new FormData();
-
-			for (const key in data)
-				fd.append(key, data[key]);
-
+			for (const key in data) fd.append(key, data[key]);
 			this._data = fd;
 		}
 
@@ -119,22 +109,17 @@ export class RequestBuilder<T> {
 	header(name: string, value: string): this;
 	header(a1: any, a2?: string) {
 		const tuples = toTuples(a1, a2);
-
-		for (const [key, value] of tuples)
-			this._headers[key.toLowerCase()] = value;
-
+		for (const [key, value] of tuples) this._headers[key.toLowerCase()] = value;
 		return this;
 	}
 
 	timeout(timeout: number) {
 		this._timeout = timeout;
-
 		return this;
 	}
 
 	agent(...fragments: string[]) {
 		this._agent = fragments.join(' ');
-
 		return this;
 	}
 
@@ -142,10 +127,7 @@ export class RequestBuilder<T> {
 	option<K extends keyof Options>(name: K, value: Options[K]): this;
 	option<K extends keyof Options>(a1: any, a2?: Options[K]) {
 		const tuples = toTuples<K, Options[K]>(a1, a2);
-
-		for (const [key, value] of tuples)
-			this._options[key] = value;
-
+		for (const [key, value] of tuples) this._options[key] = value;
 		return this;
 	}
 
@@ -154,29 +136,23 @@ export class RequestBuilder<T> {
 	auth(token: string, type = 'Bearer') {
 		if (type.toLowerCase() === 'basic')
 			this._headers.authorization = `Basic ${Buffer.from(token).toString('base64')}`;
-		else
-			this._headers.authorization = type ? `${type} ${token}` : token;
-
+		else this._headers.authorization = type ? `${type} ${token}` : token;
 		return this;
 	}
 
 	follow(countOrBool: number | boolean) {
-		if (typeof countOrBool === 'number') {
+		if (typeof countOrBool === 'number')
 			this._redirect = countOrBool;
-		}
-		else if (typeof countOrBool === 'boolean') {
+		else if (typeof countOrBool === 'boolean')
 			if (countOrBool)
 				this._redirect = DEF_REFDIR_COUNT;
 			else
 				this._redirect = 0;
-		}
-
 		return this;
 	}
 
 	method(method: Method) {
 		this._method = method;
-
 		return this;
 	}
 
@@ -205,13 +181,10 @@ export class RequestBuilder<T> {
 	}
 
 	json<U = any>(): RequestProxy<WithStatus<U>>;
-	json<U, K extends keyof U & string>(
-		key: keyof U & string,
-	): RequestProxy<WithStatus<U[K]>>;
+	json<U, K extends keyof U & string>(key: keyof U & string): RequestProxy<WithStatus<U[K]>>;
 	json<U, K extends keyof U & string>(key?: K) {
 		if (key)
 			return this.finalizer(res => fin.toJsonPick<U, K>(res, key));
-
 		return this.finalizer(fin.toJson<U>);
 	}
 
@@ -228,14 +201,12 @@ export class RequestBuilder<T> {
 	}
 
 	async send(): Promise<T> {
-		if (this._data) {
-			if (!this._headers['content-type']) {
+		if (this._data)
+			if (!this._headers['content-type'])
 				if (this._dataType === 'json')
 					this._headers['content-type'] = 'application/json';
 				else if (this._dataType === 'form')
 					this._headers['content-type'] = 'application/x-www-form-urlencoded';
-			}
-		}
 
 		if (this._search.length) {
 			const query = this._options.encodeQuery

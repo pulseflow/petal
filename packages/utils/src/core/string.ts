@@ -1,35 +1,38 @@
 import { isObject } from './assert';
 
+export type Strings = string[] | ReadonlyArray<string>;
+
+export function untemplate<T extends Strings>(strings: T, ...keys: any[]) {
+	if (keys.length === 0)
+		return strings.join(' ');
+	return strings.reduce((acc, str, i) => {
+		const key = keys[i];
+		if (key)
+			return acc + key.toString() + str;
+		else return acc + str;
+	}, '');
+}
+
 /**
  * Replace backslash to slash
  *
  * @category String
  */
-export function slash(str: string) {
-	return str.replace(/\\/g, '/');
-}
+export const slash = (str: string) => str.replace(/\\/g, '/');
 
 /**
  * Ensure prefix of a string
  *
  * @category String
  */
-export function ensurePrefix(prefix: string, str: string) {
-	if (!str.startsWith(prefix))
-		return prefix + str;
-	return str;
-}
+export const ensurePrefix = (prefix: string, str: string) => !str.startsWith(prefix) ? prefix + str : str;
 
 /**
  * Ensure suffix of a string
  *
  * @category String
  */
-export function ensureSuffix(suffix: string, str: string) {
-	if (!str.endsWith(suffix))
-		return str + suffix;
-	return str;
-}
+export const ensureSuffix = (suffix: string, str: string) => !str.endsWith(suffix) ? str + suffix : str;
 
 /**
  * Dead simple template engine, just like Python's `.format()`
@@ -69,8 +72,7 @@ export function randomStr(size = 16, dict = urlAlphabet) {
 	let id = '';
 	let i = size;
 	const len = dict.length;
-	while (i--)
-		id += dict[(Math.random() * len) | 0];
+	while (i--) id += dict[(Math.random() * len) | 0];
 	return id;
 }
 
@@ -78,13 +80,11 @@ export function randomStr(size = 16, dict = urlAlphabet) {
  * First letter uppercase, other lowercase (I HATE CAPITALISM)
  * @category string
  * @example
- * ```
+ * ```ts
  * capitalize('hello') => 'Hello'
  * ```
  */
-export function capitalize(str: string): string {
-	return str[0].toUpperCase() + str.slice(1).toLowerCase();
-}
+export const capitalize = (str: string): string => str[0].toUpperCase() + str.slice(1).toLowerCase();
 
 const _reFullWs = /^\s*$/;
 
@@ -95,32 +95,27 @@ const _reFullWs = /^\s*$/;
  * @example
  * ```ts
  * const str = unindent`
- *   if (a) {
- *     b()
- *   }
+ * 	if (a) {
+ * 		b()
+ * 	}
  * `
+ * ```
  */
 export function unindent(str: TemplateStringsArray | string) {
 	const lines = (typeof str === 'string' ? str : str[0]).split('\n');
 	const whitespaceLines = lines.map(line => _reFullWs.test(line));
 
-	const commonIndent = lines
-		.reduce((min, line, idx) => {
-			if (whitespaceLines[idx])
-				return min;
-			const indent = line.match(/^\s*/)?.[0].length;
-			return indent === undefined ? min : Math.min(min, indent);
-		}, Number.POSITIVE_INFINITY);
+	const commonIndent = lines.reduce((min, line, idx) => {
+		if (whitespaceLines[idx])
+			return min;
+		const indent = line.match(/^\s*/)?.[0].length;
+		return indent === undefined ? min : Math.min(min, indent);
+	}, Number.POSITIVE_INFINITY);
 
 	let emptyLinesHead = 0;
-	while (emptyLinesHead < lines.length && whitespaceLines[emptyLinesHead])
-		emptyLinesHead++;
+	while (emptyLinesHead < lines.length && whitespaceLines[emptyLinesHead]) emptyLinesHead++;
 	let emptyLinesTail = 0;
-	while (emptyLinesTail < lines.length && whitespaceLines[lines.length - emptyLinesTail - 1])
-		emptyLinesTail++;
+	while (emptyLinesTail < lines.length && whitespaceLines[lines.length - emptyLinesTail - 1]) emptyLinesTail++;
 
-	return lines
-		.slice(emptyLinesHead, lines.length - emptyLinesTail)
-		.map(line => line.slice(commonIndent))
-		.join('\n');
+	return lines.slice(emptyLinesHead, lines.length - emptyLinesTail).map(line => line.slice(commonIndent)).join('\n');
 }
