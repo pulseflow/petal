@@ -17,18 +17,10 @@ export async function typescript(
 	OptionsTypeScriptParserOptions &
 	OptionsFiles = {},
 ): Promise<TypedFlatConfigItem[]> {
-	const {
-		componentExts = [],
-		overrides = {},
-		parserOptions = {},
-	} = options;
-
+	const { componentExts = [], overrides = {}, parserOptions = {} } = options;
 	const files = options.files ?? [GLOB_SRC, ...componentExts.map(f => `**/*.${f}`)];
-
 	const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX];
-	const tsconfigPath = options?.tsconfigPath
-		? toArray(options.tsconfigPath)
-		: undefined;
+	const tsconfigPath = options?.tsconfigPath ? toArray(options.tsconfigPath) : undefined;
 	const isTypeAware = !!tsconfigPath;
 
 	const typeAwareRules: TypedFlatConfigItem['rules'] = {

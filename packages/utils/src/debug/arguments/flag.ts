@@ -34,9 +34,7 @@ export class Flag<N extends string, T extends FlagType, A extends boolean, F ext
 	upsert(input: string, existing?: OuterFlagType<T, A>): OuterFlagType<T, A>;
 	upsert(input: string, existing?: OuterFlagType<T, A>) {
 		const value = this.#parse(input);
-		return this.options.array
-			? [...(existing ?? []) as OuterFlagType<T, true>, value]
-			: value;
+		return this.options.array ? [...(existing ?? []) as OuterFlagType<T, true>, value] : value;
 	}
 
 	match(existing?: OuterFlagType<T, A>): OuterFlagType<T, A> | FallbackFlagType<T, A, true>;
@@ -98,23 +96,12 @@ export type FlagTypeInteger = typeof sym_int;
 export type FlagTypeBool = typeof sym_bool;
 export type FlagType = FlagTypeString | FlagTypeInteger | FlagTypeBool;
 
-export type InnerFlagType<T extends FlagType> =
-	T extends FlagTypeBool ? boolean
-		: T extends FlagTypeInteger ? number
-			: T extends FlagTypeString ? string
-				: never;
+export type InnerFlagType<T extends FlagType> = T extends FlagTypeBool ? boolean : T extends FlagTypeInteger
+	? number : T extends FlagTypeString ? string : never;
 
-export type OuterFlagType<T extends FlagType, A extends boolean> =
-	A extends true
-		? InnerFlagType<T>[]
-		: InnerFlagType<T>;
-
+export type OuterFlagType<T extends FlagType, A extends boolean> = A extends true ? InnerFlagType<T>[] : InnerFlagType<T>;
 export type FallbackFlagType<T extends FlagType, A extends boolean, Matched extends boolean = false> =
-	A extends true
-		? OuterFlagType<T, A>
-		: T extends FlagTypeBool
-			? Matched
-			: null;
+	A extends true ? OuterFlagType<T, A> : T extends FlagTypeBool ? Matched : null;
 
 export interface OptionFlag<T extends FlagType, A extends boolean, F extends OuterFlagType<T, A> | undefined> {
 	array: A;
@@ -130,14 +117,8 @@ export type Flags<T extends Record<string, UnknownOptionFlag>> = {
 };
 
 export type ParsedFlags<T extends Record<string, UnknownOptionFlag>> = {
-	[P in keyof T]: T[P] extends OptionFlag<infer U, infer A, infer _F> ?
-	| OuterFlagType<U, A>
-	| T[P]['fallback'] extends infer G
-		? G extends undefined
-			? FallbackFlagType<U, A>
-			: G
-		: never
-		: never;
+	[P in keyof T]: T[P] extends OptionFlag<infer U, infer A, infer _F> ? OuterFlagType<U, A> | T[P]['fallback'] extends infer G
+		? G extends undefined ? FallbackFlagType<U, A> : G : never : never;
 };
 
 export type Aliases<T extends Record<string, UnknownOptionFlag>> = {

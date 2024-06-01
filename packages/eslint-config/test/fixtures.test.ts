@@ -107,7 +107,7 @@ export default petal(
 );
 `, 'utf-8');
 
-		await execa({ stdio: 'pipe', cwd: target })`pnpm dlx eslint --config ./eslint.config.js . --fix`;
+		await execa({ stdio: 'pipe', cwd: target })`pnpm -c dlx eslint --config ./eslint.config.js . --fix`;
 
 		const files = await fg('**/*', {
 			ignore: [

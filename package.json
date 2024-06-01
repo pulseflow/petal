@@ -32,7 +32,7 @@
 		"@flowr/tsconfig": "workspace:^",
 		"@stylistic/eslint-plugin": "^2.1.0",
 		"@stylistic/eslint-plugin-migrate": "^2.1.0",
-		"@types/node": "^20.12.13",
+		"@types/node": "^20.13.0",
 		"bumpp": "^9.4.1",
 		"esbuild": "^0.21.4",
 		"eslint": "npm:eslint-ts-patch@9.2.0-6",
