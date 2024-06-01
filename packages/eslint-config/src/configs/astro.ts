@@ -30,16 +30,27 @@ export async function astro(options: OptionsOverrides & OptionsFiles & OptionsSt
 		{
 			files,
 			languageOptions: {
+				globals: pluginAstro.environments.astro.globals,
 				parser: parserAstro,
 				parserOptions: {
 					extraFileExtensions: ['.astro'],
-					parser: parserTs as any,
+					parser: parserTs,
 				},
+				sourceType: 'module',
 			},
 			name: 'petal/astro/rules',
+			processor: 'astro/client-side-ts',
 			rules: {
+				'astro/missing-client-only-directive-value': 'error',
+				'astro/no-conflict-set-directives': 'error',
+				'astro/no-deprecated-astro-canonicalurl': 'error',
+				'astro/no-deprecated-astro-fetchcontent': 'error',
+				'astro/no-deprecated-astro-resolve': 'error',
+				'astro/no-deprecated-getentrybyslug': 'error',
 				'astro/no-set-html-directive': 'off',
+				'astro/no-unused-define-vars-in-style': 'error',
 				'astro/semi': 'off',
+				'astro/valid-compile': 'error',
 
 				...stylistic
 					? {
