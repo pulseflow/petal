@@ -9,9 +9,6 @@ declare global {
 	}
 }
 
-export function req(url: string | URL, options?: Options) {
-	const request = new RequestBuilder(url, toDefault, options);
-	return proxy(request);
-}
+export const req = (url: string | URL, options?: Options) => proxy(new RequestBuilder(url, toDefault, options));
 
 export { SYM_STATUS as status } from './const';
