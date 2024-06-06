@@ -5,7 +5,7 @@ declare module 'eslint/use-at-your-own-risk' {
 
 	export const builtinRules: {
 		get: <K extends keyof RuleMap>(key: K) => RuleMap[K] | undefined;
-	};
+	} & Map<string, import('eslint').Rule.RuleModule>;
 }
 
 declare module 'eslint/lib/rules/no-unused-vars' {

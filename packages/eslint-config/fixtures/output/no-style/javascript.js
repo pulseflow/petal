@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-console
+// eslint-disable-next-line no-console -- console.log is used for testing owo
 const log = console.log
 
 // Define a class using ES6 class syntax

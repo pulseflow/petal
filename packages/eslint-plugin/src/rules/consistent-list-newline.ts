@@ -309,5 +309,5 @@ export default createEslintRule<Options, MessageIds>({
 	},
 });
 
-// eslint-disable-next-line unused-imports/no-unused-vars
+// eslint-disable-next-line unused-imports/no-unused-vars -- type params are used for typechecking, unused
 function exportType<A, B extends A>() { }

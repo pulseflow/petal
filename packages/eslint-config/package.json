@@ -110,6 +110,7 @@
 	"dependencies": {
 		"@antfu/install-pkg": "^0.3.3",
 		"@clack/prompts": "^0.7.0",
+		"@eslint-community/eslint-plugin-eslint-comments": "^4.3.0",
 		"@stylistic/eslint-plugin": "^2.1.0",
 		"@typescript-eslint/eslint-plugin": "^7.11.0",
 		"@typescript-eslint/parser": "^7.11.0",
@@ -117,7 +118,6 @@
 		"eslint-flat-config-utils": "^0.2.5",
 		"eslint-merge-processors": "^0.1.0",
 		"eslint-plugin-command": "^0.2.3",
-		"eslint-plugin-eslint-comments": "^3.2.0",
 		"eslint-plugin-import-x": "^0.5.1",
 		"eslint-plugin-jsdoc": "^48.2.6",
 		"eslint-plugin-jsonc": "^2.16.0",

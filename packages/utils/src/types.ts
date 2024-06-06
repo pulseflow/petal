@@ -1,5 +1,3 @@
-/* eslint-disable ts/ban-types */
-
 import { isFunction, isString } from './core';
 
 /** Possibly a `Promise<T>` */
@@ -96,8 +94,8 @@ export type Swap<T, K extends keyof T, V> = Omit<T, K> & Record<K, V>;
 
 export const swap = <T, K extends keyof T, V>(obj: T, key: K, value: V): Swap<T, K, V> => ({ ...obj, [key]: value });
 
-export type PickNecessary<T> = Pick<T, { [K in keyof T]-?: {} extends Pick<T, K> ? never : K; }[keyof T]>;
-export type PickOptional<T> = Pick<T, { [K in keyof T]-?: {} extends Pick<T, K> ? K : never; }[keyof T]>;
+export type PickNecessary<T> = Pick<T, { [K in keyof T]-?: object extends Pick<T, K> ? never : K; }[keyof T]>;
+export type PickOptional<T> = Pick<T, { [K in keyof T]-?: object extends Pick<T, K> ? K : never; }[keyof T]>;
 
 export type Rename<T, K extends keyof T, V extends string> = Omit<T, K> & Record<V, T[K]>;
 
@@ -123,9 +121,7 @@ export type Push<T extends any[], V> = [...T, V];
  */
 export type TuplifyUnion<T, L = LastOf<T>, N = [T] extends [never] ? true : false> = true extends N ? [] : Push<TuplifyUnion<Exclude<T, L>>, L>;
 
-export interface MethodDictInf<T> extends Dict<MethodDictInf<T>> {
-	(): T;
-}
+export interface MethodDictInf<T> extends Dict<MethodDictInf<T>> { (): T }
 
 export interface ReadonlyMap<T extends Record<string, any>> {
 	forEach: (
@@ -139,7 +135,7 @@ export interface ReadonlyMap<T extends Record<string, any>> {
 	has: <K extends string>(key: K) => K extends keyof T ? true : false;
 	set: <K extends string, V>(key: K, value: V) => ReadonlyMap< & { [P in K]: V } & { [P in Exclude<keyof T, K>]: T[P] }>;
 
-	clear: () => ReadonlyMap<{}>;
+	clear: () => ReadonlyMap<Record<string, never>>;
 	keys: () => IterableIterator<keyof T>;
 	values: () => IterableIterator<T[keyof T]>;
 	entries: () => IterableIterator<{ [K in keyof T]-?: [K, T[K]] }[keyof T]>;
@@ -153,7 +149,7 @@ export interface ReadonlyMap<T extends Record<string, any>> {
 export interface ReadonlyMapConstructor {
 	readonly prototype: ReadonlyMap<Record<string, any>>;
 
-	new(): ReadonlyMap<{}>;
+	new(): ReadonlyMap<Record<string, never>>;
 	new<K extends string, V>(
 		entries?: ReadonlyArray<[K, V]>,
 	): ReadonlyMap<{ [P in K]: V }>;

@@ -34,7 +34,7 @@ export default createEslintRule<Options, MessageIds>({
 		},
 	},
 	defaultOptions: [{}],
-	create(context) {
+	create: (context) => {
 		const {
 			tags = ['$', 'unindent', 'unIndent'],
 		} = context.options?.[0] ?? {};
@@ -56,7 +56,7 @@ export default createEslintRule<Options, MessageIds>({
 				});
 				const baseIndent = context.sourceCode.text.slice(lineStartIndex).match(/^\s*/)?.[0] ?? '';
 				const targetIndent = `${baseIndent}	`;
-				const pure = unindent([value] as any);
+				const pure: string = unindent([value] as any);
 				let final = pure
 					.split('\n')
 					.map(line => targetIndent + line)

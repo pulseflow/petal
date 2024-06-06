@@ -14,13 +14,9 @@ export function getESLintCoreRule<R extends RuleId>(ruleId: R): RuleMap[R] {
 	return ESLintUtils.nullThrows(builtinRules.get(ruleId), `ESLint core rule '${ruleId} not found.`);
 }
 
-const blobUrl: string = 'https://github.com/pulseflow/petal/blob/main/configs/eslint-plugin/src/rules';
+const blobUrl: string = 'https://github.com/pulseflow/petal/blob/main/packages/eslint-plugin/src/rules';
 
-export interface RuleModule<
-	T extends readonly unknown[],
-> extends Rule.RuleModule {
-	defaultOptions: T;
-};
+export interface RuleModule<T extends readonly unknown[]> extends Rule.RuleModule { defaultOptions: T };
 
 /**
  * Creates reusable function to create rules with default options and docs URLs.

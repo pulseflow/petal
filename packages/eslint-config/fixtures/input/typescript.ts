@@ -11,7 +11,7 @@ const people: Person[] = [
   age: 35 }
 ];
 
-// eslint-disable-next-line no-console
+// eslint-disable-next-line no-console -- console.log is used for testing owo
 var log = console.log
 
 // Use a for...of loop to iterate over the array

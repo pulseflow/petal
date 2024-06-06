@@ -1,4 +1,4 @@
-/* eslint-disable perfectionist/sort-objects */
+/* eslint-disable perfectionist/sort-objects -- rules need to be in this order */
 import type { OptionsStylistic, TypedFlatConfigItem } from '../types';
 import { GLOB_SRC_EXT } from '../globs';
 import { interopDefault } from '../utils';

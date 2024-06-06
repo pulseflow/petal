@@ -206,7 +206,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 	opinionated?: boolean;
 
 	/**
-	 * Core rules. Can't be disabled.
+	 * Core JavaScript rules. Can't be disabled.
 	 */
 	javascript?: OptionsOverrides;
 
@@ -340,14 +340,16 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * Requires installing:
 	 * - `eslint-plugin-format`
 	 *
-	 * When set to `true`, it will enable all formatters.
+	 * When set to `true`, it will enable all formatters by default.
+	 * Use [`OptionsFormatters`] to fine-tune the formatters and config options.
 	 *
 	 * @default false
 	 */
 	formatters?: boolean | OptionsFormatters;
 
 	/**
-	 * Control to disable some rules in editors.
+	 * Control to disable some testing rules in editors.
+	 *
 	 * @default auto-detect based on the process.env
 	 */
 	isInEditor?: boolean;

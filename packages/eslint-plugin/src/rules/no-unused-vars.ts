@@ -23,8 +23,8 @@ export {};
 // 		schema: baseRule.meta.schema,
 // 		messages: baseRule.meta.messages,
 // 	},
-// 	defaultOptions: [{}],
-// 	create: (context) => {
-
+// 	defaultOptions: baseRule.defaultOptions,
+// 	create: context => {
+// 		return baseRule.create(context);
 // 	},
 // });

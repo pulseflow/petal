@@ -10,11 +10,13 @@ export async function test(options: OptionsOverrides & OptionsFiles = {}): Promi
 	const { files = GLOB_TESTS, overrides = {} } = options;
 
 	const pluginTest = await interopDefault(import('eslint-plugin-vitest'));
+	const pluginPetal = await interopDefault(import('eslint-plugin-petal'));
 
 	return [
 		{
 			name: 'petal/test/setup',
 			plugins: {
+				petal: pluginPetal,
 				test: pluginTest,
 			},
 		},
@@ -23,6 +25,8 @@ export async function test(options: OptionsOverrides & OptionsFiles = {}): Promi
 			name: 'petal/test/rules',
 			rules: {
 				'node/prefer-global/process': 'off',
+
+				'petal/no-only-tests': 'error',
 
 				'test/consistent-test-it': ['error', { fn: 'it', withinDescribe: 'it' }],
 				'test/no-identical-title': 'error',

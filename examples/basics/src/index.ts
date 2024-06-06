@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console -- console.log required */
 // use typescript types, no long tsconfig needed!
 interface HelloWorld { messages: string[] }
 

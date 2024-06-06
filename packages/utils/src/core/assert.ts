@@ -20,7 +20,7 @@ export function assert<T>(i: T) {
 			case 'number':
 			case 'bigint':
 			case 'boolean':
-				// eslint-disable-next-line valid-typeof
+				// eslint-disable-next-line valid-typeof -- primitive isnt actually a valid typeof
 				if (typeof i !== type)
 					err(i, type);
 				break;

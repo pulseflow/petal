@@ -67,8 +67,8 @@ let dts = await flatConfigsToRulesDTS(configs, {
 });
 
 dts += `
-// All configuration names
-export type ConfigNames = ${configNames.map(i => `'${i}'`).join(' | ')}
+// ----- petal/provider/configNames -----
+export type ConfigNames = ${configNames.map(i => `'${i}'`).join(' | ')};
 `;
 
 await fs.writeFile('src/typegen.d.ts', dts);

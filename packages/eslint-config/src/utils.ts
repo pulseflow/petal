@@ -1,17 +1,18 @@
 import process from 'node:process';
 import { isPackageExists } from 'local-pkg';
+import type { Linter } from 'eslint';
 import type { Awaitable, TypedFlatConfigItem } from './types';
 
-export const parserPlain = {
+export const parserPlain: Linter.FlatConfigParserModule = {
 	meta: {
 		name: 'parser-plain',
 	},
-	parseForESLint: (code: string) => ({
+	parseForESLint: text => ({
 		ast: {
 			body: [],
 			comments: [],
-			loc: { end: code.length, start: 0 },
-			range: [0, code.length],
+			loc: { end: text.length, start: 0 },
+			range: [0, text.length],
 			tokens: [],
 			type: 'Program',
 		},
@@ -68,20 +69,14 @@ export function renameRules(rules: Record<string, any>, map: Record<string, stri
  * })
  * ```
  */
-export function renamePluginInConfigs(configs: TypedFlatConfigItem[],	map: Record<string, string>): TypedFlatConfigItem[] {
+export function renamePluginInConfigs(configs: TypedFlatConfigItem[], map: Record<string, string>): TypedFlatConfigItem[] {
 	return configs.map((i) => {
 		const clone = { ...i };
 		if (clone.rules)
 			clone.rules = renameRules(clone.rules, map);
 		if (clone.plugins)
-			clone.plugins = Object.fromEntries(
-				Object.entries(clone.plugins)
-					.map(([key, value]) => {
-						if (key in map)
-							return [map[key], value];
-						return [key, value];
-					}),
-			);
+			clone.plugins = Object.fromEntries(Object.entries(clone.plugins)
+				.map(([key, value]) => (key in map) ? [map[key], value] : [key, value]));
 
 		return clone;
 	});

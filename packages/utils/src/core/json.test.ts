@@ -1,10 +1,10 @@
-/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars -- vars for json primitives arent used */
 import type { JsonArray, JsonObject, JsonPrimitive, JsonValue } from './json';
 
 describe('json', () => {
 	it('jsonPrimitive', () => {
-		function isValid(..._v: JsonPrimitive[]) {}
-		isValid(1, 's', true, false, null);
+		const isValid = (..._v: JsonPrimitive[]) => true;
+		expect(isValid(1, 's', true, false, null)).toBe(true);
 
 		// @ts-expect-error expected to throw an error for test
 		const v1: JsonPrimitive = [];
@@ -15,8 +15,8 @@ describe('json', () => {
 	});
 
 	it('jsonArray', () => {
-		function isValid(..._v: JsonArray[]) {}
-		isValid([], [1, 's', true, false, null, {}, []]);
+		const isValid = (..._v: JsonArray[]) => true;
+		expect(isValid([], [1, 's', true, false, null, {}, []])).toBe(true);
 
 		// @ts-expect-error expected to throw an error for test
 		const v1: JsonArray = 1;
@@ -35,11 +35,8 @@ describe('json', () => {
 	});
 
 	it('jsonObject', () => {
-		function isValid(..._v: JsonObject[]) {}
-		isValid(
-			{},
-			{ v1: 1, v2: 's', v3: true, v4: false, v5: null, v6: {}, v7: [] },
-		);
+		const isValid = (..._v: JsonObject[]) => true;
+		expect(isValid({}, { v1: 1, v2: 's', v3: true, v4: false, v5: null, v6: {}, v7: [] })).toBe(true);
 
 		// @ts-expect-error expected to throw an error for test
 		const v1: JsonObject = 1;
@@ -58,8 +55,8 @@ describe('json', () => {
 	});
 
 	it('jsonValue', () => {
-		function isValid(..._v: JsonValue[]) {}
-		isValid(1, 's', true, false, null, {}, []);
+		const isValid = (..._v: JsonValue[]) => true;
+		expect(isValid(1, 's', true, false, null, {}, [])).toBe(true);
 
 		expect(true).toBe(true);
 	});

@@ -12,14 +12,7 @@ run({
 		{
 			code: 'export = {}',
 			filename: 'test.ts',
-			errors(errors) {
-				expect(errors.map(i => i.message))
-					.toMatchInlineSnapshot(`
-            [
-              "Use ESM \`export default\` instead",
-            ]
-          `);
-			},
+			errors: [{ messageId: 'noTsExportEqual' }],
 		},
 	],
 });

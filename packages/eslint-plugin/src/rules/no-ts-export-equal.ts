@@ -20,9 +20,7 @@ export default createEslintRule<Options, MessageIds>({
 	defaultOptions: [],
 	create: (context) => {
 		const extension = context.filename.split('.').pop();
-		if (!extension)
-			return {};
-		if (!['ts', 'tsx', 'mts', 'cts'].includes(extension))
+		if (!extension || !['ts', 'tsx', 'mts', 'cts'].includes(extension))
 			return {};
 
 		return {
