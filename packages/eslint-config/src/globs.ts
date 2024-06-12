@@ -22,6 +22,7 @@ export const GLOB_MARKDOWN_IN_MARKDOWN = '**/*.md/*.md';
 export const GLOB_SVELTE = '**/*.svelte';
 export const GLOB_VUE = '**/*.vue';
 export const GLOB_ASTRO = '**/*.astro';
+export const GLOB_ASTRO_TS = '**/*.astro/*.ts';
 export const GLOB_GRAPHQL = '**/*.{g,graph}ql';
 export const GLOB_YAML = '**/*.y?(a)ml';
 export const GLOB_TOML = '**/*.toml';

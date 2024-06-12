@@ -7,7 +7,7 @@ import type {
 	OptionsTypeScriptWithTypes,
 	TypedFlatConfigItem,
 } from '../types';
-import { GLOB_SRC, GLOB_TS, GLOB_TSX } from '../globs';
+import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_TS, GLOB_TSX } from '../globs';
 import { interopDefault, renameRules, toArray } from '../utils';
 
 export async function typescript(
@@ -18,8 +18,9 @@ export async function typescript(
 	OptionsFiles = {},
 ): Promise<TypedFlatConfigItem[]> {
 	const { componentExts = [], overrides = {}, parserOptions = {} } = options;
-	const files = options.files ?? [GLOB_SRC, ...componentExts.map(f => `**/*.${f}`)];
+	const files = options.files ?? [GLOB_TS, GLOB_TSX, ...componentExts.map(f => `**/*.${f}`)];
 	const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX];
+	const ignoresTypeAware = options.ignoresTypeAware ?? [`${GLOB_MARKDOWN}/**`, GLOB_ASTRO_TS];
 	const tsconfigPath = options?.tsconfigPath ? toArray(options.tsconfigPath) : undefined;
 	const isTypeAware = !!tsconfigPath;
 
@@ -56,8 +57,8 @@ export async function typescript(
 		interopDefault(import('@typescript-eslint/parser')),
 	] as const);
 
-	function makeParser(typeAware: boolean, files: string[], ignores?: string[]): TypedFlatConfigItem {
-		return {
+	const makeParser = (typeAware: boolean, files: string[], ignores?: string[]): TypedFlatConfigItem =>
+		({
 			files,
 			...ignores ? { ignores } : {},
 			languageOptions: {
@@ -75,8 +76,7 @@ export async function typescript(
 				},
 			},
 			name: `petal/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`,
-		};
-	};
+		});
 
 	return [
 		{
@@ -88,10 +88,12 @@ export async function typescript(
 		},
 		...isTypeAware
 			? [
-					makeParser(true, filesTypeAware),
+					makeParser(true, filesTypeAware, ignoresTypeAware),
 					makeParser(false, files, filesTypeAware),
 				]
-			: [makeParser(false, files)],
+			: [
+					makeParser(false, files),
+				],
 		{
 			files,
 			name: 'petal/typescript/rules',
@@ -130,6 +132,7 @@ export async function typescript(
 		...isTypeAware
 			? [{
 					files: filesTypeAware,
+					ignores: ignoresTypeAware,
 					name: 'petal/typescript/rules-type-aware',
 					rules: {
 						...tsconfigPath ? typeAwareRules : {},
@@ -138,7 +141,7 @@ export async function typescript(
 				}]
 			: [],
 		{
-			files: ['**/*.d.ts'],
+			files: ['**/*.d.?([cm])ts'],
 			name: 'petal/typescript/disables/dts',
 			rules: {
 				'eslint-comments/no-unlimited-disable': 'off',

@@ -25,10 +25,7 @@ export default createEslintRule<Options, MessageIds>({
 
 		return {
 			TSExportAssignment(node) {
-				context.report({
-					node,
-					messageId: 'noTsExportEqual',
-				});
+				context.report({ node, messageId: 'noTsExportEqual' });
 			},
 		};
 	},

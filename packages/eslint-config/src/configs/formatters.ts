@@ -1,5 +1,5 @@
 import { isPackageExists } from 'local-pkg';
-import { GLOB_ASTRO, GLOB_CSS, GLOB_GRAPHQL, GLOB_HTML, GLOB_LESS, GLOB_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_XML } from '../globs';
+import { GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_GRAPHQL, GLOB_HTML, GLOB_LESS, GLOB_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_XML } from '../globs';
 import type { VendoredPrettierOptions } from '../vendor/prettier-types';
 import { ensurePackages, interopDefault, parserPlain } from '../utils';
 import type { OptionsFormatters, StylisticConfig, TypedFlatConfigItem } from '../types';
@@ -10,7 +10,7 @@ type VendoredPrettierXMLOptions = Pick<VendoredPrettierOptions, 'xmlQuoteAttribu
 export async function formatters(options: OptionsFormatters | true = {}, stylistic: StylisticConfig = {}): Promise<TypedFlatConfigItem[]> {
 	if (options === true)
 		options = {
-			astro: isPackageExists('astro'),
+			astro: isPackageExists('prettier-plugin-astro'),
 			css: true,
 			graphql: true,
 			html: true,
@@ -212,7 +212,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 			});
 	}
 
-	if (options.astro)
+	if (options.astro) {
 		configs.push({
 			files: [GLOB_ASTRO],
 			languageOptions: {
@@ -230,6 +230,21 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 				],
 			},
 		});
+
+		configs.push({
+			files: [GLOB_ASTRO, GLOB_ASTRO_TS],
+			name: 'petal/formatter/astro/disables',
+			rules: {
+				'style/arrow-parens': 'off',
+				'style/block-spacing': 'off',
+				'style/comma-dangle': 'off',
+				'style/indent': 'off',
+				'style/no-multi-spaces': 'off',
+				'style/quotes': 'off',
+				'style/semi': 'off',
+			},
+		});
+	}
 
 	if (options.graphql)
 		configs.push({

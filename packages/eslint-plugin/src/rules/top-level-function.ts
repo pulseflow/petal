@@ -57,7 +57,7 @@ export default createEslintRule<Options, MessageIds>({
 						end: body.loc.start,
 					},
 					messageId: 'topLevelFunctionDeclaration',
-					fix(fixer) {
+					fix: (f) => {
 						const code = context.sourceCode.text;
 						const textName = code.slice(id.range[0], id.range[1]);
 						const textArgs = arrowFn.params.length
@@ -75,7 +75,7 @@ export default createEslintRule<Options, MessageIds>({
 						const textAsync = arrowFn.async ? 'async ' : '';
 
 						const final = `${textAsync}function ${textName} ${textGeneric}(${textArgs})${textTypeReturn} ${textBody}`;
-						return fixer.replaceTextRange([node.range[0], node.range[1]], final);
+						return f.replaceTextRange([node.range[0], node.range[1]], final);
 					},
 				});
 			},

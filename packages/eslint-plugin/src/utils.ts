@@ -14,7 +14,7 @@ export function getESLintCoreRule<R extends RuleId>(ruleId: R): RuleMap[R] {
 	return ESLintUtils.nullThrows(builtinRules.get(ruleId), `ESLint core rule '${ruleId} not found.`);
 }
 
-const blobUrl: string = 'https://github.com/pulseflow/petal/blob/main/packages/eslint-plugin/src/rules';
+const blobUrl = 'https://github.com/pulseflow/petal/blob/main/packages/eslint-plugin/src/rules/';
 
 export interface RuleModule<T extends readonly unknown[]> extends Rule.RuleModule { defaultOptions: T };
 
@@ -26,8 +26,7 @@ export interface RuleModule<T extends readonly unknown[]> extends Rule.RuleModul
  */
 function RuleCreator(urlCreator: (name: string) => string) {
 	return <TOptions extends readonly unknown[], TMessageIds extends string>
-	({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>,
-	): RuleModule<TOptions> =>
+	({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>): RuleModule<TOptions> =>
 		createRule<TOptions, TMessageIds>({
 			meta: {
 				...meta,
@@ -46,32 +45,19 @@ function RuleCreator(urlCreator: (name: string) => string) {
  * @returns Well-typed TSESLint custom ESLint rule.
  * @remarks It is generally better to provide a docs URL function to RuleCreator.
  */
-function createRule<TOptions extends readonly unknown[], TMessageIds extends string>({ create, defaultOptions, meta }: Readonly<RuleWithMeta<TOptions, TMessageIds>>): RuleModule<TOptions> {
+function createRule<TOptions extends readonly unknown[], TMessageIds extends string>(
+	{ create, defaultOptions, meta }: Readonly<RuleWithMeta<TOptions, TMessageIds>>,
+): RuleModule<TOptions> {
 	return {
 		create: ((
 			context: Readonly<RuleContext<TMessageIds, TOptions>>,
-		): RuleListener => {
-			const optionsWithDefault = context.options.map((opts, idx) => {
-				return {
-					...defaultOptions[idx] || {},
-					...opts || {},
-				};
-			}) as unknown as TOptions;
-
-			return create(context, optionsWithDefault);
-		}) as any,
+		): RuleListener => create(context, context.options.map(
+			(o, i) => ({ ...defaultOptions[i] || {}, ...o || {} }),
+		) as unknown as TOptions)) as any,
 		defaultOptions,
 		meta: meta as any,
 	};
 }
 
-export const createEslintRule = RuleCreator(ruleName => `${blobUrl}/${ruleName}.md`) as any as <TOptions extends readonly unknown[], TMessageIds extends string>
+export const createEslintRule = RuleCreator(ruleName => `${blobUrl}${ruleName}.md`) as any as <TOptions extends readonly unknown[], TMessageIds extends string>
 ({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>) => RuleModule<TOptions>;
-
-const warned = new Set<string>();
-export function warnOnce(message: string) {
-	if (warned.has(message))
-		return;
-	warned.add(message);
-	console.warn(message);
-}

@@ -1,4 +1,4 @@
-import { assertExpect, isString } from '../core';
+import { isObject, isString } from '../core';
 
 type Key = string | number | symbol;
 type Tuples<K extends Key, V> = [K, V][];
@@ -12,7 +12,7 @@ export function toTuples<K extends string, V>(t: RecordOrTuples<K, V> | string, 
 		return [...t];
 	if (Array.isArray(t))
 		return t;
-	if (assertExpect(t).is('object'))
+	if (isObject(t))
 		return Object.entries(t) as Tuples<K, V>;
 	if (isString(t) && isString(v))
 		return [[t as K, v]];

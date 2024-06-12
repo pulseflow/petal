@@ -9,6 +9,15 @@ export const StylisticConfigDefaults: StylisticConfig = {
 };
 
 export interface StylisticOptions extends StylisticConfig, OptionsOverrides {
+	/**
+	 * Enable or disable more opinionated rules, including:
+	 *
+	 * - `'curly': ['error', 'multi', 'consistent']`
+	 * - `'petal/if-newline': 'error'`
+	 * - `'petal/top-level-function': 'error'`
+	 *
+	 * @default true
+	 */
 	opinionated?: boolean;
 }
 

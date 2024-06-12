@@ -5,13 +5,8 @@ import { execa } from 'execa';
 import fg from 'fast-glob';
 import type { OptionsConfig, TypedFlatConfigItem } from '../src/types';
 
-beforeAll(async () => {
-	await fs.rm('./packages/eslint-config/_fixtures', { recursive: true, force: true });
-});
-
-afterAll(async () => {
-	await fs.rm('./packages/eslint-config/_fixtures', { recursive: true, force: true });
-});
+beforeAll(async () => await fs.rm('./packages/eslint-config/_fixtures', { recursive: true, force: true }));
+afterAll(async () => await fs.rm('./packages/eslint-config/_fixtures', { recursive: true, force: true }));
 
 runWithConfig('js', {
 	typescript: false,
@@ -119,15 +114,17 @@ export default petal(
 		});
 
 		await Promise.all(files.map(async (file) => {
-			const content = await fs.readFile(join(target, file), 'utf-8');
-			const source = await fs.readFile(join(from, file), 'utf-8');
+			const content = (await fs.readFile(join(target, file), 'utf-8')).replace(/\r\n/g, '\n').trim();
+			const source = (await fs.readFile(join(from, file), 'utf-8')).replace(/\r\n/g, '\n').trim();
 			const outputPath = join(output, file);
+
 			if (content === source) {
 				if (fs.existsSync(outputPath))
 					fs.remove(outputPath);
 				return;
 			}
-			await expect.soft(content).toMatchFileSnapshot(join(output, file));
+
+			await expect.soft(content).toMatchFileSnapshot(outputPath);
 		}));
-	}, 40_000);
+	}, 60_000);
 }

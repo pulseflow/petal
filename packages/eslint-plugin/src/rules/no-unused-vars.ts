@@ -1,6 +1,6 @@
 export {};
 
-// import { InferMessageIdsTypeFromRule, InferOptionsTypeFromRule } from '@typescript-eslint/utils/eslint-utils';
+// import type { InferMessageIdsTypeFromRule, InferOptionsTypeFromRule } from '@typescript-eslint/utils/eslint-utils';
 // import { createEslintRule, getESLintCoreRule } from '../utils';
 
 // const baseRule = getESLintCoreRule('no-unused-vars');
@@ -24,7 +24,15 @@ export {};
 // 		messages: baseRule.meta.messages,
 // 	},
 // 	defaultOptions: baseRule.defaultOptions,
-// 	create: context => {
-// 		return baseRule.create(context);
+// 	create: (context) => {
+// 		const sourceCode = context.sourceCode;
+// 		const rules = baseRule.create(context);
+
+// 		return {
+// 			ArrowFunctionExpression: (node) => {
+// 				return /^Import(|Default|Namespace)Specifier$/.test(node.parent.type) === false
+// 					&& Object.assign(rules.ArrowFunctionExpression(node), addFixer)
+// 			}
+// 		}
 // 	},
 // });

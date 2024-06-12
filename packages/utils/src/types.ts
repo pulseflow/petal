@@ -11,6 +11,8 @@ export type StrictNullable<T> = T | null;
 /** Possibly an `Array<T>` */
 export type Arrayable<T> = T | Array<T>;
 
+export type ToString<T> = T extends `${infer V}` ? V : never;
+
 /** Possibly a Function */
 export type Fn<Return = void> = () => Return;
 export type ArgsFn<Return = void, Args extends any[] = any[]> = (...args: Args) => Return;

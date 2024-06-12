@@ -1,6 +1,5 @@
-import { unindent as $ } from 'eslint-vitest-rule-tester';
 import rule, { RULE_NAME } from './indent-unindent';
-import { run } from './_test';
+import { $, run } from './_test';
 
 run({
 	name: RULE_NAME,

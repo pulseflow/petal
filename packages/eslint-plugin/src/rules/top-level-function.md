@@ -1,6 +1,6 @@
 # top-level-function
 
-Enforce top-level function to be declared using `function` instead of arrow function. With auto-fix.
+Enforce top-level function to be declared using `function` instead of arrow function, includes auto-fix.
 
 ## Rule Details
 

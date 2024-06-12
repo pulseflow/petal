@@ -21,22 +21,20 @@ export default createEslintRule<Options, MessageIds>({
 	defaultOptions: [],
 	create: (context) => {
 		return {
-			IfStatement(node) {
-				if (!node.consequent)
+			IfStatement(n) {
+				if (!n.consequent)
 					return;
-				if (node.consequent.type === 'BlockStatement')
+				if (n.consequent.type === 'BlockStatement')
 					return;
-				if (node.test.loc.end.line === node.consequent.loc.start.line)
+				if (n.test.loc.end.line === n.consequent.loc.start.line)
 					context.report({
-						node,
+						node: n,
 						loc: {
-							start: node.test.loc.end,
-							end: node.consequent.loc.start,
+							start: n.test.loc.end,
+							end: n.consequent.loc.start,
 						},
 						messageId: 'missingIfNewline',
-						fix(fixer) {
-							return fixer.replaceTextRange([node.consequent.range[0], node.consequent.range[0]], '\n');
-						},
+						fix: f => f.replaceTextRange([n.consequent.range[0], n.consequent.range[0]], '\n'),
 					});
 			},
 		};

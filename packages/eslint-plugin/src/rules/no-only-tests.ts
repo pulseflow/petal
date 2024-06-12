@@ -1,6 +1,5 @@
 import type { JSONSchema4 } from '@typescript-eslint/utils/json-schema';
 import type { TSESTree } from '@typescript-eslint/utils';
-import type { RuleFixer } from '@typescript-eslint/utils/ts-eslint';
 import { createEslintRule } from '../utils';
 
 export const RULE_NAME = 'no-only-tests';
@@ -11,6 +10,7 @@ export type Options = [{
 }];
 
 const defaultOptions: Options = [{
+	/// @keep-sorted
 	blocks: [
 		'describe',
 		'it',
@@ -28,6 +28,8 @@ const defaultOptions: Options = [{
 	],
 	focus: ['only'],
 }];
+
+// Adapted from https://github.com/levibuzolic/eslint-plugin-no-only-tests
 
 export default createEslintRule<Options, MessageIds>({
 	name: RULE_NAME,
@@ -90,7 +92,7 @@ export default createEslintRule<Options, MessageIds>({
 				const callPath = getCallPath(node.parent).join('.');
 
 				if (blocks.some(f => (f.endsWith('*')) ? callPath.startsWith(f.replace(/\*$/, '')) : callPath.startsWith(`${f}.`)))
-					context.report({ node, messageId: 'noOnlyTests', fix: (fixer: RuleFixer) => fixer.removeRange([node.range[0] - 1, node.range[1]]) });
+					context.report({ node, messageId: 'noOnlyTests', fix: fx => fx.removeRange([node.range[0] - 1, node.range[1]]) });
 			},
 		};
 	},

@@ -48,12 +48,15 @@
 		"stub": "unbuild --stub"
 	},
 	"dependencies": {
+		"fast-glob": "^3.3.2",
+		"fs-extra": "^11.2.0",
 		"luxon": "^3.4.4",
 		"pathe": "^1.1.2",
 		"serialize-error": "^11.0.3",
 		"ufo": "^1.5.3"
 	},
 	"devDependencies": {
+		"@types/fs-extra": "^11.0.4",
 		"@types/luxon": "^3.4.2",
 		"@types/zen-observable": "^0.8.7",
 		"p-limit": "^5.0.0",

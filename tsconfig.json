@@ -15,6 +15,7 @@
 		"**/dist/**",
 		"**/build/**",
 		"**/fixtures/**",
-		"**/.fixtures/**"
+		"**/.fixtures/**",
+		"**/_fixtures/**"
 	]
 }

@@ -19,10 +19,7 @@ export default createEslintRule<Options, MessageIds>({
 	},
 	defaultOptions: [],
 	create: (context) => {
-		function isDist(path: string) {
-			return (path.startsWith('.') && path.match(/\/dist(\/|$)/))
-				|| path === 'dist';
-		}
+		const isDist = (path: string) => (path.startsWith('.') && path.match(/\/dist(\/|$)/)) || path === 'dist';
 
 		return {
 			ImportDeclaration: (node) => {

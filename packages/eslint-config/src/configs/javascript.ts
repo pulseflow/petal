@@ -37,6 +37,9 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 			linterOptions: {
 				reportUnusedDisableDirectives: true,
 			},
+			name: 'petal/javascript/setup',
+		},
+		{
 			name: 'petal/javascript/rules',
 			plugins: {
 				'petal': pluginPetal,

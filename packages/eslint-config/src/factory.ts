@@ -13,6 +13,7 @@ import {
 	javascript,
 	jsdoc,
 	jsonc,
+	jsx,
 	markdown,
 	node,
 	perfectionist,
@@ -29,7 +30,7 @@ import {
 	unocss,
 	vue,
 	yaml,
-} from './configs/index';
+} from './configs';
 import { interopDefault } from './utils';
 import { formatters } from './configs/formatters';
 import { regexp } from './configs/regexp';
@@ -87,6 +88,7 @@ export function petal(
 			(process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM)
 			&& !process.env.CI
 		),
+		jsx: enableJsx = true,
 		react: enableReact = false,
 		regexp: enableRegexp = true,
 		solid: enableSolid = SolidPackages.some(i => isPackageExists(i)),
@@ -103,7 +105,7 @@ export function petal(
 			: {};
 
 	if (stylisticOptions && !('jsx' in stylisticOptions))
-		stylisticOptions.jsx = options.jsx ?? true;
+		stylisticOptions.jsx = enableJsx;
 
 	const configs: Awaitable<TypedFlatConfigItem[]>[] = [];
 	if (enableGitignore)
@@ -136,6 +138,9 @@ export function petal(
 
 	if (enableVue)
 		componentExts.push('vue');
+
+	if (enableJsx)
+		configs.push(jsx());
 
 	if (enableTypeScript)
 		configs.push(typescript({

@@ -3,7 +3,7 @@
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 
-This contains all Petal-specific eslint rules for [eslint-config](https://github.com/pulseflow/petal/blob/main/configs/eslint-config).
+This contains linting rules according to the Petal specification for [eslint-config-petal](https://github.com/pulseflow/petal/blob/main/configs/eslint-config). **All** rules contain detailed error messages, with all incluidng auto-fixers.
 
 [Rules List](https://github.com/pulseflow/petal/blob/main/configs/eslint-plugin/src/rules/)
 
