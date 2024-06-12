@@ -1,21 +1,27 @@
 # @flowr/petal
 
 [![Actions Status](https://github.com/pulseflow/petal/workflows/Tests/badge.svg)](https://github.com/pulseflow/petal/actions)
-[![Version](https://img.shields.io/npm/v/@flowr/petal.svg)](https://www.npmjs.com/package/@flowr/petal)
+[![Version](https://img.shields.io/npm/v/@flowr/utils.svg)](https://www.npmjs.com/package/@flowr/utils)
 
-A monorepo of base configs and CLI wrappers used to speed up development @ Pulse.
+A monorepo of configs and packages used to speed up development @ Pulseflow and ensure adherence to Petal standards.
 
-## Petal shared configurations
+## Petal Configuration Suite
 
--   [@flowr/eslint-config](./configs/eslint-config)
--   [@flowr/petal-plugin](./configs/petal-plugin)
--   [@flowr/tsconfig](./configs/tsconfig)
+- [`@flowr/eslint-config`](./packages/eslint-config): Standardized Petal specification linting configuration
+- [`eslint-plugin-petal`](./packages/petal-plugin): Custom ESLint rules for the Petal specification
+- [`@flowr/tsconfig`](./packages/tsconfig): Common TSConfigs in Petal standardized projects
+
+## Petal Utilities
+
+- [`create-petal`](./packages/create-petal): WIP CLI utility for creating and migrating Petal projects
+- [`@flowr/console`](./packages/console): WIP Utilities for logging with JavaScript.
+- [`@flowr/utils`](./packages/utils): Universal utilities for Petal projects.
 
 ## Related projects we use (not exclusive)
 
--   [TypeScript]: a superset of JavaScript which we think helps make code readable and less bug-prone.
--   [ESLint]: used for static code analysis with auto-fixing.
--   [Vitest]: our preferred JavaScript test framework.
+- [TypeScript]: a superset of JavaScript which we think helps make code readable and less bug-prone.
+- [ESLint]: used for static code analysis with auto-fixing.
+- [Vitest]: our preferred JavaScript test framework.
 
 [eslint]: https://eslint.org/
 [typescript]: https://www.typescriptlang.org/

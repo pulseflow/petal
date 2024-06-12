@@ -2,19 +2,17 @@
 
 [![npm](https://img.shields.io/npm/v/@flowr/eslint-config?color=444&label=)](https://npmjs.com/package/@flowr/eslint-config)
 
-- easy reasonable defaults with only one line of config
-- auto fix for formatting (**without** prettier)
+- easy reasonable defaults with just one line of config
+- auto fix for formatting and best practices (**without** prettier)
 - designed to work with typescript, jsx, vue, json, yaml, toml, markdown, etc. out of the box
-- optional [react and astro](#non-vue-ui-frameworks), [unocss](#unocss) and [svelte](#svelte) support
-- heavily opinionated, but very [customizable](#customization)
+- optional [react](#react), [unocss](#unocss), [solid](#solid), [astro](#astro), and [svelte](#svelte) support
+- optional [formatter](#formatters) support for css, html, xml, graphql, etc.
 - easily composable [eslint flat config][eslint-flat]
 - respects `.gitignore` by default, without the need for `.eslintignore`
-- optional [formatter](#formatters) support for css, html, xml, graphql, etc.
-- best practices for minimal, stable, consistent code
+- **petal specification**: minimal, stable, consistent code and diffs
   - sorted imports, dangling commas
   - single quotes, semicolons
   - uses [eslint stylistic][stylistic]
-- respects `.gitignore` by default, without the need for `.eslintignore`
 - supports eslint v9 or v8.50.0+
 
 > [!IMPORTANT]
@@ -180,6 +178,7 @@ export default petal({
         '**/fixtures',
         // ...globs
     ],
+    // ...
 });
 ```
 
@@ -209,7 +208,7 @@ export default petal(
 );
 ```
 
-going more advanced, you can also import fine-grainec configs and compose them as wanted:
+going more advanced, you can also import fine-grained configs and compose them as wanted:
 
 <details>
 <summary>advanced example</summary>
@@ -336,7 +335,12 @@ export default petal()
         // some configs before the main config
     )
     .override(
-        'petal/imports'
+        'petal/imports',
+        {
+            rules: {
+                'import/order': ['error', { 'newlines-between': 'always' }],
+            }
+        }
     )
     .renamePlugins({
         'old-prefix': 'new-prefix',
@@ -347,7 +351,7 @@ export default petal()
 
 ### vue
 
-vue support is auto-detected. you can also explicitly enable it:
+vue support is auto-detected based on the `vue` dependency. you can also explicitly enable or disable it:
 
 ```js
 // eslint.config.js
@@ -373,7 +377,7 @@ export default petal({
 });
 ```
 
-this support may be removed when `eslint-plugin-vue` drops support for vue 2. i recommend updating to vue 3.
+this support may be removed when `eslint-plugin-vue` drops support for vue 2 and it is recommended to update to vue 3 if possible.
 
 ### optional configs
 
@@ -413,9 +417,9 @@ export default petal({
 
 the required dev dependencies are: `eslint-plugin-format` (you should be prompted to install these when running eslint)
 
-#### non-vue ui frameworks
+#### react
 
-to enable framework support, you need to explicitly turn it on:
+to enable react support, you need to explicitly turn it on:
 
 ```js
 // eslint.config.js
@@ -423,11 +427,25 @@ import petal from '@flowr/eslint-config';
 
 export default petal({
     react: true,
+});
+```
+
+the required dev dependencies are: `@eslint-react/eslint-plugin eslint-plugin-react-hooks` (you should be prompted to install these when running eslint)
+
+#### astro
+
+to enable astro support, you need to explicitly turn it on:
+
+```js
+// eslint.config.js
+import petal from '@flowr/eslint-config';
+
+export default petal({
     astro: true,
 });
 ```
 
-the required dev dependencies are: `@eslint-react/eslint-plugin eslint-plugin-react-hooks eslint-plugin-astro` (you should be prompted to install these when running eslint - astro is only required with astro integration)
+the required dev dependencies are: `eslint-plugin-astro` (you should be prompted to install these when running eslint)
 
 #### svelte
 
@@ -459,24 +477,26 @@ export default petal({
 
 the required dev dependencies are: `@unocss/eslint-plugin` (you should be prompted to install these when running eslint)
 
+#### solid
+
+to enable solid support, you need to explicitly turn it on:
+
+```js
+// eslint.config.js
+import petal from '@flowr/eslint-config';
+
+export default petal({
+    solid: true,
+});
+```
+
+the required dev dependencies are: `eslint-plugin-solid` (you should be prompted to install these when running eslint)
+
 ### optional rules
 
 we also provide some optional plugins and rules for extended/stricter usage:
 
-### `perfectionist` sorting
-
-the plugin [`eslint-plugin-perfectionist`](https://github.com/azat-io/eslint-plugin-perfectionist) sorts object keys and imports with auto-fix. the plugin is installed, but no rules are enabled by default. it's recommended to opt-in on each file individually using [configuration comments][config-comments].
-
-```js
-/* eslint perfectionist/sort-objects: "error" */
-const objectWantedToSort = {
-    a: 2,
-    b: 1,
-    c: 3,
-};
-```
-
-### `command`
+#### `command`
 
 the plugin by [`eslint-plugin-command`](https://github.com/antfu/eslint-plugin-command) allows you to add on-demand micro codemods that trigger on specific comment commands:
 
@@ -490,7 +510,6 @@ the plugin by [`eslint-plugin-command`](https://github.com/antfu/eslint-plugin-c
 you can add the trigger comment one line above the code you want to transform (note the triple slash):
 
 <!-- eslint-skip -->
-
 ```ts
 /// to-function
 const foo = async (bar: string): void => {
@@ -523,6 +542,48 @@ export default petal({
 });
 ```
 
+### editor specific disables
+
+certain rules are disabled when inside [eslint ide integrations](#ide-integration), namely [`unused-imports/no-unused-imports`](https://www.npmjs.com/package/eslint-plugin-unused-imports) and [`petal/no-only-tests`](../eslint-plugin/src/rules/no-only-tests.md).
+
+this is to prevent unused imports and temporary patches from getting removed by the ide during refactoring. those rules are applied when eslint is ran in the terminal. you can disable this behavior using:
+
+```js
+// eslint.config.js
+import petal from '@flowr/eslint-config';
+
+export default petal({
+    isInEditor: false,
+});
+```
+
+## config inspector
+
+eslint has a visual tool to help view what rules are enabled in a project and which files they are applied to, [`@eslint/config-inspector`](https://github.com/eslint/config-inspector). go to the project root that contains a `eslint.config.js` file and run:
+
+```bash
+pnpm dlx @eslint/config-inspector
+```
+
+## versioning
+
+the petal projects follows [semantic versioning](https://semver.org/) for its release cycle. however, since this is a recommended configuration and has many constantly updating plugins and moving parts, rule changes **are not** treated as breaking changes.
+
+this is a petal project, and as such is released in observence with the rest of the petal monorepo. version bumps will come out as patches in regular intervals as other petal projects are updated.
+
+### changes considered breaking changes
+
+- peer and node.js version requirement changes
+- large refactors that may break existing configurations
+- plugin updates with breaking changes that may break existing configurations
+- changes that effect most of the codebase
+
+### changes not considered as breaking changes
+
+- enabling or disabling of rules (may become stricter)
+- changing of rules options
+- patch version bumps of dependencies
+
 ## FAQ
 
 ### prettier?
@@ -535,10 +596,26 @@ using prettier isn't recommended, but you can still use it to format files that 
 
 however, we do have dprint integration for formatting other files such as `.md` (see [formatters](#formatters) for more details).
 
+### css formatting?
+
+you can opt-in to the [`formatters`](#formatters) feature to format css. this would only format the code, not lint it. for proper linting support, you can try [`stylelint`](https://stylelint.io/), or [`unocss`](https://unocss.dev/) and the [`unocss` integration](#unocss).
+
+### majorly opinionated rules?
+
+some rules set by default are very opinionated, and as such, we include an option to disable some rules. you can use the `opinionated` option as follows:
+
+```js
+// eslint.config.js
+import petal from '@flowr/eslint-config';
+
+export default petal({
+    opinionated: false // by default, `true`
+});
+```
+
 [configs]: https://github.com/pulseflow/petal/blob/main/configs/eslint-config/src/configs
 [factory]: https://github.com/pulseflow/petal/blob/main/configs/eslint-config/src/factory.ts
 [eslint-flat]: https://eslint.org/docs/latest/use/configure/configuration-files-new
 [stylistic]: https://github.com/eslint-stylistic/eslint-stylistic
 [vscode]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
-[config-comments]: https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1
 [type-aware]: https://typescript-eslint.io/linting/typed-linting
