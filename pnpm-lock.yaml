@@ -148,8 +148,8 @@ importers:
         specifier: ^17.8.1
         version: 17.8.1(eslint-ts-patch@9.4.0-0)
       eslint-plugin-perfectionist:
-        specifier: ^2.10.0
-        version: 2.10.0(astro-eslint-parser@1.0.2(typescript@5.4.5))(eslint-ts-patch@9.4.0-0)(svelte-eslint-parser@0.37.0(svelte@4.2.18))(svelte@4.2.18)(typescript@5.4.5)(vue-eslint-parser@9.4.3(eslint-ts-patch@9.4.0-0))
+        specifier: ^2.11.0
+        version: 2.11.0(astro-eslint-parser@1.0.2(typescript@5.4.5))(eslint-ts-patch@9.4.0-0)(svelte-eslint-parser@0.37.0(svelte@4.2.18))(svelte@4.2.18)(typescript@5.4.5)(vue-eslint-parser@9.4.3(eslint-ts-patch@9.4.0-0))
       eslint-plugin-petal:
         specifier: workspace:^
         version: link:../eslint-plugin
@@ -1987,13 +1987,13 @@ packages:
     peerDependencies:
       eslint: '>=8.23.0'
 
-  eslint-plugin-perfectionist@2.10.0:
-    resolution: {integrity: sha512-P+tdrkHeMWBc55+DZsoDOAftV1WCsEoHaKm6JC7zajFus/syfT4vUPBFb3atGFSuyaVnGQGHlcKpP9X3Q0gH/w==}
+  eslint-plugin-perfectionist@2.11.0:
+    resolution: {integrity: sha512-XrtBtiu5rbQv88gl+1e2RQud9te9luYNvKIgM9emttQ2zutHPzY/AQUucwxscDKV4qlTkvLTxjOFvxqeDpPorw==}
     peerDependencies:
-      astro-eslint-parser: ^0.16.0
+      astro-eslint-parser: ^1.0.2
       eslint: '>=8.0.0'
       svelte: '>=3.0.0'
-      svelte-eslint-parser: ^0.33.0
+      svelte-eslint-parser: ^0.37.0
       vue-eslint-parser: '>=9.0.0'
     peerDependenciesMeta:
       astro-eslint-parser:
@@ -2333,6 +2333,7 @@ packages:
   glob@8.1.0:
     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
     engines: {node: '>=12'}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   globals@11.12.0:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
@@ -2426,6 +2427,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -5672,9 +5674,9 @@ snapshots:
       minimatch: 9.0.4
       semver: 7.6.2
 
-  eslint-plugin-perfectionist@2.10.0(astro-eslint-parser@1.0.2(typescript@5.4.5))(eslint-ts-patch@9.4.0-0)(svelte-eslint-parser@0.37.0(svelte@4.2.18))(svelte@4.2.18)(typescript@5.4.5)(vue-eslint-parser@9.4.3(eslint-ts-patch@9.4.0-0)):
+  eslint-plugin-perfectionist@2.11.0(astro-eslint-parser@1.0.2(typescript@5.4.5))(eslint-ts-patch@9.4.0-0)(svelte-eslint-parser@0.37.0(svelte@4.2.18))(svelte@4.2.18)(typescript@5.4.5)(vue-eslint-parser@9.4.3(eslint-ts-patch@9.4.0-0)):
     dependencies:
-      '@typescript-eslint/utils': 7.10.0(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
+      '@typescript-eslint/utils': 7.13.0(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
       eslint: eslint-ts-patch@9.4.0-0
       minimatch: 9.0.4
       natural-compare-lite: 1.4.0
