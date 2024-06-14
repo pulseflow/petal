@@ -1,4 +1,5 @@
 import { join, resolve } from 'node:path';
+import process from 'node:process';
 import { afterAll, beforeAll, it } from 'vitest';
 import fs from 'fs-extra';
 import { execa } from 'execa';
@@ -102,7 +103,9 @@ export default petal(
 );
 `, 'utf-8');
 
-		await execa({ stdio: 'pipe', cwd: target })`pnpm -c dlx eslint --config ./eslint.config.js . --fix`;
+		if (process.platform === 'win32')
+			await execa({ stdio: 'pipe', cwd: target })`npx eslint . --fix`;
+		else await execa({ stdio: 'pipe', cwd: target })`pnpm -c dlx eslint --config ./eslint.config.js . --fix`;
 
 		const files = await fg('**/*', {
 			ignore: [
