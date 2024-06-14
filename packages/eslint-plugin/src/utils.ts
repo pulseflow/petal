@@ -1,7 +1,6 @@
 import type { RuleListener, RuleWithMeta, RuleWithMetaAndName } from '@typescript-eslint/utils/eslint-utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 import type { Rule } from 'eslint';
-import { ESLintUtils } from '@typescript-eslint/utils';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
 
 export interface RuleMap {
@@ -10,8 +9,14 @@ export interface RuleMap {
 
 export type RuleId = keyof RuleMap;
 
+function nullThrows<T>(value: T, message: string): NonNullable<T> {
+	if (value == null)
+		throw new Error(`Non-null Assertion Failed: ${message}`);
+	return value;
+}
+
 export function getESLintCoreRule<R extends RuleId>(ruleId: R): RuleMap[R] {
-	return ESLintUtils.nullThrows(builtinRules.get(ruleId), `ESLint core rule '${ruleId} not found.`);
+	return nullThrows(builtinRules.get(ruleId), `ESLint core rule '${ruleId}' not found.`);
 }
 
 const blobUrl = 'https://github.com/pulseflow/petal/blob/main/packages/eslint-plugin/src/rules/';

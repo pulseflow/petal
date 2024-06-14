@@ -16,6 +16,7 @@ export async function svelte(options: OptionsHasTypeScript & OptionsOverrides & 
 
 	await ensurePackages([
 		'eslint-plugin-svelte',
+		'svelte-eslint-parser',
 	]);
 
 	const [

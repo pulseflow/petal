@@ -274,14 +274,14 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 *
 	 * @default false
 	 */
-	svelte?: boolean;
+	svelte?: boolean | OptionsOverrides;
 
 	/**
 	 * Enable Astro support.
 	 *
 	 * @default auto-detect based on the dependencies
 	 */
-	astro?: boolean;
+	astro?: boolean | OptionsOverrides;
 
 	/**
 	 * Enable JSONC support.

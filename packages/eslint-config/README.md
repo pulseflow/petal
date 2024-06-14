@@ -4,8 +4,8 @@
 
 - easy reasonable defaults with just one line of config
 - auto fix for formatting and best practices (**without** prettier)
-- designed to work with typescript, jsx, vue, json, yaml, toml, markdown, etc. out of the box
-- optional [react](#react), [unocss](#unocss), [solid](#solid), [astro](#astro), and [svelte](#svelte) support
+- designed to work with typescript, jsx, json, yaml, toml, markdown, etc. out of the box
+- optional [react](#react), [unocss](#unocss), [solid](#solid), [astro](#astro), [vue](#vue) and [svelte](#svelte) support
 - optional [formatter](#formatters) support for css, html, xml, graphql, etc.
 - easily composable [eslint flat config][eslint-flat]
 - respects `.gitignore` by default, without the need for `.eslintignore`
@@ -14,9 +14,6 @@
   - single quotes, semicolons
   - uses [eslint stylistic][stylistic]
 - supports eslint v9 or v8.50.0+
-
-> [!IMPORTANT]
-> this config uses the new [eslint flat config][eslint-flat]. this may require new integeration configuration and some adjustments.
 
 ## usage
 
@@ -40,7 +37,7 @@ export default petal();
 combined with a legacy configuration:
 </summary>
 
-If you still use some configs from the legacy eslintrc format, you can use the [`@eslint/eslintrc`](https://www.npmjs.com/package/@eslint/eslintrc) package to convert them to the flat config.
+if you still use some configuration from the legacy eslintrc format, you can use the [`@eslint/eslintrc`](https://www.npmjs.com/package/@eslint/eslintrc) package to convert them to the flat config.
 
 ```js
 // eslint.config.mjs
@@ -57,7 +54,7 @@ export default petal(
     // legacy config
     ...compat.config({
         'eslint:recommended',
-        // other extends...
+        // other legacy config options...
     }),
 
     // other flat configs...
@@ -240,6 +237,7 @@ export default combine(
     yaml(),
     toml(),
     markdown(),
+    /* ... */
 );
 ```
 
@@ -249,11 +247,11 @@ check out the [configs][configs] and [factory][factory] for more details.
 
 ### plugins remaining
 
-since [flat config][eslint-flat] requires us to explicitly provide the plugin names (rather than the mandatory convention derived from the npm package name), we renamed some plugins to make the overall scope more consistent and easier to write:
+since [flat config][eslint-flat] allows us to explicitly provide the plugin names (rather than the mandatory convention derived from the npm package name), we renamed some plugins to make the overall scope more consistent and easier to write:
 
 | New Prefix | Original Prefix        | Source Plugin                                                                              |
 | ---------- | ---------------------- | ------------------------------------------------------------------------------------------ |
-| `import/*` | `i/*`                  | [eslint-plugin-import-x](https://github.com/un-es/eslint-plugin-import-x)                                |
+| `import/*` | `i/*`                  | [eslint-plugin-import-x](https://github.com/un-es/eslint-plugin-import-x)                  |
 | `node/*`   | `n/*`                  | [eslint-plugin-n](https://github.com/eslint-community/eslint-plugin-n)                     |
 | `yaml/*`   | `yml/*`                | [eslint-plugin-yml](https://github.com/ota-meshi/eslint-plugin-yml)                        |
 | `ts/*`     | `@typescript-eslint/*` | [@typescript-eslint/eslint-plugin](https://github.com/typescript-eslint/typescript-eslint) |
@@ -344,9 +342,9 @@ export default petal()
     )
     .renamePlugins({
         'old-prefix': 'new-prefix',
-        // ...
+        /* ... */
     });
-// ...
+/* ... */
 ```
 
 ### vue
@@ -361,6 +359,10 @@ export default petal({
     vue: true,
 });
 ```
+
+the required dev dependencies are: `eslint-plugin-vue vue-eslint-parser` (you should be prompted to install these when running eslint)
+
+if you have `vue.sfcBlocks` enabled (set to enabled by default), you will also need to install `eslint-processor-vue-blocks` as a dev dependency, also prompted upon running eslint
 
 #### vue 2
 
@@ -412,6 +414,7 @@ export default petal({
          */
         markdown: 'prettier', // also 'dprint' or `true` (default)
     },
+    /* ... */
 });
 ```
 
@@ -434,7 +437,7 @@ the required dev dependencies are: `@eslint-react/eslint-plugin eslint-plugin-re
 
 #### astro
 
-to enable astro support, you need to explicitly turn it on:
+to enable astro support, you need to explicitly turn it on or install the `astro` dependency, in which case it is auto-detected:
 
 ```js
 // eslint.config.js
@@ -449,7 +452,7 @@ the required dev dependencies are: `eslint-plugin-astro` (you should be prompted
 
 #### svelte
 
-to enable svelte support, you need to explicitly turn it on:
+to enable svelte support, you need to explicitly turn it on, or install a svelte related dependency, in which case it is auto-detected:
 
 ```js
 // eslint.config.js
@@ -479,7 +482,7 @@ the required dev dependencies are: `@unocss/eslint-plugin` (you should be prompt
 
 #### solid
 
-to enable solid support, you need to explicitly turn it on:
+to enable solid support, you need to explicitly turn it on, or install a solid-related dependency, in which case it is auto-detected:
 
 ```js
 // eslint.config.js
@@ -602,20 +605,20 @@ you can opt-in to the [`formatters`](#formatters) feature to format css. this wo
 
 ### majorly opinionated rules?
 
-some rules set by default are very opinionated, and as such, we include an option to disable some rules. you can use the `opinionated` option as follows:
+some rules set by default are very opinionated, and as such, we include an option to disable some rules. you can use the `opinionated` toggle as follows:
 
 ```js
 // eslint.config.js
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    opinionated: false // by default, `true`
+    opinionated: false, // by default this is `true`; `false` disables the opinionated rules
 });
 ```
 
-[configs]: https://github.com/pulseflow/petal/blob/main/configs/eslint-config/src/configs
-[factory]: https://github.com/pulseflow/petal/blob/main/configs/eslint-config/src/factory.ts
-[eslint-flat]: https://eslint.org/docs/latest/use/configure/configuration-files-new
+[configs]: https://github.com/pulseflow/petal/blob/main/packages/eslint-config/src/configs
+[factory]: https://github.com/pulseflow/petal/blob/main/packages/eslint-config/src/factory.ts
+[eslint-flat]: https://eslint.org/docs/latest/use/configure/configuration-files
 [stylistic]: https://github.com/eslint-stylistic/eslint-stylistic
 [vscode]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
-[type-aware]: https://typescript-eslint.io/linting/typed-linting
+[type-aware]: https://typescript-eslint.io/getting-started/typed-linting/

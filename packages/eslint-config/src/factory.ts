@@ -8,6 +8,7 @@ import {
 	astro,
 	command,
 	comments,
+	formatters,
 	ignores,
 	imports,
 	javascript,
@@ -18,6 +19,7 @@ import {
 	node,
 	perfectionist,
 	react,
+	regexp,
 	solid,
 	sortPackageJson,
 	sortTsConfig,
@@ -32,8 +34,6 @@ import {
 	yaml,
 } from './configs';
 import { interopDefault } from './utils';
-import { formatters } from './configs/formatters';
-import { regexp } from './configs/regexp';
 
 const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
 	'name',
@@ -49,6 +49,7 @@ const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
 
 const VuePackages = ['vue', 'nuxt', 'vitepress', '@slidev/cli'];
 const SolidPackages = ['solid-js', 'vite-plugin-solid', 'solid-refresh'];
+const SveltePackages = ['@sveltejs/kit', '@sveltejs/package', '@sveltejs/vite-plugin-svelte', 'svelte'];
 
 export const defaultPluginRenaming = {
 	'@eslint-react': 'react',
@@ -92,7 +93,7 @@ export function petal(
 		react: enableReact = false,
 		regexp: enableRegexp = true,
 		solid: enableSolid = SolidPackages.some(i => isPackageExists(i)),
-		svelte: enableSvelte = false,
+		svelte: enableSvelte = SveltePackages.some(i => isPackageExists(i)),
 		typescript: enableTypeScript = isPackageExists('typescript'),
 		unocss: enableUnoCSS = false,
 		vue: enableVue = VuePackages.some(i => isPackageExists(i)),

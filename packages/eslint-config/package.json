@@ -61,9 +61,12 @@
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-solid": "^0.14.0",
 		"eslint-plugin-svelte": ">=2.39.0",
+		"eslint-plugin-vue": "^9.26.0",
+		"eslint-processor-vue-blocks": "^0.1.2",
 		"prettier-plugin-astro": "^0.14.0",
 		"prettier-plugin-slidev": "^1.0.5",
-		"svelte-eslint-parser": ">=0.36.0"
+		"svelte-eslint-parser": ">=0.36.0",
+		"vue-eslint-parser": "^9.4.3"
 	},
 	"peerDependenciesMeta": {
 		"@eslint-react/eslint-plugin": {
@@ -93,6 +96,12 @@
 		"eslint-plugin-svelte": {
 			"optional": true
 		},
+		"eslint-plugin-vue": {
+			"optional": true
+		},
+		"eslint-processor-vue-blocks": {
+			"optional": true
+		},
 		"prettier-plugin-astro": {
 			"optional": true
 		},
@@ -100,6 +109,9 @@
 			"optional": true
 		},
 		"svelte-eslint-parser": {
+			"optional": true
+		},
+		"vue-eslint-parser": {
 			"optional": true
 		}
 	},
@@ -115,25 +127,22 @@
 		"eslint-merge-processors": "^0.1.0",
 		"eslint-plugin-command": "^0.2.3",
 		"eslint-plugin-import-x": "^0.5.1",
-		"eslint-plugin-jsdoc": "^48.2.9",
+		"eslint-plugin-jsdoc": "^48.2.11",
 		"eslint-plugin-jsonc": "^2.16.0",
 		"eslint-plugin-markdown": "^5.0.0",
 		"eslint-plugin-n": "^17.8.1",
-		"eslint-plugin-perfectionist": "^2.10.0",
+		"eslint-plugin-perfectionist": "^2.11.0",
 		"eslint-plugin-petal": "workspace:^",
 		"eslint-plugin-regexp": "^2.6.0",
 		"eslint-plugin-toml": "^0.11.0",
 		"eslint-plugin-unicorn": "^53.0.0",
 		"eslint-plugin-unused-imports": "^3.2.0",
 		"eslint-plugin-vitest": "^0.5.4",
-		"eslint-plugin-vue": "^9.26.0",
 		"eslint-plugin-yml": "^1.14.0",
-		"eslint-processor-vue-blocks": "^0.1.2",
 		"globals": "^15.4.0",
 		"jsonc-eslint-parser": "^2.4.0",
 		"local-pkg": "^0.5.0",
 		"toml-eslint-parser": "^0.9.3",
-		"vue-eslint-parser": "^9.4.3",
 		"yaml-eslint-parser": "^1.2.3"
 	},
 	"devDependencies": {
@@ -152,6 +161,8 @@
 		"eslint-plugin-react-hooks": "^4.6.2",
 		"eslint-plugin-solid": "^0.14.0",
 		"eslint-plugin-svelte": "^2.39.3",
+		"eslint-plugin-vue": "^9.26.0",
+		"eslint-processor-vue-blocks": "^0.1.2",
 		"eslint-ts-patch": "9.4.0-0",
 		"eslint-typegen": "^0.2.4",
 		"execa": "^9.2.0",
@@ -162,7 +173,8 @@
 		"svelte": "^4.2.18",
 		"svelte-eslint-parser": "^0.37.0",
 		"typescript": "^5.4.5",
-		"vue": "^3.4.27"
+		"vue": "^3.4.27",
+		"vue-eslint-parser": "^9.4.3"
 	},
 	"publishConfig": {
 		"access": "public"

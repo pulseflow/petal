@@ -158,7 +158,7 @@ export async function typescript(
 			},
 		},
 		{
-			files: ['**/*', '**/*.cjs'],
+			files: ['**/*.js', '**/*.cjs'],
 			name: 'petal/typescript/disables/cjs',
 			rules: {
 				'ts/no-require-imports': 'off',

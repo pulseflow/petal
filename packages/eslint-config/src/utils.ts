@@ -3,6 +3,7 @@ import { isPackageExists } from 'local-pkg';
 import type { Linter } from 'eslint';
 import type { Awaitable, TypedFlatConfigItem } from './types';
 
+/** A simple parser for use in AST-agnostic configs (i.e. markdown formatters, `eslint-plugin-format`) */
 export const parserPlain: Linter.FlatConfigParserModule = {
 	meta: {
 		name: 'parser-plain',
@@ -33,16 +34,16 @@ export const combine = async (...configs: Awaitable<TypedFlatConfigItem | TypedF
  *
  * @example
  * ```ts
- * import { renameRules } from '@petal/eslint-config'
+ * import { renameRules } from '@petal/eslint-config';
  *
  * export default [{
- *   rules: renameRules(
- *     {
- *       '@typescript-eslint/indent': 'error'
- *     },
- *     { '@typescript-eslint': 'ts' }
- *   )
- * }]
+ * 	rules: renameRules(
+ * 		{
+ * 			'@typescript-eslint/indent': 'error'
+ * 		},
+ * 		{ '@typescript-eslint': 'ts' },
+ * 	),
+ * }];
  * ```
  */
 export function renameRules(rules: Record<string, any>, map: Record<string, string>) {
@@ -60,13 +61,13 @@ export function renameRules(rules: Record<string, any>, map: Record<string, stri
  *
  * @example
  * ```ts
- * import { renamePluginInConfigs } from '@petal/eslint-config'
- * import someConfigs from './some-configs'
+ * import { renamePluginInConfigs } from '@petal/eslint-config';
+ * import someConfigs from './some-configs';
  *
  * export default renamePluginInConfigs(someConfigs, {
- *   '@typescript-eslint': 'ts',
- *   'import-x': 'import',
- * })
+ * 	'@typescript-eslint': 'ts',
+ * 	'import-x': 'import',
+ * });
  * ```
  */
 export function renamePluginInConfigs(configs: TypedFlatConfigItem[], map: Record<string, string>): TypedFlatConfigItem[] {
@@ -85,11 +86,24 @@ export function renamePluginInConfigs(configs: TypedFlatConfigItem[], map: Recor
 /** Export a generic value to an array */
 export const toArray = <T>(value: T | T[]): T[] => Array.isArray(value) ? value : [value];
 
+/**
+ * Utility to safely fetch an `import`ed ESLint plugin.
+ *
+ * Since ESLint Flat Config still isn't widely adopted, many plugins don't include types or a default import by default.
+ * Additionally, since we accept large version ranges in our peer dependencies, the structure of plugins may change at times.
+ * This function normalizes an import of a generic ESLint plugin, ensuring it is typed and accessible.
+ */
 export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { default: infer U } ? U : T> {
 	const resolved = await m;
 	return (resolved as any).default || resolved;
 }
 
+/**
+ * Ensures an array of ESLint plugin and package names exist using `local-pkg`.
+ *
+ * This is so we don't have to include framework-specific ESLint plugins to reduce the package size.
+ * It prompts the user to install the packages if one of the packages are not detected.
+ */
 export async function ensurePackages(packages: (string | undefined)[]) {
 	if (process.env.CI || process.stdout.isTTY === false)
 		return;

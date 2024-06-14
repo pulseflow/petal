@@ -5,7 +5,7 @@ import type {
 	TypedFlatConfigItem,
 } from '../types';
 import { pluginUnusedImports } from '../plugins';
-import { GLOB_SRC, GLOB_SRC_EXT } from '../globs';
+import { GLOB_CLI, GLOB_SCRIPTS } from '../globs';
 import { interopDefault } from '../utils';
 
 export async function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): Promise<TypedFlatConfigItem[]> {
@@ -225,7 +225,7 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 			},
 		},
 		{
-			files: [`scripts/${GLOB_SRC}`, `cli.${GLOB_SRC_EXT}`],
+			files: [GLOB_SCRIPTS, GLOB_CLI],
 			name: 'petal/javascript/disables/cli',
 			rules: {
 				'no-console': 'off',

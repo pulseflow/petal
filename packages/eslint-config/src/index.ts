@@ -1,6 +1,6 @@
 import { petal } from './factory';
 
-export * from './configs/index';
+export * from './configs';
 export * from './factory';
 export * from './globs';
 export * from './types';

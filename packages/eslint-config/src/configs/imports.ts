@@ -1,13 +1,18 @@
 /* eslint-disable perfectionist/sort-objects -- rules need to be in this order */
 import type { OptionsStylistic, TypedFlatConfigItem } from '../types';
-import { GLOB_SRC_EXT } from '../globs';
+import { GLOB_BIN, GLOB_BIN_SRC } from '../globs';
 import { interopDefault } from '../utils';
 
 export async function imports(options: OptionsStylistic = {}): Promise<TypedFlatConfigItem[]> {
 	const { stylistic = true } = options;
 
-	const pluginImport = await interopDefault(import('eslint-plugin-import-x'));
-	const pluginPetal = await interopDefault(import('eslint-plugin-petal'));
+	const [
+		pluginImport,
+		pluginPetal,
+	] = await Promise.all([
+		interopDefault(import('eslint-plugin-import-x')),
+		interopDefault(import('eslint-plugin-petal')),
+	] as const);
 
 	return [
 		{
@@ -37,7 +42,7 @@ export async function imports(options: OptionsStylistic = {}): Promise<TypedFlat
 			},
 		},
 		{
-			files: ['**/bin/**/*', `**/bin.${GLOB_SRC_EXT}`],
+			files: [GLOB_BIN, GLOB_BIN_SRC],
 			name: 'petal/imports/disables/bin',
 			rules: {
 				'petal/no-import-dist': 'off',

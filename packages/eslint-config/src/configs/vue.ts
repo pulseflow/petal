@@ -8,7 +8,7 @@ import type {
 	TypedFlatConfigItem,
 } from '../types';
 import { GLOB_VUE } from '../globs';
-import { interopDefault } from '../utils';
+import { ensurePackages, interopDefault } from '../utils';
 
 export async function vue(options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles & OptionsVue = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_VUE], overrides = {}, stylistic = true, vueVersion = 3 } = options;
@@ -18,15 +18,21 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 		? {}
 		: options.sfcBlocks ?? {};
 
+	await ensurePackages([
+		'eslint-plugin-vue',
+		'vue-eslint-parser',
+	]);
+
+	if (sfcBlocks)
+		ensurePackages(['eslint-processor-vue-blocks']);
+
 	const [
 		pluginVue,
 		parserVue,
-		processorVueBlocks,
 	] = await Promise.all([
 		// @ts-expect-error missing types
 		interopDefault(import('eslint-plugin-vue')),
 		interopDefault(import('vue-eslint-parser')),
-		interopDefault(import('eslint-processor-vue-blocks')),
 	] as const);
 
 	return [
@@ -74,7 +80,7 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 				? pluginVue.processors['.vue']
 				: mergeProcessors([
 					pluginVue.processors['.vue'],
-					processorVueBlocks({
+					(await interopDefault(import('eslint-processor-vue-blocks')))({
 						...sfcBlocks,
 						blocks: {
 							styles: true,
