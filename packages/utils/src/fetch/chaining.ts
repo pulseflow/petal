@@ -8,7 +8,7 @@ export function chain<T>(this: RequestBuilder<T>, ...args: (Parameters<typeof _c
 	return args.reduce((acc: RequestBuilder<T>, cur) => (_chain<T>).bind(acc)(cur), this.clone());
 }
 
-function _chain<T>(this: RequestBuilder<T>, arg: Method | string | RecordOrTuples<string, any> | null) {
+function _chain<T>(this: RequestBuilder<T>, arg: Method | string | RecordOrTuples<string, any> | null): RequestBuilder<T> {
 	if (isNull(arg))
 		return this;
 

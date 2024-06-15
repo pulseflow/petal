@@ -23,7 +23,7 @@ export class RequestBuilder<T> {
 	public _data: any;
 	public _dataType: BodyType = 'buffer';
 	public _headers: Record<string, string> = {};
-	public _agent = `@flowr/utils/fetch/${version} (+https://github.com/pulseflow)`;
+	public _agent: string = `@flowr/utils/fetch/${version} (+https://github.com/pulseflow)`;
 	public _timeout: number = DEF_TIMEOUT;
 	public _redirect: number = DEF_REFDIR_COUNT;
 	public _search: [string, string][];
@@ -41,6 +41,12 @@ export class RequestBuilder<T> {
 		this._finalizer = finalizer;
 	}
 
+	/**
+	 * Clone the current {@link RequestProxy<T>}.
+	 *
+	 * @see {@link RequestProxy<T>}
+	 * @chainable
+	 */
 	clone(): RequestProxy<T>;
 	clone<U>(finalizer: Finalizer<U>): RequestProxy<U>;
 	clone<U>(finalizer: Finalizer<T | U> = this._finalizer) {
@@ -62,20 +68,37 @@ export class RequestBuilder<T> {
 		return clone;
 	}
 
+	/**
+	 * Push an object(s) to the query string/search object.
+	 *
+	 * @chainable
+	 */
 	query(obj: RecordOrTuples<string, any>): this;
 	query(name: string, value: string): this;
-	query(a1: any, a2?: string) {
+	query(a1: any, a2?: string): this {
 		const tuples = toTuples(a1, a2);
 		this._search.push(...tuples);
 		return this;
 	}
 
-	path(...relativePaths: string[]) {
+	/**
+	 * Append an array of relative paths to the base pathname of the current URL.
+	 *
+	 * @see {@link URL}
+	 * @chainable
+	 */
+	path(...relativePaths: string[]): this {
 		for (const relativePath of relativePaths) this._url.pathname = join(this._url.pathname, relativePath);
 		return this;
 	}
 
-	body(data: any, sendAs?: BodyType) {
+	/**
+	 * Set the body data, as a {@link BodyType}
+	 *
+	 * @see {@link BodyType}
+	 * @chainable
+	 */
+	body(data: any, sendAs?: BodyType): this {
 		this._dataType = sendAs ?? (typeof data === 'object' && !(data instanceof ArrayBuffer) ? 'json' : 'buffer');
 
 		switch (this._dataType) {
@@ -105,27 +128,43 @@ export class RequestBuilder<T> {
 		return this;
 	}
 
+	/**
+	 * Push an object(s) to the current header record.
+	 *
+	 * @see {@link Record<string, string>}
+	 * @chainable
+	 */
 	header(obj: RecordOrTuples<string, any>): this;
 	header(name: string, value: string): this;
-	header(a1: any, a2?: string) {
+	header(a1: any, a2?: string): this {
 		const tuples = toTuples(a1, a2);
 		for (const [key, value] of tuples) this._headers[key.toLowerCase()] = value;
 		return this;
 	}
 
-	timeout(timeout: number) {
+	/**
+	 * Set the timeout in milliseconds of this request.
+	 *
+	 * @chainable
+	 */
+	timeout(timeout: number): this {
 		this._timeout = timeout;
 		return this;
 	}
 
-	agent(...fragments: string[]) {
+	/**
+	 * Set the `User-Agent` header of this request.
+	 *
+	 * @chainable
+	 */
+	agent(...fragments: string[]): this {
 		this._agent = fragments.join(' ');
 		return this;
 	}
 
 	option<K extends keyof Options>(obj: RecordOrTuples<K, Options[K]>): this;
 	option<K extends keyof Options>(name: K, value: Options[K]): this;
-	option<K extends keyof Options>(a1: any, a2?: Options[K]) {
+	option<K extends keyof Options>(a1: any, a2?: Options[K]): this {
 		const tuples = toTuples<K, Options[K]>(a1, a2);
 		for (const [key, value] of tuples) this._options[key] = value;
 		return this;
@@ -133,14 +172,14 @@ export class RequestBuilder<T> {
 
 	auth(token: string, type: AuthType): this;
 	auth(token: string, type?: string): this;
-	auth(token: string, type = 'Bearer') {
+	auth(token: string, type = 'Bearer'): this {
 		if (type.toLowerCase() === 'basic')
 			this._headers.authorization = `Basic ${Buffer.from(token).toString('base64')}`;
 		else this._headers.authorization = type ? `${type} ${token}` : token;
 		return this;
 	}
 
-	follow(countOrBool: number | boolean) {
+	follow(countOrBool: number | boolean): this {
 		if (typeof countOrBool === 'number')
 			this._redirect = countOrBool;
 		else if (typeof countOrBool === 'boolean')
@@ -151,28 +190,28 @@ export class RequestBuilder<T> {
 		return this;
 	}
 
-	method(method: Method) {
+	method(method: Method): this {
 		this._method = method;
 		return this;
 	}
 
-	get() {
+	get(): this {
 		return this.method('GET');
 	}
 
-	post() {
+	post(): this {
 		return this.method('POST');
 	}
 
-	patch() {
+	patch(): this {
 		return this.method('PATCH');
 	}
 
-	put() {
+	put(): this {
 		return this.method('PUT');
 	}
 
-	delete() {
+	delete(): this {
 		return this.method('DELETE');
 	}
 
