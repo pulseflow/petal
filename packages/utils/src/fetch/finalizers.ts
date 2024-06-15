@@ -10,8 +10,8 @@ async function statusWrapper<T>(fn: Awaitable<T>, status: number): Promise<WithS
 }
 
 export type Finalizer<T> = (res: Response) => Awaitable<T>;
-export const toJson = <T = any>(res: Response) => statusWrapper(res.json() as Promise<T>, res.status);
-export const toJsonPick = <T, K extends keyof T & string>(res: Response, key: K) => statusWrapper(res.json().then((it: T) => it[key]), res.status);
+export const toJson = <T = any>(res: Response) => statusWrapper(res.json<T>(), res.status);
+export const toJsonPick = <T, K extends keyof T & string>(res: Response, key: K) => statusWrapper(res.json<T>().then(it => it[key]), res.status);
 export const toText = (res: Response) => res.text();
 export const toBlob = (res: Response) => statusWrapper(res.blob(), res.status);
 export const toArrayBuffer = (res: Response) => statusWrapper(res.arrayBuffer(), res.status);

@@ -37,6 +37,16 @@ export interface OptionsVue extends OptionsOverrides {
 	 * @default 3
 	 */
 	vueVersion?: 2 | 3;
+
+	/**
+	 * Enable Vue accessibility rules.
+	 *
+	 * Requires installing:
+	 * - `eslint-plugin-vuejs-accessibility`
+	 *
+	 * @default false
+	 */
+	accessibility?: boolean;
 }
 
 export type OptionsTypescript =

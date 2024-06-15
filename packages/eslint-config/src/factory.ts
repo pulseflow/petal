@@ -62,6 +62,7 @@ export const defaultPluginRenaming = {
 	'import-x': 'import',
 	'n': 'node',
 	'vitest': 'test',
+	'vuejs-accessibility': 'vue-a11y',
 	'yml': 'yaml',
 };
 

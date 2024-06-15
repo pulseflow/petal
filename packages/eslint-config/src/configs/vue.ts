@@ -11,7 +11,7 @@ import { GLOB_VUE } from '../globs';
 import { ensurePackages, interopDefault } from '../utils';
 
 export async function vue(options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles & OptionsVue = {}): Promise<TypedFlatConfigItem[]> {
-	const { files = [GLOB_VUE], overrides = {}, stylistic = true, vueVersion = 3 } = options;
+	const { accessibility = false, files = [GLOB_VUE], overrides = {}, stylistic = true, vueVersion = 3 } = options;
 	const { indent = 'tab' } = typeof stylistic === 'boolean' ? {} : stylistic;
 
 	const sfcBlocks = options.sfcBlocks === true
@@ -25,6 +25,9 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 
 	if (sfcBlocks)
 		ensurePackages(['eslint-processor-vue-blocks']);
+
+	if (accessibility)
+		ensurePackages(['eslint-plugin-vuejs-accessibility']);
 
 	const [
 		pluginVue,
@@ -58,6 +61,8 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 			name: 'petal/vue/setup',
 			plugins: {
 				vue: pluginVue,
+
+				...accessibility ? { 'vue-a11y': await interopDefault(import('eslint-plugin-vuejs-accessibility')) } : {},
 			},
 		},
 		{
@@ -153,6 +158,31 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 				'vue/require-prop-types': 'off',
 				'vue/space-infix-ops': 'error',
 				'vue/space-unary-ops': ['error', { nonwords: false, words: true }],
+
+				...accessibility
+					? {
+							'vue-a11y/alt-text': 'error',
+							'vue-a11y/anchor-has-content': 'error',
+							'vue-a11y/aria-props': 'error',
+							'vue-a11y/aria-role': 'error',
+							'vue-a11y/aria-unsupported-elements': 'error',
+							'vue-a11y/click-events-have-key-events': 'error',
+							'vue-a11y/form-control-has-label': 'error',
+							'vue-a11y/heading-has-content': 'error',
+							'vue-a11y/iframe-has-title': 'error',
+							'vue-a11y/interactive-supports-focus': 'error',
+							'vue-a11y/label-has-for': 'error',
+							'vue-a11y/media-has-caption': 'error',
+							'vue-a11y/mouse-events-have-key-events': 'error',
+							'vue-a11y/no-access-key': 'error',
+							'vue-a11y/no-autofocus': 'error',
+							'vue-a11y/no-distracting-elements': 'error',
+							'vue-a11y/no-redundant-roles': 'error',
+							'vue-a11y/no-static-element-interactions': 'error',
+							'vue-a11y/role-has-required-aria-props': 'error',
+							'vue-a11y/tabindex-no-positive': 'error',
+						}
+					: {},
 
 				...stylistic
 					? {

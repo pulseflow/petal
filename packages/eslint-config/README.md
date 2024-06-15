@@ -249,14 +249,15 @@ check out the [configs][configs] and [factory][factory] for more details.
 
 since [flat config][eslint-flat] allows us to explicitly provide the plugin names (rather than the mandatory convention derived from the npm package name), we renamed some plugins to make the overall scope more consistent and easier to write:
 
-| New Prefix | Original Prefix        | Source Plugin                                                                              |
-| ---------- | ---------------------- | ------------------------------------------------------------------------------------------ |
-| `import/*` | `i/*`                  | [eslint-plugin-import-x](https://github.com/un-es/eslint-plugin-import-x)                  |
-| `node/*`   | `n/*`                  | [eslint-plugin-n](https://github.com/eslint-community/eslint-plugin-n)                     |
-| `yaml/*`   | `yml/*`                | [eslint-plugin-yml](https://github.com/ota-meshi/eslint-plugin-yml)                        |
-| `ts/*`     | `@typescript-eslint/*` | [@typescript-eslint/eslint-plugin](https://github.com/typescript-eslint/typescript-eslint) |
-| `style/*`  | `@stylistic/*`         | [@stylistic/eslint-plugin](https://github.com/eslint-stylistic/eslint-stylistic)           |
-| `test/*`   | `vitest/*`             | [eslint-plugin-vitest](https://github.com/veritem/eslint-plugin-vitest)                    |
+| New Prefix   | Original Prefix         | Source Plugin                       |
+| ------------ | ----------------------- | ----------------------------------- |
+| `import/*`   | `i/*`                   | [`eslint-plugin-import-x`]            |
+| `node/*`     | `n/*`                   | [`eslint-plugin-n`]                   |
+| `yaml/*`     | `yml/*`                 | [`eslint-plugin-yml`]                 |
+| `ts/*`       | `@typescript-eslint/*`  | [`@typescript-eslint/eslint-plugin`]  |
+| `style/*`    | `@stylistic/*`          | [`@stylistic/eslint-plugin`]          |
+| `test/*`     | `vitest/*`              | [`eslint-plugin-vitest`]              |
+| `vue-a11y/*` | `vuejs-accessibility/*` | [`eslint-plugin-vuejs-accessibility`] |
 
 when you want to override rules, or disable them inline, you need to update to the new prefix (unfortunately the vscode eslint extension doesn't automatically rewrite this):
 
@@ -360,9 +361,25 @@ export default petal({
 });
 ```
 
+we also support additional options, such as `accessibility` for a11y rules, and `sfcBlocks` for inline code blocks:
+
+```js
+// eslint.config.js
+import petal from '@flowr/eslint-config';
+
+export default petal({
+    vue: {
+        sfcBlocks: true, // default is `true`, requires `eslint-processor-vue-blocks`
+        accessibility: true, // default is `false`, requires `eslint-plugin-vuejs-accessibility`
+    },
+});
+```
+
 the required dev dependencies are: `eslint-plugin-vue vue-eslint-parser` (you should be prompted to install these when running eslint)
 
 if you have `vue.sfcBlocks` enabled (set to enabled by default), you will also need to install `eslint-processor-vue-blocks` as a dev dependency, also prompted upon running eslint
+
+if you have `vue.accessibility` enabled (set to disabled by default), you will also need to install `eslint-plugin-vuejs-accessibility` as a dev dependency, also prompted upon running eslint
 
 #### vue 2
 
@@ -501,7 +518,7 @@ we also provide some optional plugins and rules for extended/stricter usage:
 
 #### `command`
 
-the plugin by [`eslint-plugin-command`](https://github.com/antfu/eslint-plugin-command) allows you to add on-demand micro codemods that trigger on specific comment commands:
+the plugin [`eslint-plugin-command`] allows you to add on-demand micro codemods that trigger on specific comment commands:
 
 - `/// to-function` - converts an arrow function to a normal function
 - `/// to-arrow` - converts a normal function to an arrow function
@@ -547,7 +564,7 @@ export default petal({
 
 ### editor specific disables
 
-certain rules are disabled when inside [eslint ide integrations](#ide-integration), namely [`unused-imports/no-unused-imports`](https://www.npmjs.com/package/eslint-plugin-unused-imports) and [`petal/no-only-tests`](../eslint-plugin/src/rules/no-only-tests.md).
+certain rules are disabled when inside [eslint ide integrations](#ide-integration), namely [`unused-imports/no-unused-imports`] and [`petal/no-only-tests`](../eslint-plugin/src/rules/no-only-tests.md).
 
 this is to prevent unused imports and temporary patches from getting removed by the ide during refactoring. those rules are applied when eslint is ran in the terminal. you can disable this behavior using:
 
@@ -562,7 +579,7 @@ export default petal({
 
 ## config inspector
 
-eslint has a visual tool to help view what rules are enabled in a project and which files they are applied to, [`@eslint/config-inspector`](https://github.com/eslint/config-inspector). go to the project root that contains a `eslint.config.js` file and run:
+eslint has a visual tool to help view what rules are enabled in a project and which files they are applied to, [`@eslint/config-inspector`]. go to the project root that contains a `eslint.config.js` file and run:
 
 ```bash
 pnpm dlx @eslint/config-inspector
@@ -570,7 +587,7 @@ pnpm dlx @eslint/config-inspector
 
 ## versioning
 
-the petal projects follows [semantic versioning](https://semver.org/) for its release cycle. however, since this is a recommended configuration and has many constantly updating plugins and moving parts, rule changes **are not** treated as breaking changes.
+the petal projects follows [semantic versioning] for its release cycle. however, since this is a recommended configuration and has many constantly updating plugins and moving parts, rule changes **are not** treated as breaking changes.
 
 this is a petal project, and as such is released in observence with the rest of the petal monorepo. version bumps will come out as patches in regular intervals as other petal projects are updated.
 
@@ -595,13 +612,13 @@ using prettier isn't recommended, but you can still use it to format files that 
 
 ### dprint?
 
-[dprint](https://dprint.dev/) is also a great formatter with more customization. however, it follows the same ast-based model as prettier (leading to inconsistent diff and ignoring line breaks). in general, we prefer to use eslint to format and lint most code.
+[`dprint`] is also a great formatter with more customization. however, it follows the same ast-based model as prettier (leading to inconsistent diff and ignoring line breaks). in general, we prefer to use eslint to format and lint most code.
 
 however, we do have dprint integration for formatting other files such as `.md` (see [formatters](#formatters) for more details).
 
 ### css formatting?
 
-you can opt-in to the [`formatters`](#formatters) feature to format css. this would only format the code, not lint it. for proper linting support, you can try [`stylelint`](https://stylelint.io/), or [`unocss`](https://unocss.dev/) and the [`unocss` integration](#unocss).
+you can opt-in to the [`formatters`](#formatters) feature to format css. this would only format the code, not lint it. for proper linting support, you can try [`stylelint`], or [`unocss`] and the [unocss integration](#unocss).
 
 ### majorly opinionated rules?
 
@@ -622,3 +639,18 @@ export default petal({
 [stylistic]: https://github.com/eslint-stylistic/eslint-stylistic
 [vscode]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 [type-aware]: https://typescript-eslint.io/getting-started/typed-linting/
+[semantic versioning]: https://semver.org/
+[`dprint`]: https://dprint.dev/
+[`stylelint`]: https://stylelint.io/
+[`unocss`]: https://unocss.dev/
+
+[`eslint-plugin-import-x`]: https://github.com/un-es/eslint-plugin-import-x
+[`eslint-plugin-n`]: https://github.com/eslint-community/eslint-plugin-n
+[`eslint-plugin-yml`]: https://github.com/ota-meshi/eslint-plugin-yml
+[`@typescript-eslint/eslint-plugin`]: https://github.com/typescript-eslint/typescript-eslint
+[`@stylistic/eslint-plugin`]: https://github.com/eslint-stylistic/eslint-stylistic
+[`eslint-plugin-vitest`]: https://github.com/veritem/eslint-plugin-vitest
+[`eslint-plugin-vuejs-accessibility`]: https://github.com/vue-a11y/eslint-plugin-vuejs-accessibility
+[`eslint-plugin-command`]: https://github.com/antfu/eslint-plugin-command
+[`@eslint/config-inspector`]: https://github.com/eslint/config-inspector
+[`unused-imports/no-unused-imports`]: https://www.npmjs.com/package/eslint-plugin-unused-imports
