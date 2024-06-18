@@ -50,6 +50,7 @@ const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
 const VuePackages = ['vue', 'nuxt', 'vitepress', '@slidev/cli'];
 const SolidPackages = ['solid-js', 'vite-plugin-solid', 'solid-refresh'];
 const SveltePackages = ['@sveltejs/kit', '@sveltejs/package', '@sveltejs/vite-plugin-svelte', 'svelte'];
+const CheckIsInEditor = () => !!((process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM || process.env.NVIM) && !process.env.CI);
 
 export const defaultPluginRenaming = {
 	'@eslint-react': 'react',
@@ -86,10 +87,7 @@ export function petal(
 		autoRenamePlugins = true,
 		componentExts = [],
 		gitignore: enableGitignore = true,
-		isInEditor = !!(
-			(process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM)
-			&& !process.env.CI
-		),
+		isInEditor = CheckIsInEditor(),
 		jsx: enableJsx = true,
 		react: enableReact = false,
 		regexp: enableRegexp = true,
