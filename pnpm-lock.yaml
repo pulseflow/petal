@@ -15,8 +15,8 @@ importers:
         specifier: workspace:^
         version: link:packages/tsconfig
       '@stylistic/eslint-plugin':
-        specifier: ^2.1.0
-        version: 2.1.0(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
+        specifier: ^2.2.1
+        version: 2.2.1(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
       '@stylistic/eslint-plugin-migrate':
         specifier: ^2.1.0
         version: 2.1.0(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
@@ -112,8 +112,8 @@ importers:
         specifier: ^4.3.0
         version: 4.3.0(eslint-ts-patch@9.4.0-0)
       '@stylistic/eslint-plugin':
-        specifier: ^2.1.0
-        version: 2.1.0(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
+        specifier: ^2.2.1
+        version: 2.2.1(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.13.0
         version: 7.13.0(@typescript-eslint/parser@7.13.0(eslint-ts-patch@9.4.0-0)(typescript@5.4.5))(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
@@ -1191,14 +1191,14 @@ packages:
     resolution: {integrity: sha512-X67V4cCgM0Sz50bP8GbVzmiL8DHC2IXvdKcsN7DlxHyf+/T4d9GveeGukwha5Fx3MuYeGZWKag7TFL2ZY4w54A==}
     engines: {node: '>=18.0.0'}
 
-  '@stylistic/eslint-plugin-js@2.1.0':
-    resolution: {integrity: sha512-gdXUjGNSsnY6nPyqxu6lmDTtVrwCOjun4x8PUn0x04d5ucLI74N3MT1Q0UhdcOR9No3bo5PGDyBgXK+KmD787A==}
+  '@stylistic/eslint-plugin-js@2.2.1':
+    resolution: {integrity: sha512-M2dQkKw2R4R+b1SJ/xElJ9bDVq/vCI31VpIIxkZD9KXCqbUHvtsGpZH3eO6MzmFWOZj4PfNdEQdP332MtqjCPg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=8.40.0'
 
-  '@stylistic/eslint-plugin-jsx@2.1.0':
-    resolution: {integrity: sha512-mMD7S+IndZo2vxmwpHVTCwx2O1VdtE5tmpeNwgaEcXODzWV1WTWpnsc/PECQKIr/mkLPFWiSIqcuYNhQ/3l6AQ==}
+  '@stylistic/eslint-plugin-jsx@2.2.1':
+    resolution: {integrity: sha512-J/R4tU38v8gVqKPy6Mh22dq8btLSPWK06SuRc/ryOxT8LpW2ZdcSDP4HNvQiOte0Wy9xzgKJHP4JlYauDZ/oVw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=8.40.0'
@@ -1207,19 +1207,19 @@ packages:
     resolution: {integrity: sha512-qMyfjrMFx7b+oMB7u/spW1AJHk7CCWvKy0p5CdN+hVHw3yREmbILnNJJwn8Yq4mzE9EILcOM6bhL/WIL4WqFdA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@stylistic/eslint-plugin-plus@2.1.0':
-    resolution: {integrity: sha512-S5QAlgYXESJaSBFhBSBLZy9o36gXrXQwWSt6QkO+F0SrT9vpV5JF/VKoh+ojO7tHzd8Ckmyouq02TT9Sv2B0zQ==}
+  '@stylistic/eslint-plugin-plus@2.2.1':
+    resolution: {integrity: sha512-VGdTcQzZ/cZNcJnvjDos1VLzUerPapvYCVSCQZEhupMtmxt+mbITiJWzLLHYNfqGBnW7ABqViLfob+s3Q2GcKw==}
     peerDependencies:
       eslint: '*'
 
-  '@stylistic/eslint-plugin-ts@2.1.0':
-    resolution: {integrity: sha512-2ioFibufHYBALx2TBrU4KXovCkN8qCqcb9yIHc0fyOfTaO5jw4d56WW7YRcF3Zgde6qFyXwAN6z/+w4pnmos1g==}
+  '@stylistic/eslint-plugin-ts@2.2.1':
+    resolution: {integrity: sha512-2AbpXGGorCEzDryth7RhOMJWlko+sxSs1lxL2tSXB5H/EffmXgLn1tMoMKgwYJW3s6v0BxJRr5BWj9B9JaZTUQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=8.40.0'
 
-  '@stylistic/eslint-plugin@2.1.0':
-    resolution: {integrity: sha512-cBBowKP2u/+uE5CzgH5w8pE9VKqcM7BXdIDPIbGt2rmLJGnA6MJPr9vYGaqgMoJFs7R/FzsMQerMvvEP40g2uw==}
+  '@stylistic/eslint-plugin@2.2.1':
+    resolution: {integrity: sha512-YErqfwWFbRCpkyPtrcVYaJhvEn9aXE4WzxxkZ7Q3OKS4QD9CE6qZjzEw5DhcA2wL3Jo6JbzSB3/stJMNocGMgQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=8.40.0'
@@ -2342,6 +2342,7 @@ packages:
   glob@8.1.0:
     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
     engines: {node: '>=12'}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   globals@11.12.0:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
@@ -2435,6 +2436,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -4631,7 +4633,7 @@ snapshots:
 
   '@slidev/types@0.47.5': {}
 
-  '@stylistic/eslint-plugin-js@2.1.0(eslint-ts-patch@9.4.0-0)':
+  '@stylistic/eslint-plugin-js@2.2.1(eslint-ts-patch@9.4.0-0)':
     dependencies:
       '@types/eslint': 8.56.10
       acorn: 8.11.3
@@ -4639,9 +4641,9 @@ snapshots:
       eslint-visitor-keys: 4.0.0
       espree: 10.0.1
 
-  '@stylistic/eslint-plugin-jsx@2.1.0(eslint-ts-patch@9.4.0-0)':
+  '@stylistic/eslint-plugin-jsx@2.2.1(eslint-ts-patch@9.4.0-0)':
     dependencies:
-      '@stylistic/eslint-plugin-js': 2.1.0(eslint-ts-patch@9.4.0-0)
+      '@stylistic/eslint-plugin-js': 2.2.1(eslint-ts-patch@9.4.0-0)
       '@types/eslint': 8.56.10
       eslint: eslint-ts-patch@9.4.0-0
       estraverse: 5.3.0
@@ -4656,7 +4658,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@stylistic/eslint-plugin-plus@2.1.0(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)':
+  '@stylistic/eslint-plugin-plus@2.2.1(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)':
     dependencies:
       '@types/eslint': 8.56.10
       '@typescript-eslint/utils': 7.13.0(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
@@ -4665,9 +4667,9 @@ snapshots:
       - supports-color
       - typescript
 
-  '@stylistic/eslint-plugin-ts@2.1.0(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)':
+  '@stylistic/eslint-plugin-ts@2.2.1(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)':
     dependencies:
-      '@stylistic/eslint-plugin-js': 2.1.0(eslint-ts-patch@9.4.0-0)
+      '@stylistic/eslint-plugin-js': 2.2.1(eslint-ts-patch@9.4.0-0)
       '@types/eslint': 8.56.10
       '@typescript-eslint/utils': 7.13.0(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
       eslint: eslint-ts-patch@9.4.0-0
@@ -4675,12 +4677,12 @@ snapshots:
       - supports-color
       - typescript
 
-  '@stylistic/eslint-plugin@2.1.0(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)':
+  '@stylistic/eslint-plugin@2.2.1(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)':
     dependencies:
-      '@stylistic/eslint-plugin-js': 2.1.0(eslint-ts-patch@9.4.0-0)
-      '@stylistic/eslint-plugin-jsx': 2.1.0(eslint-ts-patch@9.4.0-0)
-      '@stylistic/eslint-plugin-plus': 2.1.0(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
-      '@stylistic/eslint-plugin-ts': 2.1.0(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
+      '@stylistic/eslint-plugin-js': 2.2.1(eslint-ts-patch@9.4.0-0)
+      '@stylistic/eslint-plugin-jsx': 2.2.1(eslint-ts-patch@9.4.0-0)
+      '@stylistic/eslint-plugin-plus': 2.2.1(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
+      '@stylistic/eslint-plugin-ts': 2.2.1(eslint-ts-patch@9.4.0-0)(typescript@5.4.5)
       '@types/eslint': 8.56.10
       eslint: eslint-ts-patch@9.4.0-0
     transitivePeerDependencies:

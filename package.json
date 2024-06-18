@@ -30,7 +30,7 @@
 	"devDependencies": {
 		"@flowr/eslint-config": "workspace:^",
 		"@flowr/tsconfig": "workspace:^",
-		"@stylistic/eslint-plugin": "^2.1.0",
+		"@stylistic/eslint-plugin": "^2.2.1",
 		"@stylistic/eslint-plugin-migrate": "^2.1.0",
 		"@types/node": "^20.14.2",
 		"bumpp": "^9.4.1",
