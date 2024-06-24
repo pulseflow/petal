@@ -170,7 +170,7 @@
 		"eslint-processor-vue-blocks": "^0.1.2",
 		"eslint-ts-patch": "9.4.0-0",
 		"eslint-typegen": "^0.2.4",
-		"execa": "^9.2.0",
+		"execa": "^9.3.0",
 		"fast-glob": "^3.3.2",
 		"fs-extra": "^11.2.0",
 		"prettier-plugin-astro": "^0.14.0",
