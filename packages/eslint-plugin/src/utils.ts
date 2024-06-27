@@ -1,6 +1,5 @@
 import type { RuleListener, RuleWithMeta, RuleWithMetaAndName, RuleModule as TSESModule } from '@typescript-eslint/utils/eslint-utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
-import type { Rule } from 'eslint';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
 
 export interface RuleMap {
@@ -54,11 +53,11 @@ function createRule<TOptions extends readonly unknown[], TMessageIds extends str
 	{ create, defaultOptions, meta }: Readonly<RuleWithMeta<TOptions, TMessageIds>>,
 ): RuleModule<TOptions, TMessageIds> {
 	return {
-		create: ((
+		create: (
 			context: Readonly<RuleContext<TMessageIds, TOptions>>,
 		): RuleListener => create(context, context.options.map(
 			(o, i) => ({ ...defaultOptions[i] || {}, ...o || {} }),
-		) as unknown as TOptions)),
+		) as unknown as TOptions),
 		defaultOptions,
 		meta,
 	};
