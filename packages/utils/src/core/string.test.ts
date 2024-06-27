@@ -158,4 +158,15 @@ it('unindent', () => {
               }
     `,
 	).toMatchSnapshot('indent deep');
+
+	const a = 'a';
+	const b = 'b';
+
+	expect(
+		unindent`
+      if (${a}) {
+        ${b}()
+      }
+    `,
+	).toMatchSnapshot('keys');
 });

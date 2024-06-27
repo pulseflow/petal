@@ -36,19 +36,19 @@ import {
 import { interopDefault } from './utils';
 
 const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
-	'name',
 	'files',
 	'ignores',
 	'languageOptions',
 	'linterOptions',
-	'processor',
+	'name',
 	'plugins',
+	'processor',
 	'rules',
 	'settings',
 ];
 
-const VuePackages = ['vue', 'nuxt', 'vitepress', '@slidev/cli'];
-const SolidPackages = ['solid-js', 'vite-plugin-solid', 'solid-refresh'];
+const VuePackages = ['@slidev/cli', 'nuxt', 'vitepress', 'vue'];
+const SolidPackages = ['solid-js', 'solid-refresh', 'vite-plugin-solid'];
 const SveltePackages = ['@sveltejs/kit', '@sveltejs/package', '@sveltejs/vite-plugin-svelte', 'svelte'];
 const CheckIsInEditor = () => !!((process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM || process.env.NVIM) && !process.env.CI);
 

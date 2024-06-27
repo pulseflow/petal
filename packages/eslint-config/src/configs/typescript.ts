@@ -85,7 +85,7 @@ export async function typescript(
 			name: 'petal/typescript/setup',
 			plugins: {
 				petal: pluginPetal,
-				ts: pluginTs as any,
+				ts: pluginTs,
 			},
 		},
 		...isTypeAware
@@ -107,7 +107,7 @@ export async function typescript(
 				'no-redeclare': 'off',
 				'no-use-before-define': 'off',
 				'no-useless-constructor': 'off',
-				'ts/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],
+				'ts/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
 				'ts/ban-types': ['error', { types: { Function: false } }],
 				'ts/consistent-type-definitions': ['error', 'interface'],
 				'ts/consistent-type-imports': ['error', { disallowTypeAnnotations: false, prefer: 'type-imports' }],
@@ -125,7 +125,6 @@ export async function typescript(
 				'ts/no-unused-vars': 'off',
 				'ts/no-use-before-define': ['error', { classes: false, functions: false, variables: true }],
 				'ts/no-useless-constructor': 'off',
-				'ts/prefer-ts-expect-error': 'error',
 				'ts/triple-slash-reference': 'off',
 				'ts/unified-signatures': 'off',
 				...overrides,

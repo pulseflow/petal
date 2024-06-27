@@ -1,5 +1,5 @@
 import type { TypedFlatConfigItem } from '../types';
-import { pluginPerfectionist } from '../plugins';
+import { interopDefault } from '../utils';
 
 /**
  * Optional perfectionist plugin for props and items sorting.
@@ -11,7 +11,7 @@ export async function perfectionist(): Promise<TypedFlatConfigItem[]> {
 		{
 			name: 'petal/perfectionist/setup',
 			plugins: {
-				perfectionist: pluginPerfectionist,
+				perfectionist: await interopDefault(import('eslint-plugin-perfectionist')),
 			},
 		},
 	];

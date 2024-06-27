@@ -23,7 +23,7 @@ export async function jsonc(options: OptionsFiles & OptionsStylistic & OptionsOv
 		{
 			name: 'petal/jsonc/setup',
 			plugins: {
-				jsonc: pluginJsonc as any,
+				jsonc: pluginJsonc,
 			},
 		},
 		{

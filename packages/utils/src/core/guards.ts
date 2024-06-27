@@ -2,7 +2,7 @@
  * Type guard to filter out null-ish values
  *
  * @category Guards
- * @example array.filter(notNullish)
+ * @example [array].filter(notNullish)
  */
 export const notNullish = <T>(v: T | null | undefined): v is NonNullable<T> => v != null;
 
@@ -10,7 +10,7 @@ export const notNullish = <T>(v: T | null | undefined): v is NonNullable<T> => v
  * Type guard to filter out null values
  *
  * @category Guards
- * @example array.filter(noNull)
+ * @example [array].filter(noNull)
  */
 export const noNull = <T>(v: T | null): v is Exclude<T, null> => v !== null;
 
@@ -18,7 +18,7 @@ export const noNull = <T>(v: T | null): v is Exclude<T, null> => v !== null;
  * Type guard to filter out null-ish values
  *
  * @category Guards
- * @example array.filter(notUndefined)
+ * @example [array].filter(notUndefined)
  */
 export const notUndefined = <T>(v: T): v is Exclude<T, undefined> => v !== undefined;
 
@@ -26,6 +26,6 @@ export const notUndefined = <T>(v: T): v is Exclude<T, undefined> => v !== undef
  * Type guard to filter out falsy values
  *
  * @category Guards
- * @example array.filter(isTruthy)
+ * @example [array].filter(isTruthy)
  */
 export const isTruthy = <T>(v: T): v is NonNullable<T> => Boolean(v);

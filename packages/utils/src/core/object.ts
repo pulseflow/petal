@@ -31,8 +31,8 @@ const isMergableObject = (item: any): item is object => isObject(item) && !Array
  * // { b: 2 }
  * ```
  */
-export function objectMap<K extends string, V, NK = K, NV = V>(obj: Record<K, V>, fn: (key: K, value: V) => [NK, NV] | undefined): Record<K, V> {
-	return Object.fromEntries(Object.entries(obj).map(([k, v]) => fn(k as K, v as V)).filter(notNullish));
+export function objectMap<K extends string, V, NK extends string | number | symbol = K, NV = V>(obj: Record<K, V>, fn: (key: K, value: V) => [NK, NV] | undefined): Record<NK, NV> {
+	return Object.fromEntries(Object.entries(obj).map(([k, v]) => fn(k as K, v as V)).filter(notNullish)) as Record<NK, NV>;
 }
 
 /**
@@ -90,7 +90,6 @@ export function deepMerge<T extends object = object, S extends object = T>(targe
 					target[key] = {};
 				// @ts-expect-error indexing error
 				if (isMergableObject(target[key]))
-					// @ts-expect-error indexing error
 					deepMerge(target[key], source[key]);
 				// @ts-expect-error indexing error
 				else target[key] = source[key];

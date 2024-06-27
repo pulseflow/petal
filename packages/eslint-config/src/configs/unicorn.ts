@@ -1,12 +1,12 @@
 import type { TypedFlatConfigItem } from '../types';
-import { pluginUnicorn } from '../plugins';
+import { interopDefault } from '../utils';
 
 export async function unicorn(): Promise<TypedFlatConfigItem[]> {
 	return [
 		{
 			name: 'petal/unicorn/rules',
 			plugins: {
-				unicorn: pluginUnicorn,
+				unicorn: await interopDefault(import('eslint-plugin-unicorn')),
 			},
 			rules: {
 				// Pass error message when throwing errors

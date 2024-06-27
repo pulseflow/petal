@@ -35,6 +35,7 @@ export const GLOB_CLI = `cli.${GLOB_SRC_EXT}`;
 
 export const GLOB_MARKDOWN_CODE = `${GLOB_MARKDOWN}/${GLOB_SRC}`;
 
+// @keep-sorted
 export const GLOB_TESTS = [
 	`**/__tests__/**/*.${GLOB_SRC_EXT}`,
 	`**/*.spec.${GLOB_SRC_EXT}`,
@@ -43,17 +44,18 @@ export const GLOB_TESTS = [
 	`**/*.benchmark.${GLOB_SRC_EXT}`,
 ];
 
+// @keep-sorted
 export const GLOB_ALL_SRC = [
-	GLOB_SRC,
-	GLOB_STYLE,
+	GLOB_HTML,
 	GLOB_JSON,
 	GLOB_JSON5,
 	GLOB_MARKDOWN,
+	GLOB_SRC,
+	GLOB_STYLE,
 	GLOB_SVELTE,
 	GLOB_VUE,
-	GLOB_YAML,
-	GLOB_HTML,
 	GLOB_XML,
+	GLOB_YAML,
 ];
 
 export const GLOB_EXCLUDE = [
@@ -80,11 +82,12 @@ export const GLOB_EXCLUDE = [
 	'**/.cache',
 	'**/.output',
 	'**/.vite-inspect',
+	'**/.yarn',
+	'**/vite.config.*.timestamp-*',
 
 	'**/CHANGELOG*.md',
 	'**/*.min.*',
 	'**/LICENSE*',
-	'**/README*',
 	'**/__snapshots__',
 	'**/auto-import?(s).d.ts',
 	'**/components.d.ts',

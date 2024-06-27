@@ -44,20 +44,22 @@ if you still use some configuration from the legacy eslintrc format, you can use
 import petal from '@flowr/eslint-config';
 import { FlatCompat } from '@eslint/eslintrc';
 
-const compat = new FlatCompat()
+const compat = new FlatCompat();
 
 export default petal(
-    {
-        ignores: [],
-    },
+	{
+		ignores: [],
+	},
 
-    // legacy config
-    ...compat.config({
-        'eslint:recommended',
-        // other legacy config options...
-    }),
+	// legacy config
+	...compat.config({
+		extends: [
+			'eslint:recommended'
+			// other legacy config options...
+		]
+	})
 
-    // other flat configs...
+	// other flat configs...
 );
 ```
 
@@ -68,10 +70,10 @@ export default petal(
 
 ```json
 {
-    "scripts": {
-        "lint": "eslint .",
-        "lint:fix": "eslint . --fix"
-    }
+	"scripts": {
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix"
+	}
 }
 ```
 
@@ -83,57 +85,57 @@ install the [vscode eslint extension][vscode] and add the following settings to 
 
 ```jsonc
 {
-    // enable the eslint flat config support
-    // (remove this if your ESLint extension above v3.0.5)
-    "eslint.experimental.useFlatConfig": true,
-    
-    // disable the default formatter, use eslint
-    "prettier.enable": false,
-    "editor.formatOnSave": false,
+	// enable the eslint flat config support
+	// (remove this if your ESLint extension above v3.0.5)
+	"eslint.experimental.useFlatConfig": true,
 
-    // automatically fix
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit",
-        "source.organizeImports": "never"
-    },
+	// disable the default formatter, use eslint
+	"prettier.enable": false,
+	"editor.formatOnSave": false,
 
-    // silent stylistic rules in the ide, but still fix them
-    "eslint.rules.customizations": [
-        { "rule": "@stylistic/*", "severity": "warn" },
-        { "rule": "style*", "severity": "warn" },
-        { "rule": "*-indent", "severity": "warn" },
-        { "rule": "*-spacing", "severity": "warn" },
-        { "rule": "*-spaces", "severity": "warn" },
-        { "rule": "*-order", "severity": "warn" },
-        { "rule": "*-dangle", "severity": "warn" },
-        { "rule": "*-newline", "severity": "warn" },
-        { "rule": "*quotes", "severity": "warn" },
-        { "rule": "*semi", "severity": "warn" }
-    ],
+	// automatically fix
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit",
+		"source.organizeImports": "never"
+	},
 
-    // enable eslint for all supported languages
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact",
-        "vue",
-        "html",
-        "markdown",
-        "json",
-        "jsonc",
-        "yaml",
-        "astro",
-        "toml",
-        "graphql",
-        "gql",
-        "xml",
-        "css",
-        "less",
-        "scss",
-        "pcss",
-        "postcss"
-    ]
+	// silent stylistic rules in the ide, but still fix them
+	"eslint.rules.customizations": [
+		{ "rule": "@stylistic/*", "severity": "warn" },
+		{ "rule": "style*", "severity": "warn" },
+		{ "rule": "*-indent", "severity": "warn" },
+		{ "rule": "*-spacing", "severity": "warn" },
+		{ "rule": "*-spaces", "severity": "warn" },
+		{ "rule": "*-order", "severity": "warn" },
+		{ "rule": "*-dangle", "severity": "warn" },
+		{ "rule": "*-newline", "severity": "warn" },
+		{ "rule": "*quotes", "severity": "warn" },
+		{ "rule": "*semi", "severity": "warn" }
+	],
+
+	// enable eslint for all supported languages
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"vue",
+		"html",
+		"markdown",
+		"json",
+		"jsonc",
+		"yaml",
+		"astro",
+		"toml",
+		"graphql",
+		"gql",
+		"xml",
+		"css",
+		"less",
+		"scss",
+		"pcss",
+		"postcss"
+	]
 }
 ```
 
@@ -155,27 +157,27 @@ alternatively, you can confgure each integration individually, for example:
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    // enable stylistic formatting rules
-    stylistic: {
-        indent: 'tab', // 4, or 2
-        quotes: 'single', // or 'double'
-    },
+	// enable stylistic formatting rules
+	stylistic: {
+		indent: 'tab', // 4, or 2
+		quotes: 'single', // or 'double'
+	},
 
-    // frameworks are automatically detected. you can manually enable them:
-    typescript: true,
-    astro: true,
-    vue: true,
+	// frameworks are automatically detected. you can manually enable them:
+	typescript: true,
+	astro: true,
+	vue: true,
 
-    // disable jsonc and yaml support
-    jsonc: false,
-    yaml: false,
+	// disable jsonc and yaml support
+	jsonc: false,
+	yaml: false,
 
-    // `.eslintignore` isn't supported in flat configs, use `ignores` instead
-    ignores: [
-        '**/fixtures',
-        // ...globs
-    ],
-    // ...
+	// `.eslintignore` isn't supported in flat configs, use `ignores` instead
+	ignores: [
+		'**/fixtures',
+		// ...globs
+	],
+	// ...
 });
 ```
 
@@ -186,22 +188,22 @@ the `petal` factory function also accepts any number of arbitrary custom config 
 import petal from '@flowr/eslint-config';
 
 export default petal(
-    {
-        // configures for `petal` preset
-    },
-    
-    // eslint flat config overrides
-    {
-        files: ['**/*.ts'],
-        rules: {
-            'do-something': 'error',
-        },
-    },
-    {
-        rules: {
-            'do-something': 'off',
-        },
-    },
+	{
+		// configures for `petal` preset
+	},
+
+	// eslint flat config overrides
+	{
+		files: ['**/*.ts'],
+		rules: {
+			'do-something': 'error',
+		},
+	},
+	{
+		rules: {
+			'do-something': 'off',
+		},
+	},
 );
 ```
 
@@ -215,29 +217,41 @@ we wouldn't recommend using this style in general unless you know what you are d
 ```js
 // eslint.config.js
 import {
-    combine, comments, ignores, imports,
-    javascript, jsdoc, jsonc, markdown,
-    node, sortPackageJson, sortTsconfig,
-    stylistic, toml, typescript, unicorn,
-    vue, yaml,
+	combine,
+	comments,
+	ignores,
+	imports,
+	javascript,
+	jsdoc,
+	jsonc,
+	markdown,
+	node,
+	sortPackageJson,
+	sortTsconfig,
+	stylistic,
+	toml,
+	typescript,
+	unicorn,
+	vue,
+	yaml,
 } from '@flowr/eslint-config';
 
 export default combine(
-    ignores(),
-    javascript(/* options */),
-    comments(),
-    node(),
-    jsdoc(),
-    imports(),
-    unicorn(),
-    typescript(/* options */),
-    stylistic(),
-    vue(),
-    jsonc(),
-    yaml(),
-    toml(),
-    markdown(),
-    /* ... */
+	ignores(),
+	javascript(/* options */),
+	comments(),
+	node(),
+	jsdoc(),
+	imports(),
+	unicorn(),
+	typescript(/* options */),
+	stylistic(),
+	vue(),
+	jsonc(),
+	yaml(),
+	toml(),
+	markdown(),
+	/* ... */
 );
 ```
 
@@ -276,23 +290,23 @@ certain rules would only be enabled in specific files, for example `ts/*` rules 
 import petal from '@flowr/eslint-config';
 
 export default petal(
-    {
-        vue: true,
-        typescript: true
-    },
-    {
-        // remember to specify the file glob here, otherwise the vue plugin might apply to non-vue files
-        files: ['**/*.vue'],
-        rules: {
-            'vue/operator-linebreak': ['error', 'before'],
-        },
-    },
-    {
-        // without the file globs, they are general rules for all files
-        rules: {
-            'style/semi': ['error', 'never'],
-        },
-    },
+	{
+		vue: true,
+		typescript: true
+	},
+	{
+		// remember to specify the file glob here, otherwise the vue plugin might apply to non-vue files
+		files: ['**/*.vue'],
+		rules: {
+			'vue/operator-linebreak': ['error', 'before'],
+		},
+	},
+	{
+		// without the file globs, they are general rules for all files
+		rules: {
+			'style/semi': ['error', 'never'],
+		},
+	},
 );
 ```
 
@@ -303,21 +317,21 @@ we also provide the `overrides` option for each integration to use our default g
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    vue: {
-        overrides: {
-            'vue/operator-linebreak': ['error', 'before'],
-        }
-    },
-    typescript: {
-        overrides: {
-            'ts/consistent-type-definitions': ['error', 'interface'],
-        }
-    },
-    yaml: {
-        overrides: {
-            /* ... */
-        }
-    },
+	vue: {
+		overrides: {
+			'vue/operator-linebreak': ['error', 'before'],
+		}
+	},
+	typescript: {
+		overrides: {
+			'ts/consistent-type-definitions': ['error', 'interface'],
+		}
+	},
+	yaml: {
+		overrides: {
+			/* ... */
+		}
+	},
 });
 ```
 
@@ -330,21 +344,21 @@ the factory function `petal()` returns a [`FlatConfigComposer` object from `esli
 import petal from '@flowr/eslint-config';
 
 export default petal()
-    .prepend(
-        // some configs before the main config
-    )
-    .override(
-        'petal/imports',
-        {
-            rules: {
-                'import/order': ['error', { 'newlines-between': 'always' }],
-            }
-        }
-    )
-    .renamePlugins({
-        'old-prefix': 'new-prefix',
-        /* ... */
-    });
+	.prepend(
+		// some configs before the main config
+	)
+	.override(
+		'petal/imports',
+		{
+			rules: {
+				'import/order': ['error', { 'newlines-between': 'always' }],
+			}
+		}
+	)
+	.renamePlugins({
+		'old-prefix': 'new-prefix',
+		/* ... */
+	});
 /* ... */
 ```
 
@@ -357,7 +371,7 @@ vue support is auto-detected based on the `vue` dependency. you can also explici
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    vue: true,
+	vue: true,
 });
 ```
 
@@ -368,10 +382,10 @@ we also support additional options, such as `accessibility` for a11y rules, and 
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    vue: {
-        sfcBlocks: true, // default is `true`, requires `eslint-processor-vue-blocks`
-        accessibility: true, // default is `false`, requires `eslint-plugin-vuejs-accessibility`
-    },
+	vue: {
+		sfcBlocks: true, // default is `true`, requires `eslint-processor-vue-blocks`
+		accessibility: true, // default is `false`, requires `eslint-plugin-vuejs-accessibility`
+	},
 });
 ```
 
@@ -390,9 +404,9 @@ we have limited support for vue 2 (as it's already [reached eol](https://v2.vuej
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    vue: {
-        vueVersion: 2,
-    },
+	vue: {
+		vueVersion: 2,
+	},
 });
 ```
 
@@ -411,27 +425,12 @@ use external formatters to format files that eslint cannot handle yet (`.css`, `
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    formatters: {
-        /**
-         * format CSS, LESS, SCSS files, also the `<style>` blocks in vue
-         * uses prettier by default
-         */
-        css: true,
-        
-        /**
-         * format HTML files
-         * uses prettier by default
-         */
-        html: true,
-
-        /**
-         * format markdown files
-         * supports prettier and dprint
-         * uses prettier by default
-         */
-        markdown: 'prettier', // also 'dprint' or `true` (default)
-    },
-    /* ... */
+	formatters: {
+		css: true, // format CSS, LESS, SCSS files, also the `<style>` blocks in vue, uses prettier by default
+		html: true, // format HTML files, uses prettier by default
+		markdown: 'prettier', // format Markdown files, uses prettier by default supports also 'dprint' or `true` (default)
+	},
+	/* ... */
 });
 ```
 
@@ -446,7 +445,7 @@ to enable react support, you need to explicitly turn it on:
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    react: true,
+	react: true,
 });
 ```
 
@@ -461,7 +460,7 @@ to enable astro support, you need to explicitly turn it on or install the `astro
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    astro: true,
+	astro: true,
 });
 ```
 
@@ -476,7 +475,7 @@ to enable svelte support, you need to explicitly turn it on, or install a svelte
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    svelte: true,
+	svelte: true,
 });
 ```
 
@@ -491,7 +490,7 @@ to enable unocss support, you need to explicitly turn it on:
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    unocss: true,
+	unocss: true,
 });
 ```
 
@@ -506,7 +505,7 @@ to enable solid support, you need to explicitly turn it on, or install a solid-r
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    solid: true,
+	solid: true,
 });
 ```
 
@@ -541,7 +540,7 @@ will be transformed into the following upon saving or running `eslint . --fix`:
 
 ```ts
 async function foo(bar: string): void {
-    console.log(bar);
+	console.log(bar);
 }
 ```
 
@@ -556,9 +555,9 @@ configuration for [type aware rules][type-aware] can be enabled by passing the o
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    typescript: {
-        tsconfigPath: 'tsconfig.json',
-    },
+	typescript: {
+		tsconfigPath: 'tsconfig.json',
+	},
 });
 ```
 
@@ -573,7 +572,7 @@ this is to prevent unused imports and temporary patches from getting removed by 
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    isInEditor: false,
+	isInEditor: false,
 });
 ```
 
@@ -629,7 +628,7 @@ some rules set by default are very opinionated, and as such, we include an optio
 import petal from '@flowr/eslint-config';
 
 export default petal({
-    opinionated: false, // by default this is `true`; `false` disables the opinionated rules
+	opinionated: false, // by default this is `true`; `false` disables the opinionated rules
 });
 ```
 

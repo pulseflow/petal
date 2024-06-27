@@ -12,6 +12,13 @@ exports[`unindent > indent deep 1`] = `
 }"
 `;
 
+exports[`unindent > keys 1`] = `
+"a
+      if (b) {
+        ()
+      }"
+`;
+
 exports[`unindent > multi-start and end 1`] = `
 "    if (a) {
   b()

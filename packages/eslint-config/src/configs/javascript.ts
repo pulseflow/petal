@@ -4,7 +4,6 @@ import type {
 	OptionsOverrides,
 	TypedFlatConfigItem,
 } from '../types';
-import { pluginUnusedImports } from '../plugins';
 import { GLOB_CLI, GLOB_SCRIPTS } from '../globs';
 import { interopDefault } from '../utils';
 
@@ -12,6 +11,7 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 	const { isInEditor = false, overrides = {} } = options;
 
 	const pluginPetal = await interopDefault(import('eslint-plugin-petal'));
+	const pluginUnusedImports = await interopDefault(import('eslint-plugin-unused-imports'));
 
 	return [
 		{

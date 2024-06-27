@@ -35,6 +35,13 @@ export const ensurePrefix = (prefix: string, str: string) => !str.startsWith(pre
 export const ensureSuffix = (suffix: string, str: string) => !str.endsWith(suffix) ? str + suffix : str;
 
 /**
+ * Ensure an LF line ending
+ *
+ * @category String
+ */
+export const normalizeLF = (str: string) => str.replace(/\r\n/g, '\n');
+
+/**
  * Dead simple template engine, just like Python's `.format()`
  * Support passing variables as either in index based or object/name based approach
  * While using object/name based approach, you can pass a fallback value as the third argument
@@ -86,8 +93,6 @@ export function randomStr(size = 16, dict = urlAlphabet) {
  */
 export const capitalize = (str: string): string => str[0].toUpperCase() + str.slice(1).toLowerCase();
 
-const _reFullWs = /^\s*$/;
-
 /**
  * Remove common leading whitespace from a template string.
  * Will also remove empty lines at the beginning and end.
@@ -101,9 +106,9 @@ const _reFullWs = /^\s*$/;
  * `
  * ```
  */
-export function unindent(str: TemplateStringsArray | string) {
-	const lines = (typeof str === 'string' ? str : str[0]).split('\n');
-	const whitespaceLines = lines.map(line => _reFullWs.test(line));
+export function unindent(strings: TemplateStringsArray, ...keys: any[]) {
+	const lines = normalizeLF(untemplate(strings, ...keys)).split('\n');
+	const whitespaceLines = lines.map(f => /^\s*$/.test(f));
 
 	const commonIndent = lines.reduce((min, line, idx) => {
 		if (whitespaceLines[idx])

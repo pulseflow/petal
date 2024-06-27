@@ -1,12 +1,12 @@
-import { pluginComments } from '../plugins';
 import type { TypedFlatConfigItem } from '../types';
+import { interopDefault } from '../utils';
 
 export async function comments(): Promise<TypedFlatConfigItem[]> {
 	return [
 		{
 			name: 'petal/eslint-comments/rules',
 			plugins: {
-				'eslint-comments': pluginComments,
+				'eslint-comments': await interopDefault(import('@eslint-community/eslint-plugin-eslint-comments')),
 			},
 			rules: {
 				'eslint-comments/no-aggregating-enable': 'error',

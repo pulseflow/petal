@@ -1,4 +1,4 @@
-import type { RuleListener, RuleWithMeta, RuleWithMetaAndName } from '@typescript-eslint/utils/eslint-utils';
+import type { RuleListener, RuleWithMeta, RuleWithMetaAndName, RuleModule as TSESModule } from '@typescript-eslint/utils/eslint-utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 import type { Rule } from 'eslint';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
@@ -21,7 +21,7 @@ export function getESLintCoreRule<R extends RuleId>(ruleId: R): RuleMap[R] {
 
 const blobUrl = 'https://github.com/pulseflow/petal/blob/main/packages/eslint-plugin/src/rules/';
 
-export interface RuleModule<T extends readonly unknown[]> extends Rule.RuleModule { defaultOptions: T };
+export interface RuleModule<TOptions extends readonly unknown[], TMessageIds extends string> extends TSESModule<TMessageIds, TOptions> { defaultOptions: TOptions };
 
 /**
  * Creates reusable function to create rules with default options and docs URLs.
@@ -29,9 +29,9 @@ export interface RuleModule<T extends readonly unknown[]> extends Rule.RuleModul
  * @param urlCreator Creates a documentation URL for a given rule name.
  * @returns Function to create a rule with the docs URL format.
  */
-function RuleCreator(urlCreator: (name: string) => string) {
+function RuleCreator(urlCreator: (name: string) => string): <TOptions extends readonly unknown[], TMessageIds extends string>({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>) => RuleModule<TOptions, TMessageIds> {
 	return <TOptions extends readonly unknown[], TMessageIds extends string>
-	({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>): RuleModule<TOptions> =>
+	({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>): RuleModule<TOptions, TMessageIds> =>
 		createRule<TOptions, TMessageIds>({
 			meta: {
 				...meta,
@@ -52,17 +52,16 @@ function RuleCreator(urlCreator: (name: string) => string) {
  */
 function createRule<TOptions extends readonly unknown[], TMessageIds extends string>(
 	{ create, defaultOptions, meta }: Readonly<RuleWithMeta<TOptions, TMessageIds>>,
-): RuleModule<TOptions> {
+): RuleModule<TOptions, TMessageIds> {
 	return {
 		create: ((
 			context: Readonly<RuleContext<TMessageIds, TOptions>>,
 		): RuleListener => create(context, context.options.map(
 			(o, i) => ({ ...defaultOptions[i] || {}, ...o || {} }),
-		) as unknown as TOptions)) as any,
+		) as unknown as TOptions)),
 		defaultOptions,
-		meta: meta as any,
+		meta,
 	};
 }
 
-export const createEslintRule = RuleCreator(ruleName => `${blobUrl}${ruleName}.md`) as any as <TOptions extends readonly unknown[], TMessageIds extends string>
-({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>) => RuleModule<TOptions>;
+export const createEslintRule = RuleCreator(ruleName => `${blobUrl}${ruleName}.md`);
