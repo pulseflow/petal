@@ -1,7 +1,7 @@
 {
 	"name": "@flowr/utils",
 	"type": "module",
-	"version": "3.7.0",
+	"version": "3.8.0",
 	"description": "Opinionated collection of common TypeScript utilities",
 	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",
