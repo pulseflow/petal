@@ -37,4 +37,8 @@ export default petal(
 			'petal/indent-unindent': 'error',
 		},
 	},
+).removeRules(
+	'ts/no-unsafe-member-access',
+	'ts/no-unsafe-argument',
+	'ts/no-unsafe-assignment',
 );

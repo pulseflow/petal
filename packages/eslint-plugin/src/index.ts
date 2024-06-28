@@ -10,7 +10,7 @@ import noTsExportEqual from './rules/no-ts-export-equal';
 import consistentListNewline from './rules/consistent-list-newline';
 import indentUnindent from './rules/indent-unindent';
 import onlyExportComponents from './rules/only-export-components';
-import * as utils from '@typescript-eslint/utils';
+import type { RuleModule } from './utils';
 
 const plugin = {
 	meta: {
@@ -31,7 +31,7 @@ const plugin = {
 		'top-level-function': topLevelFunction,
 	},
 } satisfies Omit<ESLint.Plugin, 'rules'> & {
-	rules?: Record<string, utils.TSESLint.AnyRuleModule>
+	rules?: Record<string, RuleModule<readonly unknown[], string>>;
 };
 
 export default plugin;

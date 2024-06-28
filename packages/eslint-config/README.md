@@ -85,10 +85,6 @@ install the [vscode eslint extension][vscode] and add the following settings to 
 
 ```jsonc
 {
-	// enable the eslint flat config support
-	// (remove this if your ESLint extension above v3.0.5)
-	"eslint.experimental.useFlatConfig": true,
-
 	// disable the default formatter, use eslint
 	"prettier.enable": false,
 	"editor.formatOnSave": false,

@@ -41,10 +41,11 @@ export async function typescript(
 		'ts/no-unsafe-call': 'error',
 		'ts/no-unsafe-member-access': 'error',
 		'ts/no-unsafe-return': 'error',
+		'ts/promise-function-async': 'error',
 		'ts/restrict-plus-operands': 'error',
 		'ts/restrict-template-expressions': 'error',
-		'ts/return-await': 'error',
-		'ts/strict-boolean-expressions': 'error',
+		'ts/return-await': ['error', 'in-try-catch'],
+		'ts/strict-boolean-expressions': ['error', { allowNullableBoolean: true, allowNullableObject: true }],
 		'ts/switch-exhaustiveness-check': 'error',
 		'ts/unbound-method': 'error',
 	};
@@ -135,10 +136,7 @@ export async function typescript(
 					files: filesTypeAware,
 					ignores: ignoresTypeAware,
 					name: 'petal/typescript/rules-type-aware',
-					rules: {
-						...tsconfigPath ? typeAwareRules : {},
-						...overrides,
-					},
+					rules: typeAwareRules,
 				}]
 			: [],
 		{
