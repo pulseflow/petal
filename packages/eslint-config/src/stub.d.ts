@@ -37,12 +37,12 @@ declare module 'eslint-plugin-perfectionist' {
 		configs: {
 			'recommended-alphabetical': Linter.Config;
 			'recommended-natural': Linter.Config;
-			'recommended-line-length': Linter.FlatConfig;
+			'recommended-line-length': Linter.Config;
 		};
 	};
 
-	export = eslintPluginUnicorn;
-	export default { eslintPluginUnicorn };
+	export = eslintPluginPerfectionist;
+	export default { eslintPluginPerfectionist };
 };
 
 declare module 'eslint-plugin-unused-imports' {

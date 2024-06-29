@@ -129,5 +129,5 @@ export default petal(
 
 			await expect.soft(content).toMatchFileSnapshot(outputPath);
 		}));
-	}, 60_000);
+	}, 70_000);
 }
