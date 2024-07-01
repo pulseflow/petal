@@ -34,7 +34,7 @@
 		"@stylistic/eslint-plugin-migrate": "^2.3.0",
 		"@types/node": "^20.14.9",
 		"bumpp": "^9.4.1",
-		"esbuild": "^0.21.5",
+		"esbuild": "^0.22.0",
 		"eslint": "npm:eslint-ts-patch@9.5.0-0",
 		"eslint-ts-patch": "9.5.0-0",
 		"rimraf": "^5.0.7",
