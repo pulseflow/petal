@@ -8,6 +8,7 @@ export default petal(
 		astro: false,
 	},
 	{
+		name: 'ignores',
 		ignores: [
 			'fixtures',
 			'_fixtures',
@@ -16,12 +17,14 @@ export default petal(
 		],
 	},
 	{
+		name: 'sort/objects',
 		files: ['packages/eslint-config/src/**/*.ts'],
 		rules: {
 			'perfectionist/sort-objects': 'error',
 		},
 	},
 	{
+		name: 'style/migrate',
 		files: ['packages/eslint-config/src/configs/*.ts'],
 		plugins: {
 			'style-migrate': styleMigrate,

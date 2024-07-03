@@ -1,5 +1,6 @@
 import type { RuleFixer, RuleListener } from '@typescript-eslint/utils/ts-eslint';
 import type { TSESTree } from '@typescript-eslint/utils';
+import type { JSONSchema4 } from '@typescript-eslint/utils/json-schema';
 import { createEslintRule } from '../utils';
 
 export const RULE_NAME = 'consistent-list-newline';
@@ -57,7 +58,7 @@ export default createEslintRule<Options, MessageIds>({
 				JSXOpeningElement: { type: 'boolean' },
 				JSONArrayExpression: { type: 'boolean' },
 				JSONObjectExpression: { type: 'boolean' },
-			} satisfies Record<keyof Options[0], { type: 'boolean' }>,
+			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
 			additionalProperties: false,
 		}],
 		messages: {
@@ -107,6 +108,14 @@ export default createEslintRule<Options, MessageIds>({
 			let startToken = ['CallExpression', 'NewExpression'].includes(node.type)
 				? undefined
 				: context.sourceCode.getFirstToken(node);
+			if (node.type === 'CallExpression')
+				startToken = context.sourceCode.getTokenAfter(
+					node.typeArguments
+						? node.typeArguments
+						: node.callee.type === 'MemberExpression'
+							? node.callee.property
+							: node.callee,
+				);
 			if (startToken?.type !== 'Punctuator')
 				startToken = context.sourceCode.getTokenBefore(items[0]);
 			const endToken = context.sourceCode.getTokenAfter(items[items.length - 1]);

@@ -5,6 +5,7 @@ export async function ignores(): Promise<TypedFlatConfigItem[]> {
 	return [
 		{
 			ignores: GLOB_EXCLUDE,
+			name: 'petal/ignores',
 		},
 	];
 }

@@ -59,7 +59,7 @@ export default createEslintRule<Options, MessageIds>({
 					uniqueItems: true,
 					default: defaultOptions[0].focus,
 				},
-			} satisfies Record<keyof Options[0], JSONSchema4>,
+			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
 			additionalProperties: false,
 		}],
 		messages: {

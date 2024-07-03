@@ -107,6 +107,27 @@ const valids: ValidTestCase[] = [
 		];
 	`,
 	`const a = [(1), (2)];`,
+	$`
+		this.foobar(
+			(x),
+			y,
+			z
+		)
+	`,
+	$`
+		foobar(
+			(x),
+			y,
+			z
+		)
+	`,
+	$`
+		foobar<A>(
+			(x),
+			y,
+			z
+		)
+	`,
 	{
 		code: $`
 			function Foo() {

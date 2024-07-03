@@ -57,12 +57,12 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "^8.56.10",
-		"@typescript-eslint/typescript-estree": "^7.14.1",
-		"@typescript-eslint/utils": "^7.14.1",
+		"@typescript-eslint/typescript-estree": "^7.15.0",
+		"@typescript-eslint/utils": "^7.15.0",
 		"eslint": "9.5.0",
 		"eslint-vitest-rule-tester": "^0.3.2",
 		"jsonc-eslint-parser": "^2.4.0",
-		"typescript": "^5.5.2"
+		"typescript": "^5.5.3"
 	},
 	"publishConfig": {
 		"access": "public"

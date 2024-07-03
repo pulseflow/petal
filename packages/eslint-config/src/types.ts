@@ -1,16 +1,8 @@
-import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
-import type { ParserOptions } from '@typescript-eslint/parser';
-import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks';
 import type { Linter } from 'eslint';
-import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
-import type { VendoredPrettierOptions } from './vendor/prettier-types';
-import type { ConfigNames, RuleOptions } from './typegen';
 
 export type Awaitable<T> = T | Promise<T>;
-
-export type Rules = RuleOptions;
-
-export type { ConfigNames };
+export type Rules = import('./typegen').RuleOptions;
+export type { ConfigNames } from './typegen';
 
 export type TypedFlatConfigItem = Omit<Linter.FlatConfig<Linter.RulesRecord & Rules>, 'plugins'> & {
 	/**
@@ -29,7 +21,7 @@ export interface OptionsVue extends OptionsOverrides {
 	 * @see https://github.com/antfu/eslint-processor-vue-blocks
 	 * @default true
 	 */
-	sfcBlocks?: boolean | VueBlocksOptions;
+	sfcBlocks?: boolean | import('eslint-processor-vue-blocks').Options;
 
 	/**
 	 * Vue version. Apply different rules set from `eslint-plugin-vue`
@@ -52,6 +44,29 @@ export interface OptionsVue extends OptionsOverrides {
 export type OptionsTypescript =
 	(OptionsTypeScriptWithTypes & OptionsOverrides)
 	| (OptionsTypeScriptParserOptions & OptionsOverrides);
+
+export interface OptionsGitignore {
+	/**
+	 * Path to `.gitignore` files, or files with compatible formats like `.eslintignore`.
+	 */
+	files?: string | string[];
+
+	/**
+	 * Throws an error if gitignore file isn't found.
+	 *
+	 * @default true
+	 */
+	strict?: boolean;
+
+	/**
+	 * Mark the current working directory as the root directory,
+	 * disable searching for `.gitignore` files in parent directories.
+	 *
+	 * This option is not effective when `files` is explicitly specified.
+	 * @default false
+	 */
+	root?: boolean;
+}
 
 export interface OptionsFormatters {
 	/**
@@ -94,7 +109,7 @@ export interface OptionsFormatters {
 	 *
 	 * By default it's controlled by our own config.
 	 */
-	prettierOptions?: VendoredPrettierOptions;
+	prettierOptions?: import('./vendor/prettier-types').VendoredPrettierOptions;
 
 	/**
 	 * Custom options for dprint.
@@ -141,7 +156,7 @@ export interface OptionsTypeScriptParserOptions {
 	/**
 	 * Additional parser options for TypeScript.
 	 */
-	parserOptions?: Partial<ParserOptions>;
+	parserOptions?: Partial<import('@typescript-eslint/parser').ParserOptions>;
 
 	/**
 	 * Glob patterns for files that should be type aware.
@@ -172,7 +187,7 @@ export interface OptionsStylistic {
 	stylistic?: boolean | StylisticConfig;
 }
 
-export interface StylisticConfig extends Pick<StylisticCustomizeOptions, 'indent' | 'quotes' | 'jsx' | 'semi'> { }
+export interface StylisticConfig extends Pick<import('@stylistic/eslint-plugin').StylisticCustomizeOptions, 'indent' | 'quotes' | 'jsx' | 'semi'> { }
 
 export interface OptionsOverrides {
 	overrides?: TypedFlatConfigItem['rules'];
@@ -209,10 +224,9 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 *
 	 * Passing an object to configure the options.
 	 *
-	 * @see https://github.com/antfu/eslint-config-flat-gitignore
 	 * @default true
 	 */
-	gitignore?: boolean | FlatGitignoreOptions;
+	gitignore?: boolean | OptionsGitignore;
 
 	/**
 	 * Enable opinionated stylistic rules.

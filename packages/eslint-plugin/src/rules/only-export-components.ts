@@ -44,7 +44,7 @@ export default createEslintRule<Options, MessageIds>({
 				allowConstantExport: { type: 'boolean' },
 				checkJS: { type: 'boolean' },
 				allowExportNames: { type: 'array', items: { type: 'string' } },
-			} satisfies Record<keyof Options[0], JSONSchema4>,
+			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
 			additionalProperties: false,
 		}],
 		messages: {

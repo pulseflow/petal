@@ -2,6 +2,7 @@ export * from './astro';
 export * from './command';
 export * from './comments';
 export * from './formatters';
+export * from './gitignore';
 export * from './ignores';
 export * from './imports';
 export * from './javascript';

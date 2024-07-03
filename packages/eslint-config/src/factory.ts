@@ -9,6 +9,7 @@ import {
 	command,
 	comments,
 	formatters,
+	gitignore,
 	ignores,
 	imports,
 	javascript,
@@ -33,7 +34,6 @@ import {
 	vue,
 	yaml,
 } from './configs';
-import { interopDefault } from './utils';
 
 const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
 	'files',
@@ -110,9 +110,9 @@ export function petal(
 	const configs: Awaitable<TypedFlatConfigItem[]>[] = [];
 	if (enableGitignore)
 		if (typeof enableGitignore !== 'boolean')
-			configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r(enableGitignore)]));
+			configs.push(gitignore(enableGitignore));
 		else if (fs.existsSync('.gitignore'))
-			configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r()]));
+			configs.push(gitignore());
 
 	const typescriptOptions = resolveSubOptions(options, 'typescript');
 	const tsconfigPath = 'tsconfigPath' in typescriptOptions ? typescriptOptions.tsconfigPath : undefined;
