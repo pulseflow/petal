@@ -34,7 +34,7 @@ export async function gitignore(options: OptionsGitignore = {}): Promise<TypedFl
 	return [
 		{
 			ignores,
-			name: 'petal/gitignore',
+			name: 'petal/ignores/git',
 		},
 	];
 }
