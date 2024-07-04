@@ -59,7 +59,7 @@
 		"@types/fs-extra": "^11.0.4",
 		"@types/luxon": "^3.4.2",
 		"@types/zen-observable": "^0.8.7",
-		"p-limit": "^5.0.0",
+		"p-limit": "^6.0.0",
 		"zen-observable": "^0.10.0"
 	},
 	"publishConfig": {

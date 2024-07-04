@@ -349,8 +349,8 @@ importers:
         specifier: ^0.8.7
         version: 0.8.7
       p-limit:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^6.0.0
+        version: 6.0.0
       zen-observable:
         specifier: ^0.10.0
         version: 0.10.0
@@ -3071,6 +3071,10 @@ packages:
 
   p-limit@5.0.0:
     resolution: {integrity: sha512-/Eaoq+QyLSiXQ4lyYV23f14mZRQcXnxfHrN0vCai+ak9G0pp9iEQukIIZq5NccEvwRB8PUnZT0KsOoDCINS1qQ==}
+    engines: {node: '>=18'}
+
+  p-limit@6.0.0:
+    resolution: {integrity: sha512-Dx+NzOuILWwjJE9OYtEKuQRy0i3c5QVAmDsVrvvRSgyNnPuB27D2DyEjl6QTNyeePaAHjaPk+ya0yA0Frld8RA==}
     engines: {node: '>=18'}
 
   p-locate@4.1.0:
@@ -7027,6 +7031,10 @@ snapshots:
       yocto-queue: 1.1.1
 
   p-limit@5.0.0:
+    dependencies:
+      yocto-queue: 1.1.1
+
+  p-limit@6.0.0:
     dependencies:
       yocto-queue: 1.1.1
 

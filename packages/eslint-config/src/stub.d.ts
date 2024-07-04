@@ -12,6 +12,23 @@ declare module 'eslint-plugin-react-hooks' {
 	export default { eslintPluginReactHooks };
 };
 
+declare module 'eslint-plugin-markdown' {
+	import type { ESLint, Linter } from 'eslint';
+
+	const eslintPluginMarkdown: ESLint.Plugin & {
+		configs: {
+			'recommended': Linter.FlatConfig;
+			'recommended-legacy': Linter.Config;
+		};
+		processors: {
+			markdown: Linter.Processor;
+		};
+	};
+
+	export = eslintPluginMarkdown;
+	export default { eslintPluginMarkdown };
+};
+
 // merged, awaiting next release
 declare module 'eslint-plugin-unicorn' {
 	import type { ESLint, Linter } from 'eslint';
