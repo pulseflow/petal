@@ -1,7 +1,7 @@
 {
 	"name": "eslint-plugin-petal",
 	"type": "module",
-	"version": "3.8.4",
+	"version": "3.8.5",
 	"description": "Custom ESLint rules for the Petal specification",
 	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",
