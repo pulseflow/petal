@@ -1,7 +1,7 @@
 {
 	"name": "@flowr/console",
 	"type": "module",
-	"version": "3.8.2",
+	"version": "3.8.3",
 	"description": "Opinionated logger and console utilities for Petal",
 	"license": "Apache-2.0",
 	"funding": "https://ko-fi.com/pauliesnug",
