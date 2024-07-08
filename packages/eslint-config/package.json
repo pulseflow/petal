@@ -159,7 +159,7 @@
 		"@types/eslint": "^8.56.10",
 		"@types/fs-extra": "^11.0.4",
 		"@types/prompts": "^2.4.9",
-		"@unocss/eslint-plugin": "^0.61.0",
+		"@unocss/eslint-plugin": "^0.61.3",
 		"astro-eslint-parser": "^1.0.2",
 		"eslint": "npm:eslint-ts-patch@9.5.0-0",
 		"eslint-plugin-astro": "^1.2.2",
