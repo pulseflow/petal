@@ -3,7 +3,8 @@
 	"type": "module",
 	"version": "3.8.5",
 	"description": "Custom ESLint rules for the Petal specification",
-	"license": "Apache-2.0",
+	"author": "Petal Contributors",
+	"license": "MIT",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
 	"repository": {
@@ -11,9 +12,7 @@
 		"url": "https://github.com/pulseflow/petal",
 		"directory": "packages/eslint-plugin"
 	},
-	"bugs": {
-		"url": "https://github.com/pulseflow/petal/issues"
-	},
+	"bugs": "https://github.com/pulseflow/petal/issues",
 	"keywords": [
 		"eslint",
 		"eslint-plugin",
@@ -23,6 +22,7 @@
 	"sideEffects": false,
 	"exports": {
 		".": {
+			"types": "./dist/index.d.ts",
 			"import": "./dist/index.mjs",
 			"require": "./dist/index.cjs"
 		}
@@ -57,12 +57,10 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "^8.56.10",
-		"@typescript-eslint/typescript-estree": "^7.15.0",
-		"@typescript-eslint/utils": "^7.15.0",
+		"@typescript-eslint/utils": "^7.16.0",
 		"eslint": "9.5.0",
 		"eslint-vitest-rule-tester": "^0.3.2",
-		"jsonc-eslint-parser": "^2.4.0",
-		"typescript": "^5.5.3"
+		"jsonc-eslint-parser": "^2.4.0"
 	},
 	"publishConfig": {
 		"access": "public"

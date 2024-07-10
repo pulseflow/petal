@@ -10,15 +10,13 @@ async function statusWrapper<T>(fn: Awaitable<T>, status: number): Promise<WithS
 }
 
 export type Finalizer<T> = (res: Response) => Awaitable<T>;
-export const toJson = <T = any>(res: Response) => statusWrapper(res.json<T>(), res.status);
-export const toJsonPick = <T, K extends keyof T & string>(res: Response, key: K) => statusWrapper(res.json<T>().then(it => it[key]), res.status);
-export const toText = (res: Response) => res.text();
-export const toBlob = (res: Response) => statusWrapper(res.blob(), res.status);
-export const toArrayBuffer = (res: Response) => statusWrapper(res.arrayBuffer(), res.status);
+export const toJson = <T = any>(res: Response): Promise<WithStatus<T>> => statusWrapper(res.json<T>(), res.status);
+export const toJsonPick = <T, K extends keyof T & string>(res: Response, key: K): Promise<WithStatus<T[K]>> => statusWrapper(res.json<T>().then(it => it[key]), res.status);
+export const toText = (res: Response): Promise<string> => res.text();
+export const toBlob = (res: Response): Promise<WithStatus<Blob>> => statusWrapper(res.blob(), res.status);
+export const toArrayBuffer = (res: Response): Promise<WithStatus<ArrayBuffer>> => statusWrapper(res.arrayBuffer(), res.status);
 
-export interface WrappedResponse extends Response {
-	headers: Headers & Record<string, string>;
-}
+export interface WrappedResponse extends Response { headers: Headers & Record<string, string> }
 
 export async function toWrapped(res: Response): Promise<WrappedResponse> {
 	return new Proxy(res, {

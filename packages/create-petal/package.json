@@ -3,7 +3,8 @@
 	"type": "module",
 	"version": "3.8.5",
 	"description": "A CLI utility to create a new petal app",
-	"license": "Apache-2.0",
+	"author": "Petal Contributors",
+	"license": "MIT",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
 	"repository": {
@@ -11,9 +12,7 @@
 		"url": "https://github.com/pulseflow/petal",
 		"directory": "packages/create-petal"
 	},
-	"bugs": {
-		"url": "https://github.com/pulseflow/petal/issues"
-	},
+	"bugs": "https://github.com/pulseflow/petal/issues",
 	"keywords": [
 		"create-app",
 		"petal",

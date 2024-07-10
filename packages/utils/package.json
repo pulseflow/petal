@@ -3,7 +3,8 @@
 	"type": "module",
 	"version": "3.8.5",
 	"description": "Opinionated collection of common TypeScript utilities",
-	"license": "Apache-2.0",
+	"author": "Petal Contributors",
+	"license": "MIT",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
 	"repository": {
@@ -11,9 +12,7 @@
 		"url": "https://github.com/pulseflow/petal.git",
 		"directory": "packages/utils"
 	},
-	"bugs": {
-		"url": "https://github.com/pulseflow/petal/issues"
-	},
+	"bugs": "https://github.com/pulseflow/petal/issues",
 	"keywords": [
 		"utils",
 		"flowr",
@@ -47,19 +46,18 @@
 		"build": "unbuild",
 		"stub": "unbuild --stub"
 	},
-	"dependencies": {
-		"fast-glob": "^3.3.2",
-		"fs-extra": "^11.2.0",
-		"luxon": "^3.4.4",
-		"pathe": "^1.1.2",
-		"serialize-error": "^11.0.3",
-		"ufo": "^1.5.3"
-	},
 	"devDependencies": {
-		"@types/fs-extra": "^11.0.4",
+		"@std/encoding": "npm:@jsr/std__encoding@1.0.0",
 		"@types/luxon": "^3.4.2",
 		"@types/zen-observable": "^0.8.7",
-		"p-limit": "^6.0.0",
+		"destr": "^2.0.3",
+		"luxon": "^3.4.4",
+		"p-limit": "^6.1.0",
+		"pathe": "^1.1.2",
+		"scule": "^1.3.0",
+		"serialize-error": "^11.0.3",
+		"tweetnacl": "^1.0.3",
+		"ufo": "^1.5.3",
 		"zen-observable": "^0.10.0"
 	},
 	"publishConfig": {

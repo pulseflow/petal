@@ -1,15 +1,17 @@
-export * from './assert';
 export * from './array';
+export * from './assert';
+// export * from './crypto';
 export * from './equal';
+export * from './event';
+export * from './function';
 export * from './guards';
+export * from './io';
 export * from './json';
 export * from './math';
-export * from './io';
-export * from './string';
-export * from './time';
-export * from './function';
 export * from './object';
 export * from './promise';
+export * from './string';
+export * from './time';
 
 export function assert(condition: boolean, message: string): asserts condition {
 	if (!condition)
@@ -17,12 +19,3 @@ export function assert(condition: boolean, message: string): asserts condition {
 }
 
 export const toString = (v: any) => Object.prototype.toString.call(v);
-
-export function getTypeName(v: any) {
-	if (v === null)
-		return 'null';
-	const type = toString(v).slice(8, -1).toLowerCase();
-	return (typeof v === 'object' || typeof v === 'function') ? type : typeof v;
-}
-
-export function noop() {}

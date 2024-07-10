@@ -2,7 +2,8 @@
 	"name": "@flowr/tsconfig",
 	"version": "3.8.5",
 	"description": "Common TSConfigs in Petal standardized projects",
-	"license": "Apache-2.0",
+	"author": "Petal Contributors",
+	"license": "MIT",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
 	"repository": {
@@ -10,9 +11,7 @@
 		"url": "https://github.com/pulseflow/petal.git",
 		"directory": "packages/tsconfig"
 	},
-	"bugs": {
-		"url": "https://github.com/pulseflow/petal/issues"
-	},
+	"bugs": "https://github.com/pulseflow/petal/issues",
 	"keywords": [
 		"config",
 		"tsconfig",

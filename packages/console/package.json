@@ -3,7 +3,8 @@
 	"type": "module",
 	"version": "3.8.5",
 	"description": "Opinionated logger and console utilities for Petal",
-	"license": "Apache-2.0",
+	"author": "Petal Contributors",
+	"license": "MIT",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
 	"repository": {
@@ -11,15 +12,16 @@
 		"url": "https://github.com/pulseflow/petal.git",
 		"directory": "packages/console"
 	},
-	"bugs": {
-		"url": "https://github.com/pulseflow/petal/issues"
-	},
+	"bugs": "https://github.com/pulseflow/petal/issues",
 	"keywords": [
 		"utils",
 		"flowr",
 		"petal",
 		"console",
-		"consola"
+		"consola",
+		"logger",
+		"logging",
+		"log"
 	],
 	"sideEffects": false,
 	"exports": {

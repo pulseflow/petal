@@ -277,6 +277,25 @@ when you want to override rules, or disable them inline, you need to update to t
 type foo = { bar: 2 }
 ```
 
+<details>
+<summary>change back to original prefixes/change other prefixes</summary>
+
+if you really want to use the original prefix, you can revert the plugin renaming using:
+
+```ts
+// eslint.config.js
+import petal from '@flowr/eslint-config';
+
+export default petal()
+	.renamePlugins({
+		ts: '@typescript-eslint',
+		yaml: 'yml',
+		node: 'n',
+		// ...
+	});
+```
+</details>
+
 ### rules overrides
 
 certain rules would only be enabled in specific files, for example `ts/*` rules would only be enabled in `.ts` files. if you want to override those rules, you need to specifiy the file extension:

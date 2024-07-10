@@ -80,11 +80,11 @@ export function boundMethods<T extends _EmptyClass>(t: T): {
 	return methods as any;
 }
 
-export function pick<T extends object, K extends keyof T>(obj: T, ...keys: K[]) {
+export function pick<T extends object, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> {
 	return Object.fromEntries(Object.entries(obj).filter(([k]) => keys.includes(k as K))) as Pick<T, K>;
 }
 
-export function omit<T extends object, K extends keyof T>(obj: T, ...keys: K[]) {
+export function omit<T extends object, K extends keyof T>(obj: T, ...keys: K[]): Omit<T, K> {
 	return Object.fromEntries(Object.entries(obj).filter(([k]) => !keys.includes(k as K))) as Omit<T, K>;
 }
 
@@ -105,14 +105,14 @@ export function rename<T extends Record<string | number | symbol, any>, K extend
 	return ({ ...omit(obj, from), [to]: obj[from] }) as Rename<T, K, V>;
 }
 
-export interface ArrayPosN<T> extends Array<ArrayPosN<T> | T> { }
+export interface ArrayPosN<T> extends Array<ArrayPosN<T> | T> {}
 export type ArrayN<T> = ArrayPosN<T> | T;
-export interface ArrayInf<T> extends Array<ArrayInf<T>> { }
+export interface ArrayInf<T> extends Array<ArrayInf<T>> {}
 
 export type Dict<T> = Record<string, T>;
-export interface DictPosN<T> extends Dict<DictPosN<T> | T> { }
+export interface DictPosN<T> extends Dict<DictPosN<T> | T> {}
 export type DictN<T> = DictPosN<T> | T;
-export interface DictInf<T> extends Dict<DictInf<T>> { }
+export interface DictInf<T> extends Dict<DictInf<T>> {}
 
 export type LastOf<T> = UnionToIntersection<T extends any ? () => T : never> extends () => infer R ? R : never;
 export type Push<T extends any[], V> = [...T, V];

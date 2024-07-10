@@ -73,6 +73,7 @@ export async function markdown(options: OptionsFiles & OptionsComponentExts & Op
 				'ts/no-namespace': 'off',
 				'ts/no-redeclare': 'off',
 				'ts/no-require-imports': 'off',
+				'ts/no-unused-expressions': 'off',
 				'ts/no-unused-vars': 'off',
 				'ts/no-use-before-define': 'off',
 				'ts/no-var-requires': 'off',

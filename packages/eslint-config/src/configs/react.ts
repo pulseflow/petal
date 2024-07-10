@@ -5,7 +5,7 @@ import type {
 	OptionsTypeScriptWithTypes,
 	TypedFlatConfigItem,
 } from '../types';
-import { GLOB_JS, GLOB_JSX, GLOB_TS, GLOB_TSX } from '../globs';
+import { GLOB_SRC } from '../globs';
 import { ensurePackages, interopDefault, toArray } from '../utils';
 
 const ReactRefreshAllowConstantExportPackages = ['vite'];
@@ -13,7 +13,7 @@ const RemixPackages = ['@remix-run/node', '@remix-run/react', '@remix-run/serve'
 const NextJsPackages = ['next'];
 
 export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
-	const { files = [GLOB_JS, GLOB_JSX, GLOB_TS, GLOB_TSX], overrides = {} } = options;
+	const { files = [GLOB_SRC], overrides = {} } = options;
 
 	await ensurePackages([
 		'@eslint-react/eslint-plugin',

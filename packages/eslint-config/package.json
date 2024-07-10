@@ -3,7 +3,8 @@
 	"type": "module",
 	"version": "3.8.5",
 	"description": "Standardized Petal specification linting configuration",
-	"license": "Apache-2.0",
+	"author": "Petal Contributors",
+	"license": "MIT",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
 	"repository": {
@@ -11,9 +12,7 @@
 		"url": "https://github.com/pulseflow/petal.git",
 		"directory": "packages/eslint-config"
 	},
-	"bugs": {
-		"url": "https://github.com/pulseflow/petal/issues"
-	},
+	"bugs": "https://github.com/pulseflow/petal/issues",
 	"keywords": [
 		"eslint-config",
 		"eslint",
@@ -125,13 +124,13 @@
 		"@clack/prompts": "^0.7.0",
 		"@eslint-community/eslint-plugin-eslint-comments": "^4.3.0",
 		"@stylistic/eslint-plugin": "^2.3.0",
-		"@typescript-eslint/eslint-plugin": "^7.15.0",
-		"@typescript-eslint/parser": "^7.15.0",
+		"@typescript-eslint/eslint-plugin": "^7.16.0",
+		"@typescript-eslint/parser": "^7.16.0",
 		"eslint-flat-config-utils": "^0.2.5",
 		"eslint-merge-processors": "^0.1.0",
 		"eslint-plugin-command": "^0.2.3",
 		"eslint-plugin-import-x": "^0.5.3",
-		"eslint-plugin-jsdoc": "^48.5.0",
+		"eslint-plugin-jsdoc": "^48.6.0",
 		"eslint-plugin-jsonc": "^2.16.0",
 		"eslint-plugin-markdown": "^5.0.0",
 		"eslint-plugin-n": "^17.8.1",
@@ -152,17 +151,17 @@
 		"yaml-eslint-parser": "^1.2.3"
 	},
 	"devDependencies": {
-		"@eslint-react/eslint-plugin": "^1.5.21",
+		"@eslint-react/eslint-plugin": "^1.5.22",
 		"@eslint/config-inspector": "^0.5.1",
 		"@prettier/plugin-xml": "^3.4.1",
 		"@stylistic/eslint-plugin-migrate": "^2.3.0",
 		"@types/eslint": "^8.56.10",
 		"@types/fs-extra": "^11.0.4",
 		"@types/prompts": "^2.4.9",
-		"@unocss/eslint-plugin": "^0.61.0",
+		"@unocss/eslint-plugin": "^0.61.2",
 		"astro-eslint-parser": "^1.0.2",
 		"eslint": "npm:eslint-ts-patch@9.5.0-0",
-		"eslint-plugin-astro": "^1.2.2",
+		"eslint-plugin-astro": "^1.2.3",
 		"eslint-plugin-format": "^0.1.1",
 		"eslint-plugin-react-hooks": "^4.6.2",
 		"eslint-plugin-solid": "^0.14.1",

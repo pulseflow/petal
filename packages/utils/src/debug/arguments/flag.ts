@@ -1,10 +1,11 @@
 import { isUndefined } from '../../core';
 
-export const sym_str = Symbol('@flowr/utils/arg:flag:string');
-export const sym_int = Symbol('@flowr/utils/arg:flag:integer');
-export const sym_bool = Symbol('@flowr/utils/arg:flag:boolean');
+export const sym_str: unique symbol = Symbol('@flowr/utils/arg:flag:string');
+export const sym_int: unique symbol = Symbol('@flowr/utils/arg:flag:integer');
+export const sym_bool: unique symbol = Symbol('@flowr/utils/arg:flag:boolean');
 
-export function flag<A extends boolean>(array: A) {
+export function flag<A extends boolean>(array: A): <T extends FlagType>(type: T) =>
+<F extends OuterFlagType<T, A> | undefined>(short?: string, fallback?: F) => OptionFlag<T, A, F> {
 	return <T extends FlagType>(type: T) =>
 		<F extends OuterFlagType<T, A> | undefined>(short?: string, fallback?: F) => {
 			return {
@@ -29,7 +30,7 @@ export const strs = array(sym_str);
 export class Flag<N extends string, T extends FlagType, A extends boolean, F extends OuterFlagType<T, A> | undefined> {
 	constructor(public name: N, public options: OptionFlag<T, A, F>) { }
 
-	is(input: string) { return this.#regex.test(input); }
+	is(input: string): boolean { return this.#regex.test(input); }
 
 	upsert(input: string, existing?: OuterFlagType<T, A>): OuterFlagType<T, A>;
 	upsert(input: string, existing?: OuterFlagType<T, A>) {
@@ -66,15 +67,19 @@ export class Flag<N extends string, T extends FlagType, A extends boolean, F ext
 		return null as FallbackFlagType<T, A, false>;
 	}
 
-	#parse(input: string) {
+	#parse(input: string): InnerFlagType<T> {
 		return this.#convert(this.#match(input));
 	}
 
-	#match(input: string) {
+	#match(input: string): string {
 		return input.match(this.#regex)![1];
 	}
 
-	get #regex() {
+	get #regex(): {
+		[sym_int]: RegExp;
+		[sym_bool]: RegExp;
+		[sym_str]: RegExp;
+	}[T] {
 		return {
 			[sym_int]: /(\d+)/,
 			[sym_bool]: /(true|false|1|0)/,
@@ -82,7 +87,7 @@ export class Flag<N extends string, T extends FlagType, A extends boolean, F ext
 		}[this.options.type];
 	}
 
-	get #convert() {
+	get #convert(): (x: string) => InnerFlagType<T> {
 		return {
 			[sym_int]: (x: string) => Number(x),
 			[sym_bool]: (x: string) => x === 'true' || x === '1',

@@ -1,7 +1,7 @@
 /**
  * Common utilities for error handling
  *
- * @packageDocumentation
+ * @module
  */
 
 export * from './core';

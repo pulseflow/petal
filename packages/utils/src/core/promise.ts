@@ -28,7 +28,7 @@ class PInstance<T = any> extends Promise<Awaited<T>[]> {
 		}
 		else { batch = Promise.all(items); }
 
-		return batch.then(l => l.filter((i: any) => i !== VOID));
+		return batch.then(l => l.filter(i => i !== VOID));
 	}
 
 	constructor(public items: Iterable<T> = [], public options?: POptions) {
@@ -43,8 +43,8 @@ class PInstance<T = any> extends Promise<Awaited<T>[]> {
 		return new PInstance(
 			Array.from(this.items).map(async (i, idx) => {
 				const v = await i;
-				if ((v as any) === VOID)
-					return VOID as unknown as U;
+				if (v === VOID)
+					return VOID as U;
 				return fn(v, idx);
 			}),
 			this.options,
@@ -57,7 +57,7 @@ class PInstance<T = any> extends Promise<Awaited<T>[]> {
 				const v = await i;
 				const r = await fn(v, idx);
 				if (!r)
-					return VOID as unknown as T;
+					return VOID as T;
 				return v;
 			}),
 			this.options,
@@ -80,8 +80,7 @@ class PInstance<T = any> extends Promise<Awaited<T>[]> {
 		const p = this.promise;
 		if (fn)
 			return p.then(fn);
-		else
-			return p;
+		else return p;
 	}
 
 	catch(fn?: (err: unknown) => PromiseLike<any>) {
@@ -109,9 +108,7 @@ class PInstance<T = any> extends Promise<Awaited<T>[]> {
  * // [6, 12]
  * ```
  */
-export function p<T = any>(items?: Iterable<T>, options?: POptions): PInstance<T> {
-	return new PInstance(items, options);
-}
+export const p = <T = any>(items?: Iterable<T>, options?: POptions): PInstance<T> => new PInstance(items, options);
 
 export interface SingletonPromiseReturn<T> {
 	(): Promise<T>;
@@ -152,7 +149,6 @@ export function createSingletonPromise<T>(fn: () => Promise<T>): SingletonPromis
  */
 export function sleep(ms: number, callback?: Fn<any>) {
 	return new Promise<void>(resolve =>
-
 		setTimeout(async () => {
 			await callback?.();
 			resolve();
@@ -193,12 +189,8 @@ export function createPromiseLock() {
 		async wait(): Promise<void> {
 			await Promise.allSettled(locks);
 		},
-		isWaiting() {
-			return Boolean(locks.length);
-		},
-		clear() {
-			locks.length = 0;
-		},
+		isWaiting: () => Boolean(locks.length),
+		clear: () => locks.length = 0,
 	};
 }
 

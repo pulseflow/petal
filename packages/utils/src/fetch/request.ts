@@ -215,7 +215,7 @@ export class RequestBuilder<T> {
 		return this.method('DELETE');
 	}
 
-	finalizer<U>(fn: Finalizer<U>) {
+	finalizer<U>(fn: Finalizer<U>): RequestProxy<U> {
 		return this.clone(fn);
 	}
 
@@ -227,15 +227,15 @@ export class RequestBuilder<T> {
 		return this.finalizer(fin.toJson<U>);
 	}
 
-	text() {
+	text(): RequestProxy<string> {
 		return this.finalizer(fin.toText);
 	}
 
-	arrayBuffer() {
+	arrayBuffer(): RequestProxy<WithStatus<ArrayBuffer>> {
 		return this.finalizer(fin.toArrayBuffer);
 	}
 
-	blob() {
+	blob(): RequestProxy<WithStatus<Blob>> {
 		return this.finalizer(fin.toBlob);
 	}
 

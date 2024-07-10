@@ -1,4 +1,11 @@
-import { getTypeName } from './index';
+import { toString } from './index';
+
+export function getTypeName(v: any) {
+	if (v === null)
+		return 'null';
+	const type = toString(v).slice(8, -1).toLowerCase();
+	return (typeof v === 'object' || typeof v === 'function') ? type : typeof v;
+}
 
 export function isDeepEqual(value1: any, value2: any): boolean {
 	const type1 = getTypeName(value1);
@@ -26,7 +33,6 @@ export function isDeepEqual(value1: any, value2: any): boolean {
 	return Object.is(value1, value2);
 }
 
-export type NoOp = Promise<void>;
 export async function gen2array<T>(gen: AsyncIterable<T>): Promise<T[]> {
 	const out: T[] = [];
 	for await (const x of gen) out.push(x);

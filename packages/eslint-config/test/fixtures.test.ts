@@ -60,29 +60,23 @@ runWithConfig(
 	},
 );
 
-runWithConfig(
-	'with-formatters',
-	{
-		typescript: true,
-		vue: true,
-		astro: true,
-		formatters: true,
-		unocss: false,
-	},
-);
+runWithConfig('with-formatters', {
+	typescript: true,
+	vue: true,
+	astro: true,
+	formatters: true,
+	unocss: false,
+});
 
-runWithConfig(
-	'no-markdown-with-formatters',
-	{
-		jsx: false,
-		vue: false,
-		markdown: false,
-		unocss: false,
-		formatters: {
-			markdown: true,
-		},
+runWithConfig('no-markdown-with-formatters', {
+	jsx: false,
+	vue: false,
+	markdown: false,
+	unocss: false,
+	formatters: {
+		markdown: true,
 	},
-);
+});
 
 function runWithConfig(name: string, configs: OptionsConfig, ...items: TypedFlatConfigItem[]) {
 	it.concurrent(name, async ({ expect }) => {
@@ -90,9 +84,7 @@ function runWithConfig(name: string, configs: OptionsConfig, ...items: TypedFlat
 		const output = resolve('./packages/eslint-config/fixtures/output', name);
 		const target = resolve('./packages/eslint-config/_fixtures', name);
 
-		await fs.copy(from, target, {
-			filter: src => !src.includes('node_modules'),
-		});
+		await fs.copy(from, target, { filter: src => !src.includes('node_modules') });
 		await fs.writeFile(join(target, 'eslint.config.js'), `
 // @eslint-disable
 import petal from '@flowr/eslint-config';
