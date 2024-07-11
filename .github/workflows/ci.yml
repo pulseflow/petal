@@ -1,12 +1,13 @@
 name: CI
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
-  merge_group:
+
   pull_request:
+    branches:
+        - main
     paths-ignore:
       - '.vscode/**'
       - '**/*.md'
@@ -14,19 +15,15 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request_target' && github.head_ref || github.ref }}
   cancel-in-progress: true
-defaults:
-  run:
-    shell: bash
 
 jobs:
   build:
-    name: 'Build and Test: ${{matrix.os}} (node@${{ matrix.NODE_VERSION }})'
+    name: 'build: ${{matrix.os}} (node@lts/*)'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
     strategy:
       matrix:
-        OS: [ubuntu-latest, windows-latest]
-        NODE_VERSION: ['lts/*']
+        OS: [ubuntu-latest, windows-latest, macos-latest]
       fail-fast: true
     steps:
       - name: disable git crlf
@@ -40,47 +37,44 @@ jobs:
       - name: setup pnpm
         uses: pnpm/action-setup@v4
 
-      - name: setup node@${{ matrix.NODE_VERSION }}
+      - name: setup node@lts/*
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.NODE_VERSION }}
-          cache: pnpm
+          node-version: lts/*
+
+      - name: setup ni
+        run: npm i -g @antfu/ni
 
       - name: install dependencies
-        run: pnpm install
+        run: nci
 
       - name: build packages
-        if: ${{ matrix.os == 'ubuntu-latest' && github.repository_owner == 'pulseflow' }}
-        run: pnpm build
+        run: nr build
 
       - name: test packages
-        run: pnpm test
+        run: nr test
 
   lint:
-    name: 'Lint: ubuntu-latest (node@20)'
+    name: 'lint: ubuntu-latest (node@lts/*)'
     runs-on: ubuntu-latest
     timeout-minutes: 7
-    needs: build
     steps:
-      - name: disable git crlf
-        run: |
-          git config --global core.autocrlf false
-          git config --global core.eol lf
-
       - name: checkout
         uses: actions/checkout@v4
 
       - name: setup pnpm
         uses: pnpm/action-setup@v4
 
-      - name: setup node
+      - name: setup node@lts/*
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: pnpm
+          node-version: lts/*
+
+      - name: setup ni
+        run: npm i -g @antfu/ni
 
       - name: install dependencies
-        run: pnpm install
+        run: nci
 
-      - name: lint and format
-        run: pnpm lint
+      - name: lint
+        run: nr lint

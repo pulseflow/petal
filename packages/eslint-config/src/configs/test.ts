@@ -9,10 +9,7 @@ import { interopDefault } from '../utils';
 export async function test(options: OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = GLOB_TESTS, overrides = {} } = options;
 
-	const [
-		pluginTest,
-		pluginPetal,
-	] = await Promise.all([
+	const [pluginTest, pluginPetal] = await Promise.all([
 		interopDefault(import('eslint-plugin-vitest')),
 		interopDefault(import('eslint-plugin-petal')),
 	] as const);

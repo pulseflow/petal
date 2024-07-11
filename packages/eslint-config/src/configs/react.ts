@@ -14,23 +14,11 @@ const NextJsPackages = ['next'];
 
 export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_SRC], overrides = {} } = options;
-
-	await ensurePackages([
-		'@eslint-react/eslint-plugin',
-		'eslint-plugin-react-hooks',
-	]);
-
-	const tsconfigPath = options?.tsconfigPath
-		? toArray(options.tsconfigPath)
-		: undefined;
+	await ensurePackages(['@eslint-react/eslint-plugin', 'eslint-plugin-react-hooks']);
+	const tsconfigPath = options?.tsconfigPath ? toArray(options.tsconfigPath) : undefined;
 	const isTypeAware = !!tsconfigPath;
 
-	const [
-		pluginReact,
-		pluginReactHooks,
-		pluginPetal,
-		parserTs,
-	] = await Promise.all([
+	const [pluginReact, pluginReactHooks, pluginPetal, parserTs] = await Promise.all([
 		interopDefault(import('@eslint-react/eslint-plugin')),
 		interopDefault(import('eslint-plugin-react-hooks')),
 		interopDefault(import('eslint-plugin-petal')),

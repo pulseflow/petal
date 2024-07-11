@@ -10,8 +10,10 @@ import { interopDefault } from '../utils';
 export async function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): Promise<TypedFlatConfigItem[]> {
 	const { isInEditor = false, overrides = {} } = options;
 
-	const pluginPetal = await interopDefault(import('eslint-plugin-petal'));
-	const pluginUnusedImports = await interopDefault(import('eslint-plugin-unused-imports'));
+	const [pluginPetal, pluginUnusedImports] = await Promise.all([
+		interopDefault(import('eslint-plugin-petal')),
+		interopDefault(import('eslint-plugin-unused-imports')),
+	] as const);
 
 	return [
 		{

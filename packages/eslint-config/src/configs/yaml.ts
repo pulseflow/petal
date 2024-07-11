@@ -9,8 +9,7 @@ import { interopDefault } from '../utils';
 
 export async function yaml(options: OptionsOverrides & OptionsStylistic & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_YAML], overrides = {}, stylistic = true } = options;
-	const { indent = 2, quotes = 'single' }
-		= typeof stylistic === 'boolean' ? {} : stylistic;
+	const { indent = 2, quotes = 'single' } = typeof stylistic === 'boolean' ? {} : stylistic;
 
 	const [
 		pluginYaml,

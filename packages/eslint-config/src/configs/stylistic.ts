@@ -24,10 +24,7 @@ export interface StylisticOptions extends StylisticConfig, OptionsOverrides {
 export async function stylistic(options: StylisticOptions = {}): Promise<TypedFlatConfigItem[]> {
 	const { indent, jsx, opinionated = true, overrides = {}, quotes, semi } = { ...StylisticConfigDefaults, ...options };
 
-	const [
-		pluginStylistic,
-		pluginPetal,
-	] = await Promise.all([
+	const [pluginStylistic, pluginPetal] = await Promise.all([
 		interopDefault(import('@stylistic/eslint-plugin')),
 		interopDefault(import('eslint-plugin-petal')),
 	] as const);

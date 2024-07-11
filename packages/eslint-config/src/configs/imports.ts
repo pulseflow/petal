@@ -1,15 +1,11 @@
-/* eslint-disable perfectionist/sort-objects -- rules need to be in this order */
 import type { OptionsStylistic, TypedFlatConfigItem } from '../types';
-import { GLOB_BIN, GLOB_BIN_SRC } from '../globs';
 import { interopDefault } from '../utils';
+import { GLOB_BIN, GLOB_BIN_SRC } from '../globs';
 
 export async function imports(options: OptionsStylistic = {}): Promise<TypedFlatConfigItem[]> {
 	const { stylistic = true } = options;
 
-	const [
-		pluginImport,
-		pluginPetal,
-	] = await Promise.all([
+	const [pluginImport, pluginPetal] = await Promise.all([
 		interopDefault(import('eslint-plugin-import-x')),
 		interopDefault(import('eslint-plugin-petal')),
 	] as const);
@@ -22,10 +18,6 @@ export async function imports(options: OptionsStylistic = {}): Promise<TypedFlat
 				petal: pluginPetal,
 			},
 			rules: {
-				'petal/import-dedupe': 'error',
-				'petal/no-import-dist': 'error',
-				'petal/no-import-node-modules-by-path': 'error',
-
 				'import/first': 'error',
 				'import/no-duplicates': 'error',
 				'import/no-mutable-exports': 'error',
@@ -33,6 +25,10 @@ export async function imports(options: OptionsStylistic = {}): Promise<TypedFlat
 				'import/no-self-import': 'error',
 				'import/no-webpack-loader-syntax': 'error',
 				'import/order': 'error',
+				
+				'petal/import-dedupe': 'error',
+				'petal/no-import-dist': 'error',
+				'petal/no-import-node-modules-by-path': 'error',
 
 				...stylistic
 					? {

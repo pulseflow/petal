@@ -11,10 +11,7 @@ export async function jsonc(options: OptionsFiles & OptionsStylistic & OptionsOv
 	const { files = [GLOB_JSON, GLOB_JSON5, GLOB_JSONC], overrides = {}, stylistic = true } = options;
 	const { indent = 'tab' } = typeof stylistic === 'boolean' ? {} : stylistic;
 
-	const [
-		pluginJsonc,
-		parserJsonc,
-	] = await Promise.all([
+	const [pluginJsonc, parserJsonc] = await Promise.all([
 		interopDefault(import('eslint-plugin-jsonc')),
 		interopDefault(import('jsonc-eslint-parser')),
 	] as const);

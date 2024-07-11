@@ -18,14 +18,9 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 		? {}
 		: options.sfcBlocks ?? {};
 
-	await ensurePackages([
-		'eslint-plugin-vue',
-		'vue-eslint-parser',
-	]);
-
+	await ensurePackages(['eslint-plugin-vue']);
 	if (sfcBlocks)
 		ensurePackages(['eslint-processor-vue-blocks']);
-
 	if (accessibility)
 		ensurePackages(['eslint-plugin-vuejs-accessibility']);
 
@@ -33,7 +28,6 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 		pluginVue,
 		parserVue,
 	] = await Promise.all([
-		// @ts-expect-error missing types
 		interopDefault(import('eslint-plugin-vue')),
 		interopDefault(import('vue-eslint-parser')),
 	] as const);
@@ -94,18 +88,18 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 					}),
 				]),
 			rules: {
-				...pluginVue.configs.base.rules as any,
+				...pluginVue.configs.base.rules,
 
 				...vueVersion === 2
 					? {
-							...pluginVue.configs.essential.rules as any,
-							...pluginVue.configs['strongly-recommended'].rules as any,
-							...pluginVue.configs.recommended.rules as any,
+							...pluginVue.configs.essential.rules,
+							...pluginVue.configs['strongly-recommended'].rules,
+							...pluginVue.configs.recommended.rules,
 						}
 					: {
-							...pluginVue.configs['vue3-essential'].rules as any,
-							...pluginVue.configs['vue3-strongly-recommended'].rules as any,
-							...pluginVue.configs['vue3-recommended'].rules as any,
+							...pluginVue.configs['vue3-essential'].rules,
+							...pluginVue.configs['vue3-strongly-recommended'].rules,
+							...pluginVue.configs['vue3-recommended'].rules,
 						},
 
 				'node/prefer-global/process': 'off',

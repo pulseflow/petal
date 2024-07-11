@@ -1,4 +1,4 @@
-import fs from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import { flatConfigsToRulesDTS } from 'eslint-typegen/core';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
 import {
@@ -13,6 +13,7 @@ import {
 	markdown,
 	node,
 	perfectionist,
+	query,
 	react,
 	regexp,
 	solid,
@@ -48,6 +49,7 @@ const configs = await combine(
 	markdown(),
 	node(),
 	perfectionist(),
+	query(),
 	react(),
 	solid(),
 	sortPackageJson(),
@@ -63,14 +65,13 @@ const configs = await combine(
 	yaml(),
 );
 
-const configNames = configs.map(c => c.name).filter(Boolean) as string[];
-let dts = await flatConfigsToRulesDTS(configs, {
-	includeAugmentation: false,
-});
+const configNames = configs.map(c => c.name).filter(Boolean) as readonly string[];
+const _dts = await flatConfigsToRulesDTS(configs, { includeAugmentation: false });
 
-dts += `
+const dts = `${_dts}
+
 // ----- petal/provider/configNames -----
 export type ConfigNames = ${configNames.map(i => `'${i}'`).join(' | ')};
 `;
 
-await fs.writeFile('src/typegen.d.ts', dts);
+await writeFile('src/typegen.d.ts', dts);

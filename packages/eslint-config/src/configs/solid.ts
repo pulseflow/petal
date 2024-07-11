@@ -5,20 +5,11 @@ import { ensurePackages, interopDefault, toArray } from '../utils';
 
 export async function solid(options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles & OptionsTypeScriptWithTypes = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_JSX, GLOB_TSX], overrides = {}, typescript = true } = options;
-
-	await ensurePackages([
-		'eslint-plugin-solid',
-	]);
-
-	const tsconfigPath = options?.tsconfigPath
-		? toArray(options.tsconfigPath)
-		: undefined;
+	await ensurePackages(['eslint-plugin-solid']);
+	const tsconfigPath = options?.tsconfigPath ? toArray(options.tsconfigPath) : undefined;
 	const isTypeAware = !!tsconfigPath;
 
-	const [
-		pluginSolid,
-		parserTs,
-	] = await Promise.all([
+	const [pluginSolid, parserTs] = await Promise.all([
 		interopDefault(import('eslint-plugin-solid')),
 		interopDefault(import('@typescript-eslint/parser')),
 	] as const);

@@ -1,3 +1,9 @@
+/**
+ * General purpose ESLint configuration for Petal and the Petal standard.
+ *
+ * @module
+ */
+
 import { petal } from './factory';
 
 export * from './configs';

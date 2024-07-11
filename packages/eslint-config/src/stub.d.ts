@@ -12,6 +12,28 @@ declare module 'eslint-plugin-react-hooks' {
 	export default { eslintPluginReactHooks };
 };
 
+declare module 'eslint-plugin-vue' {
+	import type { ESLint, Linter } from 'eslint';
+
+	const eslintPluginVue: ESLint.Plugin & {
+		configs: {
+			'base': Linter.FlatConfig;
+			'essential': Linter.FlatConfig;
+			'strongly-recommended': Linter.FlatConfig;
+			'recommended': Linter.FlatConfig;
+			'vue3-essential': Linter.FlatConfig;
+			'vue3-strongly-recommended': Linter.FlatConfig;
+			'vue3-recommended': Linter.FlatConfig;
+		};
+		processors: {
+			'.vue': Linter.Processor;
+		};
+	};
+
+	export = eslintPluginVue;
+	export default { eslintPluginVue };
+};
+
 declare module 'eslint-plugin-markdown' {
 	import type { ESLint, Linter } from 'eslint';
 

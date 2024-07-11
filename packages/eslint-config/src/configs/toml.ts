@@ -6,10 +6,7 @@ export async function toml(options: OptionsOverrides & OptionsStylistic & Option
 	const { files = [GLOB_TOML], overrides = {}, stylistic = true } = options;
 	const { indent = 2 } = typeof stylistic === 'boolean' ? {} : stylistic;
 
-	const [
-		pluginToml,
-		parserToml,
-	] = await Promise.all([
+	const [pluginToml, parserToml] = await Promise.all([
 		interopDefault(import('eslint-plugin-toml')),
 		interopDefault(import('toml-eslint-parser')),
 	] as const);

@@ -10,7 +10,6 @@ export async function gitignore(options: OptionsGitignore = {}): Promise<TypedFl
 	const root = options.root ?? false;
 	const _files = options.files ?? root ? GITIGNORE : findUpSync(GITIGNORE) || [];
 	const strict = options.strict ?? true;
-
 	const ignores: string[] = [];
 	const files = Array.isArray(_files) ? _files : [_files];
 
@@ -34,7 +33,8 @@ export async function gitignore(options: OptionsGitignore = {}): Promise<TypedFl
 	return [
 		{
 			ignores,
-			name: 'petal/ignores/git',
+			// todo
+			// name: 'petal/ignores/git',
 		},
 	];
 }

@@ -3,26 +3,11 @@ import type { OptionsFiles, OptionsHasTypeScript, OptionsOverrides, OptionsStyli
 import { GLOB_SVELTE } from '../globs';
 
 export async function svelte(options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
-	const {
-		files = [GLOB_SVELTE],
-		overrides = {},
-		stylistic = true,
-	} = options;
+	const { files = [GLOB_SVELTE], overrides = {}, stylistic = true } = options;
+	const { indent = 'tab', quotes = 'single' } = typeof stylistic === 'boolean' ? {} : stylistic;
+	await ensurePackages(['eslint-plugin-svelte']);
 
-	const {
-		indent = 'tab',
-		quotes = 'single',
-	} = typeof stylistic === 'boolean' ? {} : stylistic;
-
-	await ensurePackages([
-		'eslint-plugin-svelte',
-		'svelte-eslint-parser',
-	]);
-
-	const [
-		pluginSvelte,
-		parserSvelte,
-	] = await Promise.all([
+	const [pluginSvelte, parserSvelte] = await Promise.all([
 		interopDefault(import('eslint-plugin-svelte')),
 		interopDefault(import('svelte-eslint-parser')),
 	] as const);

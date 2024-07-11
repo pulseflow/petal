@@ -12,6 +12,7 @@ export * from './jsonc';
 export * from './markdown';
 export * from './node';
 export * from './perfectionist';
+export * from './query';
 export * from './react';
 export * from './solid';
 export * from './sort';

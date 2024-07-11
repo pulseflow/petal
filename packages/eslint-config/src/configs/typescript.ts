@@ -1,4 +1,5 @@
 import process from 'node:process';
+import type { Linter } from 'eslint';
 import type {
 	OptionsComponentExts,
 	OptionsFiles,
@@ -75,7 +76,7 @@ export async function typescript(
 								tsconfigRootDir: process.cwd(),
 							}
 						: {},
-					...parserOptions as any,
+					...parserOptions as Linter.ParserOptions,
 				},
 			},
 			name: `petal/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`,

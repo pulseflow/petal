@@ -3,9 +3,7 @@ import type { OptionsUnoCSS, TypedFlatConfigItem } from '../types';
 
 export async function unocss(options: OptionsUnoCSS = {}): Promise<TypedFlatConfigItem[]> {
 	const { attributify = true, strict = false } = options;
-
 	await ensurePackages(['@unocss/eslint-plugin']);
-
 	const pluginUnoCSS = await interopDefault(import('@unocss/eslint-plugin'));
 
 	return [

@@ -19,6 +19,7 @@ import {
 	markdown,
 	node,
 	perfectionist,
+	query,
 	react,
 	regexp,
 	solid,
@@ -34,6 +35,7 @@ import {
 	vue,
 	yaml,
 } from './configs';
+import { getOverrides, resolveSubOptions } from './utils';
 
 const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
 	'files',
@@ -50,7 +52,8 @@ const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
 const VuePackages = ['@slidev/cli', 'nuxt', 'vitepress', 'vue'];
 const SolidPackages = ['solid-js', 'solid-refresh', 'vite-plugin-solid'];
 const SveltePackages = ['@sveltejs/kit', '@sveltejs/package', '@sveltejs/vite-plugin-svelte', 'svelte'];
-const CheckIsInEditor = () => !!((process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM || process.env.NVIM) && !process.env.CI);
+const QueryPackages = ['react', 'vue', 'solid', 'svelte'].map(i => `@tanstack/${i}-query`);
+const EditorCheck = !!((process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM || process.env.NVIM) && !process.env.CI);
 
 export const defaultPluginRenaming = {
 	'@eslint-react': 'react',
@@ -87,8 +90,9 @@ export function petal(
 		autoRenamePlugins = true,
 		componentExts = [],
 		gitignore: enableGitignore = true,
-		isInEditor = CheckIsInEditor(),
+		isInEditor = EditorCheck,
 		jsx: enableJsx = true,
+		query: enableQuery = QueryPackages.some(i => isPackageExists(i)),
 		react: enableReact = false,
 		regexp: enableRegexp = true,
 		solid: enableSolid = SolidPackages.some(i => isPackageExists(i)),
@@ -199,6 +203,11 @@ export function petal(
 			overrides: getOverrides(options, 'unocss'),
 		}));
 
+	if (enableQuery)
+		configs.push(query({
+			overrides: getOverrides(options, 'query'),
+		}));
+
 	if (options.jsonc ?? true)
 		configs.push(
 			jsonc({
@@ -247,18 +256,4 @@ export function petal(
 		composer = composer.renamePlugins(defaultPluginRenaming);
 
 	return composer;
-}
-
-export type ResolveOptions<T> = T extends boolean ? never : NonNullable<T>;
-
-export function resolveSubOptions<K extends keyof OptionsConfig>(options: OptionsConfig, key: K): ResolveOptions<OptionsConfig[K]> {
-	return typeof options[key] === 'boolean' ? {} as any : options[key] || {};
-}
-
-export function getOverrides<K extends keyof OptionsConfig>(options: OptionsConfig, key: K) {
-	const sub = resolveSubOptions(options, key);
-	return {
-		...(options.overrides as any)?.[key],
-		...'overrides' in sub ? sub.overrides : {},
-	};
 }

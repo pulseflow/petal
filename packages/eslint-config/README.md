@@ -377,7 +377,11 @@ export default petal()
 /* ... */
 ```
 
-### vue
+### optional configs
+
+we provide some additional configs for specific cases, that we don't include their dependencies by default to reduce package size:
+
+#### vue
 
 vue support is auto-detected based on the `vue` dependency. you can also explicitly enable or disable it:
 
@@ -404,7 +408,7 @@ export default petal({
 });
 ```
 
-the required dev dependencies are: `eslint-plugin-vue vue-eslint-parser` (you should be prompted to install these when running eslint)
+the required dev dependencies are: `eslint-plugin-vue` (you should be prompted to install these when running eslint)
 
 if you have `vue.sfcBlocks` enabled (set to enabled by default), you will also need to install `eslint-processor-vue-blocks` as a dev dependency, also prompted upon running eslint
 
@@ -426,10 +430,6 @@ export default petal({
 ```
 
 this support may be removed when `eslint-plugin-vue` drops support for vue 2 and it is recommended to update to vue 3 if possible.
-
-### optional configs
-
-we provide some additional configs for specific cases, that we don't include their dependencies by default to reduce package size:
 
 #### formatters
 

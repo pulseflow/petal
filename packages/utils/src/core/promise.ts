@@ -98,7 +98,7 @@ class PInstance<T = any> extends Promise<Awaited<T>[]> {
  * @category Promise
  * @example
  * ```
- * import { p } from '@petal/utils'
+ * import { p } from '@flowr/utils'
  *
  * const items = [1, 2, 3, 4, 5]
  *
