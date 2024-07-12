@@ -1,7 +1,7 @@
 {
 	"name": "@flowr/petal-monorepo",
 	"type": "module",
-	"version": "3.8.5",
+	"version": "3.8.6",
 	"private": true,
 	"packageManager": "pnpm@9.5.0",
 	"engineStrict": true,
@@ -32,7 +32,9 @@
 		"dev": "pnpm stub"
 	},
 	"workspaces": {
-		"packages": ["packages/*"]
+		"packages": [
+			"packages/*"
+		]
 	},
 	"devDependencies": {
 		"@flowr/eslint-config": "workspace:^",
