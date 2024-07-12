@@ -13,8 +13,8 @@ const te = new TextDecoder();
 type Ascii85Standard = 'Adobe' | 'btoa' | 'RFC 1924' | 'Z85';
 type Base64Standard = 'btoa' | 'url' | 'url_padded';
 
-const encodeBase64UrlPadded = (data: Encodable) => std.encodeBase64(data).replace(/\+/g, '-').replace(/\//g, '_');
-const decodeBase64UrlPadded = (src: string) => std.decodeBase64(src.replace(/-/g, '+').replace(/_/g, '/'));
+const encodeBase64UrlPadded = (data: Encodable): string => std.encodeBase64(data).replace(/\+/g, '-').replace(/\//g, '_');
+const decodeBase64UrlPadded = (src: string): Uint8Array => std.decodeBase64(src.replace(/-/g, '+').replace(/_/g, '/'));
 
 const enc = {
 	16: std.encodeHex,
@@ -62,15 +62,15 @@ export default function base<T extends Base>(b: T, v?: Variation<T>): BaseProvid
 	};
 }
 
-export const rand = nacl.randomBytes;
-export const x25519 = nacl.scalarMult.base;
-export const sha512 = (msg: BufferLike) => nacl.hash(toUint8s(msg));
-export function sha256(msg: BufferLike) {
+export const rand: (n: number) => Uint8Array = nacl.randomBytes;
+export const x25519: (n: Uint8Array) => Uint8Array = nacl.scalarMult.base;
+export const sha512 = (msg: BufferLike): Uint8Array => nacl.hash(toUint8s(msg));
+export function sha256(msg: BufferLike): Promise<Uint8Array> {
 	return crypto.subtle
 		.digest('SHA-256', toUint8s(msg))
 		.then(x => toUint8s(x));
 }
-export function pair(pk?: Uint8Array) {
+export function pair(pk?: Uint8Array): readonly [Uint8Array, Uint8Array] {
 	const priv = pk ?? rand(32);
 	const pub = x25519(priv);
 	return [priv, pub] as const;
@@ -107,7 +107,7 @@ function uint8sToBits(arr: Uint8Array): Bit[] {
 	return result as Bit[];
 }
 
-function bitGenerator() {
+function bitGenerator(): () => Bit {
 	const state = {
 		consumed: 0,
 		random: uint8sToBits(rand(1)),
@@ -125,9 +125,9 @@ function bitGenerator() {
 	return next;
 }
 
-export const bit = bitGenerator();
+export const bit: () => Bit = bitGenerator();
 
-export function po2(x: bigint) {
+export function po2(x: bigint): bigint {
 	x |= x >> 1n;
 	x |= x >> 2n;
 	x |= x >> 4n;

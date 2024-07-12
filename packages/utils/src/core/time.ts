@@ -15,7 +15,7 @@ export interface HumanDuration {
 }
 
 /** Get `Date.now()` as a timestamp. */
-export const timestamp = () => +Date.now();
+export const timestamp = (): number => +Date.now();
 
 /**
  * Converts a {@link HumanDuration} to milliseconds.

@@ -38,7 +38,7 @@ export default createEslintRule<Options, MessageIds>({
 		const { tags = ['$', 'unindent', 'unIndent'] } = context.options?.[0] ?? {};
 
 		return {
-			TaggedTemplateExpression(node) {
+			TaggedTemplateExpression: (node) => {
 				const id = node.tag;
 				if (!id || id.type !== 'Identifier')
 					return;

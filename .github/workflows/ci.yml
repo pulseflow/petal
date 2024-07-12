@@ -7,7 +7,7 @@ on:
 
   pull_request:
     branches:
-        - main
+      - main
     paths-ignore:
       - '.vscode/**'
       - '**/*.md'
@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   build:
-    name: 'build: ${{matrix.os}} (node@lts/*)'
+    name: 'build: ${{ matrix.os }} (node@lts/*)'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
     strategy:

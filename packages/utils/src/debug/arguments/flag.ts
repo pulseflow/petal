@@ -1,8 +1,8 @@
 import { isUndefined } from '../../core';
 
-export const sym_str: unique symbol = Symbol('@flowr/utils/arg:flag:string');
-export const sym_int: unique symbol = Symbol('@flowr/utils/arg:flag:integer');
-export const sym_bool: unique symbol = Symbol('@flowr/utils/arg:flag:boolean');
+export const sym_string: unique symbol = Symbol('@flowr/utils/arg:flag:string');
+export const sym_integer: unique symbol = Symbol('@flowr/utils/arg:flag:integer');
+export const sym_boolean: unique symbol = Symbol('@flowr/utils/arg:flag:boolean');
 
 export function flag<A extends boolean>(array: A): <T extends FlagType>(type: T) =>
 <F extends OuterFlagType<T, A> | undefined>(short?: string, fallback?: F) => OptionFlag<T, A, F> {
@@ -18,14 +18,14 @@ export function flag<A extends boolean>(array: A): <T extends FlagType>(type: T)
 }
 
 export const single = flag(false);
-export const bool = single(sym_bool);
-export const int = single(sym_int);
-export const str = single(sym_str);
+export const boolean = single(sym_boolean);
+export const integer = single(sym_integer);
+export const string = single(sym_string);
 
 export const array = flag(true);
-export const bools = array(sym_bool);
-export const ints = array(sym_int);
-export const strs = array(sym_str);
+export const booleans = array(sym_boolean);
+export const integers = array(sym_integer);
+export const strings = array(sym_string);
 
 export class Flag<N extends string, T extends FlagType, A extends boolean, F extends OuterFlagType<T, A> | undefined> {
 	constructor(public name: N, public options: OptionFlag<T, A, F>) { }
@@ -41,7 +41,7 @@ export class Flag<N extends string, T extends FlagType, A extends boolean, F ext
 	match(existing?: OuterFlagType<T, A>): OuterFlagType<T, A> | FallbackFlagType<T, A, true>;
 
 	match(existing?: OuterFlagType<T, A>) {
-		if (this.options.type === sym_bool)
+		if (this.options.type === sym_boolean)
 			return this.options.array
 				? [...(existing ?? []) as OuterFlagType<T, true>, true]
 				: true;
@@ -61,7 +61,7 @@ export class Flag<N extends string, T extends FlagType, A extends boolean, F ext
 		if (this.options.array)
 			return [] as OuterFlagType<T, true> as FallbackFlagType<T, A, false>;
 
-		if (this.options.type === sym_bool)
+		if (this.options.type === sym_boolean)
 			return false as FallbackFlagType<T, A, false>;
 
 		return null as FallbackFlagType<T, A, false>;
@@ -76,29 +76,29 @@ export class Flag<N extends string, T extends FlagType, A extends boolean, F ext
 	}
 
 	get #regex(): {
-		[sym_int]: RegExp;
-		[sym_bool]: RegExp;
-		[sym_str]: RegExp;
+		[sym_integer]: RegExp;
+		[sym_boolean]: RegExp;
+		[sym_string]: RegExp;
 	}[T] {
 		return {
-			[sym_int]: /(\d+)/,
-			[sym_bool]: /(true|false|1|0)/,
-			[sym_str]: /(\S+)/,
+			[sym_integer]: /(\d+)/,
+			[sym_boolean]: /(true|false|1|0)/,
+			[sym_string]: /(\S+)/,
 		}[this.options.type];
 	}
 
 	get #convert(): (x: string) => InnerFlagType<T> {
 		return {
-			[sym_int]: (x: string) => Number(x),
-			[sym_bool]: (x: string) => x === 'true' || x === '1',
-			[sym_str]: (x: string) => x,
+			[sym_integer]: (x: string) => Number(x),
+			[sym_boolean]: (x: string) => x === 'true' || x === '1',
+			[sym_string]: (x: string) => x,
 		}[this.options.type] as (x: string) => InnerFlagType<T>;
 	}
 }
 
-export type FlagTypeString = typeof sym_str;
-export type FlagTypeInteger = typeof sym_int;
-export type FlagTypeBool = typeof sym_bool;
+export type FlagTypeString = typeof sym_string;
+export type FlagTypeInteger = typeof sym_integer;
+export type FlagTypeBool = typeof sym_boolean;
 export type FlagType = FlagTypeString | FlagTypeInteger | FlagTypeBool;
 
 export type InnerFlagType<T extends FlagType> = T extends FlagTypeBool ? boolean : T extends FlagTypeInteger

@@ -3,12 +3,12 @@ import type { Fn, Nullable } from '../types';
 /**
  * Call every function in an array
  */
-export const batchInvoke = (functions: Nullable<Fn>[]) => functions.forEach(fn => fn && fn());
+export const batchInvoke = (functions: Nullable<Fn>[]): void => functions.forEach(fn => fn && fn());
 
 /**
  * Call the function
  */
-export const invoke = (fn: Fn) => fn();
+export const invoke = (fn: Fn): ReturnType<typeof fn> => fn();
 
 /**
  * Pass the value through the callback, and return the value

@@ -15,8 +15,6 @@ export {};
 // 		type: 'problem',
 // 		docs: {
 // 			description: 'Disallow unused variables',
-// 			recommended: 'recommended',
-// 			extendsBaseRule: true,
 // 		},
 // 		fixable: baseRule.meta.fixable,
 // 		hasSuggestions: baseRule.meta.hasSuggestions,

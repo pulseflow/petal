@@ -10,7 +10,6 @@ export default createEslintRule<Options, MessageIds>({
 		type: 'layout',
 		docs: {
 			description: 'Newline after if',
-			recommended: 'stylistic',
 		},
 		fixable: 'whitespace',
 		schema: [],
@@ -19,24 +18,22 @@ export default createEslintRule<Options, MessageIds>({
 		},
 	},
 	defaultOptions: [],
-	create: (context) => {
-		return {
-			IfStatement(n) {
-				if (!n.consequent)
-					return;
-				if (n.consequent.type === 'BlockStatement')
-					return;
-				if (n.test.loc.end.line === n.consequent.loc.start.line)
-					context.report({
-						node: n,
-						loc: {
-							start: n.test.loc.end,
-							end: n.consequent.loc.start,
-						},
-						messageId: 'missingIfNewline',
-						fix: f => f.replaceTextRange([n.consequent.range[0], n.consequent.range[0]], '\n'),
-					});
-			},
-		};
-	},
+	create: context => ({
+		IfStatement: (node) => {
+			if (!node.consequent)
+				return;
+			if (node.consequent.type === 'BlockStatement')
+				return;
+			if (node.test.loc.end.line === node.consequent.loc.start.line)
+				context.report({
+					node,
+					loc: {
+						start: node.test.loc.end,
+						end: node.consequent.loc.start,
+					},
+					messageId: 'missingIfNewline',
+					fix: f => f.replaceTextRange([node.consequent.range[0], node.consequent.range[0]], '\n'),
+				});
+		},
+	}),
 });

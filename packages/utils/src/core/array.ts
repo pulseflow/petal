@@ -131,7 +131,7 @@ export function last<T>(array: readonly T[]): T | undefined {
  * @example const removedArray: Array<number> = remove([1, 2, 3, 4], 1); // [2, 3, 4]
  * @category Array
  */
-export function remove<T>(array: T[], value: T) {
+export function remove<T>(array: T[], value: T): boolean {
 	if (!array)
 		return false;
 	const index = array.indexOf(value);
@@ -203,7 +203,7 @@ export function range(...args: any): number[] {
  * @param to The index to move the element to.
  * @returns The `array` parameter with the element moved.
  */
-export function move<T>(array: T[], from: number, to: number) {
+export function move<T>(array: T[], from: number, to: number): T[] {
 	array.splice(to, 0, array.splice(from, 1)[0]);
 	return array;
 }
@@ -217,7 +217,7 @@ export function move<T>(array: T[], from: number, to: number) {
  * @example const arrayRange: number = clampArrayRange(30, [1, 2, 3, 4]);
  * @category Array
  */
-export const clampArrayRange = (n: number, array: readonly unknown[]) => clamp(n, 0, array.length - 1);
+export const clampArrayRange = (n: number, array: readonly unknown[]): number => clamp(n, 0, array.length - 1);
 
 /**
  * Get random element(s) from an array
@@ -228,7 +228,7 @@ export const clampArrayRange = (n: number, array: readonly unknown[]) => clamp(n
  * @returns The random sample of items in the array.
  * @example const randomResponse = sample(['response', 'another response'], 1); // one of the two responses
  */
-export const sample = <T>(array: T[], quantity: number) => Array.from({ length: quantity }, _ => array[Math.round(Math.random() * (array.length - 1))]);
+export const sample = <T>(array: T[], quantity: number): T[] => Array.from({ length: quantity }, _ => array[Math.round(Math.random() * (array.length - 1))]);
 
 /**
  * Shuffle an array. This function mutates the array.
@@ -243,16 +243,16 @@ export function shuffle<T>(array: T[]): T[] {
 	return array;
 }
 
-export const max = <T>(arr: T[], prop: ExtractKeysByType<T, number>) => Math.max(...arr.map(a => a[prop] as number));
-export const max_by = <T>(arr: T[], prop: ExtractKeysByType<T, number>) => arr.reduce((a, b) => a[prop] > b[prop] ? a : b);
-export const max_map = <T, U>(arr: T[], fn: (a: T) => U) => arr.reduce((a, b) => fn(a) > fn(b) ? a : b);
-export const min = <T>(arr: T[], prop: ExtractKeysByType<T, number>) => Math.max(...arr.map(a => a[prop] as number));
-export const min_by = <T>(arr: T[], prop: ExtractKeysByType<T, number>) => arr.reduce((a, b) => a[prop] < b[prop] ? a : b);
-export const min_map = <T, U>(arr: T[], fn: (a: T) => U) => arr.reduce((a, b) => fn(a) < fn(b) ? a : b);
+export const max = <T>(arr: T[], prop: ExtractKeysByType<T, number>): number => Math.max(...arr.map(a => a[prop] as number));
+export const max_by = <T>(arr: T[], prop: ExtractKeysByType<T, number>): T => arr.reduce((a, b) => a[prop] > b[prop] ? a : b);
+export const max_map = <T, U>(arr: T[], fn: (a: T) => U): T => arr.reduce((a, b) => fn(a) > fn(b) ? a : b);
+export const min = <T>(arr: T[], prop: ExtractKeysByType<T, number>): number => Math.max(...arr.map(a => a[prop] as number));
+export const min_by = <T>(arr: T[], prop: ExtractKeysByType<T, number>): T => arr.reduce((a, b) => a[prop] < b[prop] ? a : b);
+export const min_map = <T, U>(arr: T[], fn: (a: T) => U): T => arr.reduce((a, b) => fn(a) < fn(b) ? a : b);
 export const zip = <T>(...arr: T[][]): T[][] => Array(max(arr, 'length')).fill(null).map((_, i) => arr.map(a => a[i]));
 export const get_dimension = (a: any, d = 0): number => Array.isArray(a) ? get_dimension(a[0], d + 1) : d;
 
-export function group_by<T>(arr: T[], prop: keyof T) {
+export function group_by<T>(arr: T[], prop: keyof T): T[][] {
 	const groups = new Map<any, T[]>();
 	arr.forEach((a) => {
 		const key = a[prop];

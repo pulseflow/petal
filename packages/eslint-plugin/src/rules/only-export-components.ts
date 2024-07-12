@@ -36,7 +36,6 @@ export default createEslintRule<Options, MessageIds>({
 		type: 'problem',
 		docs: {
 			description: 'Validates that React components can be safely updated with fast refresh',
-			recommended: 'recommended',
 		},
 		schema: [{
 			type: 'object',
@@ -64,7 +63,7 @@ export default createEslintRule<Options, MessageIds>({
 			return {};
 
 		return {
-			Program(program) {
+			Program: (program) => {
 				const ruleContext = {
 					hasExports: false,
 					mayHaveReactExport: false,

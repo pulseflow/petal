@@ -4,6 +4,7 @@
 	"version": "3.8.5",
 	"private": true,
 	"packageManager": "pnpm@9.5.0",
+	"engineStrict": true,
 	"author": "Petal Contributors",
 	"license": "MIT",
 	"funding": "https://ko-fi.com/pauliesnug",
@@ -19,21 +20,19 @@
 		"node": ">=20"
 	},
 	"scripts": {
-		"test": "vitest run",
-		"test:update": "vitest -u",
-		"test:ui": "vitest --ui",
-		"test:ci": "pnpm build && pnpm lint && pnpm test",
+		"test": "pnpm vitest run",
+		"test:update": "pnpm vitest -u",
+		"test:ui": "pnpm vitest --ui",
 		"build": "pnpm --filter=./packages/* run build",
 		"stub": "pnpm --filter=./packages/* run stub",
+		"start": "pnpm --filter=./packages/* run start",
 		"lint": "pnpm eslint --cache .",
-		"release": "bumpp -r",
 		"lint:fix": "pnpm lint --fix",
+		"release": "pnpm bumpp -r",
 		"dev": "pnpm stub"
 	},
 	"workspaces": {
-		"packages": [
-			"packages/*"
-		]
+		"packages": ["packages/*"]
 	},
 	"devDependencies": {
 		"@flowr/eslint-config": "workspace:^",

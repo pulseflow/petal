@@ -10,9 +10,9 @@ export const notNullish = <T>(v: T | null | undefined): v is NonNullable<T> => v
  * Type guard to filter out null values
  *
  * @category Guards
- * @example [array].filter(noNull)
+ * @example [array].filter(notNull)
  */
-export const noNull = <T>(v: T | null): v is Exclude<T, null> => v !== null;
+export const notNull = <T>(v: T | null): v is Exclude<T, null> => v !== null;
 
 /**
  * Type guard to filter out null-ish values

@@ -1,5 +1,5 @@
 export default function handler<T extends Record<string, any> = Record<string, never>>() {
-	const listeners = new Map<string, Function[]>();
+	const listeners = new Map<string, ((...any: any[]) => any)[]>();
 	type EventName = keyof T & string;
 
 	function subscribe<K extends keyof T & string>(event: K, listener: (event: T[K]) => any): void;

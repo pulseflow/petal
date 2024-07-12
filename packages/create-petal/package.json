@@ -33,7 +33,6 @@
 		"create-petal": "./bin/create-petal.mjs"
 	},
 	"files": [
-		"CHANGELOG.md",
 		"LICENSE",
 		"README.md",
 		"bin/**/*.mjs",

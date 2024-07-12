@@ -20,7 +20,13 @@ export function getESLintCoreRule<R extends RuleId>(ruleId: R): RuleMap[R] {
 
 const blobUrl = 'https://github.com/pulseflow/petal/blob/main/packages/eslint-plugin/src/rules/';
 
-export interface RuleModule<TOptions extends readonly unknown[], TMessageIds extends string> extends TSESModule<TMessageIds, TOptions> { defaultOptions: TOptions };
+export interface RuleModule<
+	TOptions extends readonly unknown[],
+	TMessageIds extends string,
+> extends TSESModule<
+		TMessageIds,
+		TOptions
+	> { defaultOptions: TOptions };
 
 /**
  * Creates reusable function to create rules with default options and docs URLs.
@@ -28,7 +34,10 @@ export interface RuleModule<TOptions extends readonly unknown[], TMessageIds ext
  * @param urlCreator Creates a documentation URL for a given rule name.
  * @returns Function to create a rule with the docs URL format.
  */
-function RuleCreator(urlCreator: (name: string) => string): <TOptions extends readonly unknown[], TMessageIds extends string>({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>) => RuleModule<TOptions, TMessageIds> {
+function RuleCreator(urlCreator: (name: string) => string): <
+	TOptions extends readonly unknown[],
+	TMessageIds extends string,
+>({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>) => RuleModule<TOptions, TMessageIds> {
 	return <TOptions extends readonly unknown[], TMessageIds extends string>
 	({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>): RuleModule<TOptions, TMessageIds> =>
 		createRule<TOptions, TMessageIds>({

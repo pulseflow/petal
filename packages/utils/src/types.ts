@@ -60,7 +60,7 @@ class _EmptyClass {}
 export function boundMethods<T extends _EmptyClass>(t: T): {
 	[K in keyof T & string as T[K] extends (...any: any[]) => any ? K : never]: T[K]
 } {
-	const methods: Record<string, Function> = {};
+	const methods: Record<string, (...any: any[]) => any> = {};
 	let result = t as any;
 
 	while (result && result !== Object.prototype) {

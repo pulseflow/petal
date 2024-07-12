@@ -37,7 +37,6 @@ export default createEslintRule<Options, MessageIds>({
 		type: 'suggestion',
 		docs: {
 			description: 'Disallows .only blocks in testing',
-			recommended: 'stylistic',
 		},
 		fixable: 'code',
 		schema: [{

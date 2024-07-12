@@ -10,7 +10,6 @@ export default createEslintRule<Options, MessageIds>({
 		type: 'problem',
 		docs: {
 			description: 'Prevent importing modules in `node_modules` folder by relative or absolute path',
-			recommended: 'recommended',
 		},
 		schema: [],
 		messages: {
@@ -18,17 +17,15 @@ export default createEslintRule<Options, MessageIds>({
 		},
 	},
 	defaultOptions: [],
-	create: (context) => {
-		return {
-			'ImportDeclaration': (node) => {
-				if (node.source.value.includes('/node_modules/'))
-					context.report({ node, messageId: 'noImportNodeModulesByPath' });
-			},
-			'CallExpression[callee.name="require"]': (node: any) => {
-				const value = node.arguments[0]?.value;
-				if (typeof value === 'string' && value.includes('/node_modules/'))
-					context.report({ node, messageId: 'noImportNodeModulesByPath' });
-			},
-		};
-	},
+	create: context => ({
+		'ImportDeclaration': (node) => {
+			if (node.source.value.includes('/node_modules/'))
+				context.report({ node, messageId: 'noImportNodeModulesByPath' });
+		},
+		'CallExpression[callee.name="require"]': (node: any) => {
+			const value = node.arguments[0]?.value;
+			if (typeof value === 'string' && value.includes('/node_modules/'))
+				context.report({ node, messageId: 'noImportNodeModulesByPath' });
+		},
+	}),
 });

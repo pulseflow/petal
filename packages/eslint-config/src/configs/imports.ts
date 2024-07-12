@@ -25,7 +25,7 @@ export async function imports(options: OptionsStylistic = {}): Promise<TypedFlat
 				'import/no-self-import': 'error',
 				'import/no-webpack-loader-syntax': 'error',
 				'import/order': 'error',
-				
+
 				'petal/import-dedupe': 'error',
 				'petal/no-import-dist': 'error',
 				'petal/no-import-node-modules-by-path': 'error',

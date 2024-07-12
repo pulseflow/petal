@@ -50,7 +50,7 @@ export const isKeyOf = <T extends object>(obj: T, k: keyof any): k is keyof T =>
  *
  * @category Object
  */
-export function objectKeys<T extends object>(obj: T) {
+export function objectKeys<T extends object>(obj: T): Array<`${keyof T & (string | number | boolean | null | undefined)}`> {
 	return Object.keys(obj) as Array<`${keyof T & (string | number | boolean | null | undefined)}`>;
 }
 
@@ -59,7 +59,7 @@ export function objectKeys<T extends object>(obj: T) {
  *
  * @category Object
  */
-export const objectEntries = <T extends object>(obj: T) => Object.entries(obj) as Array<[keyof T, T[keyof T]]>;
+export const objectEntries = <T extends object>(obj: T): Array<[keyof T, T[keyof T]]> => Object.entries(obj) as Array<[keyof T, T[keyof T]]>;
 
 /**
  * Deep merge
@@ -158,7 +158,7 @@ export function deepMergeWithArray<T extends object = object, S extends object =
  *
  * @category Object
  */
-export function objectPick<O extends object, T extends keyof O>(obj: O, keys: T[], omitUndefined = false) {
+export function objectPick<O extends object, T extends keyof O>(obj: O, keys: T[], omitUndefined = false): Pick<O, T> {
 	return keys.reduce((n, k) => {
 		if (k in obj)
 			if (!omitUndefined || obj[k] !== undefined)
@@ -184,7 +184,7 @@ export function clearUndefined<T extends object>(obj: T): T {
  * @see https://eslint.org/docs/rules/no-prototype-builtins
  * @category Object
  */
-export function hasOwnProperty<T>(obj: T, v: PropertyKey) {
+export function hasOwnProperty<T>(obj: T, v: PropertyKey): boolean {
 	if (obj == null)
 		return false;
 	return Object.prototype.hasOwnProperty.call(obj, v);

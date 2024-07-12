@@ -21,7 +21,6 @@
 	"sideEffects": false,
 	"main": "tsconfig.strict.json",
 	"files": [
-		"CHANGELOG.md",
 		"LICENSE",
 		"README.md",
 		"tsconfig.base.json",

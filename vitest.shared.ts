@@ -1,7 +1,9 @@
 import { defineProject } from 'vitest/config';
 
-export default defineProject({
-	test: {
-		globals: true,
-	},
-});
+export default (name: TemplateStringsArray) =>
+	defineProject({
+		test: {
+			globals: true,
+			name: name[0],
+		},
+	});

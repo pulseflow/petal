@@ -1,8 +1,10 @@
 import { isObject } from './assert';
 
+export const toString = (v: any): string => Object.prototype.toString.call(v);
+
 export type Strings = string[] | ReadonlyArray<string>;
 
-export function untemplate<T extends Strings>(strings: T, ...keys: any[]) {
+export function untemplate<T extends Strings>(strings: T, ...keys: any[]): string {
 	if (keys.length === 0)
 		return strings.join(' ');
 	return strings.reduce((acc, str, i) => {
@@ -18,28 +20,28 @@ export function untemplate<T extends Strings>(strings: T, ...keys: any[]) {
  *
  * @category String
  */
-export const slash = (str: string) => str.replace(/\\/g, '/');
+export const slash = (str: string): string => str.replace(/\\/g, '/');
 
 /**
  * Ensure prefix of a string
  *
  * @category String
  */
-export const ensurePrefix = (prefix: string, str: string) => !str.startsWith(prefix) ? prefix + str : str;
+export const ensurePrefix = (prefix: string, str: string): string => !str.startsWith(prefix) ? prefix + str : str;
 
 /**
  * Ensure suffix of a string
  *
  * @category String
  */
-export const ensureSuffix = (suffix: string, str: string) => !str.endsWith(suffix) ? str + suffix : str;
+export const ensureSuffix = (suffix: string, str: string): string => !str.endsWith(suffix) ? str + suffix : str;
 
 /**
  * Ensure an LF line ending
  *
  * @category String
  */
-export const normalizeLF = (str: string) => str.replace(/\r\n/g, '\n');
+export const normalizeLF = (str: string): string => str.replace(/\r\n/g, '\n');
 
 /**
  * Dead simple template engine, just like Python's `.format()`
@@ -70,12 +72,12 @@ export function template(str: string, ...args: any[]): string {
 
 // port from nanoid
 // https://github.com/ai/nanoid
-const urlAlphabet = 'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict';
+const URL_ALPHABET: string = 'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict';
 /**
  * Generate a random string
  * @category String
  */
-export function randomStr(size = 16, dict = urlAlphabet) {
+export function randomStr(size = 16, dict = URL_ALPHABET): string {
 	let id = '';
 	let i = size;
 	const len = dict.length;
@@ -106,7 +108,7 @@ export const capitalize = (str: string): string => str[0].toUpperCase() + str.sl
  * `
  * ```
  */
-export function unindent(strings: TemplateStringsArray, ...keys: any[]) {
+export function unindent(strings: TemplateStringsArray, ...keys: any[]): string {
 	const lines = normalizeLF(untemplate(strings, ...keys)).split('\n');
 	const whitespaceLines = lines.map(f => /^\s*$/.test(f));
 

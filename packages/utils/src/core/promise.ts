@@ -35,7 +35,7 @@ class PInstance<T = any> extends Promise<Awaited<T>[]> {
 		super(() => {});
 	}
 
-	add(...args: (T | Promise<T>)[]) {
+	add(...args: (T | Promise<T>)[]): void {
 		args.forEach(f => this.promises.add(f));
 	}
 
@@ -72,22 +72,24 @@ class PInstance<T = any> extends Promise<Awaited<T>[]> {
 		return this.promise.then(array => array.reduce(fn, initialValue));
 	}
 
-	clear() {
+	clear(): void {
 		this.promises.clear();
 	}
 
-	then(fn?: () => PromiseLike<any>) {
+	then(fn?: () => PromiseLike<any>): Promise<any> {
 		const p = this.promise;
 		if (fn)
 			return p.then(fn);
 		else return p;
 	}
 
+	catch(fn?: (err: unknown) => PromiseLike<T>): Promise<T>;
+	catch<E>(fn?: (err: E) => PromiseLike<T>): Promise<T>;
 	catch(fn?: (err: unknown) => PromiseLike<any>) {
 		return this.promise.catch(fn);
 	}
 
-	finally(fn?: () => void) {
+	finally(fn?: () => void): Promise<Awaited<T>[]> {
 		return this.promise.finally(fn);
 	}
 }
@@ -147,13 +149,20 @@ export function createSingletonPromise<T>(fn: () => Promise<T>): SingletonPromis
  *
  * @category Promise
  */
-export function sleep(ms: number, callback?: Fn<any>) {
+export function sleep(ms: number, callback?: Fn<any>): Promise<void> {
 	return new Promise<void>(resolve =>
 		setTimeout(async () => {
 			await callback?.();
 			resolve();
 		}, ms),
 	);
+}
+
+export interface PromiseLock {
+	run: <T = void>(fn: () => Promise<T>) => Promise<T>;
+	wait: () => Promise<void>;
+	isWaiting: () => boolean;
+	clear: () => number;
 }
 
 /**
@@ -172,7 +181,7 @@ export function sleep(ms: number, callback?: Fn<any>) {
  * await lock.wait() // it will wait all tasking finished
  * ```
  */
-export function createPromiseLock() {
+export function createPromiseLock(): PromiseLock {
 	const locks: Promise<any>[] = [];
 
 	return {

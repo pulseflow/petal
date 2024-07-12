@@ -15,6 +15,7 @@
 		"source.organizeImports": "never"
 	},
 	"eslint.runtime": "node",
+	"eslint.useFlatConfig": true,
 	// Silent the stylistic rules in you IDE, but still auto fix them
 	"eslint.rules.customizations": [
 		{ "rule": "@stylistic/*", "severity": "warn" },

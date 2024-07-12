@@ -15,10 +15,7 @@ export const sum = (...args: number[] | number[][]) => flattenArrayable(args).re
  * const value = lerp(0, 2, 0.5) // value will be 1
  * ```
  */
-export function lerp(min: number, max: number, t: number) {
-	const interpolation = clamp(t, 0.0, 1.0);
-	return min + (max - min) * interpolation;
-}
+export const lerp = (min: number, max: number, t: number) => min + (max - min) * clamp(t, 0.0, 1.0);
 
 /**
  * Linearly remaps a clamped value from its source range [`inMin`, `inMax`] to the destination range [`outMin`, `outMax`]

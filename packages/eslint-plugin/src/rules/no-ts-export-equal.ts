@@ -10,7 +10,6 @@ export default createEslintRule<Options, MessageIds>({
 		type: 'problem',
 		docs: {
 			description: 'Do not use `exports =`',
-			recommended: 'recommended',
 		},
 		schema: [],
 		messages: {
@@ -23,10 +22,6 @@ export default createEslintRule<Options, MessageIds>({
 		if (!extension || !['ts', 'tsx', 'mts', 'cts'].includes(extension))
 			return {};
 
-		return {
-			TSExportAssignment(node) {
-				context.report({ node, messageId: 'noTsExportEqual' });
-			},
-		};
+		return { TSExportAssignment: node => context.report({ node, messageId: 'noTsExportEqual' }) };
 	},
 });
