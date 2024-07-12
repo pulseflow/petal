@@ -1,8 +1,7 @@
 {
 	"name": "@example/flowr-basics",
 	"type": "module",
-	"version": "0.0.1",
-	"private": true,
+	"version": "1.0.0",
 	"scripts": {
 		"build": "unbuild",
 		"stub": "unbuild --stub",
@@ -12,11 +11,12 @@
 	},
 	"devDependencies": {
 		"@antfu/ni": "^0.21.12",
-		"@flowr/eslint-config": "^3.1.0",
-		"@flowr/tsconfig": "^3.1.0",
-		"@types/node": "^20.12.11",
-		"typescript": "^5.4.5",
+		"@flowr/eslint-config": "^3.8.6",
+		"eslint": "^9.6.0",
+		"@flowr/tsconfig": "^3.8.6",
+		"@types/node": "^20.14.10",
+		"typescript": "^5.5.3",
 		"unbuild": "^2.0.0",
-		"vitest": "^1.6.0"
+		"vitest": "^2.0.1"
 	}
 }

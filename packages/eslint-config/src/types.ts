@@ -219,7 +219,7 @@ export interface OptionsTypeScriptWithTypes extends OptionsOverrides {
 	 * @see https://typescript-eslint.io/getting-started/typed-linting
 	 * @default undefined
 	 */
-	tsconfigPath?: string | string[];
+	tsconfigPath?: string;
 }
 
 export interface OptionsHasTypeScript {
