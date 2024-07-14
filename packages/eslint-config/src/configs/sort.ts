@@ -116,6 +116,8 @@ export async function sortTsConfig(): Promise<TypedFlatConfigItem[]> {
 						order: [
 							'extends',
 							'compilerOptions',
+							'watchOptions',
+							'typeAcquisition',
 							'references',
 							'files',
 							'include',
@@ -215,6 +217,7 @@ export async function sortTsConfig(): Promise<TypedFlatConfigItem[]> {
 							'allowSyntheticDefaultImports',
 							'esModuleInterop',
 							'forceConsistentCasingInFileNames',
+							'isolatedDeclarations',
 							'isolatedModules',
 							'preserveSymlinks',
 							'verbatimModuleSyntax',

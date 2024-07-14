@@ -131,7 +131,6 @@ export async function typescript(
 				'ts/no-wrapper-object-types': 'error',
 				'ts/triple-slash-reference': 'off',
 				'ts/unified-signatures': 'off',
-				...overrides,
 			},
 		},
 		...isTypeAware
@@ -142,6 +141,11 @@ export async function typescript(
 					rules: typeAwareRules,
 				}]
 			: [],
+		{
+			files,
+			name: 'petal/typescript/overrides',
+			rules: overrides,
+		},
 		{
 			files: ['**/*.d.?([cm])ts'],
 			name: 'petal/typescript/disables/dts',
