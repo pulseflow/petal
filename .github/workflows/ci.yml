@@ -24,7 +24,6 @@ jobs:
     strategy:
       matrix:
         OS: [ubuntu-latest, windows-latest, macos-latest]
-      fail-fast: true
     steps:
       - name: disable git crlf
         run: |

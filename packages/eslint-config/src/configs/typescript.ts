@@ -9,7 +9,7 @@ import type {
 	TypedFlatConfigItem,
 } from '../types';
 import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_TS, GLOB_TSX } from '../globs';
-import { interopDefault, renameRules, toArray } from '../utils';
+import { interopDefault, renameRules } from '../utils';
 
 export async function typescript(
 	options: OptionsComponentExts &

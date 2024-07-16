@@ -12,9 +12,9 @@
 	"devDependencies": {
 		"@antfu/ni": "^0.21.12",
 		"@flowr/eslint-config": "^3.8.6",
-		"eslint": "^9.6.0",
 		"@flowr/tsconfig": "^3.8.6",
 		"@types/node": "^20.14.10",
+		"eslint": "^9.6.0",
 		"typescript": "^5.5.3",
 		"unbuild": "^2.0.0",
 		"vitest": "^2.0.1"
