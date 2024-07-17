@@ -1,7 +1,7 @@
 {
 	"name": "@flowr/eslint-config",
 	"type": "module",
-	"version": "3.8.8",
+	"version": "3.8.9",
 	"description": "Standardized Petal specification linting configuration",
 	"author": "Petal Contributors",
 	"license": "MIT",
