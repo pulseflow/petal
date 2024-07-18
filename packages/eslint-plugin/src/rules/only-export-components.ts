@@ -72,7 +72,7 @@ export default createEslintRule<Options, MessageIds>({
 				const localComponents: TSESTree.Identifier[] = [];
 				const nonComponentExports: TSESTree.BindingName[] = [];
 
-				const handleLocalIdentifier = (id: TSESTree.BindingName) => {
+				const handleLocalIdentifier = (id: TSESTree.BindingName): void => {
 					if (id.type !== 'Identifier')
 						return;
 					if (possibleRegex.test(id.name))
@@ -83,7 +83,7 @@ export default createEslintRule<Options, MessageIds>({
 					id: TSESTree.BindingName,
 					isFn?: boolean,
 					init?: TSESTree.Expression | null,
-				) => {
+				): void => {
 					if (id.type !== 'Identifier') {
 						nonComponentExports.push(id);
 						return;
@@ -114,7 +114,7 @@ export default createEslintRule<Options, MessageIds>({
 					}
 				};
 
-				const handleExportDeclaration = (node: TSESTree.ExportDeclaration) => {
+				const handleExportDeclaration = (node: TSESTree.ExportDeclaration): void => {
 					if (node.type === 'VariableDeclaration')
 						for (const val of node.declarations)
 							handleExportIdentifier(val.id, canBeReactFunctionComponent(val.init), val.init);

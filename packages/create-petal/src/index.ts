@@ -1,7 +1,7 @@
 import process from 'node:process';
 import { consola } from 'consola';
 
-export async function main(_cwd = process.cwd(), _argv = process.argv) {
+export async function main(_cwd = process.cwd(), _argv = process.argv): Promise<void> {
 	const currentVersion = process.versions.node;
 	const requiredMajorVersion = Number.parseInt(currentVersion.split('.')[0], 10);
 	const minimumMajorVersion = 20;

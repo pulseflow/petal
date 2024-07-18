@@ -12,7 +12,7 @@ export async function javascript(options: OptionsIsInEditor & OptionsOverrides =
 
 	const [pluginPetal, pluginUnusedImports] = await Promise.all([
 		interopDefault(import('eslint-plugin-petal')),
-		interopDefault(import('eslint-plugin-unused-imports')),
+		interopDefault(import('@antfu/eslint-plugin-unused-imports')),
 	] as const);
 
 	return [

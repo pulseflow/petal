@@ -64,7 +64,7 @@ export function partition<T>(array: readonly T[], f1: PartitionFilter<T>, f2: Pa
 export function partition<T>(array: readonly T[], f1: PartitionFilter<T>, f2: PartitionFilter<T>, f3: PartitionFilter<T>, f4: PartitionFilter<T>): [T[], T[], T[], T[], T[]];
 export function partition<T>(array: readonly T[], f1: PartitionFilter<T>, f2: PartitionFilter<T>, f3: PartitionFilter<T>, f4: PartitionFilter<T>, f5: PartitionFilter<T>): [T[], T[], T[], T[], T[], T[]];
 export function partition<T>(array: readonly T[], f1: PartitionFilter<T>, f2: PartitionFilter<T>, f3: PartitionFilter<T>, f4: PartitionFilter<T>, f5: PartitionFilter<T>, f6: PartitionFilter<T>): [T[], T[], T[], T[], T[], T[], T[]];
-export function partition<T>(array: readonly T[], ...filters: PartitionFilter<T>[]): any {
+export function partition<T>(array: readonly T[], ...filters: PartitionFilter<T>[]): T[][] {
 	const result: T[][] = Array.from({ length: filters.length + 1 }).fill(null).map(() => []);
 
 	array.forEach((e, idx, arr) => {
@@ -250,7 +250,7 @@ export const min = <T>(arr: T[], prop: ExtractKeysByType<T, number>): number => 
 export const min_by = <T>(arr: T[], prop: ExtractKeysByType<T, number>): T => arr.reduce((a, b) => a[prop] < b[prop] ? a : b);
 export const min_map = <T, U>(arr: T[], fn: (a: T) => U): T => arr.reduce((a, b) => fn(a) < fn(b) ? a : b);
 export const zip = <T>(...arr: T[][]): T[][] => Array(max(arr, 'length')).fill(null).map((_, i) => arr.map(a => a[i]));
-export const get_dimension = (a: any, d = 0): number => Array.isArray(a) ? get_dimension(a[0], d + 1) : d;
+export const get_dimension = (a: Arrayable<any>, d = 0): number => Array.isArray(a) ? get_dimension(a[0], d + 1) : d;
 
 export function group_by<T>(arr: T[], prop: keyof T): T[][] {
 	const groups = new Map<any, T[]>();

@@ -84,7 +84,7 @@ declare module 'eslint-plugin-perfectionist' {
 	export default { eslintPluginPerfectionist };
 };
 
-declare module 'eslint-plugin-unused-imports' {
+declare module '@antfu/eslint-plugin-unused-imports' {
 	import type { ESLint } from 'eslint';
 
 	const eslintPluginUnusedImports: ESLint.Plugin;

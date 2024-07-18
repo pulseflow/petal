@@ -36,6 +36,8 @@ export async function test(options: OptionsOverrides & OptionsFiles = {}): Promi
 				'test/prefer-hooks-in-order': 'error',
 				'test/prefer-lowercase-title': 'error',
 
+				'ts/explicit-function-return-type': 'off',
+
 				...overrides,
 			},
 		},

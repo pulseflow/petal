@@ -6,6 +6,7 @@ export default petal(
 	{
 		typescript: true,
 		astro: false,
+		type: 'lib',
 	},
 	{
 		name: 'ignores',

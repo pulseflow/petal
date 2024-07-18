@@ -4,7 +4,7 @@ export const RULE_NAME = 'no-import-dist';
 export type MessageIds = 'noImportDist';
 export type Options = [];
 
-const isDist = (path: string) => (path.startsWith('.') && path.match(/\/dist(\/|$)/)) || path === 'dist';
+const isDist = (path: string): boolean | RegExpMatchArray => (path.startsWith('.') && path.match(/\/dist(\/|$)/)) || path === 'dist';
 
 export default createEslintRule<Options, MessageIds>({
 	name: RULE_NAME,

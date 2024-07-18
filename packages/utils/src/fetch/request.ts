@@ -49,7 +49,7 @@ export class RequestBuilder<T> {
 	 */
 	clone(): RequestProxy<T>;
 	clone<U>(finalizer: Finalizer<U>): RequestProxy<U>;
-	clone<U>(finalizer: Finalizer<T | U> = this._finalizer) {
+	clone<U>(finalizer: Finalizer<T | U> = this._finalizer): RequestProxy<T> | RequestProxy<U> {
 		const clone = new RequestBuilder<U>(
 			this._url.toString(),
 			finalizer as Finalizer<U>,
@@ -65,7 +65,7 @@ export class RequestBuilder<T> {
 		clone._search = [...this._search];
 		clone._dataType = this._dataType;
 		clone._data = this._data;
-		return clone;
+		return clone as RequestProxy<T> | RequestProxy<U>;
 	}
 
 	/**
@@ -221,7 +221,7 @@ export class RequestBuilder<T> {
 
 	json<U = any>(): RequestProxy<WithStatus<U>>;
 	json<U, K extends keyof U & string>(key: keyof U & string): RequestProxy<WithStatus<U[K]>>;
-	json<U, K extends keyof U & string>(key?: K) {
+	json<U, K extends keyof U & string>(key?: K): RequestProxy<WithStatus<U>> | RequestProxy<WithStatus<U[K]>> {
 		if (key)
 			return this.finalizer(res => fin.toJsonPick<U, K>(res, key));
 		return this.finalizer(fin.toJson<U>);

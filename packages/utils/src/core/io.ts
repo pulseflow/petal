@@ -1,12 +1,15 @@
+import type { Stats } from 'node:fs';
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'pathe';
 import { filename } from 'pathe/utils';
+import type { ArgsFn } from '../types';
 
 export const dir = Symbol('@flowr/utils/io:is_dir');
 
-const _stat = (path: string) => ({ stats: statSync(path), path });
-const _ls = (path: string) => readdirSync(path).map(_stat);
-type Files = Awaited<ReturnType<typeof _ls>>;
+export interface File { stats: Stats; path: string }
+export type Files = File[];
+const _stat = (path: string): File => ({ stats: statSync(path), path });
+const _ls = (path: string): Files => readdirSync(path).map(_stat);
 
 function _f(f: Files, type?: string): string[] {
 	return type
@@ -41,9 +44,9 @@ export function io(cwd: string): {
 		return join(cwd, resolved);
 	};
 
-	const w = <T extends (...args: any) => any>(f: T, path: string[], ...args: any[]): ReturnType<T> => f(r(path), ...args);
-	const ls = (path: string[]) => w(_ls, path);
-	const exist = (path: string) => existsSync(path);
+	const w = <T extends ArgsFn>(f: T, path: string[], ...args: any[]): ReturnType<T> => f(r(path), ...args);
+	const ls = (path: string[]): Files => w(_ls, path);
+	const exist = (path: string): boolean => existsSync(path);
 
 	return {
 		ls: (...path: string[]) => ls(path),

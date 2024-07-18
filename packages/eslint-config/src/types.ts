@@ -254,6 +254,15 @@ export interface OptionsOverrides {
 	overrides?: TypedFlatConfigItem['rules'];
 }
 
+export interface OptionsProjectType {
+	/**
+	 * Type of the project. `'lib'` will enable more strict rules for libraries.
+	 *
+	 * @default 'app'
+	 */
+	type?: 'app' | 'lib';
+}
+
 export interface OptionsIsInEditor {
 	/**
 	 * Control to disable some testing rules in editors.
@@ -290,7 +299,7 @@ export interface OptionsUnoCSS extends OptionsOverrides {
 	strict?: boolean;
 }
 
-export interface OptionsConfig extends OptionsComponentExts {
+export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType {
 	/**
 	 * Enable gitignore support.
 	 *

@@ -4,6 +4,7 @@ import type {
 	OptionsComponentExts,
 	OptionsFiles,
 	OptionsOverrides,
+	OptionsProjectType,
 	OptionsTypeScriptParserOptions,
 	OptionsTypeScriptWithTypes,
 	TypedFlatConfigItem,
@@ -16,9 +17,10 @@ export async function typescript(
 	OptionsOverrides &
 	OptionsTypeScriptWithTypes &
 	OptionsTypeScriptParserOptions &
+	OptionsProjectType &
 	OptionsFiles = {},
 ): Promise<TypedFlatConfigItem[]> {
-	const { componentExts = [], overrides = {}, parserOptions = {} } = options;
+	const { componentExts = [], overrides = {}, parserOptions = {}, type = 'app' } = options;
 	const files = options.files ?? [GLOB_TS, GLOB_TSX, ...componentExts.map(f => `**/*.${f}`)];
 	const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX];
 	const ignoresTypeAware = options.ignoresTypeAware ?? [`${GLOB_MARKDOWN}/**`, GLOB_ASTRO_TS];
@@ -112,7 +114,10 @@ export async function typescript(
 				'no-useless-constructor': 'off',
 				'ts/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
 				'ts/consistent-type-definitions': ['error', 'interface'],
-				'ts/consistent-type-imports': ['error', { disallowTypeAnnotations: false, prefer: 'type-imports' }],
+				'ts/consistent-type-imports': ['error', {
+					disallowTypeAnnotations: false,
+					prefer: 'type-imports',
+				}],
 				'ts/method-signature-style': ['error', 'property'], // https://www.totaltypescript.com/method-shorthand-syntax-considered-harmful
 				'ts/no-dupe-class-members': 'error',
 				'ts/no-dynamic-delete': 'off',
@@ -131,6 +136,17 @@ export async function typescript(
 				'ts/no-wrapper-object-types': 'error',
 				'ts/triple-slash-reference': 'off',
 				'ts/unified-signatures': 'off',
+
+				...(type === 'lib'
+					? {
+							'ts/explicit-function-return-type': ['error', {
+								allowExpressions: true,
+								allowHigherOrderFunctions: true,
+								allowIIFEs: true,
+							}],
+						}
+					: {}
+				),
 			},
 		},
 		...isTypeAware

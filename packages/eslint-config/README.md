@@ -153,6 +153,9 @@ alternatively, you can confgure each integration individually, for example:
 import petal from '@flowr/eslint-config';
 
 export default petal({
+	// type of the project
+	type: 'lib', // 'lib' or 'app', default is 'app'
+
 	// enable stylistic formatting rules
 	stylistic: {
 		indent: 'tab', // 4, or 2
@@ -578,7 +581,7 @@ export default petal({
 
 ### editor specific disables
 
-certain rules are disabled when inside [eslint ide integrations](#ide-integration), namely [`unused-imports/no-unused-imports`] and [`petal/no-only-tests`](../eslint-plugin/src/rules/no-only-tests.md).
+certain rules are disabled when inside [eslint ide integrations](#ide-integration), namely [`unused-imports/no-unused-imports`] and [`petal/no-only-tests`].
 
 this is to prevent unused imports and temporary patches from getting removed by the ide during refactoring. those rules are applied when eslint is ran in the terminal. you can disable this behavior using:
 
@@ -668,3 +671,4 @@ export default petal({
 [`eslint-plugin-command`]: https://github.com/antfu/eslint-plugin-command
 [`@eslint/config-inspector`]: https://github.com/eslint/config-inspector
 [`unused-imports/no-unused-imports`]: https://www.npmjs.com/package/eslint-plugin-unused-imports
+[`petal/no-only-tests`]: ../eslint-plugin/src/rules/no-only-tests.md

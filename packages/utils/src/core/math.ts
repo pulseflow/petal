@@ -1,7 +1,7 @@
 import { flattenArrayable } from './array';
 
-export const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
-export const sum = (...args: number[] | number[][]) => flattenArrayable(args).reduce((a, b) => a + b, 0);
+export const clamp = (n: number, min: number, max: number): number => Math.min(max, Math.max(min, n));
+export const sum = (...args: number[] | number[][]): number => flattenArrayable(args).reduce((a, b) => a + b, 0);
 
 /**
  * Linearly interpolates between `min` and `max` based on `t`
@@ -15,7 +15,7 @@ export const sum = (...args: number[] | number[][]) => flattenArrayable(args).re
  * const value = lerp(0, 2, 0.5) // value will be 1
  * ```
  */
-export const lerp = (min: number, max: number, t: number) => min + (max - min) * clamp(t, 0.0, 1.0);
+export const lerp = (min: number, max: number, t: number): number => min + (max - min) * clamp(t, 0.0, 1.0);
 
 /**
  * Linearly remaps a clamped value from its source range [`inMin`, `inMax`] to the destination range [`outMin`, `outMax`]
@@ -26,7 +26,7 @@ export const lerp = (min: number, max: number, t: number) => min + (max - min) *
  * const value = remap(0.5, 0, 1, 200, 400) // value will be 300
  * ```
  */
-export function remap(n: number, inMin: number, inMax: number, outMin: number, outMax: number) {
+export function remap(n: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
 	const interpolation = (n - inMin) / (inMax - inMin);
 	return lerp(outMin, outMax, interpolation);
 }

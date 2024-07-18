@@ -15,7 +15,7 @@ export type ToString<T> = T extends `${infer V}` ? V : never;
 
 /** Possibly a Function */
 export type Fn<Return = void> = () => Return;
-export type ArgsFn<Return = void, Args extends any[] = any[]> = (...args: Args) => Return;
+export type ArgsFn<Return = any, Args extends any[] = any[]> = (...args: Args) => Return;
 
 export type ClassConstructor<Return = void, Args extends any[] = any[]> = new (...args: Args) => Return;
 
@@ -45,8 +45,6 @@ export type DeepMerge<F, S> = MergeInsertions<{
 
 export type Key<T> = T extends ReadonlyMap<infer U> ? keyof U : T extends Record<infer U, any> ? U : never;
 
-export type FunctionVoid = (...args: any[]) => void;
-
 export type ExtractKeysByType<T, U> = {
 	[K in Extract<keyof T, string>]: T[K] extends U ? K : never;
 }[Extract<keyof T, string>];
@@ -58,9 +56,9 @@ export const identity = <T>(arg: T): T => arg;
 class _EmptyClass {}
 
 export function boundMethods<T extends _EmptyClass>(t: T): {
-	[K in keyof T & string as T[K] extends (...any: any[]) => any ? K : never]: T[K]
+	[K in keyof T & string as T[K] extends ArgsFn ? K : never]: T[K]
 } {
-	const methods: Record<string, (...any: any[]) => any> = {};
+	const methods: Record<string, ArgsFn> = {};
 	let result = t as any;
 
 	while (result && result !== Object.prototype) {

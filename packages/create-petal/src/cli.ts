@@ -13,7 +13,7 @@ class PrettyError extends Error {
 	}
 }
 
-function handleError(error: unknown) {
+function handleError(error: unknown): void {
 	if (error instanceof PrettyError)
 		console.error(error.message);
 

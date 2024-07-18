@@ -2,6 +2,7 @@ import process from 'node:process';
 import { isPackageExists } from 'local-pkg';
 import type { Linter } from 'eslint';
 import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from './types';
+import type { Rules } from './index';
 
 /**
  * A simple parser for use in AST-agnostic configs (i.e. markdown formatters, `eslint-plugin-format`)
@@ -58,7 +59,14 @@ export const combine = async (...configs: Awaitable<TypedFlatConfigItem | TypedF
  * }];
  * ```
  */
-export function renameRules(rules: Record<string, any>, map: Record<string, string>) {
+export function renameRules<RuleType = Linter.RuleEntry>(
+	rules: Record<string, RuleType>,
+	map: Record<string, string>,
+): Record<string, RuleType>;
+export function renameRules(
+	rules: Record<string, any>,
+	map: Record<string, string>,
+): Record<string, any> {
 	return Object.fromEntries(Object.entries(rules).map(([key, value]) => {
 		for (const [from, to] of Object.entries(map))
 			if (key.startsWith(`${from}/`))
@@ -162,7 +170,7 @@ export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { de
  * const chalk = interopDefault(import('chalk')); // ensures that the package is installed. add as devDependency for types
  * ```
  */
-export async function ensurePackages(packages: (string | undefined)[]) {
+export async function ensurePackages(packages: (string | undefined)[]): Promise<void> {
 	if (process.env.CI || process.stdout.isTTY === false)
 		return;
 
@@ -184,7 +192,7 @@ export function resolveSubOptions<K extends keyof OptionsConfig>(options: Option
 	return typeof options[key] === 'boolean' ? {} as any : options[key] || {};
 }
 
-export function getOverrides<K extends keyof OptionsConfig>(options: OptionsConfig, key: K) {
+export function getOverrides<K extends keyof OptionsConfig>(options: OptionsConfig, key: K): Partial<Linter.RulesRecord & Rules> {
 	const sub = resolveSubOptions(options, key);
-	return 'overrides' in sub ? sub.overrides : {};
+	return { ...'overrides' in sub ? sub.overrides : {} };
 }

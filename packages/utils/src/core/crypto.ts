@@ -113,7 +113,7 @@ function bitGenerator(): () => Bit {
 		random: uint8sToBits(rand(1)),
 	};
 
-	const next = () => {
+	const next = (): Bit => {
 		if (state.consumed === 8) {
 			state.random = uint8sToBits(rand(1));
 			state.consumed = 0;

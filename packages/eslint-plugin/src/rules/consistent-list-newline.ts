@@ -1,4 +1,4 @@
-import type { RuleFixer, RuleListener } from '@typescript-eslint/utils/ts-eslint';
+import type { RuleFix, RuleFixer, RuleListener } from '@typescript-eslint/utils/ts-eslint';
 import type { TSESTree } from '@typescript-eslint/utils';
 import type { JSONSchema4 } from '@typescript-eslint/utils/json-schema';
 import { createEslintRule } from '../utils';
@@ -67,31 +67,28 @@ export default createEslintRule<Options, MessageIds>({
 	},
 	defaultOptions: [{}],
 	create: (context, [options = {}] = [{}]) => {
-		function removeLines(fixer: RuleFixer, start: number, end: number, delimiter?: string) {
+		function removeLines(fixer: RuleFixer, start: number, end: number, delimiter?: string): RuleFix {
 			const range = [start, end] as const;
 			const code = context.sourceCode.text.slice(...range);
 			return fixer.replaceTextRange(range, code.replace(/(\r\n|\n)/g, delimiter ?? ''));
 		}
 
-		function getDelimiter(root: TSESTree.Node, current: TSESTree.Node) {
+		function getDelimiter(root: TSESTree.Node, current: TSESTree.Node): ',' | undefined {
 			if (root.type !== 'TSInterfaceDeclaration' && root.type !== 'TSTypeLiteral')
 				return;
 			const currentContent = context.sourceCode.text.slice(current.range[0], current.range[1]);
 			return currentContent.match(/(?:,|;)$/) ? undefined : ',';
 		}
 
-		function hasComments(current: TSESTree.Node) {
+		function hasComments(current: TSESTree.Node): boolean | undefined {
 			let program: TSESTree.Node = current;
 			while (program.type !== 'Program')
 				program = program.parent;
-			const currentRange = current.range;
+			const curr = current.range;
 
-			return program.comments?.some((comment) => {
-				const commentRange = comment.range;
-				return (
-					commentRange[0] > currentRange[0]
-					&& commentRange[1] < currentRange[1]
-				);
+			return program.comments?.some((c) => {
+				const cr = c.range;
+				return (cr[0] > curr[0] && cr[1] < curr[1]);
 			});
 		}
 
@@ -99,7 +96,7 @@ export default createEslintRule<Options, MessageIds>({
 			node: TSESTree.Node,
 			children: (TSESTree.Node | null)[],
 			nextNode?: TSESTree.Node,
-		) {
+		): void {
 			const items = children.filter(Boolean) as TSESTree.Node[];
 			if (items.length === 0)
 				return;
@@ -318,4 +315,4 @@ export default createEslintRule<Options, MessageIds>({
 });
 
 // eslint-disable-next-line unused-imports/no-unused-vars -- type params are used for typechecking, unused
-function exportType<A, B extends A>() { }
+function exportType<A, B extends A>(): void { }

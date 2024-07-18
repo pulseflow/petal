@@ -33,14 +33,12 @@ export class Flag<N extends string, T extends FlagType, A extends boolean, F ext
 	is(input: string): boolean { return this.#regex.test(input); }
 
 	upsert(input: string, existing?: OuterFlagType<T, A>): OuterFlagType<T, A>;
-	upsert(input: string, existing?: OuterFlagType<T, A>) {
+	upsert(input: string, existing?: OuterFlagType<T, A>): OuterFlagType<T, A> | InnerFlagType<T>[] | boolean | string | number {
 		const value = this.#parse(input);
 		return this.options.array ? [...(existing ?? []) as OuterFlagType<T, true>, value] : value;
 	}
 
-	match(existing?: OuterFlagType<T, A>): OuterFlagType<T, A> | FallbackFlagType<T, A, true>;
-
-	match(existing?: OuterFlagType<T, A>) {
+	match(existing?: OuterFlagType<T, A>): OuterFlagType<T, A> | FallbackFlagType<T, A, true> | InnerFlagType<T> | boolean | string | number | undefined | null | never[] | (true | InnerFlagType<T>)[] {
 		if (this.options.type === sym_boolean)
 			return this.options.array
 				? [...(existing ?? []) as OuterFlagType<T, true>, true]

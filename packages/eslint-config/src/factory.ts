@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import process from 'node:process';
 import { isPackageExists } from 'local-pkg';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
@@ -115,8 +114,7 @@ export function petal(
 	if (enableGitignore)
 		if (typeof enableGitignore !== 'boolean')
 			configs.push(gitignore(enableGitignore));
-		else if (fs.existsSync('.gitignore'))
-			configs.push(gitignore());
+		else configs.push(gitignore({ strict: false }));
 
 	const typescriptOptions = resolveSubOptions(options, 'typescript');
 	const tsconfigPath = 'tsconfigPath' in typescriptOptions ? typescriptOptions.tsconfigPath : undefined;
@@ -151,6 +149,7 @@ export function petal(
 			...typescriptOptions,
 			componentExts,
 			overrides: getOverrides(options, 'typescript'),
+			type: options.type,
 		}));
 
 	if (stylisticOptions)

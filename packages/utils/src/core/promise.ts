@@ -85,7 +85,7 @@ class PInstance<T = any> extends Promise<Awaited<T>[]> {
 
 	catch(fn?: (err: unknown) => PromiseLike<T>): Promise<T>;
 	catch<E>(fn?: (err: E) => PromiseLike<T>): Promise<T>;
-	catch(fn?: (err: unknown) => PromiseLike<any>) {
+	catch(fn?: (err: unknown) => PromiseLike<any>): Promise<any> {
 		return this.promise.catch(fn);
 	}
 
@@ -129,7 +129,7 @@ export interface SingletonPromiseReturn<T> {
 export function createSingletonPromise<T>(fn: () => Promise<T>): SingletonPromiseReturn<T> {
 	let _promise: Promise<T> | undefined;
 
-	function wrapper() {
+	function wrapper(): Promise<T> {
 		if (!_promise)
 			_promise = fn();
 		return _promise;

@@ -1,3 +1,4 @@
+import type { TSESTree } from '@typescript-eslint/utils';
 import { createEslintRule } from '../utils';
 
 export const RULE_NAME = 'no-import-node-modules-by-path';
@@ -22,9 +23,10 @@ export default createEslintRule<Options, MessageIds>({
 			if (node.source.value.includes('/node_modules/'))
 				context.report({ node, messageId: 'noImportNodeModulesByPath' });
 		},
-		'CallExpression[callee.name="require"]': (node: any) => {
-			const value = node.arguments[0]?.value;
-			if (typeof value === 'string' && value.includes('/node_modules/'))
+		'CallExpression[callee.name="require"]': (node: TSESTree.CallExpression) => {
+			const arg = 'value' in node.arguments[0] ? node.arguments[0].value : null;
+			const value = arg ? typeof arg === 'string' ? arg : null : null;
+			if (value && value.includes('/node_modules/'))
 				context.report({ node, messageId: 'noImportNodeModulesByPath' });
 		},
 	}),
