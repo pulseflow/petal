@@ -73,20 +73,20 @@ export default createEslintRule<Options, MessageIds>({
 			return fixer.replaceTextRange(range, code.replace(/(\r\n|\n)/g, delimiter ?? ''));
 		}
 
-		function getDelimiter(root: TSESTree.Node, current: TSESTree.Node): ',' | undefined {
+		function getDelimiter(root: TSESTree.Node, current: TSESTree.Node): string | undefined {
 			if (root.type !== 'TSInterfaceDeclaration' && root.type !== 'TSTypeLiteral')
 				return;
 			const currentContent = context.sourceCode.text.slice(current.range[0], current.range[1]);
 			return currentContent.match(/(?:,|;)$/) ? undefined : ',';
 		}
 
-		function hasComments(current: TSESTree.Node): boolean | undefined {
+		function hasComments(current: TSESTree.Node): boolean {
 			let program: TSESTree.Node = current;
 			while (program.type !== 'Program')
 				program = program.parent;
 			const curr = current.range;
 
-			return program.comments?.some((c) => {
+			return !!program.comments?.some((c) => {
 				const cr = c.range;
 				return (cr[0] > curr[0] && cr[1] < curr[1]);
 			});
@@ -314,5 +314,5 @@ export default createEslintRule<Options, MessageIds>({
 	},
 });
 
-// eslint-disable-next-line unused-imports/no-unused-vars -- type params are used for typechecking, unused
-function exportType<A, B extends A>(): void { }
+// eslint-disable-next-line unused-imports/no-unused-vars, ts/explicit-function-return-type -- type params are used for typechecking
+function exportType<A, B extends A>() { }

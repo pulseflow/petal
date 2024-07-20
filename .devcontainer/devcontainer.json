@@ -8,7 +8,7 @@
 		"ghcr.io/devcontainers/features/desktop-lite:1": {}
 	},
 
-	"postCreateCommand": "pnpm install && pnpm run build",
+	"postCreateCommand": "pnpm install && pnpm build",
 
 	"waitFor": "postCreateCommand",
 

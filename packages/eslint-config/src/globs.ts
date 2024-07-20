@@ -2,10 +2,13 @@ export const GLOB_SRC_EXT = '?([cm])[jt]s?(x)';
 export const GLOB_SRC = '**/*.?([cm])[jt]s?(x)';
 
 export const GLOB_JS = '**/*.?([cm])js';
+export const GLOB_CJS = '**/*.?(c)js';
 export const GLOB_JSX = '**/*.?([cm])jsx';
 
 export const GLOB_TS = '**/*.?([cm])ts';
 export const GLOB_TSX = '**/*.?([cm])tsx';
+export const GLOB_DTS = '**/*.d.?([cm])ts';
+export const GLOB_TEST_TS = '**/*.{test,spec}.ts?(x)';
 
 export const GLOB_STYLE = '**/*.{c,le,sc}ss';
 export const GLOB_CSS = '**/*.css';
@@ -17,8 +20,12 @@ export const GLOB_JSON = '**/*.json';
 export const GLOB_JSON5 = '**/*.json5';
 export const GLOB_JSONC = '**/*.jsonc';
 
+export const GLOB_PACKAGE_JSON = '**/package.json';
+export const GLOB_TSCONFIGS = ['**/tsconfig.json', '**/tsconfig.*.json'];
+
 export const GLOB_MARKDOWN = '**/*.md';
 export const GLOB_MARKDOWN_IN_MARKDOWN = '**/*.md/*.md';
+export const GLOB_MARKDOWN_CODE = `${GLOB_MARKDOWN}/${GLOB_SRC}`;
 export const GLOB_SVELTE = '**/*.svelte';
 export const GLOB_VUE = '**/*.vue';
 export const GLOB_ASTRO = '**/*.astro';
@@ -33,15 +40,25 @@ export const GLOB_BIN_SRC = `**/bin.${GLOB_SRC_EXT}`;
 export const GLOB_SCRIPTS = `**/scripts/${GLOB_SRC}`;
 export const GLOB_CLI = `cli.${GLOB_SRC_EXT}`;
 
-export const GLOB_MARKDOWN_CODE = `${GLOB_MARKDOWN}/${GLOB_SRC}`;
+// @keep-sorted
+export const GLOB_UNIT_TESTS = [
+	`**/__tests__/**/*.${GLOB_SRC_EXT}`,
+	`**/*.test.${GLOB_SRC_EXT}`,
+];
+
+// @keep-sorted
+export const GLOB_BENCH_TESTS = [
+	`**/*.bench.${GLOB_SRC_EXT}`,
+	`**/*.benchmark.${GLOB_SRC_EXT}`,
+];
+
+export const GLOB_E2E_TEST = `**/*.spec.${GLOB_SRC_EXT}`;
 
 // @keep-sorted
 export const GLOB_TESTS = [
-	`**/__tests__/**/*.${GLOB_SRC_EXT}`,
-	`**/*.spec.${GLOB_SRC_EXT}`,
-	`**/*.test.${GLOB_SRC_EXT}`,
-	`**/*.bench.${GLOB_SRC_EXT}`,
-	`**/*.benchmark.${GLOB_SRC_EXT}`,
+	...GLOB_UNIT_TESTS,
+	...GLOB_BENCH_TESTS,
+	GLOB_E2E_TEST,
 ];
 
 // @keep-sorted

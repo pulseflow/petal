@@ -27,7 +27,7 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 	]);
 
 	if (options.slidev && options.markdown !== true && options.markdown !== 'prettier')
-		throw new Error('`slidev` option only works when `markdown` is enabled with `prettier`');
+		throw new Error('the `slidev` option only works when `markdown` is enabled with `prettier`');
 
 	const { indent, quotes, semi } = { ...StylisticConfigDefaults, ...stylistic };
 

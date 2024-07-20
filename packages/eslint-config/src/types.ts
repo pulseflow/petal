@@ -1,10 +1,10 @@
-import type { Linter } from 'eslint';
-
 export type Awaitable<T> = T | Promise<T>;
 export type Rules = import('./typegen').RuleOptions;
 export type { ConfigNames } from './typegen';
 
-export type TypedFlatConfigItem = Omit<Linter.FlatConfig<Linter.RulesRecord & Rules>, 'plugins'> & {
+type InternalFlatConfig = import('eslint').Linter.FlatConfig<import('eslint').Linter.RulesRecord & Rules>;
+
+export type TypedFlatConfigItem = Omit<InternalFlatConfig, 'plugins'> & {
 	/**
 	 * An object containing a name-value mapping of plugin names to plugin objects.
 	 * For now, these types are simply a relaxed `Record<string, any>`, but in the future they will use a strict ESLint plugin type.
@@ -50,9 +50,9 @@ export interface OptionsGitignore {
 	/**
 	 * Path to `.gitignore` files, or files with compatible formats like `.eslintignore`.
 	 *
-	 * @default []
+	 * @default [`${CWD}.gitignore`]
 	 */
-	files?: string | string[];
+	files?: string[];
 
 	/**
 	 * Throws an error if gitignore file isn't found.
@@ -135,9 +135,7 @@ export interface OptionsFormatters {
 	/**
 	 * Custom options for dprint.
 	 *
-	 * By default it's controlled by out own config.
-	 *
-	 * @default {}
+	 * By default it's controlled by our own config.
 	 */
 	dprintOptions?: boolean;
 

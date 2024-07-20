@@ -1,4 +1,3 @@
-import process from 'node:process';
 import { isPackageExists } from 'local-pkg';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import type { Linter } from 'eslint';
@@ -34,7 +33,7 @@ import {
 	vue,
 	yaml,
 } from './configs';
-import { getOverrides, resolveSubOptions } from './utils';
+import { getOverrides, isInEditorEnv, resolveSubOptions } from './utils';
 
 const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
 	'files',
@@ -51,8 +50,9 @@ const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
 const VuePackages = ['@slidev/cli', 'nuxt', 'vitepress', 'vue'];
 const SolidPackages = ['solid-js', 'solid-refresh', 'vite-plugin-solid'];
 const SveltePackages = ['@sveltejs/kit', '@sveltejs/package', '@sveltejs/vite-plugin-svelte', 'svelte'];
+const TypeScriptPackages = ['typescript', 'tsc', 'tslib'];
 const QueryPackages = ['react', 'vue', 'solid', 'svelte'].map(i => `@tanstack/${i}-query`);
-const EditorCheck = !!((process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM || process.env.NVIM) && !process.env.CI);
+const pkgSort = (i: string): boolean => isPackageExists(i);
 
 export const defaultPluginRenaming = {
 	'@eslint-react': 'react',
@@ -72,7 +72,6 @@ export const defaultPluginRenaming = {
 /**
  * Construct a Petal ESLint config.
  *
- *
  * @param {OptionsConfig & TypedFlatConfigItem} options
  *  The options for generating the ESLint configurations.
  * @param {Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]} userConfigs
@@ -89,16 +88,16 @@ export function petal(
 		autoRenamePlugins = true,
 		componentExts = [],
 		gitignore: enableGitignore = true,
-		isInEditor = EditorCheck,
+		isInEditor = isInEditorEnv(),
 		jsx: enableJsx = true,
-		query: enableQuery = QueryPackages.some(i => isPackageExists(i)),
+		query: enableQuery = QueryPackages.some(pkgSort),
 		react: enableReact = false,
 		regexp: enableRegexp = true,
-		solid: enableSolid = SolidPackages.some(i => isPackageExists(i)),
-		svelte: enableSvelte = SveltePackages.some(i => isPackageExists(i)),
-		typescript: enableTypeScript = isPackageExists('typescript'),
+		solid: enableSolid = SolidPackages.some(pkgSort),
+		svelte: enableSvelte = SveltePackages.some(pkgSort),
+		typescript: enableTypeScript = TypeScriptPackages.some(pkgSort),
 		unocss: enableUnoCSS = false,
-		vue: enableVue = VuePackages.some(i => isPackageExists(i)),
+		vue: enableVue = VuePackages.some(pkgSort),
 	} = options;
 
 	const stylisticOptions = options.stylistic === false

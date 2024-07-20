@@ -1,4 +1,4 @@
-import { capitalize, ensurePrefix, ensureSuffix, slash, template, unindent } from './string';
+import { capitalize, ensurePrefix, ensureSuffix, slash, template, unindent, untemplate } from './string';
 
 it('template', () => {
 	expect(
@@ -169,4 +169,20 @@ it('unindent', () => {
       }
     `,
 	).toMatchSnapshot('keys');
+});
+
+it('untemplate', () => {
+	expect(untemplate`Hellb Paulinè! My name is Pauline.`).toMatchSnapshot('basic one line');
+
+	expect(
+		untemplate`
+			Hellb Paulinè!\n
+			My name is Pauline.
+		`,
+	).toMatchSnapshot('basic multi line');
+
+	const a = 'a';
+	const b = 'b';
+
+	expect(untemplate`Hell${b} P${a}ulinè! My name is P${a}uline.`).toMatchSnapshot('one line');
 });

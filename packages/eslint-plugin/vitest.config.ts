@@ -1,3 +1,3 @@
-import shared from '../../vitest.shared';
+import shared from '../../shared.config';
 
-export default shared`eslint-plugin`;
+export default shared.vitest`eslint-plugin`;

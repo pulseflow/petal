@@ -1,3 +1,4 @@
+import { GLOB_PACKAGE_JSON, GLOB_TSCONFIGS } from '../globs';
 import type { TypedFlatConfigItem } from '../types';
 
 /**
@@ -6,7 +7,7 @@ import type { TypedFlatConfigItem } from '../types';
 export async function sortPackageJson(): Promise<TypedFlatConfigItem[]> {
 	return [
 		{
-			files: ['**/package.json'],
+			files: [GLOB_PACKAGE_JSON],
 			name: 'petal/sort/package-json',
 			rules: {
 				'jsonc/sort-array-values': [
@@ -107,7 +108,7 @@ export async function sortPackageJson(): Promise<TypedFlatConfigItem[]> {
 export async function sortTsConfig(): Promise<TypedFlatConfigItem[]> {
 	return [
 		{
-			files: ['**/tsconfig.json', '**/tsconfig.*.json'],
+			files: GLOB_TSCONFIGS,
 			name: 'petal/sort/tsconfig-json',
 			rules: {
 				'jsonc/sort-keys': [

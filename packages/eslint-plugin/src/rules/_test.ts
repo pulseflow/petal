@@ -7,7 +7,7 @@ export { unindent as $ } from 'eslint-vitest-rule-tester';
 export type ExtendedRuleTesterOptions = TestCasesOptions & RuleTesterInitOptions & { lang?: 'js' | 'ts' };
 
 export function run(options: ExtendedRuleTesterOptions): void {
-	return _run({
+	_run({
 		parser: tsParser as any,
 		...options,
 	});

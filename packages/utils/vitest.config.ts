@@ -1,3 +1,3 @@
-import shared from '../../vitest.shared';
+import shared from '../../shared.config';
 
-export default shared`utils`;
+export default shared.vitest`utils`;

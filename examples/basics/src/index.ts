@@ -7,7 +7,7 @@ const helloworld = {
 	messages: [
 		'hello world!',
 		'this will be transpiled',
-		'and formatted by petal!',
+		`and formatted by petal!`,
 	],
 } satisfies HelloWorld;
 

@@ -149,7 +149,7 @@ export const toArray = <T>(value: T | T[]): T[] => Array.isArray(value) ? value 
  */
 export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { default: infer U } ? U : T> {
 	const resolved = await m;
-	return (resolved as any).default || resolved;
+	return (resolved as any).default ?? resolved;
 }
 
 /**
@@ -196,3 +196,5 @@ export function getOverrides<K extends keyof OptionsConfig>(options: OptionsConf
 	const sub = resolveSubOptions(options, key);
 	return { ...'overrides' in sub ? sub.overrides : {} };
 }
+
+export const isInEditorEnv = (): boolean => !!((process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM || process.env.NVIM) && !process.env.CI);

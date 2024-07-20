@@ -9,7 +9,7 @@ import type {
 	OptionsTypeScriptWithTypes,
 	TypedFlatConfigItem,
 } from '../types';
-import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_TS, GLOB_TSX } from '../globs';
+import { GLOB_ASTRO_TS, GLOB_CJS, GLOB_DTS, GLOB_MARKDOWN, GLOB_TEST_TS, GLOB_TS, GLOB_TSX } from '../globs';
 import { interopDefault, renameRules } from '../utils';
 
 export async function typescript(
@@ -113,7 +113,9 @@ export async function typescript(
 				'no-use-before-define': 'off',
 				'no-useless-constructor': 'off',
 				'ts/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
+				'ts/consistent-indexed-object-style': ['error', 'record'],
 				'ts/consistent-type-definitions': ['error', 'interface'],
+				// 'ts/consistent-type-exports': ['error', { fixMixedExportsWithInlineTypeSpecifier: true }],
 				'ts/consistent-type-imports': ['error', {
 					disallowTypeAnnotations: false,
 					prefer: 'type-imports',
@@ -144,6 +146,8 @@ export async function typescript(
 								allowHigherOrderFunctions: true,
 								allowIIFEs: true,
 							}],
+							// 'ts/explicit-member-accessibility': 'error',
+							// 'ts/explicit-module-boundary-types': 'error',
 						}
 					: {}
 				),
@@ -163,7 +167,7 @@ export async function typescript(
 			rules: overrides,
 		},
 		{
-			files: ['**/*.d.?([cm])ts'],
+			files: [GLOB_DTS],
 			name: 'petal/typescript/disables/dts',
 			rules: {
 				'eslint-comments/no-unlimited-disable': 'off',
@@ -173,14 +177,14 @@ export async function typescript(
 			},
 		},
 		{
-			files: ['**/*.{test,spec}.ts?(x)'],
+			files: [GLOB_TEST_TS],
 			name: 'petal/typescript/disables/tests',
 			rules: {
 				'no-unused-expressions': 'off',
 			},
 		},
 		{
-			files: ['**/*.js', '**/*.cjs'],
+			files: [GLOB_CJS],
 			name: 'petal/typescript/disables/cjs',
 			rules: {
 				'ts/no-require-imports': 'off',

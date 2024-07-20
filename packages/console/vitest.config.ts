@@ -1,3 +1,3 @@
-import shared from '../../vitest.shared';
+import shared from '../../shared.config';
 
-export default shared`console`;
+export default shared.vitest`console`;

@@ -97,16 +97,15 @@ install the [vscode eslint extension][vscode] and add the following settings to 
 
 	// silent stylistic rules in the ide, but still fix them
 	"eslint.rules.customizations": [
-		{ "rule": "@stylistic/*", "severity": "warn" },
-		{ "rule": "style*", "severity": "warn" },
-		{ "rule": "*-indent", "severity": "warn" },
-		{ "rule": "*-spacing", "severity": "warn" },
-		{ "rule": "*-spaces", "severity": "warn" },
-		{ "rule": "*-order", "severity": "warn" },
-		{ "rule": "*-dangle", "severity": "warn" },
-		{ "rule": "*-newline", "severity": "warn" },
-		{ "rule": "*quotes", "severity": "warn" },
-		{ "rule": "*semi", "severity": "warn" }
+		{ "rule": "style/*", "severity": "off", "fixable": true },
+		{ "rule": "*-indent", "severity": "off", "fixable": true },
+		{ "rule": "*-spacing", "severity": "off", "fixable": true },
+		{ "rule": "*-spaces", "severity": "off", "fixable": true },
+		{ "rule": "*-order", "severity": "off", "fixable": true },
+		{ "rule": "*-dangle", "severity": "off", "fixable": true },
+		{ "rule": "*-newline", "severity": "off", "fixable": true },
+		{ "rule": "*quotes", "severity": "off", "fixable": true },
+		{ "rule": "*semi", "severity": "off", "fixable": true }
 	],
 
 	// enable eslint for all supported languages

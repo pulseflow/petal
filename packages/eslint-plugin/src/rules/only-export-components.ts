@@ -92,7 +92,8 @@ export default createEslintRule<Options, MessageIds>({
 					if (options.allowExportNames?.includes(id.name))
 						return;
 
-					if (options.allowConstantExport && init && ['Literal', 'TemplateLiteral', 'BinaryExpression'].includes(init.type))
+					// Literal: 1, 'foo', UnaryExpression: -1, TemplateLiteral: `Some ${template}`, BinaryExpression: 24 * 60.
+					if (options.allowConstantExport && init && ['Literal', 'UnaryExpression', 'TemplateLiteral', 'BinaryExpression'].includes(init.type))
 						return;
 
 					if (isFn) {
