@@ -57,7 +57,7 @@
 	"devDependencies": {
 		"@types/eslint": "^8.56.10",
 		"@typescript-eslint/utils": "8.0.0-alpha.41",
-		"eslint": "9.5.0",
+		"eslint": "9.7.0",
 		"eslint-vitest-rule-tester": "^0.3.3",
 		"jsonc-eslint-parser": "^2.4.0"
 	},
