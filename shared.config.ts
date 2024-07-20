@@ -1,4 +1,4 @@
-import { Options, defineConfig as defineTsupConfig } from 'tsup';
+import { defineConfig as defineTsupConfig } from 'tsup';
 import { type BuildConfig, defineBuildConfig } from 'unbuild';
 import { defineProject as defineVitestProject } from 'vitest/config';
 

@@ -36,3 +36,15 @@ exports[`unindent > with leading indent 1`] = `
   b()
 }"
 `;
+
+exports[`untemplate > basic multi line 1`] = `
+"
+			Hellb Paulinè!
+
+			My name is Pauline.
+		"
+`;
+
+exports[`untemplate > basic one line 1`] = `"Hellb Paulinè! My name is Pauline."`;
+
+exports[`untemplate > one line 1`] = `"bHella Paulinè! My name is Puline."`;
