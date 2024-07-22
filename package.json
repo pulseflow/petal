@@ -46,7 +46,7 @@
 		"esbuild": "^0.23.0",
 		"eslint": "npm:eslint-ts-patch@9.5.0-0",
 		"eslint-ts-patch": "9.5.0-0",
-		"tsup": "^8.2.0",
+		"tsup": "^8.2.1",
 		"tsx": "~4.16.2",
 		"typescript": "^5.5.3",
 		"unbuild": "^2.0.0",
