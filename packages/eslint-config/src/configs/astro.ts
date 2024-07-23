@@ -35,7 +35,7 @@ export async function astro(options: OptionsOverrides & OptionsFiles & OptionsSt
 				sourceType: 'module',
 			},
 			name: 'petal/astro/rules',
-			processor: 'astro/client-side-ts',
+			processor: pluginAstro.processors['client-side-ts'],
 			rules: {
 				'astro/missing-client-only-directive-value': 'error',
 				'astro/no-conflict-set-directives': 'error',
@@ -52,7 +52,6 @@ export async function astro(options: OptionsOverrides & OptionsFiles & OptionsSt
 					? {
 							'style/indent': 'off',
 							'style/jsx-closing-tag-location': 'off',
-							'style/jsx-indent': 'off',
 							'style/jsx-one-expression-per-line': 'off',
 							'style/no-multiple-empty-lines': 'off',
 						}

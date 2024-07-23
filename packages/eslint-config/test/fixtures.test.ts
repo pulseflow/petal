@@ -4,7 +4,6 @@ import { afterAll, beforeAll, it } from 'vitest';
 import fs from 'fs-extra';
 import { execa } from 'execa';
 import fg from 'fast-glob';
-import { untemplate } from '@flowr/utils';
 import type { OptionsConfig, TypedFlatConfigItem } from '../src/types';
 
 beforeAll(async () => await fs.rm('./packages/eslint-config/_fixtures', { recursive: true, force: true }));
@@ -93,17 +92,17 @@ runWithConfig`no-markdown-with-formatters` ({
 
 function runWithConfig(name: TemplateStringsArray) {
 	return (configs: OptionsConfig, ...items: TypedFlatConfigItem[]) => {
-		it.concurrent(untemplate(name), async ({ expect }) => {
+		it.concurrent(name[0], async ({ expect }) => {
 			const from = resolve('./packages/eslint-config/fixtures/input');
-			const output = resolve('./packages/eslint-config/fixtures/output', untemplate(name));
-			const target = resolve('./packages/eslint-config/_fixtures', untemplate(name));
+			const output = resolve('./packages/eslint-config/fixtures/output', name[0]);
+			const target = resolve('./packages/eslint-config/_fixtures', name[0]);
 
 			await fs.copy(from, target, { filter: src => !src.includes('node_modules') });
 			await fs.writeFile(join(target, 'eslint.config.js'), `
 // @eslint-disable
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal(
+export default defineConfig(
 	${JSON.stringify(configs)},
 	...${JSON.stringify(items) ?? []},
 );

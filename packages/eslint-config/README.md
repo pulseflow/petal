@@ -27,9 +27,9 @@ pnpm i -D eslint @flowr/eslint-config
 
 ```js
 // eslint.config.mjs
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal();
+export default defineConfig();
 ```
 
 <details>
@@ -41,12 +41,12 @@ if you still use some configuration from the legacy eslintrc format, you can use
 
 ```js
 // eslint.config.mjs
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 import { FlatCompat } from '@eslint/eslintrc';
 
 const compat = new FlatCompat();
 
-export default petal(
+export default defineConfig(
 	{
 		ignores: [],
 	},
@@ -79,7 +79,7 @@ export default petal(
 
 ## ide integration
 
-### vscode support (auto fix on save)
+### vscode support
 
 install the [vscode eslint extension][vscode] and add the following settings to your `.vscode/settings.json`:
 
@@ -134,24 +134,66 @@ install the [vscode eslint extension][vscode] and add the following settings to 
 }
 ```
 
+### neovim support
+
+```lua
+local customizations = {
+    { rule = 'style/*', severity = 'off', fixable = true },
+    { rule = 'format/*', severity = 'off', fixable = true },
+    { rule = '*-indent', severity = 'off', fixable = true },
+    { rule = '*-spacing', severity = 'off', fixable = true },
+    { rule = '*-spaces', severity = 'off', fixable = true },
+    { rule = '*-order', severity = 'off', fixable = true },
+    { rule = '*-dangle', severity = 'off', fixable = true },
+    { rule = '*-newline', severity = 'off', fixable = true },
+    { rule = '*quotes', severity = 'off', fixable = true },
+    { rule = '*semi', severity = 'off', fixable = true },
+}
+
+local lspconfig = require('lspconfig')
+-- enable eslint for all supported languages
+lspconfig.eslint.setup({
+    filetypes = {
+        "",
+    },
+    settings = {
+        -- silence the stylistic rules in neovim, but still autofix them
+        rulesCustomizations = customizations,
+    },
+    -- nvim-lspconfig has an EslintFixAll command predefined. you can create an `autocmd` to call this command upon saving a file
+    on_attach = function(client, bufnr)
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            command = "EslintFixAll",
+        })
+    end,
+})
+```
+
+there are some preexisting libraries for eslint nvim support as well, which you can use for auto-fixing too:
+
+- use [`conform.nvim`](https://github.com/stevearc/conform.nvim)
+- use [`none-ls.nvim`](https://github.com/nvimtools/none-ls.nvim)
+- use [`nvim-lint`](https://github.com/mfussenegger/nvim-lint)
+
 ## customization
 
 we use [eslint's flat config feature][eslint-flat]. it provides much better orginzation and composition. normally you only need to import and use the `petal` preset:
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal();
+export default defineConfig();
 ```
 
 alternatively, you can confgure each integration individually, for example:
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	// type of the project
 	type: 'lib', // 'lib' or 'app', default is 'app'
 
@@ -179,13 +221,13 @@ export default petal({
 });
 ```
 
-the `petal` factory function also accepts any number of arbitrary custom config overrides:
+the `defineConfig` factory function also accepts any number of arbitrary custom config overrides:
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal(
+export default defineConfig(
 	{
 		// configures for `petal` preset
 	},
@@ -286,9 +328,9 @@ if you really want to use the original prefix, you can revert the plugin renamin
 
 ```ts
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal()
+export default defineConfig()
 	.renamePlugins({
 		ts: '@typescript-eslint',
 		yaml: 'yml',
@@ -304,9 +346,9 @@ certain rules would only be enabled in specific files, for example `ts/*` rules 
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal(
+export default defineConfig(
 	{
 		vue: true,
 		typescript: true
@@ -331,9 +373,9 @@ we also provide the `overrides` option for each integration to use our default g
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	vue: {
 		overrides: {
 			'vue/operator-linebreak': ['error', 'before'],
@@ -354,13 +396,13 @@ export default petal({
 
 ### composer
 
-the factory function `petal()` returns a [`FlatConfigComposer` object from `eslint-flat-config-utils`](https://github.com/antfu/eslint-flat-config-utils#composer) where you can chain the methods to compose the config even more flexibly.
+the factory function `defineConfig()` returns a [`FlatConfigComposer` object from `eslint-flat-config-utils`](https://github.com/antfu/eslint-flat-config-utils#composer) where you can chain the methods to compose the config even more flexibly.
 
 ```js
 // eslint.config.ks
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal()
+export default defineConfig()
 	.prepend(
 		// some configs before the main config
 	)
@@ -389,9 +431,9 @@ vue support is auto-detected based on the `vue` dependency. you can also explici
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	vue: true,
 });
 ```
@@ -400,9 +442,9 @@ we also support additional options, such as `accessibility` for a11y rules, and 
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	vue: {
 		sfcBlocks: true, // default is `true`, requires `eslint-processor-vue-blocks`
 		accessibility: true, // default is `false`, requires `eslint-plugin-vuejs-accessibility`
@@ -422,9 +464,9 @@ we have limited support for vue 2 (as it's already [reached eol](https://v2.vuej
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	vue: {
 		vueVersion: 2,
 	},
@@ -439,9 +481,9 @@ use external formatters to format files that eslint cannot handle yet (`.css`, `
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	formatters: {
 		css: true, // format CSS, LESS, SCSS files, also the `<style>` blocks in vue, uses prettier by default
 		html: true, // format HTML files, uses prettier by default
@@ -459,9 +501,9 @@ to enable react support, you need to explicitly turn it on:
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	react: true,
 });
 ```
@@ -474,9 +516,9 @@ to enable astro support, you need to explicitly turn it on or install the `astro
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	astro: true,
 });
 ```
@@ -489,9 +531,9 @@ to enable svelte support, you need to explicitly turn it on, or install a svelte
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	svelte: true,
 });
 ```
@@ -504,9 +546,9 @@ to enable unocss support, you need to explicitly turn it on:
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	unocss: true,
 });
 ```
@@ -519,9 +561,9 @@ to enable solid support, you need to explicitly turn it on, or install a solid-r
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	solid: true,
 });
 ```
@@ -569,9 +611,9 @@ configuration for [type aware rules][type-aware] can be enabled by passing the o
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	typescript: {
 		tsconfigPath: 'tsconfig.json',
 	},
@@ -586,9 +628,9 @@ this is to prevent unused imports and temporary patches from getting removed by 
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	isInEditor: false,
 });
 ```
@@ -642,9 +684,9 @@ some rules set by default are very opinionated, and as such, we include an optio
 
 ```js
 // eslint.config.js
-import petal from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal({
+export default defineConfig({
 	opinionated: false, // by default this is `true`; `false` disables the opinionated rules
 });
 ```

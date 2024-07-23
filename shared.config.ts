@@ -1,10 +1,10 @@
 import { defineConfig as defineTsupConfig } from 'tsup';
 import { type BuildConfig, defineBuildConfig } from 'unbuild';
-import { defineProject as defineVitestProject } from 'vitest/config';
+import { defineProject as defineVitestConfig } from 'vitest/config';
 
 export const shared = {
 	vitest: (name: TemplateStringsArray): { test: { globals: true; name: string } } =>
-		defineVitestProject({
+		defineVitestConfig({
 			test: {
 				globals: true,
 				name: name[0],

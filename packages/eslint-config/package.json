@@ -53,17 +53,18 @@
 		"@eslint-react/eslint-plugin": "^1.5.8",
 		"@prettier/plugin-xml": "^3.4.1",
 		"@tanstack/eslint-plugin-query": "^5.50.1",
-		"@unocss/eslint-plugin": ">=0.50.0",
+		"@unocss/eslint-plugin": ">=0.59.4 < 1",
 		"astro-eslint-parser": "^1.0.2",
 		"eslint": ">=8.40.0",
 		"eslint-plugin-astro": "^1.2.0",
 		"eslint-plugin-format": ">=0.1.0",
+		"eslint-plugin-jsx-a11y": "^6.9.0",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-solid": "^0.14.0",
 		"eslint-plugin-svelte": ">=2.39.0",
 		"eslint-plugin-vue": "^9.26.0",
 		"eslint-plugin-vuejs-accessibility": "^2.3.0",
-		"eslint-processor-vue-blocks": "^0.1.2",
+		"eslint-processor-vue-blocks": ">=0.1.2",
 		"prettier-plugin-astro": "^0.14.0",
 		"prettier-plugin-slidev": "^1.0.5",
 		"svelte-eslint-parser": ">=0.36.0",
@@ -89,6 +90,9 @@
 			"optional": true
 		},
 		"eslint-plugin-format": {
+			"optional": true
+		},
+		"eslint-plugin-jsx-a11y": {
 			"optional": true
 		},
 		"eslint-plugin-react-hooks": {
@@ -123,7 +127,6 @@
 		}
 	},
 	"dependencies": {
-		"@antfu/eslint-plugin-unused-imports": "^4.0.0",
 		"@antfu/install-pkg": "^0.3.3",
 		"@clack/prompts": "^0.7.0",
 		"@eslint-community/eslint-plugin-eslint-comments": "^4.3.0",
@@ -133,16 +136,17 @@
 		"eslint-flat-config-utils": "^0.2.5",
 		"eslint-merge-processors": "^0.1.0",
 		"eslint-plugin-command": "^0.2.3",
-		"eslint-plugin-import-x": "^3.0.0",
+		"eslint-plugin-import-x": "^3.1.0",
 		"eslint-plugin-jsdoc": "^48.8.3",
 		"eslint-plugin-jsonc": "^2.16.0",
 		"eslint-plugin-markdown": "^5.1.0",
 		"eslint-plugin-n": "^17.9.0",
-		"eslint-plugin-perfectionist": "^2.11.0",
+		"eslint-plugin-perfectionist": "^3.0.0",
 		"eslint-plugin-petal": "workspace:^",
 		"eslint-plugin-regexp": "^2.6.0",
 		"eslint-plugin-toml": "^0.11.1",
 		"eslint-plugin-unicorn": "^54.0.0",
+		"eslint-plugin-unused-imports": "^4.0.1",
 		"eslint-plugin-vitest": "^0.5.4",
 		"eslint-plugin-yml": "^1.14.0",
 		"find-up": "^7.0.0",
@@ -154,9 +158,8 @@
 		"yaml-eslint-parser": "^1.2.3"
 	},
 	"devDependencies": {
-		"@eslint-react/eslint-plugin": "^1.5.28",
+		"@eslint-react/eslint-plugin": "^1.5.30",
 		"@eslint/config-inspector": "^0.5.2",
-		"@flowr/utils": "workspace:*",
 		"@prettier/plugin-xml": "^3.4.1",
 		"@tanstack/eslint-plugin-query": "^5.51.12",
 		"@types/eslint": "^8.56.10",
@@ -167,11 +170,12 @@
 		"eslint": "npm:eslint-ts-patch@9.5.0-0",
 		"eslint-plugin-astro": "^1.2.3",
 		"eslint-plugin-format": "^0.1.2",
+		"eslint-plugin-jsx-a11y": "^6.9.0",
 		"eslint-plugin-react-hooks": "^4.6.2",
 		"eslint-plugin-solid": "^0.14.1",
 		"eslint-plugin-svelte": "^2.43.0",
 		"eslint-plugin-vue": "^9.27.0",
-		"eslint-plugin-vuejs-accessibility": "^2.4.0",
+		"eslint-plugin-vuejs-accessibility": "^2.4.1",
 		"eslint-processor-vue-blocks": "^0.1.2",
 		"eslint-ts-patch": "9.5.0-0",
 		"eslint-typegen": "^0.2.4",
@@ -182,7 +186,7 @@
 		"prettier-plugin-slidev": "^1.0.5",
 		"svelte": "^4.2.18",
 		"svelte-eslint-parser": "^0.41.0",
-		"typescript": "^5.5.3",
+		"typescript": "^5.5.4",
 		"vue": "^3.4.33",
 		"vue-eslint-parser": "^9.4.3"
 	},

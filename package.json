@@ -3,7 +3,7 @@
 	"type": "module",
 	"version": "3.9.1",
 	"private": true,
-	"packageManager": "pnpm@9.5.0",
+	"packageManager": "pnpm@9.6.0",
 	"engineStrict": true,
 	"author": "Petal Contributors",
 	"license": "MIT",
@@ -39,19 +39,17 @@
 	"devDependencies": {
 		"@flowr/eslint-config": "workspace:^",
 		"@flowr/tsconfig": "workspace:^",
-		"@stylistic/eslint-plugin-migrate": "^2.6.0-beta.0",
-		"@types/node": "^20.14.11",
+		"@types/node": "^20.14.12",
 		"bumpp": "^9.4.1",
-		"changelogithub": "^0.13.9",
 		"esbuild": "^0.23.0",
 		"eslint": "npm:eslint-ts-patch@9.5.0-0",
 		"eslint-ts-patch": "9.5.0-0",
-		"tsup": "^8.2.0",
+		"tsup": "^8.2.2",
 		"tsx": "~4.16.2",
-		"typescript": "^5.5.3",
+		"typescript": "^5.5.4",
 		"unbuild": "^2.0.0",
 		"vite": "^5.3.4",
-		"vitest": "^2.0.3"
+		"vitest": "^2.0.4"
 	},
 	"resolutions": {
 		"tsx": "~4.16.2"

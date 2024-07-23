@@ -25,7 +25,7 @@ export async function markdown(options: OptionsFiles & OptionsComponentExts & Op
 			name: 'petal/markdown/processor',
 			// `eslint-plugin-markdown` only creates virtual files for code blocks,
 			// but not the markdown file itself. we use `eslint-merge-processors` to
-			// add a pass-through processor for themarkdown file itself.
+			// add a pass-through processor for the markdown file itself.
 			processor: mergeProcessors([
 				markdown.processors.markdown,
 				processorPassThrough,
@@ -75,7 +75,6 @@ export async function markdown(options: OptionsFiles & OptionsComponentExts & Op
 				'ts/no-unused-expressions': 'off',
 				'ts/no-unused-vars': 'off',
 				'ts/no-use-before-define': 'off',
-				'ts/no-var-requires': 'off',
 
 				'unicode-bom': 'off',
 				'unused-imports/no-unused-imports': 'off',

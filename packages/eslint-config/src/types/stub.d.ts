@@ -68,23 +68,7 @@ declare module 'eslint-plugin-unicorn' {
 	export default { eslintPluginUnicorn };
 };
 
-// https://github.com/azat-io/eslint-plugin-perfectionist/issues/154
-declare module 'eslint-plugin-perfectionist' {
-	import type { ESLint, Linter } from 'eslint';
-
-	const eslintPluginPerfectionist: ESLint.Plugin & {
-		configs: {
-			'recommended-alphabetical': Linter.Config;
-			'recommended-natural': Linter.Config;
-			'recommended-line-length': Linter.Config;
-		};
-	};
-
-	export = eslintPluginPerfectionist;
-	export default { eslintPluginPerfectionist };
-};
-
-declare module '@antfu/eslint-plugin-unused-imports' {
+declare module 'eslint-plugin-unused-imports' {
 	import type { ESLint } from 'eslint';
 
 	const eslintPluginUnusedImports: ESLint.Plugin;

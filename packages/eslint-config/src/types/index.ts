@@ -1,3 +1,5 @@
+export type * from './prettier';
+
 export type Awaitable<T> = T | Promise<T>;
 export type Rules = import('./typegen').RuleOptions;
 export type { ConfigNames } from './typegen';
@@ -21,7 +23,7 @@ export interface OptionsVue extends OptionsOverrides {
 	 * Requires installing:
 	 * `eslint-processor-vue-blocks`
 	 *
-	 * @see https://github.com/antfu/eslint-processor-vue-blocks
+	 * @see [`eslint-processor-vue-blocks` github](https://github.com/antfu/eslint-processor-vue-blocks)
 	 * @default true
 	 */
 	sfcBlocks?: boolean | import('eslint-processor-vue-blocks').Options;
@@ -130,7 +132,7 @@ export interface OptionsFormatters {
 	 *
 	 * @default {}
 	 */
-	prettierOptions?: import('./vendor/prettier-types').VendoredPrettierOptions;
+	prettierOptions?: import('./prettier').VendoredPrettierOptions;
 
 	/**
 	 * Custom options for dprint.

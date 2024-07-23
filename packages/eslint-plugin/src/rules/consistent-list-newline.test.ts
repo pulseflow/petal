@@ -306,7 +306,7 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-			export default petal({
+			export default defineConfig({
 			},
 			{
 			  foo: 'bar'
@@ -316,7 +316,7 @@ const invalid: InvalidTestCase[] = [
 			)
 		`,
 		output: o => expect(o).toMatchInlineSnapshot(`
-      "export default petal({
+      "export default defineConfig({
       },{
         foo: 'bar'
       }
@@ -387,7 +387,7 @@ const invalid: InvalidTestCase[] = [
 	},
 	{
 		code: $`
-			export default petal({
+			export default defineConfig({
 			},
 			// some comment
 			{
@@ -399,7 +399,7 @@ const invalid: InvalidTestCase[] = [
 			)
 		`,
 		output: o => expect(o).toMatchInlineSnapshot(`
-      "export default petal({
+      "export default defineConfig({
       },
       // some comment
       {

@@ -47,14 +47,15 @@ const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
 	'settings',
 ];
 
-const VuePackages = ['@slidev/cli', 'nuxt', 'vitepress', 'vue'];
-const SolidPackages = ['solid-js', 'solid-refresh', 'vite-plugin-solid'];
-const SveltePackages = ['@sveltejs/kit', '@sveltejs/package', '@sveltejs/vite-plugin-svelte', 'svelte'];
-const TypeScriptPackages = ['typescript', 'tsc', 'tslib'];
-const QueryPackages = ['react', 'vue', 'solid', 'svelte'].map(i => `@tanstack/${i}-query`);
+const VUE_PACKAGES = ['@slidev/cli', 'nuxt', 'vitepress', 'vue'];
+const SOLID_PACKAGES = ['solid-js', 'solid-refresh', 'vite-plugin-solid'];
+const SVELTE_PACKAGES = ['@sveltejs/kit', '@sveltejs/package', '@sveltejs/vite-plugin-svelte', 'svelte'];
+const REACT_PACKAGES = ['react', 'react-dom', 'react-native', 'next'];
+const TYPESCRIPT_PACKAGES = ['typescript', 'tsc', 'tslib'];
+const QUERY_PACKAGES = ['react', 'vue', 'solid', 'svelte'].map(i => `@tanstack/${i}-query`);
 const pkgSort = (i: string): boolean => isPackageExists(i);
 
-export const defaultPluginRenaming = {
+export const defaultPluginRenaming: Record<string, string> = {
 	'@eslint-react': 'react',
 	'@eslint-react/dom': 'react-dom',
 	'@eslint-react/hooks-extra': 'react-hooks-extra',
@@ -69,20 +70,18 @@ export const defaultPluginRenaming = {
 	'yml': 'yaml',
 };
 
+type FactoryOptions = OptionsConfig & TypedFlatConfigItem;
+type UserConfig = Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.FlatConfig[]>;
+type FactoryComposer = FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
+
 /**
  * Construct a Petal ESLint config.
  *
- * @param {OptionsConfig & TypedFlatConfigItem} options
- *  The options for generating the ESLint configurations.
- * @param {Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]} userConfigs
- *  The user configurations to be merged with the generated configurations.
- * @returns {Promise<TypedFlatConfigItem[]>}
- *  The merged ESLint configurations.
+ * @param {FactoryOptions} options The options for generating the ESLint configurations.
+ * @param {UserConfigs} userConfigs The user configurations to be merged with the generated configurations.
+ * @returns {FactoryComposer} The merged ESLint configurations.
  */
-export function petal(
-	options: OptionsConfig & TypedFlatConfigItem = {},
-	...userConfigs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.FlatConfig[]>[]
-): FlatConfigComposer<TypedFlatConfigItem, ConfigNames> {
+export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserConfig[]): FactoryComposer {
 	const {
 		astro: enableAstro = isPackageExists('astro'),
 		autoRenamePlugins = true,
@@ -90,14 +89,14 @@ export function petal(
 		gitignore: enableGitignore = true,
 		isInEditor = isInEditorEnv(),
 		jsx: enableJsx = true,
-		query: enableQuery = QueryPackages.some(pkgSort),
-		react: enableReact = false,
+		query: enableQuery = QUERY_PACKAGES.some(pkgSort),
+		react: enableReact = REACT_PACKAGES.some(pkgSort),
 		regexp: enableRegexp = true,
-		solid: enableSolid = SolidPackages.some(pkgSort),
-		svelte: enableSvelte = SveltePackages.some(pkgSort),
-		typescript: enableTypeScript = TypeScriptPackages.some(pkgSort),
+		solid: enableSolid = SOLID_PACKAGES.some(pkgSort),
+		svelte: enableSvelte = SVELTE_PACKAGES.some(pkgSort),
+		typescript: enableTypeScript = TYPESCRIPT_PACKAGES.some(pkgSort),
 		unocss: enableUnoCSS = false,
-		vue: enableVue = VuePackages.some(pkgSort),
+		vue: enableVue = VUE_PACKAGES.some(pkgSort),
 	} = options;
 
 	const stylisticOptions = options.stylistic === false

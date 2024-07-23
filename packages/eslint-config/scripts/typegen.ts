@@ -74,4 +74,4 @@ const dts = `${_dts}
 export type ConfigNames = ${configNames.map(i => `'${i}'`).join(' | ')};
 `;
 
-await writeFile('src/typegen.d.ts', dts);
+await writeFile('src/types/typegen.d.ts', dts);

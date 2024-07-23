@@ -1,15 +1,13 @@
-// @ts-expect-error missing types
-import styleMigrate from '@stylistic/eslint-plugin-migrate';
-import { petal } from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint-config';
 
-export default petal(
+export default defineConfig(
 	{
 		typescript: true,
 		astro: false,
 		type: 'lib',
 	},
 	{
-		name: 'ignores',
+		name: 'user/ignores/fixtures',
 		ignores: [
 			'fixtures',
 			'_fixtures',
@@ -18,24 +16,14 @@ export default petal(
 		],
 	},
 	{
-		name: 'sort/objects',
+		name: 'user/perfectionist/sort',
 		files: ['packages/eslint-config/src/**/*.ts'],
 		rules: {
 			'perfectionist/sort-objects': 'error',
 		},
 	},
 	{
-		name: 'style/migrate',
-		files: ['packages/eslint-config/src/configs/*.ts'],
-		plugins: {
-			'style-migrate': styleMigrate,
-		},
-		rules: {
-			'style-migrate/migrate': ['error', { namespaceTo: 'style' }],
-		},
-	},
-	{
-		name: 'tests',
+		name: 'user/test/indent',
 		files: ['packages/eslint-plugin/src/rules/**/*.test.ts'],
 		rules: {
 			'petal/indent-unindent': 'error',

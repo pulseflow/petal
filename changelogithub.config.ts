@@ -1,7 +1,4 @@
-import { defineConfig } from 'changelogithub';
-
-export default defineConfig({
-	scopeMap: {},
+export default {
 	types: {
 		chore: { title: '🔨 Chores' },
 		feature: { title: '✨ Features' },
@@ -15,10 +12,5 @@ export default defineConfig({
 		deploy: { title: '🚀 Deployments' },
 		wip: { title: '🚧 Experiments' },
 	},
-	titles: {
-		breakingChanges: '🚨 Breaking Changes',
-	},
-	contributors: true,
-	capitalize: true,
-	group: true,
-});
+	capitalize: false,
+};

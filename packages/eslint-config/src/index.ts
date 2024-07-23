@@ -4,12 +4,11 @@
  * @module
  */
 
-import { petal } from './factory';
-
 export * from './configs';
 export * from './factory';
 export * from './globs';
-export * from './types';
 export * from './utils';
 
-export default petal;
+export type * from './types';
+
+export { defineConfig as default } from './factory';

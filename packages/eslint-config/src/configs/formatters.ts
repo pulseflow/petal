@@ -1,8 +1,7 @@
 import { isPackageExists } from 'local-pkg';
 import { GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_GRAPHQL, GLOB_HTML, GLOB_LESS, GLOB_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_XML } from '../globs';
-import type { VendoredPrettierOptions } from '../vendor/prettier-types';
 import { ensurePackages, interopDefault, parserPlain } from '../utils';
-import type { OptionsFormatters, StylisticConfig, TypedFlatConfigItem } from '../types';
+import type { OptionsFormatters, StylisticConfig, TypedFlatConfigItem, VendoredPrettierOptions } from '../types';
 import { StylisticConfigDefaults } from './stylistic';
 
 type VendoredPrettierXMLOptions = Pick<VendoredPrettierOptions, 'xmlQuoteAttributes' | 'xmlSelfClosingSpace' | 'xmlSortAttributesByKey' | 'xmlWhitespaceSensitivity'>;

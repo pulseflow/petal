@@ -55,14 +55,14 @@ export const GLOB_BENCH_TESTS = [
 export const GLOB_E2E_TEST = `**/*.spec.${GLOB_SRC_EXT}`;
 
 // @keep-sorted
-export const GLOB_TESTS = [
+export const GLOB_TESTS: string[] = [
 	...GLOB_UNIT_TESTS,
 	...GLOB_BENCH_TESTS,
 	GLOB_E2E_TEST,
 ];
 
 // @keep-sorted
-export const GLOB_ALL_SRC = [
+export const GLOB_ALL_SRC: string[] = [
 	GLOB_HTML,
 	GLOB_JSON,
 	GLOB_JSON5,
@@ -75,7 +75,7 @@ export const GLOB_ALL_SRC = [
 	GLOB_YAML,
 ];
 
-export const GLOB_EXCLUDE = [
+export const GLOB_EXCLUDE: string[] = [
 	'**/node_modules',
 	'**/dist',
 	'**/package-lock.json',
@@ -101,7 +101,11 @@ export const GLOB_EXCLUDE = [
 	'**/.output',
 	'**/.vite-inspect',
 	'**/.yarn',
+	'**/.astro',
 	'**/vite.config.*.timestamp-*',
+
+	'**/Cargo.lock',
+	'**/target',
 
 	'**/CHANGELOG*.md',
 	'**/*.min.*',

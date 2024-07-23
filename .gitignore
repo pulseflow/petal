@@ -1,4 +1,4 @@
-packages/eslint-config/src/typegen.d.ts
+packages/eslint-config/src/types/typegen.d.ts
 packages/eslint-config/.eslint-config-inspector
 packages/eslint-config/_fixtures
 
@@ -230,10 +230,3 @@ dist
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/node,yarn,git,macos,visualstudiocode
-
-
-# petal generated files
-cjs/
-esm/
-types/
-build/

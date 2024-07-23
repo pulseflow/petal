@@ -32,6 +32,7 @@ export const parserPlain: Linter.FlatConfigParserModule = {
 /**
  * Combine array and non-array configs into a single array.
  *
+ * @param configs The configs to combine.
  * @returns A flatmap of all the `await`ed configs.
  * @public
  */
