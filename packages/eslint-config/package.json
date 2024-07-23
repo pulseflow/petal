@@ -162,7 +162,7 @@
 		"@eslint/config-inspector": "^0.5.2",
 		"@prettier/plugin-xml": "^3.4.1",
 		"@tanstack/eslint-plugin-query": "^5.51.12",
-		"@types/eslint": "^8.56.10",
+		"@types/eslint": "^9.6.0",
 		"@types/fs-extra": "^11.0.4",
 		"@types/prompts": "^2.4.9",
 		"@unocss/eslint-plugin": "^0.61.5",
