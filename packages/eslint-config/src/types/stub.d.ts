@@ -51,23 +51,6 @@ declare module 'eslint-plugin-markdown' {
 	export default { eslintPluginMarkdown };
 };
 
-// merged, awaiting next release
-declare module 'eslint-plugin-unicorn' {
-	import type { ESLint, Linter } from 'eslint';
-
-	const eslintPluginUnicorn: ESLint.Plugin & {
-		configs: {
-			'recommended': Linter.Config;
-			'all': Linter.Config;
-			'flat/all': Linter.FlatConfig;
-			'flat/recommended': Linter.FlatConfig;
-		};
-	};
-
-	export = eslintPluginUnicorn;
-	export default { eslintPluginUnicorn };
-};
-
 declare module 'eslint-plugin-unused-imports' {
 	import type { ESLint } from 'eslint';
 

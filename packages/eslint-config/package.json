@@ -145,7 +145,7 @@
 		"eslint-plugin-petal": "workspace:^",
 		"eslint-plugin-regexp": "^2.6.0",
 		"eslint-plugin-toml": "^0.11.1",
-		"eslint-plugin-unicorn": "^54.0.0",
+		"eslint-plugin-unicorn": "^55.0.0",
 		"eslint-plugin-unused-imports": "^4.0.1",
 		"eslint-plugin-vitest": "^0.5.4",
 		"eslint-plugin-yml": "^1.14.0",
@@ -187,7 +187,7 @@
 		"svelte": "^4.2.18",
 		"svelte-eslint-parser": "^0.41.0",
 		"typescript": "^5.5.4",
-		"vue": "^3.4.33",
+		"vue": "^3.4.34",
 		"vue-eslint-parser": "^9.4.3"
 	},
 	"publishConfig": {
