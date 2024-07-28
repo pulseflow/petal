@@ -1,7 +1,7 @@
 {
 	"name": "@flowr/petal-monorepo",
 	"type": "module",
-	"version": "3.10.1",
+	"version": "3.10.2",
 	"private": true,
 	"packageManager": "pnpm@9.6.0",
 	"engineStrict": true,
