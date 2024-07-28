@@ -4,7 +4,7 @@ declare module 'eslint-plugin-react-hooks' {
 
 	const eslintPluginReactHooks: ESLint.Plugin & {
 		configs: {
-			recommended: Linter.FlatConfig;
+			recommended: Linter.Config;
 		};
 	};
 
@@ -17,13 +17,13 @@ declare module 'eslint-plugin-vue' {
 
 	const eslintPluginVue: ESLint.Plugin & {
 		configs: {
-			'base': Linter.FlatConfig;
-			'essential': Linter.FlatConfig;
-			'strongly-recommended': Linter.FlatConfig;
-			'recommended': Linter.FlatConfig;
-			'vue3-essential': Linter.FlatConfig;
-			'vue3-strongly-recommended': Linter.FlatConfig;
-			'vue3-recommended': Linter.FlatConfig;
+			'base': Linter.Config;
+			'essential': Linter.Config;
+			'strongly-recommended': Linter.Config;
+			'recommended': Linter.Config;
+			'vue3-essential': Linter.Config;
+			'vue3-strongly-recommended': Linter.Config;
+			'vue3-recommended': Linter.Config;
 		};
 		processors: {
 			'.vue': Linter.Processor;
@@ -39,8 +39,8 @@ declare module 'eslint-plugin-markdown' {
 
 	const eslintPluginMarkdown: ESLint.Plugin & {
 		configs: {
-			'recommended': Linter.FlatConfig;
-			'recommended-legacy': Linter.Config;
+			'recommended': Linter.Config;
+			'recommended-legacy': Linter.LegacyConfig;
 		};
 		processors: {
 			markdown: Linter.Processor;
@@ -65,7 +65,7 @@ declare module '@eslint-community/eslint-plugin-eslint-comments' {
 
 	const eslintPluginESLintComments: ESLint.Plugin & {
 		configs: {
-			recommended: Linter.Config;
+			recommended: Linter.LegacyConfig;
 		};
 	};
 

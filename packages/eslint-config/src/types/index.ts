@@ -4,7 +4,7 @@ export type Awaitable<T> = T | Promise<T>;
 export type Rules = import('./typegen').RuleOptions;
 export type { ConfigNames } from './typegen';
 
-type InternalFlatConfig = import('eslint').Linter.FlatConfig<import('eslint').Linter.RulesRecord & Rules>;
+type InternalFlatConfig = import('eslint').Linter.Config<import('eslint').Linter.RulesRecord & Rules>;
 
 export type TypedFlatConfigItem = Omit<InternalFlatConfig, 'plugins'> & {
 	/**

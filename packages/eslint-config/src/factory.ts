@@ -71,7 +71,7 @@ export const defaultPluginRenaming: Record<string, string> = {
 };
 
 type FactoryOptions = OptionsConfig & TypedFlatConfigItem;
-type UserConfig = Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.FlatConfig[]>;
+type UserConfig = Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.Config[]>;
 type FactoryComposer = FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
 
 /**

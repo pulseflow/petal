@@ -8,7 +8,7 @@ import type { Rules } from './index';
  * A simple parser for use in AST-agnostic configs (i.e. markdown formatters, `eslint-plugin-format`)
  * @public
  */
-export const parserPlain: Linter.FlatConfigParserModule = {
+export const parserPlain: Linter.Parser = {
 	meta: {
 		name: 'parser-plain',
 	},
