@@ -39,7 +39,7 @@
 	"devDependencies": {
 		"@flowr/eslint-config": "workspace:^",
 		"@flowr/tsconfig": "workspace:^",
-		"@types/node": "^20.14.12",
+		"@types/node": "^22.0.0",
 		"bumpp": "^9.4.1",
 		"esbuild": "^0.23.0",
 		"eslint": "npm:eslint-ts-patch@9.5.0-0",
