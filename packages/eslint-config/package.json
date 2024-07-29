@@ -131,7 +131,7 @@
 		"@clack/prompts": "^0.7.0",
 		"@eslint-community/eslint-plugin-eslint-comments": "^4.3.0",
 		"@stylistic/eslint-plugin": "2.6.0-beta.1",
-		"@typescript-eslint/eslint-plugin": "8.0.0-alpha.41",
+		"@typescript-eslint/eslint-plugin": "8.0.0-alpha.54",
 		"@typescript-eslint/parser": "8.0.0-alpha.41",
 		"eslint-flat-config-utils": "^0.3.0",
 		"eslint-merge-processors": "^0.1.0",
