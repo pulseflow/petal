@@ -39,19 +39,19 @@
 	"devDependencies": {
 		"@flowr/eslint-config": "workspace:^",
 		"@flowr/tsconfig": "workspace:^",
-		"@types/node": "^20.14.12",
+		"@types/node": "^22.0.2",
 		"bumpp": "^9.4.1",
 		"esbuild": "^0.23.0",
-		"eslint": "npm:eslint-ts-patch@9.5.0-0",
-		"eslint-ts-patch": "9.5.0-0",
+		"eslint": "npm:eslint-ts-patch@9.8.0-1",
+		"eslint-ts-patch": "9.8.0-1",
 		"tsup": "^8.2.3",
-		"tsx": "~4.16.2",
+		"tsx": "~4.16.4",
 		"typescript": "^5.5.4",
 		"unbuild": "^2.0.0",
 		"vite": "^5.3.5",
-		"vitest": "^2.0.4"
+		"vitest": "^2.0.5"
 	},
 	"resolutions": {
-		"tsx": "~4.16.2"
+		"tsx": "~4.16.3"
 	}
 }

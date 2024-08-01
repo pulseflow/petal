@@ -154,7 +154,29 @@ local lspconfig = require('lspconfig')
 -- enable eslint for all supported languages
 lspconfig.eslint.setup({
     filetypes = {
-        "",
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
+        "vue",
+        "html",
+        "markdown",
+        "json",
+        "jsonc",
+        "yaml",
+        "toml",
+        "xml",
+        "gql",
+        "graphql",
+        "astro",
+        "svelte",
+        "css",
+        "less",
+        "scss",
+        "pcss",
+        "postcss"
     },
     settings = {
         -- silence the stylistic rules in neovim, but still autofix them

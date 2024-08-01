@@ -25,7 +25,8 @@
 			"types": "./dist/index.d.ts",
 			"import": "./dist/index.mjs",
 			"require": "./dist/index.cjs"
-		}
+		},
+		"./package.json": "./package.json"
 	},
 	"main": "./dist/index.mjs",
 	"module": "./dist/index.mjs",
@@ -56,8 +57,8 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "^9.6.0",
-		"@typescript-eslint/utils": "8.0.0-alpha.41",
-		"eslint": "9.5.0",
+		"@typescript-eslint/utils": "^8.0.0",
+		"eslint": "9.8.0",
 		"eslint-vitest-rule-tester": "^0.3.3",
 		"jsonc-eslint-parser": "^2.4.0"
 	},

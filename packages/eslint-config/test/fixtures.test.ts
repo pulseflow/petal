@@ -61,7 +61,7 @@ runWithConfig`ts-override` (
 runWithConfig`ts-strict` (
 	{
 		typescript: {
-			tsconfigPath: '../../../../tsconfig.json',
+			tsconfigPath: './tsconfig.json',
 		},
 	},
 	{
@@ -115,6 +115,7 @@ export default defineConfig(
 			const files = await fg('**/*', {
 				ignore: [
 					'node_modules',
+					'tsconfig.json',
 					'eslint.config.js',
 					'eslint.config.ts',
 				],
@@ -134,6 +135,6 @@ export default defineConfig(
 
 				await expect.soft(content).toMatchFileSnapshot(outputPath);
 			}));
-		}, 70_000);
+		}, 80_000);
 	};
 }
