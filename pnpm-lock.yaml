@@ -136,8 +136,8 @@ importers:
         specifier: ^17.10.1
         version: 17.10.1(eslint-ts-patch@9.8.0-1)
       eslint-plugin-perfectionist:
-        specifier: ^3.0.0
-        version: 3.0.0(astro-eslint-parser@1.0.2(typescript@5.5.4))(eslint-ts-patch@9.8.0-1)(svelte-eslint-parser@0.41.0(svelte@4.2.18))(svelte@4.2.18)(typescript@5.5.4)(vue-eslint-parser@9.4.3(eslint-ts-patch@9.8.0-1))
+        specifier: ^3.1.1
+        version: 3.1.1(astro-eslint-parser@1.0.2(typescript@5.5.4))(eslint-ts-patch@9.8.0-1)(svelte-eslint-parser@0.41.0(svelte@4.2.18))(svelte@4.2.18)(typescript@5.5.4)(vue-eslint-parser@9.4.3(eslint-ts-patch@9.8.0-1))
       eslint-plugin-petal:
         specifier: workspace:^
         version: link:../eslint-plugin
@@ -2183,8 +2183,8 @@ packages:
     peerDependencies:
       eslint: '>=8.23.0'
 
-  eslint-plugin-perfectionist@3.0.0:
-    resolution: {integrity: sha512-B+leJTo1YjxiNIm8Yv0rCHp4eWh9RaJHO6T1ifxd26wg8NCbEiWSdqZVeYLWPCI+zS1dlf89WpOkUzG7cE4vtQ==}
+  eslint-plugin-perfectionist@3.1.1:
+    resolution: {integrity: sha512-joaAPd2gVNV+Gm+xU6tqOxy9WlBcb/6TSCUaHLNSdhot/KcsyiKSzeTVToasrCPIxgqgGwcOy+AJaGaBhBwblw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
       astro-eslint-parser: ^1.0.2
@@ -4600,7 +4600,7 @@ snapshots:
     dependencies:
       '@types/eslint': 8.56.11
       '@types/estree': 1.0.5
-      '@typescript-eslint/types': 7.16.0
+      '@typescript-eslint/types': 7.18.0
       comment-parser: 1.4.1
       esquery: 1.6.0
       jsdoc-type-pratt-parser: 4.0.0
@@ -6582,10 +6582,10 @@ snapshots:
       minimatch: 9.0.5
       semver: 7.6.3
 
-  eslint-plugin-perfectionist@3.0.0(astro-eslint-parser@1.0.2(typescript@5.5.4))(eslint-ts-patch@9.8.0-1)(svelte-eslint-parser@0.41.0(svelte@4.2.18))(svelte@4.2.18)(typescript@5.5.4)(vue-eslint-parser@9.4.3(eslint-ts-patch@9.8.0-1)):
+  eslint-plugin-perfectionist@3.1.1(astro-eslint-parser@1.0.2(typescript@5.5.4))(eslint-ts-patch@9.8.0-1)(svelte-eslint-parser@0.41.0(svelte@4.2.18))(svelte@4.2.18)(typescript@5.5.4)(vue-eslint-parser@9.4.3(eslint-ts-patch@9.8.0-1)):
     dependencies:
-      '@typescript-eslint/types': 7.17.0
-      '@typescript-eslint/utils': 7.17.0(eslint-ts-patch@9.8.0-1)(typescript@5.5.4)
+      '@typescript-eslint/types': 8.0.0
+      '@typescript-eslint/utils': 8.0.0(eslint-ts-patch@9.8.0-1)(typescript@5.5.4)
       eslint: eslint-ts-patch@9.8.0-1
       minimatch: 10.0.1
       natural-compare-lite: 1.4.0
