@@ -1,7 +1,7 @@
 {
 	"name": "@flowr/console",
 	"type": "module",
-	"version": "3.10.5",
+	"version": "3.11.0",
 	"description": "Opinionated logger and console utilities for Petal",
 	"author": "Petal Contributors",
 	"license": "MIT",
