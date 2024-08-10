@@ -1,7 +1,7 @@
 {
 	"name": "eslint-plugin-petal",
 	"type": "module",
-	"version": "3.11.0",
+	"version": "3.11.1",
 	"description": "Custom ESLint rules for the Petal specification",
 	"author": "Petal Contributors",
 	"license": "MIT",
