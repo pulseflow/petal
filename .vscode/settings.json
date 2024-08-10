@@ -1,11 +1,4 @@
 {
-	"search.exclude": {
-		"**/node_modules": true,
-		"**/bower_components": true,
-		"**/*.code-search": true,
-		"**/.ruby-lsp": true,
-		"pnpm-lock.yaml": true
-	},
 	// Disable the default formatter
 	"prettier.enable": false,
 	"editor.formatOnSave": false,
@@ -14,8 +7,6 @@
 		"source.fixAll.eslint": "explicit",
 		"source.organizeImports": "never"
 	},
-	"eslint.runtime": "node",
-	"eslint.useFlatConfig": true,
 	// Silent the stylistic rules in you IDE, but still auto fix them
 	"eslint.rules.customizations": [
 		{ "rule": "style/*", "severity": "off", "fixable": true },
@@ -40,8 +31,20 @@
 		"json",
 		"jsonc",
 		"yaml",
-		"xml",
 		"astro",
-		"toml"
-	]
+		"toml",
+		"graphql",
+		"gql",
+		"xml",
+		"css",
+		"less",
+		"scss",
+		"pcss",
+		"postcss"
+	],
+
+	"eslint.runtime": "node",
+	"eslint.options": {
+		"flags": ["unstable_ts_config"]
+	}
 }

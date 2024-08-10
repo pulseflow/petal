@@ -1,9 +1,0 @@
-[workspace]
-resolver = "2"
-members = []
-
-[workspace.dependencies]
-
-[workspace.metadata]
-
-[workspace.package]
