@@ -334,18 +334,16 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
 	typescript?: boolean | OptionsTypeScriptWithTypes | OptionsTypeScriptParserOptions;
 
 	/**
-	 * Enable JSX related rules.
-	 *
-	 * Currently only stylistic rules are included.
+	 * Enable JSX related rules. Currently only stylistic rules are included.
 	 *
 	 * @default true
 	 */
 	jsx?: boolean;
 
 	/**
-	 * Enable test support.
+	 * Enable Vitest support.
 	 *
-	 * @see https://github.com/veritem/eslint-plugin-vitest
+	 * @see https://github.com/vitest-dev/eslint-plugin-vitest
 	 * @default true
 	 */
 	test?: boolean | OptionsOverrides;
@@ -446,7 +444,7 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
 	 *
 	 * For formatting Markdown content, enable also `formatters.markdown`
 	 *
-	 * @see https://github.com/eslint/eslint-plugin-markdown
+	 * @see https://github.com/eslint/markdown
 	 * @default true
 	 */
 	markdown?: boolean | OptionsOverrides;

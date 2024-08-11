@@ -325,14 +325,14 @@ check out the [configs][configs] and [factory][factory] for more details.
 
 since [flat config][eslint-flat] allows us to explicitly provide the plugin names (rather than the mandatory convention derived from the npm package name), we renamed some plugins to make the overall scope more consistent and easier to write:
 
-| New Prefix   | Original Prefix         | Source Plugin                       |
-| ------------ | ----------------------- | ----------------------------------- |
+| New Prefix   | Original Prefix         | Source Plugin                         |
+| ------------ | ----------------------- | ------------------------------------- |
 | `import/*`   | `i/*`                   | [`eslint-plugin-import-x`]            |
 | `node/*`     | `n/*`                   | [`eslint-plugin-n`]                   |
 | `yaml/*`     | `yml/*`                 | [`eslint-plugin-yml`]                 |
 | `ts/*`       | `@typescript-eslint/*`  | [`@typescript-eslint/eslint-plugin`]  |
 | `style/*`    | `@stylistic/*`          | [`@stylistic/eslint-plugin`]          |
-| `test/*`     | `vitest/*`              | [`eslint-plugin-vitest`]              |
+| `test/*`     | `vitest/*`              | [`@vitest/eslint-plugin`]             |
 | `vue-a11y/*` | `vuejs-accessibility/*` | [`eslint-plugin-vuejs-accessibility`] |
 
 when you want to override rules, or disable them inline, you need to update to the new prefix (unfortunately the vscode eslint extension doesn't automatically rewrite this):
@@ -729,9 +729,9 @@ export default defineConfig({
 [`eslint-plugin-yml`]: https://github.com/ota-meshi/eslint-plugin-yml
 [`@typescript-eslint/eslint-plugin`]: https://github.com/typescript-eslint/typescript-eslint
 [`@stylistic/eslint-plugin`]: https://github.com/eslint-stylistic/eslint-stylistic
-[`eslint-plugin-vitest`]: https://github.com/veritem/eslint-plugin-vitest
+[`@vitest/eslint-plugin`]: https://github.com/vitest-dev/eslint-plugin-vitest
 [`eslint-plugin-vuejs-accessibility`]: https://github.com/vue-a11y/eslint-plugin-vuejs-accessibility
 [`eslint-plugin-command`]: https://github.com/antfu/eslint-plugin-command
 [`@eslint/config-inspector`]: https://github.com/eslint/config-inspector
-[`unused-imports/no-unused-imports`]: https://www.npmjs.com/package/eslint-plugin-unused-imports
+[`unused-imports/no-unused-imports`]: https://github.com/sweepline/eslint-plugin-unused-imports
 [`petal/no-only-tests`]: ../eslint-plugin/src/rules/no-only-tests.md

@@ -12,6 +12,7 @@ declare module 'eslint-plugin-react-hooks' {
 	export default { eslintPluginReactHooks };
 };
 
+// fixed in v10
 declare module 'eslint-plugin-vue' {
 	import type { ESLint, Linter } from 'eslint';
 
@@ -34,6 +35,7 @@ declare module 'eslint-plugin-vue' {
 	export default { eslintPluginVue };
 };
 
+// fixed when `@eslint/markdown` releases
 declare module 'eslint-plugin-markdown' {
 	import type { ESLint, Linter } from 'eslint';
 
@@ -49,15 +51,6 @@ declare module 'eslint-plugin-markdown' {
 
 	export = eslintPluginMarkdown;
 	export default { eslintPluginMarkdown };
-};
-
-declare module 'eslint-plugin-unused-imports' {
-	import type { ESLint } from 'eslint';
-
-	const eslintPluginUnusedImports: ESLint.Plugin;
-
-	export = eslintPluginUnusedImports;
-	export default { eslintPluginUnusedImports };
 };
 
 declare module '@eslint-community/eslint-plugin-eslint-comments' {

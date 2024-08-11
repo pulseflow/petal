@@ -10,7 +10,7 @@ export async function test(options: OptionsOverrides & OptionsFiles = {}): Promi
 	const { files = GLOB_TESTS, overrides = {} } = options;
 
 	const [pluginTest, pluginPetal] = await Promise.all([
-		interopDefault(import('eslint-plugin-vitest')),
+		interopDefault(import('@vitest/eslint-plugin')),
 		interopDefault(import('eslint-plugin-petal')),
 	] as const);
 
