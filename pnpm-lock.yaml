@@ -109,8 +109,8 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4)
       '@vitest/eslint-plugin':
-        specifier: ^1.0.0
-        version: 1.0.0(@typescript-eslint/utils@8.0.1(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.2.0))
+        specifier: ^1.0.1
+        version: 1.0.1(@typescript-eslint/utils@8.0.1(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.2.0))
       eslint-flat-config-utils:
         specifier: ^0.3.0
         version: 0.3.0
@@ -1468,10 +1468,10 @@ packages:
     resolution: {integrity: sha512-jgOym3WyWXAWyjkrtIZurkl87XuWAwhN8mul8V4mokpFMB5y6VMlatCYql/dD0tIyZuFJujxfWvUkizqyE84aQ==}
     engines: {node: '>=14'}
 
-  '@vitest/eslint-plugin@1.0.0':
-    resolution: {integrity: sha512-YQSFGYrD+eAa2QqdL8v4WAG3yYhcfW3LGlPdNRcjbF1etX0xUfI4isE+U+tYjQuVVzHG4KccRg1F8UuveFVdfg==}
+  '@vitest/eslint-plugin@1.0.1':
+    resolution: {integrity: sha512-albpL56cL9XMwHJWCWZqjDxkuDkBXBF3WpPGOv6q2WA3cipCP41cKEwfSGktoRNGmPN77wuX452O8pM+z+ApNw==}
     peerDependencies:
-      '@typescript-eslint/utils': '>= 7.8 || 8.0.0'
+      '@typescript-eslint/utils': '>= 8.0'
       eslint: '>= 8.57.0'
       typescript: '>= 5.0.0'
       vitest: '*'
@@ -5531,7 +5531,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@vitest/eslint-plugin@1.0.0(@typescript-eslint/utils@8.0.1(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.2.0))':
+  '@vitest/eslint-plugin@1.0.1(@typescript-eslint/utils@8.0.1(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.2.0))':
     dependencies:
       eslint: 9.9.0(jiti@1.21.6)
     optionalDependencies:
