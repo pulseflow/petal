@@ -20,6 +20,7 @@ import {
 	query,
 	react,
 	regexp,
+	schema,
 	solid,
 	sortPackageJson,
 	sortTsConfig,
@@ -64,6 +65,7 @@ export const defaultPluginRenaming: Record<string, string> = {
 	'@stylistic': 'style',
 	'@typescript-eslint': 'ts',
 	'import-x': 'import',
+	'json-schema-validator': 'schema',
 	'n': 'node',
 	'vitest': 'test',
 	'vuejs-accessibility': 'vue-a11y',
@@ -117,24 +119,15 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 	const typescriptOptions = resolveSubOptions(options, 'typescript');
 	const tsconfigPath = 'tsconfigPath' in typescriptOptions ? typescriptOptions.tsconfigPath : undefined;
 
-	configs.push(
-		ignores(),
-		javascript({
-			isInEditor,
-			overrides: getOverrides(options, 'javascript'),
-		}),
-		comments(),
-		node(),
-		jsdoc({
-			stylistic: stylisticOptions,
-		}),
-		imports({
-			stylistic: stylisticOptions,
-		}),
-		unicorn(),
-		command(),
-		perfectionist(),
-	);
+	configs.push(ignores());
+	configs.push(javascript({ isInEditor, overrides: getOverrides(options, 'javascript') }));
+	configs.push(comments());
+	configs.push(node());
+	configs.push(jsdoc({ stylistic: stylisticOptions }));
+	configs.push(imports({ stylistic: stylisticOptions }));
+	configs.push(unicorn());
+	configs.push(command());
+	configs.push(perfectionist());
 
 	if (enableVue)
 		componentExts.push('vue');
@@ -227,6 +220,11 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 			stylistic: stylisticOptions,
 		}));
 
+	if (options.schema ?? true)
+		configs.push(schema({
+			overrides: getOverrides(options, 'schema'),
+		}));
+
 	if (options.markdown ?? true)
 		configs.push(markdown({
 			componentExts,
@@ -239,16 +237,18 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 			typeof stylisticOptions === 'boolean' ? {} : stylisticOptions,
 		));
 
-	const fusedConfig = flatConfigProps.reduce((acc, key) => {
+	const fusedConfig = flatConfigProps.reduce((curr, key) => {
 		if (key in options)
-			acc[key] = options[key] as any;
-		return acc;
+			curr[key] = options[key] as any;
+		return curr;
 	}, {} as TypedFlatConfigItem);
 
 	if (Object.keys(fusedConfig).length)
 		configs.push([fusedConfig]);
-	let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>();
-	composer = composer.append(...configs, ...userConfigs as any);
+
+	let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
+		.append(...configs, ...userConfigs as any);
+
 	if (autoRenamePlugins)
 		composer = composer.renamePlugins(defaultPluginRenaming);
 

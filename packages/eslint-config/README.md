@@ -7,12 +7,12 @@
 - designed to work with typescript, jsx, json, yaml, toml, markdown, etc. out of the box
 - optional [react](#react), [unocss](#unocss), [solid](#solid), [astro](#astro), [vue](#vue) and [svelte](#svelte) support
 - optional [formatter](#formatters) support for css, html, xml, graphql, etc.
-- easily composable [eslint flat config][eslint-flat]
+- easily composable [eslint flat config]
 - respects `.gitignore` by default, without the need for `.eslintignore`
 - **petal specification**: minimal, stable, consistent code and diffs
   - sorted imports, dangling commas
   - single quotes, semicolons
-  - uses [eslint stylistic][stylistic]
+  - uses eslint [stylistic]
 - supports eslint v9 or v8.50.0+
 
 ## usage
@@ -81,7 +81,7 @@ export default defineConfig(
 
 ### vscode support
 
-install the [vscode eslint extension][vscode] and add the following settings to your `.vscode/settings.json`:
+install the [vscode eslint extension] and add the following settings to your `.vscode/settings.json`:
 
 ```jsonc
 {
@@ -200,7 +200,7 @@ there are some preexisting libraries for eslint nvim support as well, which you 
 
 ## customization
 
-we use [eslint's flat config feature][eslint-flat]. it provides much better orginzation and composition. normally you only need to import and use the `petal` preset:
+we use [eslint flat config]. it provides much better orginzation and composition. normally you only need to import and use the `petal` preset:
 
 ```js
 // eslint.config.js
@@ -319,21 +319,22 @@ export default combine(
 
 </details>
 
-check out the [configs][configs] and [factory][factory] for more details.
+check out the [configs] and [factory] for more details.
 
 ### plugins remaining
 
-since [flat config][eslint-flat] allows us to explicitly provide the plugin names (rather than the mandatory convention derived from the npm package name), we renamed some plugins to make the overall scope more consistent and easier to write:
+since [eslint flat config] allows us to explicitly provide the plugin names (rather than the mandatory convention derived from the npm package name), we renamed some plugins to make the overall scope more consistent and easier to write:
 
-| New Prefix   | Original Prefix         | Source Plugin                         |
-| ------------ | ----------------------- | ------------------------------------- |
-| `import/*`   | `i/*`                   | [`eslint-plugin-import-x`]            |
-| `node/*`     | `n/*`                   | [`eslint-plugin-n`]                   |
-| `yaml/*`     | `yml/*`                 | [`eslint-plugin-yml`]                 |
-| `ts/*`       | `@typescript-eslint/*`  | [`@typescript-eslint/eslint-plugin`]  |
-| `style/*`    | `@stylistic/*`          | [`@stylistic/eslint-plugin`]          |
-| `test/*`     | `vitest/*`              | [`@vitest/eslint-plugin`]             |
-| `vue-a11y/*` | `vuejs-accessibility/*` | [`eslint-plugin-vuejs-accessibility`] |
+| New Prefix   | Original Prefix         | Source Plugin                           |
+| ------------ | ----------------------- | --------------------------------------- |
+| `import/*`   | `i/*`                   | [`eslint-plugin-import-x`]              |
+| `node/*`     | `n/*`                   | [`eslint-plugin-n`]                     |
+| `yaml/*`     | `yml/*`                 | [`eslint-plugin-yml`]                   |
+| `ts/*`       | `@typescript-eslint/*`  | [`@typescript-eslint/eslint-plugin`]    |
+| `style/*`    | `@stylistic/*`          | [`@stylistic/eslint-plugin`]            |
+| `test/*`     | `vitest/*`              | [`@vitest/eslint-plugin`]               |
+| `vue-a11y/*` | `vuejs-accessibility/*` | [`eslint-plugin-vuejs-accessibility`]   |
+| `schema/*`   | `json-schema-validator` | [`eslint-plugin-json-schema-validator`] |
 
 when you want to override rules, or disable them inline, you need to update to the new prefix (unfortunately the vscode eslint extension doesn't automatically rewrite this):
 
@@ -629,7 +630,7 @@ the command comments are one-off and removed with the codemod transformation.
 
 ### type aware rules
 
-configuration for [type aware rules][type-aware] can be enabled by passing the options object to the `typescript` configuration:
+configuration for [type aware rules] can be enabled by passing the options object to the `typescript` configuration:
 
 ```js
 // eslint.config.js
@@ -715,10 +716,10 @@ export default defineConfig({
 
 [configs]: https://github.com/pulseflow/petal/blob/main/packages/eslint-config/src/configs
 [factory]: https://github.com/pulseflow/petal/blob/main/packages/eslint-config/src/factory.ts
-[eslint-flat]: https://eslint.org/docs/latest/use/configure/configuration-files
+[eslint flat config]: https://eslint.org/docs/latest/use/configure/configuration-files
 [stylistic]: https://github.com/eslint-stylistic/eslint-stylistic
-[vscode]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
-[type-aware]: https://typescript-eslint.io/getting-started/typed-linting/
+[vscode eslint extension]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+[type aware rules]: https://typescript-eslint.io/getting-started/typed-linting/
 [semantic versioning]: https://semver.org/
 [`dprint`]: https://dprint.dev/
 [`stylelint`]: https://stylelint.io/
@@ -733,5 +734,6 @@ export default defineConfig({
 [`eslint-plugin-vuejs-accessibility`]: https://github.com/vue-a11y/eslint-plugin-vuejs-accessibility
 [`eslint-plugin-command`]: https://github.com/antfu/eslint-plugin-command
 [`@eslint/config-inspector`]: https://github.com/eslint/config-inspector
+[`eslint-plugin-json-schema-validator`]: https://github.com/ota-meshi/eslint-plugin-json-schema-validator
 [`unused-imports/no-unused-imports`]: https://github.com/sweepline/eslint-plugin-unused-imports
 [`petal/no-only-tests`]: ../eslint-plugin/src/rules/no-only-tests.md

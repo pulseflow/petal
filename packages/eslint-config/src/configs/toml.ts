@@ -4,7 +4,7 @@ import { interopDefault } from '../utils';
 
 export async function toml(options: OptionsOverrides & OptionsStylistic & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_TOML], overrides = {}, stylistic = true } = options;
-	const { indent = 2 } = typeof stylistic === 'boolean' ? {} : stylistic;
+	const { indent = 'tab' } = typeof stylistic === 'boolean' ? {} : stylistic;
 
 	const [pluginToml, parserToml] = await Promise.all([
 		interopDefault(import('eslint-plugin-toml')),
@@ -29,6 +29,7 @@ export async function toml(options: OptionsOverrides & OptionsStylistic & Option
 
 				'toml/comma-style': 'error',
 				'toml/keys-order': 'error',
+				'toml/no-mixed-type-in-array': 'error',
 				'toml/no-space-dots': 'error',
 				'toml/no-unreadable-number-separator': 'error',
 				'toml/precision-of-fractional-seconds': 'error',
@@ -41,8 +42,8 @@ export async function toml(options: OptionsOverrides & OptionsStylistic & Option
 					? {
 							'toml/array-bracket-newline': 'error',
 							'toml/array-bracket-spacing': 'error',
-							'toml/array-element-newline': 'error',
-							'toml/indent': ['error', indent === 'tab' ? 2 : indent],
+							'toml/array-element-newline': ['error', { minItems: 4 }],
+							'toml/indent': ['error', indent],
 							'toml/inline-table-curly-spacing': 'error',
 							'toml/key-spacing': 'error',
 							'toml/padding-line-between-pairs': 'error',

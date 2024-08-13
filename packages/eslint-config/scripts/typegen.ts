@@ -16,6 +16,7 @@ import {
 	query,
 	react,
 	regexp,
+	schema,
 	solid,
 	sortPackageJson,
 	stylistic,
@@ -57,6 +58,7 @@ const configs = await combine(
 	svelte(),
 	test(),
 	toml(),
+	schema(),
 	regexp(),
 	typescript(),
 	unicorn(),
@@ -65,13 +67,12 @@ const configs = await combine(
 	yaml(),
 );
 
-const configNames = configs.map(c => c.name).filter(Boolean) as readonly string[];
-const _dts = await flatConfigsToRulesDTS(configs, { includeAugmentation: false });
+const ConfigNames = configs.map(c => c.name).filter(Boolean).map(i => `'${i}'`).join(' | ');
+const rulesDTS = await flatConfigsToRulesDTS(configs, { includeAugmentation: false });
 
-const dts = `${_dts}
-
+const configNames = `
 // ----- petal/provider/configNames -----
-export type ConfigNames = ${configNames.map(i => `'${i}'`).join(' | ')};
+export type ConfigNames = ${ConfigNames};
 `;
 
-await writeFile('src/types/typegen.d.ts', dts);
+await writeFile('src/types/typegen.d.ts', `${rulesDTS}\n${configNames}`);

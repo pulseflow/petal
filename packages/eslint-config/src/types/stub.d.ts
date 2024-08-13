@@ -12,7 +12,7 @@ declare module 'eslint-plugin-react-hooks' {
 	export default { eslintPluginReactHooks };
 };
 
-// fixed in v10
+// fixed whenever i make the pr
 declare module 'eslint-plugin-vue' {
 	import type { ESLint, Linter } from 'eslint';
 
@@ -53,6 +53,7 @@ declare module 'eslint-plugin-markdown' {
 	export default { eslintPluginMarkdown };
 };
 
+// fixed in
 declare module '@eslint-community/eslint-plugin-eslint-comments' {
 	import type { ESLint, Linter } from 'eslint';
 

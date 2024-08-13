@@ -440,6 +440,17 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
 	toml?: boolean | OptionsOverrides;
 
 	/**
+	 * Enable JSON schema validation support.
+	 *
+	 * Requires installing:
+	 * - `eslint-plugin-json-schema-validator`
+	 *
+	 * @see https://ota-meshi.github.io/eslint-plugin-json-schema-validator/
+	 * @default false
+	 */
+	schema?: boolean | OptionsOverrides;
+
+	/**
 	 * Enable linting for **code snippets** in Markdown.
 	 *
 	 * For formatting Markdown content, enable also `formatters.markdown`
