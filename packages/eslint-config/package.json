@@ -132,10 +132,10 @@
 		}
 	},
 	"dependencies": {
-		"@antfu/install-pkg": "^0.3.4",
+		"@antfu/install-pkg": "^0.3.5",
 		"@clack/prompts": "^0.7.0",
-		"@eslint-community/eslint-plugin-eslint-comments": "^4.3.0",
-		"@stylistic/eslint-plugin": "^2.6.2",
+		"@eslint-community/eslint-plugin-eslint-comments": "^4.4.0",
+		"@stylistic/eslint-plugin": "^2.6.3",
 		"@typescript-eslint/eslint-plugin": "^8.1.0",
 		"@typescript-eslint/parser": "^8.1.0",
 		"@vitest/eslint-plugin": "^1.0.3",
@@ -164,14 +164,14 @@
 	},
 	"devDependencies": {
 		"@eslint-react/eslint-plugin": "^1.10.1",
-		"@eslint/config-inspector": "^0.5.2",
+		"@eslint/config-inspector": "^0.5.3",
 		"@prettier/plugin-xml": "^3.4.1",
 		"@tanstack/eslint-plugin-query": "^5.51.15",
 		"@types/eslint": "^9.6.0",
 		"@types/eslint-plugin-jsx-a11y": "^6.9.0",
 		"@types/fs-extra": "^11.0.4",
 		"@types/prompts": "^2.4.9",
-		"@unocss/eslint-plugin": "^0.62.1",
+		"@unocss/eslint-plugin": "^0.62.2",
 		"astro-eslint-parser": "^1.0.2",
 		"eslint": "^9.9.0",
 		"eslint-plugin-astro": "^1.2.3",
@@ -194,7 +194,7 @@
 		"svelte": "^4.2.18",
 		"svelte-eslint-parser": "^0.41.0",
 		"typescript": "^5.5.4",
-		"vue": "^3.4.37",
+		"vue": "^3.4.38",
 		"vue-eslint-parser": "^9.4.3"
 	},
 	"publishConfig": {

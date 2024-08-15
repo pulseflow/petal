@@ -220,7 +220,7 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 			stylistic: stylisticOptions,
 		}));
 
-	if (options.schema ?? true)
+	if (options.schema ?? false)
 		configs.push(schema({
 			overrides: getOverrides(options, 'schema'),
 		}));
