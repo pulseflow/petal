@@ -95,8 +95,8 @@ export async function typescript(
 		},
 		...isTypeAware
 			? [
+					makeParser(false, files),
 					makeParser(true, filesTypeAware, ignoresTypeAware),
-					makeParser(false, files, filesTypeAware),
 				]
 			: [
 					makeParser(false, files),

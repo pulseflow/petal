@@ -1,6 +1,6 @@
 import { isPackageExists } from 'local-pkg';
 import { GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_GRAPHQL, GLOB_HTML, GLOB_LESS, GLOB_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_XML } from '../globs';
-import { ensurePackages, interopDefault, parserPlain } from '../utils';
+import { ensurePackages, interopDefault, isPackageInScope, parserPlain } from '../utils';
 import type { OptionsFormatters, StylisticConfig, TypedFlatConfigItem, VendoredPrettierOptions } from '../types';
 import { StylisticConfigDefaults } from './stylistic';
 
@@ -9,13 +9,13 @@ type VendoredPrettierXMLOptions = Pick<VendoredPrettierOptions, 'xmlQuoteAttribu
 export async function formatters(options: OptionsFormatters | true = {}, stylistic: StylisticConfig = {}): Promise<TypedFlatConfigItem[]> {
 	if (options === true)
 		options = {
-			astro: isPackageExists('prettier-plugin-astro'),
+			astro: isPackageInScope('prettier-plugin-astro'),
 			css: true,
 			graphql: true,
 			html: true,
 			markdown: true,
 			slidev: isPackageExists('@slidev/cli'),
-			xml: isPackageExists('@prettier/plugin-xml'),
+			xml: isPackageInScope('@prettier/plugin-xml'),
 		};
 
 	await ensurePackages([

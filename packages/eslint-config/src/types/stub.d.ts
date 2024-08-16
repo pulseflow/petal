@@ -1,4 +1,4 @@
-// https://github.com/facebook/react/issues/28313
+// https://github.com/facebook/react/issues/30119
 declare module 'eslint-plugin-react-hooks' {
 	import type { ESLint, Linter } from 'eslint';
 

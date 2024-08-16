@@ -1,8 +1,12 @@
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 import { isPackageExists } from 'local-pkg';
 import type { Linter } from 'eslint';
 import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from './types';
 import type { Rules } from './index';
+
+const scopeUrl = fileURLToPath(new URL('.', import.meta.url));
+const isCwdInScope = isPackageExists('@flowr/eslint-config');
 
 /**
  * A simple parser for use in AST-agnostic configs (i.e. markdown formatters, `eslint-plugin-format`)
@@ -153,6 +157,8 @@ export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { de
 	return (resolved as any).default ?? resolved;
 }
 
+export const isPackageInScope = (name: string): boolean => isPackageExists(name, { paths: [scopeUrl] });
+
 /**
  * Ensures an array of ESLint plugin and package names exist using `local-pkg`.
  *
@@ -172,10 +178,10 @@ export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { de
  * ```
  */
 export async function ensurePackages(packages: (string | undefined)[]): Promise<void> {
-	if (process.env.CI || process.stdout.isTTY === false)
+	if (process.env.CI || process.stdout.isTTY === false || isCwdInScope === false)
 		return;
 
-	const nonExistingPackages = packages.filter(i => i && !isPackageExists(i)) as string[];
+	const nonExistingPackages = packages.filter(i => i && !isPackageInScope(i)) as string[];
 
 	if (nonExistingPackages.length === 0)
 		return;

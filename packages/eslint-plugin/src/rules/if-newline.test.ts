@@ -2,10 +2,10 @@ import { run } from './_test';
 import rule, { RULE_NAME } from './if-newline';
 
 const valids = [
-  `if (true)
+	`if (true)
   console.log('hello')
 `,
-  `if (true) {
+	`if (true) {
   console.log('hello')
 }`,
 ];
