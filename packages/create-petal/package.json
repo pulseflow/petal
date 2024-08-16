@@ -1,7 +1,7 @@
 {
 	"name": "create-petal",
 	"type": "module",
-	"version": "3.11.6",
+	"version": "3.12.0",
 	"description": "A CLI utility to create a new petal app",
 	"author": "Petal Contributors",
 	"license": "MIT",
