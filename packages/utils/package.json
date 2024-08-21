@@ -1,7 +1,7 @@
 {
 	"name": "@flowr/utils",
 	"type": "module",
-	"version": "3.12.1",
+	"version": "3.13.0",
 	"description": "Opinionated collection of common TypeScript utilities",
 	"author": "Petal Contributors",
 	"license": "MIT",
