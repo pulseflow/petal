@@ -89,7 +89,6 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 		autoRenamePlugins = true,
 		componentExts = [],
 		gitignore: enableGitignore = true,
-		isInEditor = isInEditorEnv(),
 		jsx: enableJsx = true,
 		query: enableQuery = QUERY_PACKAGES.some(pkgSort),
 		react: enableReact = REACT_PACKAGES.some(pkgSort),
@@ -100,6 +99,14 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 		unocss: enableUnoCSS = false,
 		vue: enableVue = VUE_PACKAGES.some(pkgSort),
 	} = options;
+
+	let isInEditor = options.isInEditor;
+	if (isInEditor == null) {
+		isInEditor = isInEditorEnv();
+		if (isInEditor)
+			// eslint-disable-next-line no-console -- debug editor message
+			console.log('[@flowr/eslint-config]: running in editor - some rules ar disabled');
+	}
 
 	const stylisticOptions = options.stylistic === false
 		? false

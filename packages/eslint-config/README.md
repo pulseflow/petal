@@ -647,7 +647,7 @@ export default defineConfig({
 
 certain rules are disabled when inside [eslint ide integrations](#ide-integration), namely [`unused-imports/no-unused-imports`] and [`petal/no-only-tests`].
 
-this is to prevent unused imports and temporary patches from getting removed by the ide during refactoring. those rules are applied when eslint is ran in the terminal. you can disable this behavior using:
+this is to prevent unused imports and temporary patches from getting removed by the ide during refactoring. those rules are applied when eslint is ran in the terminal. you can disable this behavior by manually setting `isInEditor`:
 
 ```js
 // eslint.config.js
@@ -660,7 +660,7 @@ export default defineConfig({
 
 ## config inspector
 
-eslint has a visual tool to help view what rules are enabled in a project and which files they are applied to, [`@eslint/config-inspector`]. go to the project root that contains a `eslint.config.js` file and run:
+eslint has a visual tool to help view what rules are enabled in a project and which files they are applied to, [`@eslint/config-inspector`]. go to the project root that contains a `eslint.config` file and run:
 
 ```bash
 pnpm dlx @eslint/config-inspector
