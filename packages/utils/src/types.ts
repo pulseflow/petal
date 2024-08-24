@@ -126,7 +126,9 @@ export interface MethodDictInf<T> extends Dict<MethodDictInf<T>> { (): T }
 export interface ReadonlyMap<T extends Record<string, any>> {
 	forEach: (
 		callbackfn: <K extends keyof T>(
-			value: T[K], key: K, map: this
+			value: T[K],
+			key: K,
+			map: this
 		) => void,
 		thisArg?: any,
 	) => void;

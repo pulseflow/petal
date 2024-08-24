@@ -220,6 +220,13 @@ export interface OptionsTypeScriptWithTypes extends OptionsOverrides {
 	 * @default undefined
 	 */
 	tsconfigPath?: string | string[];
+
+	/**
+	 * Type-aware verrides for TypeScript.
+	 *
+	 * @default {} the default ruleset, with the overrides being applied last
+	 */
+	overridesTypeAware?: TypedFlatConfigItem['rules'];
 }
 
 export interface OptionsHasTypeScript {

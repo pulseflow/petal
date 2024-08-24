@@ -7,24 +7,25 @@ export const RULE_NAME = 'consistent-list-newline';
 export type MessageIds = 'shouldWrap' | 'shouldNotWrap';
 export type Options = [{
 	ArrayExpression?: boolean;
+	ArrayPattern?: boolean;
 	ArrowFunctionExpression?: boolean;
 	CallExpression?: boolean;
 	ExportNamedDeclaration?: boolean;
 	FunctionDeclaration?: boolean;
 	FunctionExpression?: boolean;
 	ImportDeclaration?: boolean;
+	JSONObjectExpression?: boolean;
+	JSXOpeningElement?: boolean;
+	JSONArrayExpression?: boolean;
 	NewExpression?: boolean;
 	ObjectExpression?: boolean;
+	ObjectPattern?: boolean;
+	TSFunctionType?: boolean;
 	TSInterfaceDeclaration?: boolean;
 	TSTupleType?: boolean;
 	TSTypeLiteral?: boolean;
 	TSTypeParameterDeclaration?: boolean;
 	TSTypeParameterInstantiation?: boolean;
-	ObjectPattern?: boolean;
-	ArrayPattern?: boolean;
-	JSXOpeningElement?: boolean;
-	JSONArrayExpression?: boolean;
-	JSONObjectExpression?: boolean;
 }];
 
 export default createEslintRule<Options, MessageIds>({
@@ -39,24 +40,25 @@ export default createEslintRule<Options, MessageIds>({
 			type: 'object',
 			properties: {
 				ArrayExpression: { type: 'boolean' },
+				ArrayPattern: { type: 'boolean' },
 				ArrowFunctionExpression: { type: 'boolean' },
 				CallExpression: { type: 'boolean' },
 				ExportNamedDeclaration: { type: 'boolean' },
 				FunctionDeclaration: { type: 'boolean' },
 				FunctionExpression: { type: 'boolean' },
 				ImportDeclaration: { type: 'boolean' },
+				JSONArrayExpression: { type: 'boolean' },
+				JSONObjectExpression: { type: 'boolean' },
+				JSXOpeningElement: { type: 'boolean' },
 				NewExpression: { type: 'boolean' },
 				ObjectExpression: { type: 'boolean' },
+				ObjectPattern: { type: 'boolean' },
+				TSFunctionType: { type: 'boolean' },
 				TSInterfaceDeclaration: { type: 'boolean' },
 				TSTupleType: { type: 'boolean' },
 				TSTypeLiteral: { type: 'boolean' },
 				TSTypeParameterDeclaration: { type: 'boolean' },
 				TSTypeParameterInstantiation: { type: 'boolean' },
-				ObjectPattern: { type: 'boolean' },
-				ArrayPattern: { type: 'boolean' },
-				JSXOpeningElement: { type: 'boolean' },
-				JSONArrayExpression: { type: 'boolean' },
-				JSONObjectExpression: { type: 'boolean' },
 			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
 			additionalProperties: false,
 		}],
@@ -187,7 +189,7 @@ export default createEslintRule<Options, MessageIds>({
 				});
 			}
 			else if (mode === 'inline' && endLoc.line !== lastLine) {
-				// If there is only one multiline item, we allow the closing bracket to be on the a different line
+				// if there is only one multiline item, we allow the closing bracket to be on the a different line
 				if (items.length === 1 && items[0].loc.start.line !== items[1]?.loc.start.line)
 					return;
 				if (context.sourceCode.getCommentsAfter(lastItem).length > 0)
@@ -210,37 +212,12 @@ export default createEslintRule<Options, MessageIds>({
 		}
 
 		const listenser = {
-			ObjectExpression: (node) => {
-				check(node, node.properties);
-			},
-			ArrayExpression: (node) => {
-				check(node, node.elements);
-			},
-			ImportDeclaration: (node) => {
-				check(
-					node,
-					node.specifiers[0]?.type === 'ImportDefaultSpecifier'
-						? node.specifiers.slice(1)
-						: node.specifiers,
-				);
-			},
-			ExportNamedDeclaration: (node) => {
-				check(node, node.specifiers);
-			},
-			FunctionDeclaration: (node) => {
-				check(
-					node,
-					node.params,
-					node.returnType || node.body,
-				);
-			},
-			FunctionExpression: (node) => {
-				check(
-					node,
-					node.params,
-					node.returnType || node.body,
-				);
-			},
+			ObjectExpression: node => check(node, node.properties),
+			ArrayExpression: node => check(node, node.elements),
+			ImportDeclaration: node => check(node, node.specifiers[0]?.type === 'ImportDefaultSpecifier' ? node.specifiers.slice(1) : node.specifiers),
+			ExportNamedDeclaration: node => check(node, node.specifiers),
+			FunctionDeclaration: node => check(node, node.params, node.returnType || node.body),
+			FunctionExpression: node => check(node, node.params, node.returnType || node.body),
 			ArrowFunctionExpression: (node) => {
 				if (node.params.length <= 1)
 					return;
@@ -250,33 +227,16 @@ export default createEslintRule<Options, MessageIds>({
 					node.returnType || node.body,
 				);
 			},
-			CallExpression: (node) => {
-				check(node, node.arguments);
-			},
-			TSInterfaceDeclaration: (node) => {
-				check(node, node.body.body);
-			},
-			TSTypeLiteral: (node) => {
-				check(node, node.members);
-			},
-			TSTupleType: (node) => {
-				check(node, node.elementTypes);
-			},
-			NewExpression: (node) => {
-				check(node, node.arguments);
-			},
-			TSTypeParameterDeclaration: (node) => {
-				check(node, node.params);
-			},
-			TSTypeParameterInstantiation: (node) => {
-				check(node, node.params);
-			},
-			ObjectPattern: (node) => {
-				check(node, node.properties, node.typeAnnotation);
-			},
-			ArrayPattern: (node) => {
-				check(node, node.elements);
-			},
+			CallExpression: node => check(node, node.arguments),
+			TSInterfaceDeclaration: node => check(node, node.body.body),
+			TSTypeLiteral: node => check(node, node.members),
+			TSTupleType: node => check(node, node.elementTypes),
+			TSFunctionType: node => check(node, node.params),
+			NewExpression: node => check(node, node.arguments),
+			TSTypeParameterDeclaration: node => check(node, node.params),
+			TSTypeParameterInstantiation: node => check(node, node.params),
+			ObjectPattern: node => check(node, node.properties, node.typeAnnotation),
+			ArrayPattern: node => check(node, node.elements),
 			JSXOpeningElement: (node) => {
 				if (node.attributes.some(attr => attr.loc.start.line !== attr.loc.end.line))
 					return;

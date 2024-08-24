@@ -23,7 +23,8 @@ export interface RuleModule<
 function RuleCreator(urlCreator: (name: string) => string): <
 	TOptions extends readonly unknown[],
 	TMessageIds extends string,
->({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>) => RuleModule<TOptions, TMessageIds> {
+>({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>
+) => RuleModule<TOptions, TMessageIds> {
 	return <TOptions extends readonly unknown[], TMessageIds extends string>
 	({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>): RuleModule<TOptions, TMessageIds> =>
 		createRule<TOptions, TMessageIds>({

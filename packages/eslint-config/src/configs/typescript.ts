@@ -20,7 +20,7 @@ export async function typescript(
 	OptionsProjectType &
 	OptionsFiles = {},
 ): Promise<TypedFlatConfigItem[]> {
-	const { componentExts = [], overrides = {}, parserOptions = {}, type = 'app' } = options;
+	const { componentExts = [], overrides = {}, overridesTypeAware = {}, parserOptions = {}, type = 'app' } = options;
 	const files = options.files ?? [GLOB_TS, GLOB_TSX, ...componentExts.map(f => `**/*.${f}`)];
 	const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX];
 	const ignoresTypeAware = options.ignoresTypeAware ?? [`${GLOB_MARKDOWN}/**`, GLOB_ASTRO_TS];
@@ -149,6 +149,7 @@ export async function typescript(
 						}
 					: {}
 				),
+				...overrides,
 			},
 		},
 		...isTypeAware
@@ -156,14 +157,12 @@ export async function typescript(
 					files: filesTypeAware,
 					ignores: ignoresTypeAware,
 					name: 'petal/typescript/rules-type-aware',
-					rules: typeAwareRules,
+					rules: {
+						...typeAwareRules,
+						...overridesTypeAware,
+					},
 				}]
 			: [],
-		{
-			files,
-			name: 'petal/typescript/overrides',
-			rules: overrides,
-		},
 		{
 			files: [GLOB_DTS],
 			name: 'petal/typescript/disables/dts',
