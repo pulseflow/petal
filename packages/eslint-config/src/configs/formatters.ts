@@ -1,5 +1,5 @@
 import { isPackageExists } from 'local-pkg';
-import { GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_GRAPHQL, GLOB_HTML, GLOB_LESS, GLOB_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_XML } from '../globs';
+import { GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_GRAPHQL, GLOB_HTML, GLOB_LESS, GLOB_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_SVG, GLOB_XML } from '../globs';
 import { ensurePackages, interopDefault, isPackageInScope, parserPlain } from '../utils';
 import type { OptionsFormatters, StylisticConfig, TypedFlatConfigItem, VendoredPrettierOptions } from '../types';
 import { StylisticConfigDefaults } from './stylistic';
@@ -7,6 +7,7 @@ import { StylisticConfigDefaults } from './stylistic';
 type VendoredPrettierXMLOptions = Pick<VendoredPrettierOptions, 'xmlQuoteAttributes' | 'xmlSelfClosingSpace' | 'xmlSortAttributesByKey' | 'xmlWhitespaceSensitivity'>;
 
 export async function formatters(options: OptionsFormatters | true = {}, stylistic: StylisticConfig = {}): Promise<TypedFlatConfigItem[]> {
+	const isXmlInScope = isPackageInScope('@prettier/plugin-xml');
 	if (options === true)
 		options = {
 			astro: isPackageInScope('prettier-plugin-astro'),
@@ -15,14 +16,15 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 			html: true,
 			markdown: true,
 			slidev: isPackageExists('@slidev/cli'),
-			xml: isPackageInScope('@prettier/plugin-xml'),
+			svg: isXmlInScope,
+			xml: isXmlInScope,
 		};
 
 	await ensurePackages([
 		'eslint-plugin-format',
 		options.markdown && options.slidev ? 'prettier-plugin-slidev' : undefined,
 		options.astro ? 'prettier-plugin-astro' : undefined,
-		options.xml ? '@prettier/plugin-xml' : undefined,
+		(options.xml || options.svg) ? '@prettier/plugin-xml' : undefined,
 	]);
 
 	if (options.slidev && options.markdown !== true && options.markdown !== 'prettier')
@@ -141,6 +143,26 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 				parser: parserPlain,
 			},
 			name: 'petal/formatter/xml',
+			rules: {
+				'format/prettier': [
+					'error',
+					{
+						...prettierXmlOptions,
+						...prettierOptions,
+						parser: 'xml',
+						plugins: ['@prettier/plugin-xml'],
+					},
+				],
+			},
+		});
+
+	if (options.svg)
+		configs.push({
+			files: [GLOB_SVG],
+			languageOptions: {
+				parser: parserPlain,
+			},
+			name: 'petal/formatter/svg',
 			rules: {
 				'format/prettier': [
 					'error',

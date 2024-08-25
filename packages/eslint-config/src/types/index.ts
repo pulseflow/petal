@@ -99,11 +99,23 @@ export interface OptionsFormatters {
 	 * Requires installing:
 	 * - `@prettier/plugin-xml`
 	 *
-	 * Currently only support Prettier.
+	 * Currently only supports Prettier.
 	 *
 	 * @default auto-detect based on the dependencies
 	 */
 	xml?: 'prettier' | boolean;
+
+	/**
+	 * Enable formatting support for SVG.
+	 *
+	 * Requires installing:
+	 * - `@prettier/plugin-xml`
+	 *
+	 * Currently only supports Prettier.
+	 *
+	 * @default auto-detect based on the dependencies
+	 */
+	svg?: 'prettier' | boolean;
 
 	/**
 	 * Enable formatting support for Markdown.

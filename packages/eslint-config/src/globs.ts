@@ -34,6 +34,7 @@ export const GLOB_GRAPHQL = '**/*.{g,graph}ql';
 export const GLOB_YAML = '**/*.y?(a)ml';
 export const GLOB_TOML = '**/*.toml';
 export const GLOB_XML = '**/*.xml';
+export const GLOB_SVG = '**/*.svg';
 export const GLOB_HTML = '**/*.htm?(l)';
 export const GLOB_BIN = '**/bin/**/*';
 export const GLOB_BIN_SRC = `**/bin.${GLOB_SRC_EXT}`;

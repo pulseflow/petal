@@ -1,4 +1,9 @@
-import * as std from '@std/encoding';
+import { decodeHex, encodeHex } from '@std/encoding/hex';
+import { decodeBase32, encodeBase32 } from '@std/encoding/base32';
+import { decodeBase58, encodeBase58 } from '@std/encoding/base58';
+import { decodeBase64, encodeBase64 } from '@std/encoding/base64';
+import { decodeBase64Url, encodeBase64Url } from '@std/encoding/base64url';
+import { decodeAscii85, encodeAscii85 } from '@std/encoding/ascii85';
 import nacl from 'tweetnacl';
 
 export type BufferLike = Uint8Array | ArrayBuffer | string;
@@ -13,35 +18,35 @@ const te = new TextDecoder();
 type Ascii85Standard = 'Adobe' | 'btoa' | 'RFC 1924' | 'Z85';
 type Base64Standard = 'btoa' | 'url' | 'url_padded';
 
-const encodeBase64UrlPadded = (data: Encodable): string => std.encodeBase64(data).replace(/\+/g, '-').replace(/\//g, '_');
-const decodeBase64UrlPadded = (src: string): Uint8Array => std.decodeBase64(src.replace(/-/g, '+').replace(/_/g, '/'));
+const encodeBase64UrlPadded = (data: Encodable): string => encodeBase64(data).replace(/\+/g, '-').replace(/\//g, '_');
+const decodeBase64UrlPadded = (src: string): Uint8Array => decodeBase64(src.replace(/-/g, '+').replace(/_/g, '/'));
 
 const enc = {
-	16: std.encodeHex,
-	32: std.encodeBase32,
-	58: std.encodeBase58,
+	16: encodeHex,
+	32: encodeBase32,
+	58: encodeBase58,
 	64: (data: Encodable, standard: Base64Standard = 'btoa') =>
 		({
-			btoa: std.encodeBase64,
-			url: std.encodeBase64Url,
+			btoa: encodeBase64,
+			url: encodeBase64Url,
 			url_padded: encodeBase64UrlPadded,
 		})[standard](data),
 	85: (data: Encodable, standard?: Ascii85Standard) =>
-		std.encodeAscii85(data, { standard }),
+		encodeAscii85(data, { standard }),
 };
 
 const dec = {
-	16: std.decodeHex,
-	32: std.decodeBase32,
-	58: std.decodeBase58,
+	16: decodeHex,
+	32: decodeBase32,
+	58: decodeBase58,
 	64: (src: string, standard: Base64Standard = 'btoa') =>
 		({
-			btoa: std.decodeBase64,
-			url: std.decodeBase64Url,
+			btoa: decodeBase64,
+			url: decodeBase64Url,
 			url_padded: decodeBase64UrlPadded,
 		})[standard](src),
 	85: (src: string, standard?: Ascii85Standard) =>
-		std.decodeAscii85(src, { standard }),
+		decodeAscii85(src, { standard }),
 };
 
 export type Base = Extract<keyof typeof enc, number>;
@@ -65,11 +70,7 @@ export default function base<T extends Base>(b: T, v?: Variation<T>): BaseProvid
 export const rand: (n: number) => Uint8Array = nacl.randomBytes;
 export const x25519: (n: Uint8Array) => Uint8Array = nacl.scalarMult.base;
 export const sha512 = (msg: BufferLike): Uint8Array => nacl.hash(toUint8s(msg));
-export function sha256(msg: BufferLike): Promise<Uint8Array> {
-	return crypto.subtle
-		.digest('SHA-256', toUint8s(msg))
-		.then(x => toUint8s(x));
-}
+export const sha256 = async (msg: BufferLike): Promise<Uint8Array> => toUint8s(await crypto.subtle.digest('SHA-256', toUint8s(msg)));
 export function pair(pk?: Uint8Array): readonly [Uint8Array, Uint8Array] {
 	const priv = pk ?? rand(32);
 	const pub = x25519(priv);
