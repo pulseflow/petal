@@ -47,7 +47,7 @@
 		"stub": "unbuild --stub"
 	},
 	"devDependencies": {
-		"@std/encoding": "npm:@jsr/std__encoding@1.0.1",
+		"@std/encoding": "npm:@jsr/std__encoding@1.0.3",
 		"@types/luxon": "^3.4.2",
 		"@types/zen-observable": "^0.8.7",
 		"destr": "^2.0.3",
