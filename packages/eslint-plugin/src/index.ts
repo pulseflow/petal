@@ -10,6 +10,7 @@ import noTsExportEqual from './rules/no-ts-export-equal';
 import consistentListNewline from './rules/consistent-list-newline';
 import indentUnindent from './rules/indent-unindent';
 import onlyExportComponents from './rules/only-export-components';
+import fileHeader from './rules/file-header';
 import type { RuleModule } from './utils';
 
 const plugin = {
@@ -20,6 +21,7 @@ const plugin = {
 	/// @keep-sorted
 	rules: {
 		'consistent-list-newline': consistentListNewline,
+		'file-header': fileHeader,
 		'if-newline': ifNewline,
 		'import-dedupe': importDedupe,
 		'indent-unindent': indentUnindent,

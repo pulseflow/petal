@@ -24,6 +24,10 @@
 			"import": "./dist/index.mjs",
 			"require": "./dist/index.cjs"
 		},
+		"./fetch": {
+			"import": "./dist/fetch.mjs",
+			"require": "./dist/fetch.cjs"
+		},
 		"./package.json": "./package.json"
 	},
 	"main": "./dist/index.cjs",

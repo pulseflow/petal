@@ -1,7 +1,7 @@
 import type { RuleListener, RuleWithMeta, RuleWithMetaAndName, RuleModule as TSESModule } from '@typescript-eslint/utils/eslint-utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
-const blobUrl = 'https://github.com/pulseflow/petal/blob/main/packages/eslint-plugin/src/rules/';
+export const BLOB_URL = 'https://github.com/pulseflow/petal/blob/main/packages/eslint-plugin/src/rules/';
 
 /**
  * An extension of TypeScript ESLint's {@link TSESModule | RuleModule} with default options.
@@ -62,4 +62,4 @@ function createRule<TOptions extends readonly unknown[], TMessageIds extends str
 /**
  * Create a well-typed {@link RuleModule} custom ESLint rule with documentation, options, and message ids.
  */
-export const createEslintRule = RuleCreator(ruleName => `${blobUrl}${ruleName}.md`);
+export const createEslintRule = RuleCreator(ruleName => `${BLOB_URL}${ruleName}.md`);

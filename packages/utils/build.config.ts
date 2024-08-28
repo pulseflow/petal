@@ -3,6 +3,7 @@ import { defineBuildConfig } from 'unbuild';
 export default defineBuildConfig({
 	entries: [
 		'src/index',
+		'src/fetch',
 	],
 	declaration: true,
 	clean: true,

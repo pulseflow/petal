@@ -126,3 +126,6 @@ export function unindent(strings: TemplateStringsArray, ...keys: any[]): string 
 
 	return lines.slice(emptyLinesHead, lines.length - emptyLinesTail).map(line => line.slice(commonIndent)).join('\n');
 }
+
+const segmenter = new Intl.Segmenter();
+export const graphemes = (s: string): number => [...segmenter.segment(s)].length;
