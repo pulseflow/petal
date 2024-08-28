@@ -132,9 +132,6 @@ importers:
       eslint-plugin-jsdoc:
         specifier: ^50.2.2
         version: 50.2.2(eslint@9.9.1(jiti@1.21.6))
-      eslint-plugin-json-schema-validator:
-        specifier: ^5.1.2
-        version: 5.1.2(eslint@9.9.1(jiti@1.21.6))
       eslint-plugin-jsonc:
         specifier: ^2.16.0
         version: 2.16.0(eslint@9.9.1(jiti@1.21.6))
@@ -229,6 +226,9 @@ importers:
       eslint-plugin-format:
         specifier: ^0.1.2
         version: 0.1.2(eslint@9.9.1(jiti@1.21.6))
+      eslint-plugin-json-schema-validator:
+        specifier: ^5.1.2
+        version: 5.1.2(eslint@9.9.1(jiti@1.21.6))
       eslint-plugin-jsx-a11y:
         specifier: ^6.9.0
         version: 6.9.0(eslint@9.9.1(jiti@1.21.6))
