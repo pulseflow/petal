@@ -1,6 +1,6 @@
 import { defineConfig as defineTsupConfig } from 'tsup';
-import { defineBuildConfig as defineUnbuildConfig, type BuildConfig as UnbuildConfig } from 'unbuild';
-import { defineProject as defineVitestConfig, type UserWorkspaceConfig as VitestConfig } from 'vitest/config';
+import { type BuildConfig as UnbuildConfig, defineBuildConfig as defineUnbuildConfig } from 'unbuild';
+import { type UserWorkspaceConfig as VitestConfig, defineProject as defineVitestConfig } from 'vitest/config';
 
 export const shared = {
 	vitest: (name: TemplateStringsArray): VitestConfig =>

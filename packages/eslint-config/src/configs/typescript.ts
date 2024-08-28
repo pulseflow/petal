@@ -1,25 +1,10 @@
 import process from 'node:process';
 import type { Linter } from 'eslint';
-import type {
-	OptionsComponentExts,
-	OptionsFiles,
-	OptionsOverrides,
-	OptionsProjectType,
-	OptionsTypeScriptParserOptions,
-	OptionsTypeScriptWithTypes,
-	TypedFlatConfigItem,
-} from '../types';
+import type { OptionsTypeScript, TypedFlatConfigItem } from '../types';
 import { GLOB_ASTRO_TS, GLOB_CJS, GLOB_DTS, GLOB_MARKDOWN, GLOB_TEST_TS, GLOB_TS, GLOB_TSX } from '../globs';
 import { interopDefault, renameRules } from '../utils';
 
-export async function typescript(
-	options: OptionsComponentExts &
-	OptionsOverrides &
-	OptionsTypeScriptWithTypes &
-	OptionsTypeScriptParserOptions &
-	OptionsProjectType &
-	OptionsFiles = {},
-): Promise<TypedFlatConfigItem[]> {
+export async function typescript(options: OptionsTypeScript = {}): Promise<TypedFlatConfigItem[]> {
 	const { componentExts = [], overrides = {}, overridesTypeAware = {}, parserOptions = {}, type = 'app' } = options;
 	const files = options.files ?? [GLOB_TS, GLOB_TSX, ...componentExts.map(f => `**/*.${f}`)];
 	const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX];

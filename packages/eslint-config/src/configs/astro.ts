@@ -1,16 +1,9 @@
-import type {
-	OptionsAccessibility,
-	OptionsFiles,
-	OptionsOverrides,
-	OptionsStylistic,
-	TypedFlatConfigItem,
-} from '../types';
+import type { OptionsAstro, TypedFlatConfigItem } from '../types';
 import { ensurePackages, interopDefault } from '../utils';
 import { GLOB_ASTRO } from '../globs';
-import globals from 'globals';
 
-export async function astro(options: OptionsOverrides & OptionsFiles & OptionsStylistic & OptionsAccessibility = {}): Promise<TypedFlatConfigItem[]> {
-	const { files = [GLOB_ASTRO], overrides = {}, stylistic = true, accessibility = false } = options;
+export async function astro(options: OptionsAstro = {}): Promise<TypedFlatConfigItem[]> {
+	const { accessibility = false, files = [GLOB_ASTRO], overrides = {}, stylistic = true } = options;
 
 	await ensurePackages(['eslint-plugin-astro']);
 
@@ -35,17 +28,14 @@ export async function astro(options: OptionsOverrides & OptionsFiles & OptionsSt
 		{
 			files,
 			languageOptions: {
-				globals: {
-					...pluginAstro.environments.astro.globals,
-					...globals.node,
-				},
+				ecmaVersion: 'latest',
+				globals: pluginAstro.environments.astro.globals,
 				parser: parserAstro,
 				parserOptions: {
 					extraFileExtensions: ['.astro'],
 					parser: parserTs,
 				},
 				sourceType: 'module',
-				ecmaVersion: 'latest'
 			},
 			name: 'petal/astro/rules',
 			processor: pluginAstro.processors['client-side-ts'],

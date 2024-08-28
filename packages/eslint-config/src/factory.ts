@@ -179,7 +179,7 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 	if (enableAstro)
 		configs.push(astro({
 			...resolveSubOptions(options, 'astro'),
-			overrides: getOverrides(options, 'astro')
+			overrides: getOverrides(options, 'astro'),
 		}));
 
 	if (enableReact)
@@ -229,7 +229,7 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 			stylistic: stylisticOptions,
 		}));
 
-	if (options.schema ?? true)
+	if (options.schema ?? false)
 		configs.push(schema({
 			overrides: getOverrides(options, 'schema'),
 		}));

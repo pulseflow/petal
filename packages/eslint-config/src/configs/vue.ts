@@ -1,16 +1,9 @@
 import { mergeProcessors } from 'eslint-merge-processors';
-import type {
-	OptionsFiles,
-	OptionsHasTypeScript,
-	OptionsOverrides,
-	OptionsStylistic,
-	OptionsVue,
-	TypedFlatConfigItem,
-} from '../types';
+import type { OptionsVue, TypedFlatConfigItem } from '../types';
 import { GLOB_VUE } from '../globs';
 import { ensurePackages, interopDefault } from '../utils';
 
-export async function vue(options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles & OptionsVue = {}): Promise<TypedFlatConfigItem[]> {
+export async function vue(options: OptionsVue = {}): Promise<TypedFlatConfigItem[]> {
 	const { accessibility = false, files = [GLOB_VUE], overrides = {}, stylistic = true, vueVersion = 3 } = options;
 	const { indent = 'tab' } = typeof stylistic === 'boolean' ? {} : stylistic;
 

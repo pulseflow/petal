@@ -14,8 +14,6 @@
   - single quotes, semicolons
   - uses eslint [stylistic]
 
-TODO: refactor types, improve a11y, more plugins, improve petal plugin
-
 ## usage
 
 ### installation
@@ -534,6 +532,8 @@ export default defineConfig({
 
 the required dev dependencies are: `@eslint-react/eslint-plugin eslint-plugin-react-hooks` (you should be prompted to install these when running eslint)
 
+if you have `react.accessibility` enabled (set to disabled by default), you will also need to install `eslint-plugin-jsx-a11y` as a dev dependency, also prompted upon running eslint
+
 #### astro
 
 to enable astro support, you need to explicitly turn it on or install the `astro` dependency, in which case it is auto-detected:
@@ -548,6 +548,8 @@ export default defineConfig({
 ```
 
 the required dev dependencies are: `eslint-plugin-astro` (you should be prompted to install these when running eslint)
+
+if you have `astro.accessibility` enabled (set to disabled by default), you will also need to install `eslint-plugin-jsx-a11y` as a dev dependency, also prompted upon running eslint
 
 #### svelte
 
@@ -593,6 +595,8 @@ export default defineConfig({
 ```
 
 the required dev dependencies are: `eslint-plugin-solid` (you should be prompted to install these when running eslint)
+
+if you have `react.accessibility` enabled (set to disabled by default), you will also need to install `eslint-plugin-jsx-a11y` as a dev dependency, also prompted upon running eslint
 
 ### optional rules
 

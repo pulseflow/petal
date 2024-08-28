@@ -39,7 +39,7 @@ const configs = await combine(
 			},
 		},
 	},
-	astro(),
+	astro({ accessibility: true }),
 	comments(),
 	imports(),
 	formatters(),
@@ -51,8 +51,8 @@ const configs = await combine(
 	node(),
 	perfectionist(),
 	query(),
-	react(),
-	solid(),
+	react({ accessibility: true }),
+	solid({ accessibility: true }),
 	sortPackageJson(),
 	stylistic(),
 	svelte(),
@@ -63,7 +63,7 @@ const configs = await combine(
 	typescript(),
 	unicorn(),
 	unocss(),
-	vue(),
+	vue({ accessibility: true }),
 	yaml(),
 );
 

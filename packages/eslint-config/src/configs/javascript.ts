@@ -1,13 +1,9 @@
 import globals from 'globals';
-import type {
-	OptionsIsInEditor,
-	OptionsOverrides,
-	TypedFlatConfigItem,
-} from '../types';
+import type { OptionsJavascript, TypedFlatConfigItem } from '../types';
 import { GLOB_CLI, GLOB_SCRIPTS } from '../globs';
 import { interopDefault } from '../utils';
 
-export async function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): Promise<TypedFlatConfigItem[]> {
+export async function javascript(options: OptionsJavascript = {}): Promise<TypedFlatConfigItem[]> {
 	const { isInEditor = false, overrides = {} } = options;
 
 	const [pluginPetal, pluginUnusedImports] = await Promise.all([

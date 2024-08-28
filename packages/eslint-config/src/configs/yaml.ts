@@ -1,13 +1,8 @@
-import type {
-	OptionsFiles,
-	OptionsOverrides,
-	OptionsStylistic,
-	TypedFlatConfigItem,
-} from '../types';
+import type { OptionsYaml, TypedFlatConfigItem } from '../types';
 import { GLOB_YAML } from '../globs';
 import { interopDefault } from '../utils';
 
-export async function yaml(options: OptionsOverrides & OptionsStylistic & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
+export async function yaml(options: OptionsYaml = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_YAML], overrides = {}, stylistic = true } = options;
 	const { indent = 2, quotes = 'single' } = typeof stylistic === 'boolean' ? {} : stylistic;
 

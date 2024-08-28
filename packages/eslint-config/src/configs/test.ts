@@ -1,12 +1,8 @@
-import type {
-	OptionsFiles,
-	OptionsOverrides,
-	TypedFlatConfigItem,
-} from '../types';
+import type { OptionsTest, TypedFlatConfigItem } from '../types';
 import { GLOB_TESTS } from '../globs';
 import { interopDefault } from '../utils';
 
-export async function test(options: OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
+export async function test(options: OptionsTest = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = GLOB_TESTS, overrides = {} } = options;
 
 	const [pluginTest, pluginPetal] = await Promise.all([

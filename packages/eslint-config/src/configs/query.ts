@@ -1,8 +1,8 @@
-import type { OptionsFiles, OptionsOverrides, TypedFlatConfigItem } from '../types';
+import type { OptionsQuery, TypedFlatConfigItem } from '../types';
 import { GLOB_SRC } from '../globs';
 import { ensurePackages, interopDefault } from '../utils';
 
-export async function query(options: OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
+export async function query(options: OptionsQuery = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_SRC], overrides = {} } = options;
 	await ensurePackages(['@tanstack/eslint-plugin-query']);
 	const pluginQuery = await interopDefault(import('@tanstack/eslint-plugin-query'));
@@ -20,8 +20,8 @@ export async function query(options: OptionsOverrides & OptionsFiles = {}): Prom
 			rules: {
 				'query/exhaustive-deps': 'error',
 				'query/no-rest-destructuring': 'error',
-				'query/stable-query-client': 'error',
 				'query/no-unstable-deps': 'error',
+				'query/stable-query-client': 'error',
 
 				...overrides,
 			},

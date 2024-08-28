@@ -1,10 +1,10 @@
 import globals from 'globals';
-import type { OptionsAccessibility, OptionsFiles, OptionsHasTypeScript, OptionsOverrides, OptionsTypeScriptWithTypes, TypedFlatConfigItem } from '../types';
+import type { OptionsSolid, TypedFlatConfigItem } from '../types';
 import { GLOB_JSX, GLOB_TSX } from '../globs';
 import { ensurePackages, interopDefault, toArray } from '../utils';
 
-export async function solid(options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles & OptionsTypeScriptWithTypes & OptionsAccessibility = {}): Promise<TypedFlatConfigItem[]> {
-	const { files = [GLOB_JSX, GLOB_TSX], overrides = {}, typescript = true, accessibility = false } = options;
+export async function solid(options: OptionsSolid = {}): Promise<TypedFlatConfigItem[]> {
+	const { accessibility = false, files = [GLOB_JSX, GLOB_TSX], overrides = {}, typescript = true } = options;
 	await ensurePackages(['eslint-plugin-solid']);
 	const tsconfigPath = options?.tsconfigPath ? toArray(options.tsconfigPath) : undefined;
 	const isTypeAware = !!tsconfigPath;
@@ -60,7 +60,7 @@ export async function solid(options: OptionsHasTypeScript & OptionsOverrides & O
 				'solid/reactivity': 'warn',
 				'solid/self-closing-comp': 'error',
 				'solid/style-prop': ['error', { styleProps: ['style', 'css'] }],
-				
+
 				...accessibility ? (await interopDefault(import('eslint-plugin-jsx-a11y'))).flatConfigs.recommended.rules : {},
 
 				...typescript
@@ -70,7 +70,6 @@ export async function solid(options: OptionsHasTypeScript & OptionsOverrides & O
 						}
 					: {},
 
-				
 				...overrides,
 			},
 		},

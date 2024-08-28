@@ -1,11 +1,5 @@
 import { isPackageExists } from 'local-pkg';
-import type {
-	OptionsAccessibility,
-	OptionsFiles,
-	OptionsOverrides,
-	OptionsTypeScriptWithTypes,
-	TypedFlatConfigItem,
-} from '../types';
+import type { OptionsReact, TypedFlatConfigItem } from '../types';
 import { GLOB_SRC } from '../globs';
 import { ensurePackages, interopDefault, toArray } from '../utils';
 
@@ -13,8 +7,8 @@ const ReactRefreshAllowConstantExportPackages = ['vite'];
 const RemixPackages = ['@remix-run/node', '@remix-run/react', '@remix-run/serve', '@remix-run/dev'];
 const NextJsPackages = ['next'];
 
-export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrides & OptionsFiles & OptionsAccessibility = {}): Promise<TypedFlatConfigItem[]> {
-	const { files = [GLOB_SRC], overrides = {}, accessibility = false } = options;
+export async function react(options: OptionsReact = {}): Promise<TypedFlatConfigItem[]> {
+	const { accessibility = false, files = [GLOB_SRC], overrides = {} } = options;
 	await ensurePackages(['@eslint-react/eslint-plugin', 'eslint-plugin-react-hooks']);
 	const tsconfigPath = options?.tsconfigPath ? toArray(options.tsconfigPath) : undefined;
 	const isTypeAware = !!tsconfigPath;
