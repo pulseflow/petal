@@ -10,7 +10,7 @@ import { interopDefault, parserPlain } from '../utils';
 
 export async function markdown(options: OptionsFiles & OptionsComponentExts & OptionsOverrides = {}): Promise<TypedFlatConfigItem[]> {
 	const { componentExts = [], files = [GLOB_MARKDOWN], overrides = {} } = options;
-	const pluginMarkdown = await interopDefault(import('eslint-plugin-markdown'));
+	const pluginMarkdown = await interopDefault(import('@eslint/markdown'));
 
 	return [
 		{
@@ -23,11 +23,11 @@ export async function markdown(options: OptionsFiles & OptionsComponentExts & Op
 			files,
 			ignores: [GLOB_MARKDOWN_IN_MARKDOWN],
 			name: 'petal/markdown/processor',
-			// `eslint-plugin-markdown` only creates virtual files for code blocks,
+			// `@eslint/markdown` only creates virtual files for code blocks,
 			// but not the markdown file itself. we use `eslint-merge-processors` to
 			// add a pass-through processor for the markdown file itself.
 			processor: mergeProcessors([
-				pluginMarkdown.processors.markdown,
+				pluginMarkdown.processors!.markdown,
 				processorPassThrough,
 			]),
 		},

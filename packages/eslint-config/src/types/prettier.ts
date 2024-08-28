@@ -1,5 +1,6 @@
 /**
  * Vendor types from Prettier so we don't rely on the dependency.
+ * @module
  */
 
 export type VendoredPrettierOptions = Partial<VendoredPrettierOptionsRequired>;

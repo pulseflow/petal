@@ -86,17 +86,12 @@ type FactoryComposer = FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
 export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserConfig[]): FactoryComposer {
 	const {
 		astro: enableAstro = isPackageExists('astro'),
-		autoRenamePlugins = true,
 		componentExts = [],
-		gitignore: enableGitignore = true,
-		jsx: enableJsx = true,
 		query: enableQuery = QUERY_PACKAGES.some(pkgSort),
 		react: enableReact = REACT_PACKAGES.some(pkgSort),
-		regexp: enableRegexp = true,
 		solid: enableSolid = SOLID_PACKAGES.some(pkgSort),
 		svelte: enableSvelte = SVELTE_PACKAGES.some(pkgSort),
 		typescript: enableTypeScript = TYPESCRIPT_PACKAGES.some(pkgSort),
-		unocss: enableUnoCSS = false,
 		vue: enableVue = VUE_PACKAGES.some(pkgSort),
 	} = options;
 
@@ -105,7 +100,7 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 		isInEditor = isInEditorEnv();
 		if (isInEditor)
 			// eslint-disable-next-line no-console -- debug editor message
-			console.log('[@flowr/eslint-config]: running in editor - some rules ar disabled');
+			console.log('[@flowr/eslint-config]: running in editor - some rules are disabled');
 	}
 
 	const stylisticOptions = options.stylistic === false
@@ -115,12 +110,12 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 			: {};
 
 	if (stylisticOptions && !('jsx' in stylisticOptions))
-		stylisticOptions.jsx = enableJsx;
+		stylisticOptions.jsx = options.jsx ?? true;
 
 	const configs: Awaitable<TypedFlatConfigItem[]>[] = [];
-	if (enableGitignore)
-		if (typeof enableGitignore !== 'boolean')
-			configs.push(gitignore(enableGitignore));
+	if (options.gitignore ?? true)
+		if (typeof options.gitignore !== 'boolean')
+			configs.push(gitignore(options.gitignore));
 		else configs.push(gitignore({ strict: false }));
 
 	const typescriptOptions = resolveSubOptions(options, 'typescript');
@@ -139,7 +134,7 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 	if (enableVue)
 		componentExts.push('vue');
 
-	if (enableJsx)
+	if (options.jsx ?? true)
 		configs.push(jsx());
 
 	if (enableTypeScript)
@@ -158,10 +153,12 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 		}));
 
 	if (options.test ?? true)
-		configs.push(test({ overrides: getOverrides(options, 'test') }));
+		configs.push(test({
+			overrides: getOverrides(options, 'test'),
+		}));
 
-	if (enableRegexp)
-		configs.push(regexp(typeof enableRegexp === 'boolean' ? {} : enableRegexp));
+	if (options.regexp ?? true)
+		configs.push(regexp(resolveSubOptions(options, 'regexp')));
 
 	if (enableVue)
 		configs.push(vue({
@@ -173,16 +170,21 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 
 	if (enableSolid)
 		configs.push(solid({
+			...resolveSubOptions(options, 'solid'),
 			overrides: getOverrides(options, 'solid'),
 			tsconfigPath,
 			typescript: !!enableTypeScript,
 		}));
 
 	if (enableAstro)
-		configs.push(astro({ overrides: getOverrides(options, 'astro') }));
+		configs.push(astro({
+			...resolveSubOptions(options, 'astro'),
+			overrides: getOverrides(options, 'astro')
+		}));
 
 	if (enableReact)
 		configs.push(react({
+			...resolveSubOptions(options, 'react'),
 			overrides: getOverrides(options, 'react'),
 			tsconfigPath,
 		}));
@@ -194,7 +196,7 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 			typescript: !!enableTypeScript,
 		}));
 
-	if (enableUnoCSS)
+	if (options.unocss ?? false)
 		configs.push(unocss({
 			...resolveSubOptions(options, 'unocss'),
 			overrides: getOverrides(options, 'unocss'),
@@ -227,7 +229,7 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 			stylistic: stylisticOptions,
 		}));
 
-	if (options.schema ?? false)
+	if (options.schema ?? true)
 		configs.push(schema({
 			overrides: getOverrides(options, 'schema'),
 		}));
@@ -256,7 +258,7 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 	let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
 		.append(...configs, ...userConfigs as any);
 
-	if (autoRenamePlugins)
+	if (options.autoRenamePlugins ?? true)
 		composer = composer.renamePlugins(defaultPluginRenaming);
 
 	return composer;

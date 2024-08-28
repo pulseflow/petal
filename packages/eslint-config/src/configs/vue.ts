@@ -20,9 +20,9 @@ export async function vue(options: OptionsHasTypeScript & OptionsOverrides & Opt
 
 	await ensurePackages(['eslint-plugin-vue']);
 	if (sfcBlocks)
-		ensurePackages(['eslint-processor-vue-blocks']);
+		await ensurePackages(['eslint-processor-vue-blocks']);
 	if (accessibility)
-		ensurePackages(['eslint-plugin-vuejs-accessibility']);
+		await ensurePackages(['eslint-plugin-vuejs-accessibility']);
 
 	const [
 		pluginVue,

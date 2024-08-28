@@ -1,9 +1,9 @@
 import { defineConfig as defineTsupConfig } from 'tsup';
-import { type BuildConfig, defineBuildConfig } from 'unbuild';
-import { defineProject as defineVitestConfig } from 'vitest/config';
+import { defineBuildConfig as defineUnbuildConfig, type BuildConfig as UnbuildConfig } from 'unbuild';
+import { defineProject as defineVitestConfig, type UserWorkspaceConfig as VitestConfig } from 'vitest/config';
 
 export const shared = {
-	vitest: (name: TemplateStringsArray): { test: { globals: true; name: string } } =>
+	vitest: (name: TemplateStringsArray): VitestConfig =>
 		defineVitestConfig({
 			test: {
 				globals: true,
@@ -11,8 +11,8 @@ export const shared = {
 			},
 		}),
 	build: (name: TemplateStringsArray) =>
-		(config?: BuildConfig) =>
-			defineBuildConfig({
+		(config?: UnbuildConfig) =>
+			defineUnbuildConfig({
 				clean: true,
 				declaration: true,
 				name: name[0],

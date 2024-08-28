@@ -13,7 +13,8 @@
   - sorted imports, dangling commas
   - single quotes, semicolons
   - uses eslint [stylistic]
-- supports eslint v9 or v8.50.0+
+
+TODO: refactor types, improve a11y, more plugins, improve petal plugin
 
 ## usage
 

@@ -35,24 +35,6 @@ declare module 'eslint-plugin-vue' {
 	export default { eslintPluginVue };
 };
 
-// fixed when `@eslint/markdown` releases
-declare module 'eslint-plugin-markdown' {
-	import type { ESLint, Linter } from 'eslint';
-
-	const eslintPluginMarkdown: ESLint.Plugin & {
-		configs: {
-			'recommended': Linter.Config;
-			'recommended-legacy': Linter.LegacyConfig;
-		};
-		processors: {
-			markdown: Linter.Processor;
-		};
-	};
-
-	export = eslintPluginMarkdown;
-	export default { eslintPluginMarkdown };
-};
-
 // fixed in
 declare module '@eslint-community/eslint-plugin-eslint-comments' {
 	import type { ESLint, Linter } from 'eslint';

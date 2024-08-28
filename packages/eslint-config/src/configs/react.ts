@@ -1,5 +1,6 @@
 import { isPackageExists } from 'local-pkg';
 import type {
+	OptionsAccessibility,
 	OptionsFiles,
 	OptionsOverrides,
 	OptionsTypeScriptWithTypes,
@@ -12,11 +13,14 @@ const ReactRefreshAllowConstantExportPackages = ['vite'];
 const RemixPackages = ['@remix-run/node', '@remix-run/react', '@remix-run/serve', '@remix-run/dev'];
 const NextJsPackages = ['next'];
 
-export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrides & OptionsFiles = {}): Promise<TypedFlatConfigItem[]> {
-	const { files = [GLOB_SRC], overrides = {} } = options;
+export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrides & OptionsFiles & OptionsAccessibility = {}): Promise<TypedFlatConfigItem[]> {
+	const { files = [GLOB_SRC], overrides = {}, accessibility = false } = options;
 	await ensurePackages(['@eslint-react/eslint-plugin', 'eslint-plugin-react-hooks']);
 	const tsconfigPath = options?.tsconfigPath ? toArray(options.tsconfigPath) : undefined;
 	const isTypeAware = !!tsconfigPath;
+
+	if (accessibility)
+		await ensurePackages(['eslint-plugin-jsx-a11y']);
 
 	const [pluginReact, pluginReactHooks, pluginPetal, parserTs] = await Promise.all([
 		interopDefault(import('@eslint-react/eslint-plugin')),
@@ -40,6 +44,8 @@ export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrid
 				'react-hooks': pluginReactHooks,
 				'react-hooks-extra': plugins['@eslint-react/hooks-extra'],
 				'react-naming-convention': plugins['@eslint-react/naming-convention'],
+
+				...accessibility ? { 'jsx-a11y': await interopDefault(import('eslint-plugin-jsx-a11y')) } : {},
 			},
 		},
 		{
@@ -139,13 +145,14 @@ export async function react(options: OptionsTypeScriptWithTypes & OptionsOverrid
 				'react/prefer-shorthand-boolean': 'warn',
 				'react/prefer-shorthand-fragment': 'warn',
 
+				...accessibility ? (await interopDefault(import('eslint-plugin-jsx-a11y'))).flatConfigs.recommended.rules : {},
+
 				...isTypeAware
 					? {
 							'react/no-leaked-conditional-rendering': 'warn',
 						}
 					: {},
 
-				// overrides
 				...overrides,
 			},
 		},

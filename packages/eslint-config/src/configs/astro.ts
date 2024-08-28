@@ -1,14 +1,21 @@
 import type {
+	OptionsAccessibility,
 	OptionsFiles,
 	OptionsOverrides,
 	OptionsStylistic,
 	TypedFlatConfigItem,
 } from '../types';
-import { interopDefault } from '../utils';
+import { ensurePackages, interopDefault } from '../utils';
 import { GLOB_ASTRO } from '../globs';
+import globals from 'globals';
 
-export async function astro(options: OptionsOverrides & OptionsFiles & OptionsStylistic = {}): Promise<TypedFlatConfigItem[]> {
-	const { files = [GLOB_ASTRO], overrides = {}, stylistic = true } = options;
+export async function astro(options: OptionsOverrides & OptionsFiles & OptionsStylistic & OptionsAccessibility = {}): Promise<TypedFlatConfigItem[]> {
+	const { files = [GLOB_ASTRO], overrides = {}, stylistic = true, accessibility = false } = options;
+
+	await ensurePackages(['eslint-plugin-astro']);
+
+	if (accessibility)
+		await ensurePackages(['eslint-plugin-jsx-a11y']);
 
 	const [pluginAstro, parserAstro, parserTs] = await Promise.all([
 		interopDefault(import('eslint-plugin-astro')),
@@ -21,18 +28,24 @@ export async function astro(options: OptionsOverrides & OptionsFiles & OptionsSt
 			name: 'petal/astro/setup',
 			plugins: {
 				astro: pluginAstro,
+
+				...accessibility ? { 'jsx-a11y': await interopDefault(import('eslint-plugin-jsx-a11y')) } : {},
 			},
 		},
 		{
 			files,
 			languageOptions: {
-				globals: pluginAstro.environments.astro.globals,
+				globals: {
+					...pluginAstro.environments.astro.globals,
+					...globals.node,
+				},
 				parser: parserAstro,
 				parserOptions: {
 					extraFileExtensions: ['.astro'],
 					parser: parserTs,
 				},
 				sourceType: 'module',
+				ecmaVersion: 'latest'
 			},
 			name: 'petal/astro/rules',
 			processor: pluginAstro.processors['client-side-ts'],
@@ -43,7 +56,8 @@ export async function astro(options: OptionsOverrides & OptionsFiles & OptionsSt
 				'astro/no-deprecated-astro-fetchcontent': 'error',
 				'astro/no-deprecated-astro-resolve': 'error',
 				'astro/no-deprecated-getentrybyslug': 'error',
-				'astro/no-set-html-directive': 'off',
+				'astro/no-set-html-directive': 'error',
+				'astro/no-unused-css-selector': 'error',
 				'astro/no-unused-define-vars-in-style': 'error',
 				'astro/semi': 'off',
 				'astro/valid-compile': 'error',
@@ -56,6 +70,8 @@ export async function astro(options: OptionsOverrides & OptionsFiles & OptionsSt
 							'style/no-multiple-empty-lines': 'off',
 						}
 					: {},
+
+				...accessibility ? pluginAstro.configs['flat/jsx-a11y-recommended'][0].rules : {},
 
 				...overrides,
 			},

@@ -1,13 +1,16 @@
 import globals from 'globals';
-import type { OptionsFiles, OptionsHasTypeScript, OptionsOverrides, OptionsTypeScriptWithTypes, TypedFlatConfigItem } from '../types';
+import type { OptionsAccessibility, OptionsFiles, OptionsHasTypeScript, OptionsOverrides, OptionsTypeScriptWithTypes, TypedFlatConfigItem } from '../types';
 import { GLOB_JSX, GLOB_TSX } from '../globs';
 import { ensurePackages, interopDefault, toArray } from '../utils';
 
-export async function solid(options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles & OptionsTypeScriptWithTypes = {}): Promise<TypedFlatConfigItem[]> {
-	const { files = [GLOB_JSX, GLOB_TSX], overrides = {}, typescript = true } = options;
+export async function solid(options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles & OptionsTypeScriptWithTypes & OptionsAccessibility = {}): Promise<TypedFlatConfigItem[]> {
+	const { files = [GLOB_JSX, GLOB_TSX], overrides = {}, typescript = true, accessibility = false } = options;
 	await ensurePackages(['eslint-plugin-solid']);
 	const tsconfigPath = options?.tsconfigPath ? toArray(options.tsconfigPath) : undefined;
 	const isTypeAware = !!tsconfigPath;
+
+	if (accessibility)
+		await ensurePackages(['eslint-plugin-jsx-a11y']);
 
 	const [pluginSolid, parserTs] = await Promise.all([
 		interopDefault(import('eslint-plugin-solid')),
@@ -19,6 +22,8 @@ export async function solid(options: OptionsHasTypeScript & OptionsOverrides & O
 			name: 'petal/solid/setup',
 			plugins: {
 				solid: pluginSolid,
+
+				...accessibility ? { 'jsx-a11y': await interopDefault(import('eslint-plugin-jsx-a11y')) } : {},
 			},
 		},
 		{
@@ -39,23 +44,14 @@ export async function solid(options: OptionsHasTypeScript & OptionsOverrides & O
 			},
 			name: 'petal/solid/rules',
 			rules: {
-				// reactivity
 				'solid/components-return-once': 'warn',
-				'solid/event-handlers': ['error', {
-					// if true, don't warn on ambiguously named event handlers like `onclick` or `onchange`
-					ignoreCase: false,
-					// if true, warn when spreading event handlers onto JSX. Enable for Solid < v1.6.
-					warnOnSpread: false,
-				}],
-				// these rules are mostly style suggestions
+				'solid/event-handlers': ['error', { ignoreCase: false, warnOnSpread: false }],
 				'solid/imports': 'error',
-				// identifier usage is important
 				'solid/jsx-no-duplicate-props': 'error',
 				'solid/jsx-no-script-url': 'error',
 				'solid/jsx-no-undef': 'error',
 				'solid/jsx-uses-vars': 'error',
 				'solid/no-destructure': 'error',
-				// security problems
 				'solid/no-innerhtml': ['error', { allowStatic: true }],
 				'solid/no-react-deps': 'error',
 				'solid/no-react-specific-props': 'error',
@@ -64,13 +60,17 @@ export async function solid(options: OptionsHasTypeScript & OptionsOverrides & O
 				'solid/reactivity': 'warn',
 				'solid/self-closing-comp': 'error',
 				'solid/style-prop': ['error', { styleProps: ['style', 'css'] }],
+				
+				...accessibility ? (await interopDefault(import('eslint-plugin-jsx-a11y'))).flatConfigs.recommended.rules : {},
+
 				...typescript
 					? {
 							'solid/jsx-no-undef': ['error', { typescriptEnabled: true }],
 							'solid/no-unknown-namespaces': 'off',
 						}
 					: {},
-				// overrides
+
+				
 				...overrides,
 			},
 		},

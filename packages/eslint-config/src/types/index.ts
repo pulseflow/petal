@@ -16,7 +16,22 @@ export type TypedFlatConfigItem = Omit<InternalFlatConfig, 'plugins'> & {
 	plugins?: Record<string, any>;
 };
 
-export interface OptionsVue extends OptionsOverrides {
+export interface OptionsAccessibility {
+	/**
+	 * Enable accessibility rules.
+	 *
+	 * Requires installing:
+	 * - `eslint-plugin-jsx-a11y` on JSX
+	 * - `eslint-plugin-vuejs-accessibility` on Vue
+	 *
+	 * @see https://github.com/jsx-eslint/eslint-plugin-jsx-a11y
+	 * @see https://github.com/vue-a11y/eslint-plugin-vuejs-accessibility
+	 * @default false
+	 */
+	accessibility?: boolean;
+}
+
+export interface OptionsVue extends OptionsOverrides, OptionsAccessibility {
 	/**
 	 * Create virtual files for Vue SFC blocks to enable linting.
 	 *
@@ -35,17 +50,6 @@ export interface OptionsVue extends OptionsOverrides {
 	 * @default 3
 	 */
 	vueVersion?: 2 | 3;
-
-	/**
-	 * Enable Vue accessibility rules.
-	 *
-	 * Requires installing:
-	 * - `eslint-plugin-vuejs-accessibility`
-	 *
-	 * @see https://github.com/vue-a11y/eslint-plugin-vuejs-accessibility
-	 * @default false
-	 */
-	accessibility?: boolean;
 }
 
 export interface OptionsGitignore {
@@ -397,7 +401,7 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
 	 * @see https://github.com/solidjs-community/eslint-plugin-solid
 	 * @default auto-detect based on the dependencies
 	 */
-	solid?: boolean | OptionsOverrides;
+	solid?: boolean | OptionsOverrides & OptionsAccessibility;
 
 	/**
 	 * Enable React rules.
@@ -410,7 +414,7 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
 	 * @see https://www.npmjs.com/package/eslint-plugin-react-hooks
 	 * @default auto-detect based on the dependences
 	 */
-	react?: boolean | OptionsOverrides;
+	react?: boolean | OptionsOverrides & OptionsAccessibility;
 
 	/**
 	 * Enable svelte rules.
@@ -432,7 +436,7 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
 	 * @see https://ota-meshi.github.io/eslint-plugin-astro/
 	 * @default auto-detect based on the dependencies
 	 */
-	astro?: boolean | OptionsOverrides;
+	astro?: boolean | OptionsOverrides & OptionsAccessibility;
 
 	/**
 	 * Enable JSONC support.
@@ -461,11 +465,8 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
 	/**
 	 * Enable JSON schema validation support.
 	 *
-	 * Requires installing:
-	 * - `eslint-plugin-json-schema-validator`
-	 *
 	 * @see https://ota-meshi.github.io/eslint-plugin-json-schema-validator/
-	 * @default false
+	 * @default true
 	 */
 	schema?: boolean | OptionsOverrides;
 

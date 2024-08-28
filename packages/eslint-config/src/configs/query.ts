@@ -21,6 +21,7 @@ export async function query(options: OptionsOverrides & OptionsFiles = {}): Prom
 				'query/exhaustive-deps': 'error',
 				'query/no-rest-destructuring': 'error',
 				'query/stable-query-client': 'error',
+				'query/no-unstable-deps': 'error',
 
 				...overrides,
 			},
