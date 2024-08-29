@@ -4,6 +4,9 @@ export default defineBuildConfig({
 	entries: [
 		'src/index',
 		'src/fetch',
+		'src/debug',
+		'src/error',
+		'src/core',
 	],
 	declaration: true,
 	clean: true,

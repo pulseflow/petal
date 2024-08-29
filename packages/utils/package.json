@@ -28,6 +28,18 @@
 			"import": "./dist/fetch.mjs",
 			"require": "./dist/fetch.cjs"
 		},
+		"./error": {
+			"import": "./dist/error.mjs",
+			"require": "./dist/error.cjs"
+		},
+		"./debug": {
+			"import": "./dist/debug.mjs",
+			"require": "./dist/debug.cjs"
+		},
+		"./core": {
+			"import": "./dist/core.mjs",
+			"require": "./dist/core.cjs"
+		},
 		"./package.json": "./package.json"
 	},
 	"main": "./dist/index.cjs",

@@ -2,7 +2,7 @@ export interface OptionsGitignore {
 	/**
 	 * Path to `.gitignore` files, or files with compatible formats like `.eslintignore`.
 	 *
-	 * @default [`${CWD}.gitignore`]
+	 * @default [`.gitignore`] // or findUpSync('.gitignore')
 	 */
 	files?: string[];
 
@@ -22,4 +22,11 @@ export interface OptionsGitignore {
 	 * @default false
 	 */
 	root?: boolean;
+
+	/**
+	 * Current working directory, used to resolve relative paths.
+	 *
+	 * @default process.cwd()
+	 */
+	cwd?: string;
 }

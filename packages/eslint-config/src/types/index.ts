@@ -17,6 +17,7 @@ import type { StylisticConfig } from './configs/stylistic';
 import type { OptionsJsonc, OptionsToml, OptionsYaml } from './configs/formats';
 import type { OptionsMarkdown } from './configs/markdown';
 import type { OptionsSchema } from './configs/schema';
+import type { OptionsUnicorn } from './configs/unicorn';
 
 export type * from './prettier';
 export type * from './configs';
@@ -77,6 +78,14 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
 	 * @default true
 	 */
 	jsx?: boolean;
+
+	/**
+	 * Enable `eslint-plugin-unicorn` support.
+	 *
+	 * @see https://github.com/sindresorhus/eslint-plugin-unicorn
+	 * @default true
+	 */
+	unicorn?: boolean | OptionsUnicorn;
 
 	/**
 	 * Enable Vitest support.

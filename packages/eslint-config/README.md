@@ -13,6 +13,7 @@
   - sorted imports, dangling commas
   - single quotes, semicolons
   - uses eslint [stylistic]
+- supports `eslint` v9.5+
 
 ## usage
 

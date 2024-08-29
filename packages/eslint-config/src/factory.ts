@@ -36,9 +36,7 @@ import {
 } from './configs';
 import { getOverrides, isInEditorEnv, resolveSubOptions } from './utils';
 
-const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
-	'files',
-	'ignores',
+const flatConfigProps = [
 	'languageOptions',
 	'linterOptions',
 	'name',
@@ -46,7 +44,7 @@ const flatConfigProps: (keyof TypedFlatConfigItem)[] = [
 	'processor',
 	'rules',
 	'settings',
-];
+] satisfies (keyof TypedFlatConfigItem)[];
 
 const VUE_PACKAGES = ['@slidev/cli', 'nuxt', 'vitepress', 'vue'];
 const SOLID_PACKAGES = ['solid-js', 'solid-refresh', 'vite-plugin-solid'];
@@ -72,7 +70,7 @@ export const defaultPluginRenaming: Record<string, string> = {
 	'yml': 'yaml',
 };
 
-type FactoryOptions = OptionsConfig & TypedFlatConfigItem;
+type FactoryOptions = OptionsConfig & Omit<TypedFlatConfigItem, 'files'>;
 type UserConfig = Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.Config[]>;
 type FactoryComposer = FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
 
@@ -92,6 +90,7 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 		solid: enableSolid = SOLID_PACKAGES.some(pkgSort),
 		svelte: enableSvelte = SVELTE_PACKAGES.some(pkgSort),
 		typescript: enableTypeScript = TYPESCRIPT_PACKAGES.some(pkgSort),
+		unicorn: enableUnicorn = true,
 		vue: enableVue = VUE_PACKAGES.some(pkgSort),
 	} = options;
 
@@ -121,15 +120,17 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 	const typescriptOptions = resolveSubOptions(options, 'typescript');
 	const tsconfigPath = 'tsconfigPath' in typescriptOptions ? typescriptOptions.tsconfigPath : undefined;
 
-	configs.push(ignores());
+	configs.push(ignores(options.ignores));
 	configs.push(javascript({ isInEditor, overrides: getOverrides(options, 'javascript') }));
 	configs.push(comments());
 	configs.push(node());
 	configs.push(jsdoc({ stylistic: stylisticOptions }));
 	configs.push(imports({ stylistic: stylisticOptions }));
-	configs.push(unicorn());
 	configs.push(command());
 	configs.push(perfectionist());
+
+	if (enableUnicorn)
+		configs.push(unicorn(enableUnicorn === true ? {} : enableUnicorn));
 
 	if (enableVue)
 		componentExts.push('vue');
@@ -245,6 +246,9 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 			options.formatters,
 			typeof stylisticOptions === 'boolean' ? {} : stylisticOptions,
 		));
+
+	if ('files' in options)
+		throw new Error('[@flowr/eslint-config]: the first argument should not contain the "files" property as options are supposed to be global. place it in a different config block instead.');
 
 	const fusedConfig = flatConfigProps.reduce((curr, key) => {
 		if (key in options)

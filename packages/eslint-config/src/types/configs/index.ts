@@ -21,3 +21,4 @@ export type * from './markdown';
 export type * from './schema';
 export type * from './imports';
 export type * from './formats';
+export type * from './unicorn';
