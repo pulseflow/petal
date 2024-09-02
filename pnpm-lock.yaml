@@ -194,8 +194,8 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1(prettier@3.3.3)
       '@tanstack/eslint-plugin-query':
-        specifier: ^5.52.0
-        version: 5.52.0(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4)
+        specifier: ^5.53.0
+        version: 5.53.0(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4)
       '@types/eslint':
         specifier: ^9.6.1
         version: 9.6.1
@@ -234,7 +234,7 @@ importers:
         version: 6.9.0(eslint@9.9.1(jiti@1.21.6))
       eslint-plugin-react-hooks:
         specifier: next
-        version: 5.1.0-rc-68dbd84b-20240812(eslint@9.9.1(jiti@1.21.6))
+        version: 5.1.0-rc-e56f4ae3-20240830(eslint@9.9.1(jiti@1.21.6))
       eslint-plugin-solid:
         specifier: ^0.14.2
         version: 0.14.2(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4)
@@ -1317,8 +1317,8 @@ packages:
     peerDependencies:
       eslint: ^9.9.1
 
-  '@tanstack/eslint-plugin-query@5.52.0':
-    resolution: {integrity: sha512-i02fOM3TRURI46AswPNlKb4Gwu+/mAPssI+pVu0AifA7/qzOJRgco17vdqjq/VgChKLLIltd9/KI4MCJFFfWEw==}
+  '@tanstack/eslint-plugin-query@5.53.0':
+    resolution: {integrity: sha512-Q3WgvK2YTGc3h5EaktDouRkKBPGl3QQFLPZBagpBa6zD70PiNoDY72wWrX9T4yKClMmSulAa0wg5Nj3LVXGkEw==}
     peerDependencies:
       eslint: ^9.9.1
 
@@ -2252,8 +2252,8 @@ packages:
       typescript:
         optional: true
 
-  eslint-plugin-react-hooks@5.1.0-rc-68dbd84b-20240812:
-    resolution: {integrity: sha512-4TYlNy88XzkL2JYCIHjQv+sJ7tQuqkRNeTp0py78arVCVXK4I8MA/Z3DffxH5KSeC7PcagmBnVHww7tEpbToZA==}
+  eslint-plugin-react-hooks@5.1.0-rc-e56f4ae3-20240830:
+    resolution: {integrity: sha512-w+VTy81b3KCQYWhe2Ux/kVqhiyqieaWbHfPlSwU8sKLeHOPl2LPlCn1wWRJE7KMb5/bkrOtAyWrwhlasqUsePA==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^9.9.1
@@ -5312,7 +5312,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@tanstack/eslint-plugin-query@5.52.0(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4)':
+  '@tanstack/eslint-plugin-query@5.53.0(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4)':
     dependencies:
       '@typescript-eslint/utils': 8.3.0(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4)
       eslint: 9.9.1(jiti@1.21.6)
@@ -6620,7 +6620,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-react-hooks@5.1.0-rc-68dbd84b-20240812(eslint@9.9.1(jiti@1.21.6)):
+  eslint-plugin-react-hooks@5.1.0-rc-e56f4ae3-20240830(eslint@9.9.1(jiti@1.21.6)):
     dependencies:
       eslint: 9.9.1(jiti@1.21.6)
 
