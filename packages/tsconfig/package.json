@@ -1,6 +1,6 @@
 {
 	"name": "@flowr/tsconfig",
-	"version": "4.0.0",
+	"version": "4.0.1",
 	"description": "Common TSConfigs in Petal standardized projects",
 	"author": "Petal Contributors",
 	"license": "MIT",
