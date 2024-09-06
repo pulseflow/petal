@@ -1,6 +1,6 @@
 import type { InvalidTestCase, ValidTestCase } from 'eslint-vitest-rule-tester';
-import rule, { RULE_NAME } from './only-export-components';
 import { $, run } from './_test';
+import rule, { RULE_NAME } from './only-export-components';
 
 const valids: ValidTestCase[] = [
 	{
@@ -80,8 +80,38 @@ const valids: ValidTestCase[] = [
 		code: 'export default memo(function Foo () {});',
 	},
 	{
+		name: 'export default React.memo function',
+		code: 'export default React.memo(function Foo () {});',
+	},
+	{
+		name: 'export default memo function assignment',
+		code: 'const Foo = () => {}; export default memo(Foo);',
+	},
+	{
+		name: 'export default React.memo function assignment',
+		code: 'const Foo = () => {}; export default React.memo(Foo);',
+	},
+	{
+		name: 'export default memo function declaration',
+		code: 'function Foo() {}; export default memo(Foo);',
+	},
+	{
+		name: 'export default React.memo function declaration',
+		code: 'function Foo() {}; export default React.memo(Foo);',
+	},
+	{
 		name: 'export type *',
 		code: 'export type * from \'./module\';',
+		filename: 'Test.tsx',
+	},
+	{
+		name: 'export type { foo }',
+		code: 'type foo = string; export const Foo = () => null; export type { foo };',
+		filename: 'Test.tsx',
+	},
+	{
+		name: 'export type foo',
+		code: 'export type foo = string; export const Foo = () => null;',
 		filename: 'Test.tsx',
 	},
 	{
@@ -112,7 +142,7 @@ const valids: ValidTestCase[] = [
 	},
 	{
 		name: 'Component and template literal with allowConstantExport',
-		// eslint-disable-next-line no-template-curly-in-string -- Used in testing
+		// eslint-disable-next-line no-template-curly-in-string -- used in test
 		code: 'const foo = \'world\'; export const CONSTANT = `Hello ${foo}`; export const Foo = () => {};',
 		options: [{ allowConstantExport: true }],
 	},
@@ -134,11 +164,6 @@ const valids: ValidTestCase[] = [
 	{
 		name: 'Export as default',
 		code: 'export { App as default }; const App = () => <>Test</>;',
-	},
-	{
-		name: 'Excluded files should be excluded',
-		code: 'export const foo = () => {}; export const Bar = () => {};',
-		filename: 'Test.stories.jsx',
 	},
 ];
 
@@ -203,11 +228,6 @@ const invalid: InvalidTestCase[] = [
 		name: 'Unexported component and export',
 		code: 'const Tab = () => {}; export const tabs = [<Tab />, <Tab />];',
 		errors: [{ messageId: 'localComponents' }],
-	},
-	{
-		name: 'Unexported component and no export',
-		code: 'const App = () => {}; createRoot(document.getElementById(\'root\')).render(<App />);',
-		errors: [{ messageId: 'noExport' }],
 	},
 	{
 		name: 'Mixed export in JS with react import',

@@ -1,6 +1,6 @@
-import type { RuleFix, RuleFixer, RuleListener } from '@typescript-eslint/utils/ts-eslint';
 import type { TSESTree } from '@typescript-eslint/utils';
 import type { JSONSchema4 } from '@typescript-eslint/utils/json-schema';
+import type { RuleFix, RuleFixer, RuleListener } from '@typescript-eslint/utils/ts-eslint';
 import { createEslintRule } from '../utils';
 
 export const RULE_NAME = 'consistent-list-newline';
@@ -82,7 +82,7 @@ export default createEslintRule<Options, MessageIds>({
 			return currentContent.match(/(?:,|;)$/) ? undefined : ',';
 		}
 
-		function hasComments(current: TSESTree.Node): boolean {
+		const hasComments = (current: TSESTree.Node): boolean => {
 			let program: TSESTree.Node = current;
 			while (program.type !== 'Program')
 				program = program.parent;
@@ -92,7 +92,7 @@ export default createEslintRule<Options, MessageIds>({
 				const cr = c.range;
 				return (cr[0] > curr[0] && cr[1] < curr[1]);
 			});
-		}
+		};
 
 		function check(
 			node: TSESTree.Node,

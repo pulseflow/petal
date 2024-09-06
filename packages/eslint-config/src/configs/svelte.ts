@@ -1,6 +1,6 @@
+import { GLOB_SVELTE } from '../globs';
 import { ensurePackages, interopDefault } from '../utils';
 import type { OptionsSvelte, TypedFlatConfigItem } from '../types';
-import { GLOB_SVELTE } from '../globs';
 
 export async function svelte(options: OptionsSvelte = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_SVELTE], overrides = {}, stylistic = true } = options;
@@ -42,6 +42,7 @@ export async function svelte(options: OptionsSvelte = {}): Promise<TypedFlatConf
 					vars: 'all',
 					varsIgnorePattern: '^(\\$\\$Props$|\\$\\$Events$|\\$\\$Slots$)',
 				}],
+				'perfectionist/sort-svelte-attributes': ['error', { order: 'asc', type: 'natural' }],
 
 				'svelte/comment-directive': 'error',
 				'svelte/no-at-debug-tags': 'warn',

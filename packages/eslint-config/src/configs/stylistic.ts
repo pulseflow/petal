@@ -1,5 +1,5 @@
-import type { OptionsOverrides, StylisticConfig, TypedFlatConfigItem } from '../types';
 import { interopDefault } from '../utils';
+import type { OptionsOverrides, StylisticConfig, TypedFlatConfigItem } from '../types';
 
 export const StylisticConfigDefaults: StylisticConfig = {
 	indent: 'tab',
@@ -41,6 +41,7 @@ export async function stylistic(options: StylisticOptions = {}): Promise<TypedFl
 			rules: {
 				...config.rules,
 
+				'petal/consistent-chaining': 'error',
 				'petal/consistent-list-newline': 'error',
 
 				...opinionated

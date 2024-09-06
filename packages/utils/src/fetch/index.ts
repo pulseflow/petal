@@ -1,9 +1,9 @@
-import type { Options } from './request';
+import { proxy } from './chaining';
+import { toDefault } from './finalizers';
 import { RequestBuilder } from './request';
 import type { RequestProxy } from './chaining';
-import { proxy } from './chaining';
 import type { WrappedResponse } from './finalizers';
-import { toDefault } from './finalizers';
+import type { Options } from './request';
 
 declare global {
 	interface Response {

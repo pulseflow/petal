@@ -7,8 +7,8 @@ export {
 	InputError,
 	NotAllowedError,
 	NotFoundError,
-	NotModifiedError,
 	NotImplementedError,
+	NotModifiedError,
 	ServiceUnavailableError,
 } from './common';
 export { CustomErrorBase } from './CustomErrorBase';

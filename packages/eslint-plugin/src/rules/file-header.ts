@@ -18,6 +18,8 @@ export type Options = [{
 	linebreak?: 'unix' | 'windows';
 }];
 
+const defaultOptions: Options = [{}];
+
 // Adapted from https://codeberg.org/rini/eslint-plugin-simple-header
 
 const validSyntax: JSONSchema4[] = [
@@ -135,8 +137,8 @@ export default createEslintRule<Options, MessageIds>({
 			missingHeader: '',
 		},
 	},
-	defaultOptions: [{}],
-	create: (context, [options]) => {
+	defaultOptions,
+	create: (context, [options = {}] = defaultOptions) => {
 		const syntax = options.syntax ?? ['/*', '*/'];
 		const decor = options.decor ?? (Array.isArray(syntax) ? ['\n', ' * ', '\n '] : ' ');
 		const templates: TemplatesSyntax = { year: ['\\d{4}', `${new Date().getFullYear()}`], ...options.templates };

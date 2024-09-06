@@ -1,10 +1,8 @@
 import { isPackageExists } from 'local-pkg';
 import { GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_GRAPHQL, GLOB_HTML, GLOB_LESS, GLOB_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_SVG, GLOB_XML } from '../globs';
 import { ensurePackages, interopDefault, isPackageInScope, parserPlain } from '../utils';
-import type { OptionsFormatters, StylisticConfig, TypedFlatConfigItem, VendoredPrettierOptions } from '../types';
 import { StylisticConfigDefaults } from './stylistic';
-
-type VendoredPrettierXMLOptions = Pick<VendoredPrettierOptions, 'xmlQuoteAttributes' | 'xmlSelfClosingSpace' | 'xmlSortAttributesByKey' | 'xmlWhitespaceSensitivity'>;
+import type { OptionsFormatters, StylisticConfig, TypedFlatConfigItem, VendoredPrettierOptions, VendoredPrettierXMLOptions } from '../types';
 
 export async function formatters(options: OptionsFormatters | true = {}, stylistic: StylisticConfig = {}): Promise<TypedFlatConfigItem[]> {
 	const isXmlInScope = isPackageInScope('@prettier/plugin-xml');
@@ -283,6 +281,12 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 				],
 			},
 		});
+
+	if (options.prettierConfigs)
+		options.prettierConfigs({
+			defaultOptions: prettierOptions,
+			defaultXmlOptions: prettierXmlOptions,
+		}).forEach(i => configs.push(i));
 
 	return configs;
 }

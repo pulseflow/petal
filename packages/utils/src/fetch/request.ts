@@ -5,10 +5,10 @@ import { isString } from '../core';
 import { toTuples } from './arguments';
 import { DEF_REFDIR_COUNT, DEF_TIMEOUT } from './const';
 import { fetchWrapper } from './fetch';
-import type { RecordOrTuples } from './arguments';
 import * as fin from './finalizers';
-import type { Method, WithStatus } from './const';
+import type { RecordOrTuples } from './arguments';
 import type { RequestProxy } from './chaining';
+import type { Method, WithStatus } from './const';
 import type { Finalizer } from './finalizers';
 
 export type Options = RequestInit & { encodeQuery?: boolean };

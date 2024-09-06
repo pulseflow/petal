@@ -1,3 +1,13 @@
+import type { TypedFlatConfigItem } from '..';
+import type { VendoredPrettierOptions } from '../prettier';
+
+export type VendoredPrettierXMLOptions = Pick<VendoredPrettierOptions, 'xmlQuoteAttributes' | 'xmlSelfClosingSpace' | 'xmlSortAttributesByKey' | 'xmlWhitespaceSensitivity'>;
+
+export interface PrettierConfigsOptions {
+	defaultOptions: VendoredPrettierOptions;
+	defaultXmlOptions: VendoredPrettierXMLOptions;
+}
+
 export interface OptionsFormatters {
 	/**
 	 * Enable formatting support for CSS, Less, Sass, and SCSS
@@ -66,9 +76,16 @@ export interface OptionsFormatters {
 	 *
 	 * By default it's controlled by our own config.
 	 *
-	 * @default {}
+	 * @default undefined
 	 */
 	prettierOptions?: import('../prettier').VendoredPrettierOptions;
+
+	/**
+	 * Custom filetype-specific configurations for Prettier.
+	 *
+	 * @default undefined
+	 */
+	prettierConfigs?: (options: PrettierConfigsOptions) => TypedFlatConfigItem[];
 
 	/**
 	 * Custom options for dprint.

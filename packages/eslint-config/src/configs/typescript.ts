@@ -1,8 +1,8 @@
 import process from 'node:process';
 import type { Linter } from 'eslint';
-import type { OptionsTypeScript, TypedFlatConfigItem } from '../types';
-import { GLOB_ASTRO_TS, GLOB_CJS, GLOB_DTS, GLOB_MARKDOWN, GLOB_TEST_TS, GLOB_TS, GLOB_TSX } from '../globs';
+import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_TS, GLOB_TSX } from '../globs';
 import { interopDefault, renameRules } from '../utils';
+import type { OptionsTypeScript, TypedFlatConfigItem } from '../types';
 
 export async function typescript(options: OptionsTypeScript = {}): Promise<TypedFlatConfigItem[]> {
 	const { componentExts = [], overrides = {}, overridesTypeAware = {}, parserOptions = {}, type = 'app' } = options;
@@ -148,29 +148,5 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
 					},
 				}]
 			: [],
-		{
-			files: [GLOB_DTS],
-			name: 'petal/typescript/disables/dts',
-			rules: {
-				'eslint-comments/no-unlimited-disable': 'off',
-				'import/no-duplicates': 'off',
-				'no-restricted-syntax': 'off',
-				'unused-imports/no-unused-vars': 'off',
-			},
-		},
-		{
-			files: [GLOB_TEST_TS],
-			name: 'petal/typescript/disables/tests',
-			rules: {
-				'no-unused-expressions': 'off',
-			},
-		},
-		{
-			files: [GLOB_CJS],
-			name: 'petal/typescript/disables/cjs',
-			rules: {
-				'ts/no-require-imports': 'off',
-			},
-		},
 	];
 }

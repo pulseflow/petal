@@ -1,7 +1,7 @@
 import { isPackageExists } from 'local-pkg';
-import type { OptionsReact, TypedFlatConfigItem } from '../types';
 import { GLOB_SRC } from '../globs';
 import { ensurePackages, interopDefault, toArray } from '../utils';
+import type { OptionsReact, TypedFlatConfigItem } from '../types';
 
 const ReactRefreshAllowConstantExportPackages = ['vite'];
 const RemixPackages = ['@remix-run/node', '@remix-run/react', '@remix-run/serve', '@remix-run/dev'];

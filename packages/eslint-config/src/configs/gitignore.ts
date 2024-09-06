@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import process from 'node:process';
-import path from 'pathe';
-import { findUpSync } from 'find-up-simple';
-import type { OptionsGitignore, TypedFlatConfigItem } from '../types';
-import { toArray } from '../utils';
 import { convertIgnorePatternToMinimatch } from '@eslint/compat';
+import { findUpSync } from 'find-up-simple';
+import path from 'pathe';
+import { toArray } from '../utils';
+import type { OptionsGitignore, TypedFlatConfigItem } from '../types';
 
 export async function gitignore(options: OptionsGitignore = {}): Promise<TypedFlatConfigItem[]> {
 	const ignores: string[] = [];
@@ -24,7 +24,7 @@ export async function gitignore(options: OptionsGitignore = {}): Promise<TypedFl
 			.map(l => convertIgnorePatternToMinimatch(l))
 			.map(g => relativeMinimatch(g, relativePath, cwd))
 			.filter(g => g !== null);
-		
+
 		ignores.push(...globs);
 	});
 
@@ -39,8 +39,8 @@ export async function gitignore(options: OptionsGitignore = {}): Promise<TypedFl
 	];
 }
 
-function relativeMinimatch(pattern: string, relativePath: string, cwd = process.cwd()) {
-	if (['', '.', '/'].includes(relativePath))
+function relativeMinimatch(pattern: string, relativePath: string, cwd = process.cwd()): string | null {
+	if (new Set(['', '.', '/']).has(relativePath))
 		return pattern;
 
 	const negated = pattern.startsWith('!') ? '!' : ':';

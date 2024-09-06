@@ -1,6 +1,6 @@
-import type { OptionsJsonc, TypedFlatConfigItem } from '../types';
 import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs';
 import { interopDefault } from '../utils';
+import type { OptionsJsonc, TypedFlatConfigItem } from '../types';
 
 export async function jsonc(options: OptionsJsonc = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_JSON, GLOB_JSON5, GLOB_JSONC], overrides = {}, stylistic = true } = options;

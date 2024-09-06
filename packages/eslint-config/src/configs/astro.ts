@@ -1,6 +1,6 @@
-import type { OptionsAstro, TypedFlatConfigItem } from '../types';
-import { ensurePackages, interopDefault } from '../utils';
 import { GLOB_ASTRO } from '../globs';
+import { ensurePackages, interopDefault } from '../utils';
+import type { OptionsAstro, TypedFlatConfigItem } from '../types';
 
 export async function astro(options: OptionsAstro = {}): Promise<TypedFlatConfigItem[]> {
 	const { accessibility = false, files = [GLOB_ASTRO], overrides = {}, stylistic = true } = options;
@@ -51,6 +51,8 @@ export async function astro(options: OptionsAstro = {}): Promise<TypedFlatConfig
 				'astro/no-unused-define-vars-in-style': 'error',
 				'astro/semi': 'off',
 				'astro/valid-compile': 'error',
+
+				'perfectionist/sort-astro-attributes': ['error', { order: 'asc', type: 'natural' }],
 
 				...stylistic
 					? {

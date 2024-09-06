@@ -22,5 +22,5 @@ it('assert', () => {
 	expect(assert.isNumber('100')).toBeFalsy();
 
 	expect(assert.isObject({})).toBeTruthy();
-	expect(assert.isObject(Object())).toBeTruthy();
+	expect(assert.isObject(new Object())).toBeTruthy();
 });

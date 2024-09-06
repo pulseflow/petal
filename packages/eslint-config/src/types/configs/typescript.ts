@@ -1,8 +1,8 @@
 import type { TypedFlatConfigItem } from '..';
-import type { OptionsOverrides } from './overrides';
 import type { OptionsComponentExts } from './components';
 import type { OptionsProjectType } from './editor';
 import type { OptionsFiles } from './files';
+import type { OptionsOverrides } from './overrides';
 
 export interface OptionsTypeScriptParserOptions extends OptionsOverrides {
 	/**

@@ -1,4 +1,4 @@
-import { p as P, createSingletonPromise, sleep } from './promise';
+import { createSingletonPromise, p as P, sleep } from './promise';
 
 const timeout = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 

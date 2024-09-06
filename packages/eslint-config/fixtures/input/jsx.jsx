@@ -6,7 +6,8 @@ export function HelloWorld({
     return null};
 
       // TODO: Don't use random in render
-  let num = Math.floor (Math.random() * 1E+7).toString()
+  let num = Math
+  .floor (Math.random() * 1E+7).toString()
   .replace(/\.\d+/ig, "")
 
   return <div className='HelloWorld' title={`You are visitor number ${ num }`} onMouseOver={onMouseOver}>

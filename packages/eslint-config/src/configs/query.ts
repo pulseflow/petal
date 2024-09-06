@@ -1,6 +1,6 @@
-import type { OptionsQuery, TypedFlatConfigItem } from '../types';
 import { GLOB_SRC } from '../globs';
 import { ensurePackages, interopDefault } from '../utils';
+import type { OptionsQuery, TypedFlatConfigItem } from '../types';
 
 export async function query(options: OptionsQuery = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_SRC], overrides = {} } = options;

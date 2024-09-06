@@ -35,8 +35,8 @@ export function proxy<T>(request: RequestBuilder<T>, prop?: keyof RequestBuilder
 
 	return new Proxy<RequestProxy<T>>((() => {}) as any, {
 		get(_target, prop: keyof RequestBuilder<T>) {
-			const direct: Set<keyof RequestBuilder<T>> = new Set(['send', 'clone']);
-			const promise: Set<Followup> = new Set(['then', 'catch', 'finally']);
+			const direct: Set<keyof RequestBuilder<T>> = new Set(['clone', 'send']);
+			const promise: Set<Followup> = new Set(['catch', 'finally', 'then']);
 
 			if (direct.has(prop))
 				return request[prop].bind(request);

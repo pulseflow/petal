@@ -39,7 +39,8 @@ export const GLOB_HTML = '**/*.htm?(l)';
 export const GLOB_BIN = '**/bin/**/*';
 export const GLOB_BIN_SRC = `**/bin.${GLOB_SRC_EXT}`;
 export const GLOB_SCRIPTS = `**/scripts/${GLOB_SRC}`;
-export const GLOB_CLI = `cli.${GLOB_SRC_EXT}`;
+export const GLOB_CLI = `cli/${GLOB_SRC}`;
+export const GLOB_CLI_SRC = `cli.${GLOB_SRC_EXT}`;
 
 // @keep-sorted
 export const GLOB_UNIT_TESTS = [

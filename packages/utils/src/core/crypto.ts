@@ -1,9 +1,9 @@
-import { decodeHex, encodeHex } from '@std/encoding/hex';
+import { decodeAscii85, encodeAscii85 } from '@std/encoding/ascii85';
 import { decodeBase32, encodeBase32 } from '@std/encoding/base32';
 import { decodeBase58, encodeBase58 } from '@std/encoding/base58';
 import { decodeBase64, encodeBase64 } from '@std/encoding/base64';
 import { decodeBase64Url, encodeBase64Url } from '@std/encoding/base64url';
-import { decodeAscii85, encodeAscii85 } from '@std/encoding/ascii85';
+import { decodeHex, encodeHex } from '@std/encoding/hex';
 import nacl from 'tweetnacl';
 
 export type BufferLike = Uint8Array | ArrayBuffer | string;

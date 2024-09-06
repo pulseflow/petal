@@ -1,7 +1,7 @@
 import globals from 'globals';
-import type { OptionsSolid, TypedFlatConfigItem } from '../types';
 import { GLOB_JSX, GLOB_TSX } from '../globs';
 import { ensurePackages, interopDefault, toArray } from '../utils';
+import type { OptionsSolid, TypedFlatConfigItem } from '../types';
 
 export async function solid(options: OptionsSolid = {}): Promise<TypedFlatConfigItem[]> {
 	const { accessibility = false, files = [GLOB_JSX, GLOB_TSX], overrides = {}, typescript = true } = options;

@@ -1,6 +1,6 @@
 import { Duration } from 'luxon';
-import type { HumanDuration } from './time';
 import { durationToMilliseconds } from './time';
+import type { HumanDuration } from './time';
 
 describe('time', () => {
 	describe('humanDuration', () => {

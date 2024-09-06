@@ -1,5 +1,5 @@
-import type { TypedFlatConfigItem } from '../types';
 import { interopDefault } from '../utils';
+import type { TypedFlatConfigItem } from '../types';
 
 export async function comments(): Promise<TypedFlatConfigItem[]> {
 	return [

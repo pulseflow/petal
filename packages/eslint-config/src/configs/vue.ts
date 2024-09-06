@@ -1,7 +1,7 @@
 import { mergeProcessors } from 'eslint-merge-processors';
-import type { OptionsVue, TypedFlatConfigItem } from '../types';
 import { GLOB_VUE } from '../globs';
 import { ensurePackages, interopDefault } from '../utils';
+import type { OptionsVue, TypedFlatConfigItem } from '../types';
 
 export async function vue(options: OptionsVue = {}): Promise<TypedFlatConfigItem[]> {
 	const { accessibility = false, files = [GLOB_VUE], overrides = {}, stylistic = true, vueVersion = 3 } = options;
@@ -96,6 +96,7 @@ export async function vue(options: OptionsVue = {}): Promise<TypedFlatConfigItem
 						},
 
 				'node/prefer-global/process': 'off',
+				'perfectionist/sort-vue-attributes': ['error', { order: 'asc', type: 'natural' }],
 				'vue/block-order': ['error', {
 					order: ['script', 'template', 'style'],
 				}],

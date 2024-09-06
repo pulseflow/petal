@@ -1,5 +1,5 @@
 import { Flag } from './flag';
-import type { FlagType, Flags, UnknownOptionFlag } from './flag';
+import type { Flags, FlagType, UnknownOptionFlag } from './flag';
 
 export type OptionFlags = Record<string, UnknownOptionFlag>;
 type ParsedOptions<T extends OptionFlags> = readonly [Flags<T>, (readonly [string, Flag<string, FlagType, boolean, string | number | boolean | (string | number | boolean)[] | undefined>])[]];

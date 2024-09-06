@@ -2,8 +2,8 @@ import {
 	deserializeError as deserializeErrorInternal,
 	serializeError as serializeErrorInternal,
 } from 'serialize-error';
-import type { JsonObject } from '../../index';
 import { isError } from '../core';
+import type { JsonObject } from '../../index';
 
 /**
  * The serialized form of an Error.

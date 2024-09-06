@@ -41,8 +41,8 @@ if you still use some configuration from the legacy eslintrc format, you can use
 
 ```js
 // eslint.config.mjs
-import { defineConfig } from '@flowr/eslint-config';
 import { FlatCompat } from '@eslint/eslintrc';
+import { defineConfig } from '@flowr/eslint-config';
 
 const compat = new FlatCompat();
 
@@ -430,7 +430,7 @@ export default defineConfig()
 		// some configs before the main config
 	)
 	.override(
-		'petal/imports',
+		'petal/typescript',
 		{
 			rules: {
 				'import/order': ['error', { 'newlines-between': 'always' }],

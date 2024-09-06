@@ -1,7 +1,6 @@
 import globals from 'globals';
-import type { OptionsJavascript, TypedFlatConfigItem } from '../types';
-import { GLOB_CLI, GLOB_SCRIPTS } from '../globs';
 import { interopDefault } from '../utils';
+import type { OptionsJavascript, TypedFlatConfigItem } from '../types';
 
 export async function javascript(options: OptionsJavascript = {}): Promise<TypedFlatConfigItem[]> {
 	const { isInEditor = false, overrides = {} } = options;
@@ -88,7 +87,6 @@ export async function javascript(options: OptionsJavascript = {}): Promise<Typed
 				'no-iterator': 'error',
 				'no-labels': ['error', { allowLoop: false, allowSwitch: false }],
 				'no-lone-blocks': 'error',
-				'no-loss-of-precision': 'error',
 				'no-misleading-character-class': 'error',
 				'no-multi-str': 'error',
 				'no-new': 'error',
@@ -187,17 +185,6 @@ export async function javascript(options: OptionsJavascript = {}): Promise<Typed
 				'prefer-rest-params': 'error',
 				'prefer-spread': 'error',
 				'prefer-template': 'error',
-				'sort-imports': [
-					'error',
-					{
-						allowSeparatedGroups: false,
-						ignoreCase: false,
-						ignoreDeclarationSort: true,
-						ignoreMemberSort: false,
-						memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
-					},
-				],
-
 				'symbol-description': 'error',
 				'unicode-bom': ['error', 'never'],
 				'unused-imports/no-unused-imports': isInEditor ? 'off' : 'error',
@@ -217,13 +204,6 @@ export async function javascript(options: OptionsJavascript = {}): Promise<Typed
 				'yoda': ['error', 'never'],
 
 				...overrides,
-			},
-		},
-		{
-			files: [GLOB_SCRIPTS, GLOB_CLI],
-			name: 'petal/javascript/disables/cli',
-			rules: {
-				'no-console': 'off',
 			},
 		},
 	];

@@ -1,6 +1,6 @@
 import { isString } from '../core';
-import type { Awaitable } from '../types';
 import { SYM_STATUS } from './const';
+import type { Awaitable } from '../types';
 import type { WithStatus } from './const';
 
 async function statusWrapper<T>(fn: Awaitable<T>, status: number): Promise<WithStatus<T>> {

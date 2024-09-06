@@ -1,4 +1,4 @@
-import { CustomErrorBase, NotFoundError, assertError, isError } from './index';
+import { assertError, CustomErrorBase, isError, NotFoundError } from './index';
 
 const areErrors = [
 	{ name: 'e', message: '' },

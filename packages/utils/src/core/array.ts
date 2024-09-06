@@ -1,5 +1,5 @@
-import type { Arrayable, ExtractKeysByType, Nullable } from '../types';
 import { clamp } from './math';
+import type { Arrayable, ExtractKeysByType, Nullable } from '../types';
 
 /**
  * Convert an `Arrayable<T>` to an `Array<T>`.
@@ -249,7 +249,7 @@ export const max_map = <T, U>(arr: T[], fn: (a: T) => U): T => arr.reduce((a, b)
 export const min = <T>(arr: T[], prop: ExtractKeysByType<T, number>): number => Math.max(...arr.map(a => a[prop] as number));
 export const min_by = <T>(arr: T[], prop: ExtractKeysByType<T, number>): T => arr.reduce((a, b) => a[prop] < b[prop] ? a : b);
 export const min_map = <T, U>(arr: T[], fn: (a: T) => U): T => arr.reduce((a, b) => fn(a) < fn(b) ? a : b);
-export const zip = <T>(...arr: T[][]): T[][] => Array(max(arr, 'length')).fill(null).map((_, i) => arr.map(a => a[i]));
+export const zip = <T>(...arr: T[][]): T[][] => Array.from({ length: max(arr, 'length') }).fill(null).map((_, i) => arr.map(a => a[i]));
 export const get_dimension = (a: Arrayable<any>, d = 0): number => Array.isArray(a) ? get_dimension(a[0], d + 1) : d;
 
 export function group_by<T>(arr: T[], prop: keyof T): T[][] {

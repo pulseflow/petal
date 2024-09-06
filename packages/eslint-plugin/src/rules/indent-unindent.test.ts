@@ -1,5 +1,5 @@
-import rule, { RULE_NAME } from './indent-unindent';
 import { $, run } from './_test';
+import rule, { RULE_NAME } from './indent-unindent';
 
 run({
 	name: RULE_NAME,

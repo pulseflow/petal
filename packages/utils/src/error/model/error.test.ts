@@ -1,4 +1,4 @@
-import { NotModifiedError, deserializeError, serializeError, stringifyError } from '../../index';
+import { deserializeError, NotModifiedError, serializeError, stringifyError } from '../../index';
 
 class CustomError extends Error {
 	readonly customField: any;

@@ -1,16 +1,17 @@
 import type { ESLint, Linter } from 'eslint';
 import { version } from '../package.json';
+import consistentChaining from './rules/consistent-chaining';
+import consistentListNewline from './rules/consistent-list-newline';
+import fileHeader from './rules/file-header';
 import ifNewline from './rules/if-newline';
 import importDedupe from './rules/import-dedupe';
-import topLevelFunction from './rules/top-level-function';
-import noImportNodeModulesByPath from './rules/no-import-node-modules-by-path';
+import indentUnindent from './rules/indent-unindent';
 import noImportDist from './rules/no-import-dist';
+import noImportNodeModulesByPath from './rules/no-import-node-modules-by-path';
 import noOnlyTests from './rules/no-only-tests';
 import noTsExportEqual from './rules/no-ts-export-equal';
-import consistentListNewline from './rules/consistent-list-newline';
-import indentUnindent from './rules/indent-unindent';
 import onlyExportComponents from './rules/only-export-components';
-import fileHeader from './rules/file-header';
+import topLevelFunction from './rules/top-level-function';
 import type { RuleModule } from './utils';
 
 const plugin = {
@@ -20,6 +21,7 @@ const plugin = {
 	},
 	/// @keep-sorted
 	rules: {
+		'consistent-chaining': consistentChaining,
 		'consistent-list-newline': consistentListNewline,
 		'file-header': fileHeader,
 		'if-newline': ifNewline,

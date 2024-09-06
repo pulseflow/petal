@@ -2,8 +2,8 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 import { isPackageExists } from 'local-pkg';
 import type { Linter } from 'eslint';
-import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from './types';
 import type { Rules } from './index';
+import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from './types';
 
 const scopeUrl = fileURLToPath(new URL('.', import.meta.url));
 const isCwdInScope = isPackageExists('@flowr/eslint-config');

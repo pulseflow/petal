@@ -2,9 +2,13 @@ import { unindent } from '@flowr/utils';
 import { createEslintRule } from '../utils';
 
 export const RULE_NAME = 'indent-unindent';
-export type MessageIds = 'indent-unindent';
+export type MessageIds = 'indentUnindent';
 export type Options = [{
 	tags?: string[];
+}];
+
+const defaultOptions: Options = [{
+	tags: ['$', 'unindent', 'unIndent'],
 }];
 
 export default createEslintRule<Options, MessageIds>({
@@ -24,25 +28,27 @@ export default createEslintRule<Options, MessageIds>({
 						items: {
 							type: 'string',
 						},
+						default: defaultOptions[0].tags,
 					},
 				},
 				additionalProperties: false,
 			},
 		],
 		messages: {
-			'indent-unindent': 'Consistent indentation in unindent tag',
+			indentUnindent: 'Consistent indentation in unindent tag',
 		},
 	},
-	defaultOptions: [{}],
+	defaultOptions,
 	create: (context) => {
 		const { tags = ['$', 'unindent', 'unIndent'] } = context.options?.[0] ?? {};
+		const tagSet = new Set(tags);
 
 		return {
 			TaggedTemplateExpression: (node) => {
 				const id = node.tag;
 				if (!id || id.type !== 'Identifier')
 					return;
-				if (!tags.includes(id.name))
+				if (!tagSet.has(id.name))
 					return;
 				if (node.quasi.quasis.length !== 1)
 					return;
@@ -59,7 +65,7 @@ export default createEslintRule<Options, MessageIds>({
 				if (final !== value)
 					context.report({
 						node: quasi,
-						messageId: 'indent-unindent',
+						messageId: 'indentUnindent',
 						fix: fixer => fixer.replaceText(quasi, `\`${final}\``),
 					});
 			},

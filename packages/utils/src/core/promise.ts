@@ -1,7 +1,7 @@
 import pLimit from 'p-limit';
 
-import type { Fn } from '../types';
 import { remove } from './array';
+import type { Fn } from '../types';
 
 /**
  * Internal marker for filtered items

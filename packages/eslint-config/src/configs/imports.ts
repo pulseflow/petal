@@ -1,6 +1,5 @@
-import type { OptionsImports, TypedFlatConfigItem } from '../types';
 import { interopDefault } from '../utils';
-import { GLOB_BIN, GLOB_BIN_SRC } from '../globs';
+import type { OptionsImports, TypedFlatConfigItem } from '../types';
 
 export async function imports(options: OptionsImports = {}): Promise<TypedFlatConfigItem[]> {
 	const { stylistic = true } = options;
@@ -24,7 +23,6 @@ export async function imports(options: OptionsImports = {}): Promise<TypedFlatCo
 				'import/no-named-default': 'error',
 				'import/no-self-import': 'error',
 				'import/no-webpack-loader-syntax': 'error',
-				'import/order': 'error',
 
 				'petal/import-dedupe': 'error',
 				'petal/no-import-dist': 'error',
@@ -35,14 +33,6 @@ export async function imports(options: OptionsImports = {}): Promise<TypedFlatCo
 							'import/newline-after-import': ['error', { count: 1 }],
 						}
 					: {},
-			},
-		},
-		{
-			files: [GLOB_BIN, GLOB_BIN_SRC],
-			name: 'petal/imports/disables/bin',
-			rules: {
-				'petal/no-import-dist': 'off',
-				'petal/no-import-node-modules-by-path': 'off',
 			},
 		},
 	];

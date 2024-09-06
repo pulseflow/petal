@@ -1,5 +1,5 @@
-import type { OptionsUnicorn, TypedFlatConfigItem } from '../types';
 import { interopDefault } from '../utils';
+import type { OptionsUnicorn, TypedFlatConfigItem } from '../types';
 
 export async function unicorn(options: OptionsUnicorn = {}): Promise<TypedFlatConfigItem[]> {
 	const pluginUnicorn = await interopDefault(import('eslint-plugin-unicorn'));
@@ -15,7 +15,7 @@ export async function unicorn(options: OptionsUnicorn = {}): Promise<TypedFlatCo
 					? pluginUnicorn.configs['flat/recommended'].rules
 					: {
 							'unicorn/consistent-empty-array-spread': 'error',
-							'unicorn/consistent-function-scoping': 'error',
+							'unicorn/consistent-function-scoping': ['error', { checkArrowFunctions: false }],
 							'unicorn/error-message': 'error',
 							'unicorn/escape-case': 'error',
 							'unicorn/new-for-builtins': 'error',
