@@ -22,6 +22,7 @@
 	"sideEffects": false,
 	"exports": {
 		".": {
+			"import": "./dist/index.mjs",
 			"default": "./dist/index.mjs"
 		},
 		"./package.json": "./package.json"
@@ -30,12 +31,12 @@
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
 	"bin": {
-		"create-petal": "./bin/create-petal.mjs"
+		"create-petal": "./bin/index.js"
 	},
 	"files": [
 		"LICENSE",
 		"README.md",
-		"bin/**/*.mjs",
+		"bin/**/*.js",
 		"dist/**/*.cjs",
 		"dist/**/*.d.cts",
 		"dist/**/*.d.mts",
@@ -51,9 +52,17 @@
 		"stub": "unbuild --stub"
 	},
 	"dependencies": {
-		"consola": "^3.2.3"
+		"@astrojs/cli-kit": "^0.4.1",
+		"giget": "^1.2.3"
+	},
+	"devDependencies": {
+		"@flowr/utils": "workspace:^",
+		"strip-ansi": "^7.1.0",
+		"strip-json-comments": "^5.0.1",
+		"yargs": "^17.7.2"
 	},
 	"publishConfig": {
-		"access": "public"
+		"access": "public",
+		"provenance": true
 	}
 }
