@@ -1,13 +1,17 @@
-import { join, resolve } from 'node:path';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 import { execa } from 'execa';
 import fg from 'fast-glob';
 import fs from 'fs-extra';
+import { join, resolve } from 'pathe';
 import { afterAll, beforeAll, it } from 'vitest';
 import type { OptionsConfig, TypedFlatConfigItem } from '../src/types';
 
-beforeAll(async () => await fs.rm('./packages/eslint-config/_fixtures', { recursive: true, force: true }));
-afterAll(async () => await fs.rm('./packages/eslint-config/_fixtures', { recursive: true, force: true }));
+const fixturesDir = fileURLToPath(new URL('fixtures', import.meta.url));
+const outputDir = fileURLToPath(new URL('_fixtures', import.meta.url));
+
+beforeAll(async () => await fs.rm(outputDir, { recursive: true, force: true }));
+afterAll(async () => await fs.rm(outputDir, { recursive: true, force: true }));
 
 runWithConfig`js` ({
 	typescript: false,
@@ -91,11 +95,11 @@ runWithConfig`no-markdown-with-formatters` ({
 });
 
 function runWithConfig(name: TemplateStringsArray) {
-	return (configs: OptionsConfig, ...items: TypedFlatConfigItem[]) => {
+	return (configs: OptionsConfig = {}, ...items: TypedFlatConfigItem[]) => {
 		it.concurrent(name[0], async ({ expect }) => {
-			const from = resolve('./packages/eslint-config/fixtures/input');
-			const output = resolve('./packages/eslint-config/fixtures/output', name[0]);
-			const target = resolve('./packages/eslint-config/_fixtures', name[0]);
+			const from = resolve(fixturesDir, 'input');
+			const output = resolve(fixturesDir, 'output', name[0]);
+			const target = resolve(outputDir, name[0]);
 
 			await fs.copy(from, target, { filter: src => !src.includes('node_modules') });
 			await fs.writeFile(join(target, 'eslint.config.js'), `
@@ -109,8 +113,8 @@ export default defineConfig(
 `, 'utf-8');
 
 			if (process.platform === 'win32')
-				await execa({ stdio: 'pipe', cwd: target })`npx eslint . --fix`;
-			else await execa({ stdio: 'pipe', cwd: target })`pnpm -c dlx eslint --config ./eslint.config.js . --fix`;
+				await execa({ stdio: 'pipe', cwd: target })`npx eslint . --config ${target}\\eslint.config.js --fix`;
+			else await execa({ stdio: 'pipe', cwd: target })`pnpm -c dlx eslint --config ${target}/eslint.config.js . --fix`;
 
 			const files = await fg('**/*', {
 				ignore: [
@@ -130,10 +134,10 @@ export default defineConfig(
 				if (content === source) {
 					if (fs.existsSync(outputPath))
 						await fs.remove(outputPath);
-					return;
 				}
-
-				await expect.soft(content).toMatchFileSnapshot(outputPath);
+				else {
+					await expect.soft(content).toMatchFileSnapshot(outputPath);
+				}
 			}));
 		}, 80_000);
 	};
