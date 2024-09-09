@@ -6,7 +6,7 @@
 	"packageManager": "pnpm@9.9.0",
 	"engineStrict": true,
 	"author": "Petal Contributors",
-	"license": "MIT",
+	"license": "(LicenseRef-OQL-1.2 OR MIT or Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
 	"repository": {

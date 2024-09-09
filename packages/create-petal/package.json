@@ -4,7 +4,7 @@
 	"version": "4.1.0",
 	"description": "A CLI utility to create a new petal app",
 	"author": "Petal Contributors",
-	"license": "MIT",
+	"license": "(LicenseRef-OQL-1.2 OR MIT or Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
 	"repository": {
@@ -34,7 +34,7 @@
 		"create-petal": "./bin/index.js"
 	},
 	"files": [
-		"LICENSE",
+		"LICENSE*"
 		"README.md",
 		"bin/**/*.js",
 		"dist/**/*.cjs",
