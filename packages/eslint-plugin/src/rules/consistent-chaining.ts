@@ -6,11 +6,11 @@ import { createEslintRule } from '../utils';
 export const RULE_NAME = 'consistent-chaining';
 export type MessageIds = 'shouldWrap' | 'shouldNotWrap';
 export type Options = [{
-	allowFirstPropertyAccess?: boolean;
+	allowLeadingPropertyAccess?: boolean;
 }];
 
 const defaultOptions: Options = [{
-	allowFirstPropertyAccess: true,
+	allowLeadingPropertyAccess: true,
 }];
 
 export default createEslintRule<Options, MessageIds>({
@@ -24,10 +24,10 @@ export default createEslintRule<Options, MessageIds>({
 		schema: [{
 			type: 'object',
 			properties: {
-				allowFirstPropertyAccess: {
+				allowLeadingPropertyAccess: {
 					type: 'boolean',
-					description: 'Allow first property access to be on the same line',
-					default: defaultOptions[0].allowFirstPropertyAccess,
+					description: 'Allow leading property access to be on the same line',
+					default: defaultOptions[0].allowLeadingPropertyAccess,
 				},
 			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
 			additionalProperties: false,
@@ -47,7 +47,8 @@ export default createEslintRule<Options, MessageIds>({
 					root: TSESTree.Node;
 					current: TSESTree.Node | undefined;
 					mode: 'single' | 'multi' | null;
-				} = { root: node, current: undefined, mode: null };
+					leadingPropertyAccess?: boolean;
+				} = { root: node, current: undefined, mode: null, leadingPropertyAccess: options.allowLeadingPropertyAccess ?? true };
 
 				while (store.root.parent && ['CallExpression', 'MemberExpression'].includes(store.root.parent.type))
 					store.root = store.root.parent;
@@ -77,19 +78,20 @@ export default createEslintRule<Options, MessageIds>({
 						}
 					}
 
-				members.forEach((m, i) => {
+				members.forEach((m) => {
 					const token = context.sourceCode.getTokenBefore(m.property)!;
 					const tokenBefore = context.sourceCode.getTokenBefore(token)!;
 					const currentMode: 'single' | 'multi'
 						= token.loc.start.line === tokenBefore.loc.end.line ? 'single' : 'multi';
 
 					if (
-						i === 0
-						&& options.allowFirstPropertyAccess
-						&& ['Identifier', 'ThisExpression'].includes(m.object.type)
+						store.leadingPropertyAccess
+						&& ['Identifier', 'Literal', 'MemberExpression', 'ThisExpression'].includes(m.object.type)
 						&& currentMode === 'single'
 					)
 						return;
+
+					store.leadingPropertyAccess = false;
 
 					if (store.mode === null) {
 						store.mode = currentMode;

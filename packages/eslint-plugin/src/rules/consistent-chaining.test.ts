@@ -13,15 +13,24 @@ const valids: ValidTestCase[] = [
 			.baz()
 			.boo()
 	`,
-	{
-		code: $`
-			Math.random()
-				.toString()
-				.split('')
-				.map(Number)
-		`,
-		options: [{ allowFirstPropertyAccess: true }],
-	},
+	$`
+		Math.random()
+			.toString()
+			.split('')
+			.map(Number)
+	`,
+	$`
+		foo.bar.baz()
+			.toString()
+			.split('')
+			.map(Number)
+	`,
+	$`
+		foo.bar.baz
+			.toString()
+			.split('')
+			.map(Number)
+	`,
 ];
 
 const invalid: InvalidTestCase[] = [
@@ -93,7 +102,12 @@ const invalid: InvalidTestCase[] = [
 			.split('').map(Number)
 		`,
 		output: o => expect(o)
-			.toMatchInlineSnapshot(`" Math.random().toString().split('').map(Number)"`),
+			.toMatchInlineSnapshot(`
+				" Math.random()
+				.toString()
+				.split('')
+				.map(Number)"
+			`),
 	},
 	{
 		code: $`
@@ -102,7 +116,12 @@ const invalid: InvalidTestCase[] = [
 			.split('').map(Number)
 		`,
 		output: o => expect(o)
-			.toMatchInlineSnapshot(`" this.foo.toString().split('').map(Number)"`),
+			.toMatchInlineSnapshot(`
+				" this.foo
+				.toString()
+				.split('')
+				.map(Number)"
+			`),
 	},
 	{
 		code: $`
@@ -136,6 +155,18 @@ const invalid: InvalidTestCase[] = [
 				" [foo]
 				.map(x => x)
 				.filter(x => x)"
+			`),
+	},
+	{
+		code: $`
+			 foo.bar.bar
+			.filter().map()
+		`,
+		output: o => expect(o)
+			.toMatchInlineSnapshot(`
+				" foo.bar.bar
+				.filter()
+				.map()"
 			`),
 	},
 ];

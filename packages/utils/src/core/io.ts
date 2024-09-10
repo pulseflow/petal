@@ -13,9 +13,7 @@ const _ls = (path: string): Files => readdirSync(path).map(_stat);
 
 function _f(f: Files, type?: string): string[] {
 	return type
-		? f.filter(l => l.stats.isFile())
-			.filter(l => filename(l.path).endsWith(`.${type}`))
-			.map(l => filename(l.path).slice(0, -(type.length + 1)))
+		? f.filter(l => l.stats.isFile()).filter(l => filename(l.path).endsWith(`.${type}`)).map(l => filename(l.path).slice(0, -(type.length + 1)))
 		: f.filter(l => l.stats.isFile()).map(l => filename(l.path));
 }
 

@@ -19,11 +19,7 @@ export async function gitignore(options: OptionsGitignore = {}): Promise<TypedFl
 
 		const content = fs.readFileSync(f, 'utf-8');
 		const relativePath = path.relative(cwd, path.dirname(f));
-		const globs = content.split(/\r?\n/u)
-			.filter(l => l && !l.startsWith('#'))
-			.map(l => convertIgnorePatternToMinimatch(l))
-			.map(g => relativeMinimatch(g, relativePath, cwd))
-			.filter(g => g !== null);
+		const globs = content.split(/\r?\n/u).filter(l => l && !l.startsWith('#')).map(l => convertIgnorePatternToMinimatch(l)).map(g => relativeMinimatch(g, relativePath, cwd)).filter(g => g !== null);
 
 		ignores.push(...globs);
 	});
