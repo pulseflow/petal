@@ -31,7 +31,7 @@
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
 	"files": [
-		"LICENSE*"
+		"LICENSE*",
 		"README.md",
 		"dist/**/*.cjs",
 		"dist/**/*.d.cts",
@@ -55,7 +55,7 @@
 		"@flowr/utils": "workspace:^"
 	},
 	"devDependencies": {
-		"@typescript-eslint/utils": "^8.4.0",
+		"@typescript-eslint/utils": "^8.5.0",
 		"eslint": "^9.10.0",
 		"eslint-vitest-rule-tester": "^0.6.1",
 		"jsonc-eslint-parser": "^2.4.0"

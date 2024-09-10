@@ -46,7 +46,7 @@
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
 	"files": [
-		"LICENSE*"
+		"LICENSE*",
 		"README.md",
 		"dist/**/*.cjs",
 		"dist/**/*.d.cts",

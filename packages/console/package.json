@@ -34,7 +34,7 @@
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
 	"files": [
-		"LICENSE*"
+		"LICENSE*",
 		"README.md",
 		"dist/**/*.cjs",
 		"dist/**/*.d.cts",
@@ -57,7 +57,7 @@
 		"@clack/core": "^0.3.4",
 		"@flowr/utils": "workspace:^",
 		"defu": "^6.1.4",
-		"is-unicode-supported": "^2.0.0",
+		"is-unicode-supported": "^2.1.0",
 		"lodash": "^4.17.21",
 		"sentencer": "^0.2.1",
 		"sisteransi": "^1.0.5",

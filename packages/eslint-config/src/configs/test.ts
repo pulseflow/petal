@@ -33,7 +33,6 @@ export async function test(options: OptionsTest = {}): Promise<TypedFlatConfigIt
 				'test/prefer-lowercase-title': 'error',
 
 				'ts/explicit-function-return-type': 'off',
-				'unicorn/consistent-function-scoping': 'off',
 
 				...overrides,
 			},

@@ -34,7 +34,7 @@
 		"create-petal": "./bin/index.js"
 	},
 	"files": [
-		"LICENSE*"
+		"LICENSE*",
 		"README.md",
 		"bin/**/*.js",
 		"dist/**/*.cjs",
