@@ -193,7 +193,7 @@
 		"prettier-plugin-slidev": "^1.0.5",
 		"svelte": "^4.2.19",
 		"svelte-eslint-parser": "^0.41.0",
-		"vue": "^3.5.3",
+		"vue": "^3.5.4",
 		"vue-eslint-parser": "^9.4.3"
 	},
 	"publishConfig": {
