@@ -1,8 +1,8 @@
+import type { Stats } from 'node:fs';
+import type { ArgsFn } from '../types';
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'pathe';
 import { filename } from 'pathe/utils';
-import type { Stats } from 'node:fs';
-import type { ArgsFn } from '../types';
 
 export const dir = Symbol('@flowr/utils/io:is_dir');
 

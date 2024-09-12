@@ -1,7 +1,7 @@
+import type { OptionsMarkdown, TypedFlatConfigItem } from '../types';
 import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors';
 import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN } from '../globs';
 import { interopDefault, parserPlain } from '../utils';
-import type { OptionsMarkdown, TypedFlatConfigItem } from '../types';
 
 export async function markdown(options: OptionsMarkdown = {}): Promise<TypedFlatConfigItem[]> {
 	const { componentExts = [], files = [GLOB_MARKDOWN], overrides = {} } = options;

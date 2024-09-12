@@ -1,7 +1,7 @@
-import { parseInput } from './input';
-import { parseOptions } from './options';
 import type { Aliases, OptionFlag, ParsedFlags } from './flag';
 import type { OptionFlags } from './options';
+import { parseInput } from './input';
+import { parseOptions } from './options';
 
 export function parseArgs<T extends OptionFlags>(args: string[], optionFlags: T): readonly [string[], ParsedFlags<T>] {
 	const [flags, flagList] = parseOptions(optionFlags);

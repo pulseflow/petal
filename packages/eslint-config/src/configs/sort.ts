@@ -1,5 +1,5 @@
-import { GLOB_PACKAGE_JSON, GLOB_TSCONFIGS } from '../globs';
 import type { TypedFlatConfigItem } from '../types';
+import { GLOB_PACKAGE_JSON, GLOB_TSCONFIGS } from '../globs';
 
 /**
  * Sort `package.json` fles -- in tandem with `jsonc` config

@@ -1,10 +1,10 @@
+import type { OptionsGitignore, TypedFlatConfigItem } from '../types';
 import fs from 'node:fs';
 import process from 'node:process';
 import { convertIgnorePatternToMinimatch } from '@eslint/compat';
 import { findUpSync } from 'find-up-simple';
 import path from 'pathe';
 import { toArray } from '../utils';
-import type { OptionsGitignore, TypedFlatConfigItem } from '../types';
 
 export async function gitignore(options: OptionsGitignore = {}): Promise<TypedFlatConfigItem[]> {
 	const ignores: string[] = [];

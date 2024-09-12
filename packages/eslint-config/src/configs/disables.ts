@@ -1,5 +1,5 @@
-import { GLOB_BIN, GLOB_BIN_SRC, GLOB_CJS, GLOB_CLI, GLOB_CLI_SRC, GLOB_DTS, GLOB_SCRIPTS, GLOB_TEST_TS } from '../globs';
 import type { TypedFlatConfigItem } from '../types';
+import { GLOB_BIN, GLOB_BIN_SRC, GLOB_CJS, GLOB_CLI, GLOB_CLI_SRC, GLOB_DTS, GLOB_SCRIPTS, GLOB_TEST_TS } from '../globs';
 
 export async function disables(): Promise<TypedFlatConfigItem[]> {
 	return [

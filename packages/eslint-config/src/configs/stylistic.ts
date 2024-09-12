@@ -1,5 +1,5 @@
-import { interopDefault } from '../utils';
 import type { OptionsOverrides, StylisticConfig, TypedFlatConfigItem } from '../types';
+import { interopDefault } from '../utils';
 
 export const StylisticConfigDefaults: StylisticConfig = {
 	indent: 'tab',

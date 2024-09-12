@@ -1,5 +1,5 @@
-import jsoncParser from 'jsonc-eslint-parser';
 import type { InvalidTestCase, ValidTestCase } from 'eslint-vitest-rule-tester';
+import jsoncParser from 'jsonc-eslint-parser';
 import { $, run } from './_test';
 import rule, { RULE_NAME } from './consistent-list-newline';
 

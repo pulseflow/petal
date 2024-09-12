@@ -1,3 +1,7 @@
+import type { RecordOrTuples } from './arguments';
+import type { RequestProxy } from './chaining';
+import type { Method, WithStatus } from './const';
+import type { Finalizer } from './finalizers';
 import { Buffer } from 'node:buffer';
 import { join } from 'pathe';
 import { version } from '../../package.json';
@@ -6,10 +10,6 @@ import { toTuples } from './arguments';
 import { DEF_REFDIR_COUNT, DEF_TIMEOUT } from './const';
 import { fetchWrapper } from './fetch';
 import * as fin from './finalizers';
-import type { RecordOrTuples } from './arguments';
-import type { RequestProxy } from './chaining';
-import type { Method, WithStatus } from './const';
-import type { Finalizer } from './finalizers';
 
 export type Options = RequestInit & { encodeQuery?: boolean };
 export type BodyType = 'json' | 'buffer' | 'form' | 'multipart';

@@ -1,6 +1,6 @@
+import type { OptionsAstro, TypedFlatConfigItem } from '../types';
 import { GLOB_ASTRO } from '../globs';
 import { ensurePackages, interopDefault } from '../utils';
-import type { OptionsAstro, TypedFlatConfigItem } from '../types';
 
 export async function astro(options: OptionsAstro = {}): Promise<TypedFlatConfigItem[]> {
 	const { accessibility = false, files = [GLOB_ASTRO], overrides = {}, stylistic = true } = options;

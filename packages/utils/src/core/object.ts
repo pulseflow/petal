@@ -1,6 +1,6 @@
+import type { DeepMerge } from '../types';
 import { isObject } from './assert';
 import { notNullish } from './guards';
-import type { DeepMerge } from '../types';
 
 const isMergableObject = (item: any): item is object => isObject(item) && !Array.isArray(item);
 

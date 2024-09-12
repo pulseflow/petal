@@ -1,5 +1,5 @@
-import { readFileSync } from 'node:fs';
 import type { JSONSchema4 } from '@typescript-eslint/utils/json-schema';
+import { readFileSync } from 'node:fs';
 import { createEslintRule } from '../utils';
 
 type CommentSyntax = string | [string, string];

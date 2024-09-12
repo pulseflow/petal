@@ -1,3 +1,4 @@
+import type { OptionsConfig, TypedFlatConfigItem } from '../src/types';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 import { execa } from 'execa';
@@ -5,7 +6,6 @@ import fg from 'fast-glob';
 import fs from 'fs-extra';
 import { join, resolve } from 'pathe';
 import { afterAll, beforeAll, it } from 'vitest';
-import type { OptionsConfig, TypedFlatConfigItem } from '../src/types';
 
 const fixturesDir = fileURLToPath(new URL('fixtures', import.meta.url));
 const outputDir = fileURLToPath(new URL('_fixtures', import.meta.url));

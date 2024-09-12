@@ -1,5 +1,5 @@
-import { interopDefault } from '../utils';
 import type { OptionsJsdoc, TypedFlatConfigItem } from '../types';
+import { interopDefault } from '../utils';
 
 export async function jsdoc(options: OptionsJsdoc = {}): Promise<TypedFlatConfigItem[]> {
 	const { stylistic = true } = options;

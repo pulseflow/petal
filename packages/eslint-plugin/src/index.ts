@@ -1,4 +1,5 @@
 import type { ESLint, Linter } from 'eslint';
+import type { RuleModule } from './utils';
 import { version } from '../package.json';
 import consistentChaining from './rules/consistent-chaining';
 import consistentListNewline from './rules/consistent-list-newline';
@@ -12,7 +13,6 @@ import noOnlyTests from './rules/no-only-tests';
 import noTsExportEqual from './rules/no-ts-export-equal';
 import onlyExportComponents from './rules/only-export-components';
 import topLevelFunction from './rules/top-level-function';
-import type { RuleModule } from './utils';
 
 const plugin = {
 	meta: {

@@ -1,8 +1,8 @@
-import { isFunction, isNull, isObject, isString } from '../core';
-import { METHODS_SUPPORTED } from './const';
 import type { RecordOrTuples } from './arguments';
 import type { Method } from './const';
 import type { RequestBuilder } from './request';
+import { isFunction, isNull, isObject, isString } from '../core';
+import { METHODS_SUPPORTED } from './const';
 
 export function chain<T>(this: RequestBuilder<T>, ...args: (Parameters<typeof _chain<T>>[number])[]): RequestBuilder<T> {
 	return args.reduce((acc: RequestBuilder<T>, cur) => (_chain<T>).bind(acc)(cur), this.clone());

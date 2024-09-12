@@ -1,6 +1,6 @@
+import type { OptionsSvelte, TypedFlatConfigItem } from '../types';
 import { GLOB_SVELTE } from '../globs';
 import { ensurePackages, interopDefault } from '../utils';
-import type { OptionsSvelte, TypedFlatConfigItem } from '../types';
 
 export async function svelte(options: OptionsSvelte = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_SVELTE], overrides = {}, stylistic = true } = options;

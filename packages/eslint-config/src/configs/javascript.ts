@@ -1,6 +1,6 @@
+import type { OptionsJavascript, TypedFlatConfigItem } from '../types';
 import globals from 'globals';
 import { interopDefault } from '../utils';
-import type { OptionsJavascript, TypedFlatConfigItem } from '../types';
 
 export async function javascript(options: OptionsJavascript = {}): Promise<TypedFlatConfigItem[]> {
 	const { isInEditor = false, overrides = {} } = options;

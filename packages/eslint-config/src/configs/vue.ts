@@ -1,7 +1,7 @@
+import type { OptionsVue, TypedFlatConfigItem } from '../types';
 import { mergeProcessors } from 'eslint-merge-processors';
 import { GLOB_VUE } from '../globs';
 import { ensurePackages, interopDefault } from '../utils';
-import type { OptionsVue, TypedFlatConfigItem } from '../types';
 
 export async function vue(options: OptionsVue = {}): Promise<TypedFlatConfigItem[]> {
 	const { accessibility = false, files = [GLOB_VUE], overrides = {}, stylistic = true, vueVersion = 3 } = options;

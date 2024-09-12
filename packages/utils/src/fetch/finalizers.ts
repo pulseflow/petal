@@ -1,7 +1,7 @@
-import { isString } from '../core';
-import { SYM_STATUS } from './const';
 import type { Awaitable } from '../types';
 import type { WithStatus } from './const';
+import { isString } from '../core';
+import { SYM_STATUS } from './const';
 
 async function statusWrapper<T>(fn: Awaitable<T>, status: number): Promise<WithStatus<T>> {
 	const result = await fn;

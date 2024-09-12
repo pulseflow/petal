@@ -1,6 +1,6 @@
+import type { OptionsYaml, TypedFlatConfigItem } from '../types';
 import { GLOB_YAML } from '../globs';
 import { interopDefault } from '../utils';
-import type { OptionsYaml, TypedFlatConfigItem } from '../types';
 
 export async function yaml(options: OptionsYaml = {}): Promise<TypedFlatConfigItem[]> {
 	const { files = [GLOB_YAML], overrides = {}, stylistic = true } = options;

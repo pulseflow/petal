@@ -1,8 +1,8 @@
-import process from 'node:process';
 import type { Linter } from 'eslint';
+import type { OptionsTypeScript, TypedFlatConfigItem } from '../types';
+import process from 'node:process';
 import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_TS, GLOB_TSX } from '../globs';
 import { interopDefault, renameRules } from '../utils';
-import type { OptionsTypeScript, TypedFlatConfigItem } from '../types';
 
 export async function typescript(options: OptionsTypeScript = {}): Promise<TypedFlatConfigItem[]> {
 	const { componentExts = [], overrides = {}, overridesTypeAware = {}, parserOptions = {}, type = 'app' } = options;
