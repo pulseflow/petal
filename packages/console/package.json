@@ -1,7 +1,7 @@
 {
 	"name": "@flowr/console",
 	"type": "module",
-	"version": "4.3.0",
+	"version": "4.3.1",
 	"description": "Opinionated logger and console utilities for Petal",
 	"author": "Petal Contributors",
 	"license": "(LicenseRef-OQL-1.2 OR MIT or Apache-2.0)",
