@@ -64,6 +64,13 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
 						allowExportNames: [
 							...isUsingNext
 								? [
+										'dynamic',
+										'dynamicParams',
+										'revalidate',
+										'fetchCache',
+										'runtime',
+										'preferredRegion',
+										'maxDuration',
 										'config',
 										'generateStaticParams',
 										'metadata',

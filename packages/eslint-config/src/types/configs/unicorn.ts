@@ -1,9 +1,3 @@
-export interface OptionsUnicorn {
-	/**
-	 * Include all rules recommended by `eslint-plugin-unicorn`.
-	 *
-	 * @see https://github.com/sindresorhus/eslint-plugin-unicorn#rules
-	 * @default false
-	 */
-	useRecommended?: boolean;
-}
+import type { OptionsRecommended } from './recommended';
+
+export type OptionsUnicorn = OptionsRecommended;
