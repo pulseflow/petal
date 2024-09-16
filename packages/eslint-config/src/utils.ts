@@ -145,9 +145,9 @@ export const toArray = <T>(value: T | T[]): T[] => Array.isArray(value) ? value 
  *
  * export default [{
  * 	plugins: {
- * 		'mine': myPlugin,
- * 		'mine1': myPlugin1,
- * 		'mine2': myPlugin2,
+ * 		mine: myPlugin,
+ * 		mine1: myPlugin1,
+ * 		mine2: myPlugin2,
  * 	},
  * }];
  * ```
@@ -177,24 +177,24 @@ export const isPackageInScope = (name: string): boolean => isPackageExists(name,
  * const chalk = interopDefault(import('chalk')); // ensures that the package is installed. add as devDependency for types
  * ```
  */
-export async function ensurePackages(packages: (string | undefined)[]): Promise<void> {
+export async function ensurePackages(packages: string[]): Promise<void> {
 	if (process.env.CI || process.stdout.isTTY === false || isCwdInScope === false)
 		return;
 
-	const nonExistingPackages = packages.filter(i => i && !isPackageInScope(i)) as string[];
+	const packageExists = (i: string) => !isPackageInScope(i);
+	const nonExistingPackages = packages.filter(packageExists);
 
 	if (nonExistingPackages.length === 0)
 		return;
 
-	const result = await (await import('@clack/prompts')).confirm({
-		message: `${nonExistingPackages.length === 1 ? 'Package is' : 'Packages are'} required for this config: ${nonExistingPackages.join(', ')}. Do you want to install them?`,
-	});
-	if (result)
-		await import('@antfu/install-pkg').then(i => i.installPackage(nonExistingPackages, { dev: true }));
+	const message = `${nonExistingPackages.length === 1 ? 'Package is' : 'Packages are'} required for this config: ${nonExistingPackages.join(', ')}. Do you want to install them?`;
+	const installMissing = async () => await import('@antfu/install-pkg').then(i => i.installPackage(nonExistingPackages, { dev: true }));
+
+	if (await (await import('@clack/prompts')).confirm({ message }))
+		installMissing();
 }
 
 export type ResolveOptions<T> = T extends boolean ? never : NonNullable<T>;
-
 export function resolveSubOptions<K extends keyof OptionsConfig>(options: OptionsConfig, key: K): ResolveOptions<OptionsConfig[K]> {
 	return typeof options[key] === 'boolean' ? {} as any : options[key] || {};
 }

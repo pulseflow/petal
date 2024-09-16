@@ -6,8 +6,8 @@
 
 export * from './configs';
 export * from './factory';
-export { defineConfig as default } from './factory';
 export * from './globs';
-export type * from './types';
-
 export * from './utils';
+
+export type * from './types';
+export { defineConfig as default } from './factory';
