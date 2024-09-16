@@ -97,10 +97,10 @@ export async function vue(options: OptionsVue = {}): Promise<TypedFlatConfigItem
 
 				'node/prefer-global/process': 'off',
 				'perfectionist/sort-vue-attributes': ['error', { order: 'asc', type: 'natural' }],
+				'ts/explicit-function-return-type': 'off',
 				'vue/block-order': ['error', {
 					order: ['script', 'template', 'style'],
 				}],
-
 				'vue/component-name-in-template-casing': ['error', 'PascalCase'],
 				'vue/component-options-name-casing': ['error', 'PascalCase'],
 				'vue/custom-event-name-casing': ['error', 'camelCase'],
