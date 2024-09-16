@@ -177,21 +177,20 @@ export const isPackageInScope = (name: string): boolean => isPackageExists(name,
  * const chalk = interopDefault(import('chalk')); // ensures that the package is installed. add as devDependency for types
  * ```
  */
-export async function ensurePackages(packages: string[]): Promise<void> {
+export async function ensurePackages(packages: (string | undefined)[]): Promise<void> {
 	if (process.env.CI || process.stdout.isTTY === false || isCwdInScope === false)
 		return;
 
-	const packageExists = (i: string) => !isPackageInScope(i);
-	const nonExistingPackages = packages.filter(packageExists);
+	const nonExistingPackages = packages.filter(i => i && !isPackageInScope(i)) as string[];
 
 	if (nonExistingPackages.length === 0)
 		return;
 
-	const message = `${nonExistingPackages.length === 1 ? 'Package is' : 'Packages are'} required for this config: ${nonExistingPackages.join(', ')}. Do you want to install them?`;
-	const installMissing = async () => await import('@antfu/install-pkg').then(i => i.installPackage(nonExistingPackages, { dev: true }));
-
-	if (await (await import('@clack/prompts')).confirm({ message }))
-		installMissing();
+	const result = await (await import('@clack/prompts')).confirm({
+		message: `${nonExistingPackages.length === 1 ? 'Package is' : 'Packages are'} required for this config: ${nonExistingPackages.join(', ')}. Do you want to install them?`,
+	});
+	if (result)
+		await import('@antfu/install-pkg').then(i => i.installPackage(nonExistingPackages, { dev: true }));
 }
 
 export type ResolveOptions<T> = T extends boolean ? never : NonNullable<T>;
