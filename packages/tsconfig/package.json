@@ -1,6 +1,6 @@
 {
 	"name": "@flowr/tsconfig",
-	"version": "4.3.4",
+	"version": "4.3.5",
 	"description": "Common TSConfigs in Petal standardized projects",
 	"author": "Petal Contributors",
 	"license": "(LicenseRef-OQL-1.2 OR MIT or Apache-2.0)",
