@@ -1,5 +1,22 @@
 import { isFunction, isString } from './core';
 
+/**
+ * Matches any [primitive value](https://developer.mozilla.org/en-US/docs/Glossary/Primitive).
+ */
+export type Primitive =
+	| null
+	| undefined
+	| string
+	| number
+	| boolean
+	| symbol
+	| bigint;
+
+export type LiteralUnion<
+	LiteralType,
+	BaseType extends Primitive,
+> = LiteralType | (BaseType & Record<never, never>);
+
 /** Possibly a `Promise<T>` */
 export type Awaitable<T> = T | PromiseLike<T>;
 export type StrictAwaitable<T> = T | Promise<T>;

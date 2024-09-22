@@ -2,7 +2,7 @@ import type { OptionsJsdoc, TypedFlatConfigItem } from '../types';
 import { interopDefault } from '../utils';
 
 export async function jsdoc(options: OptionsJsdoc = {}): Promise<TypedFlatConfigItem[]> {
-	const { stylistic = true } = options;
+	const { overrides = {}, stylistic = true } = options;
 
 	const pluginJsdoc = await interopDefault(import('eslint-plugin-jsdoc'));
 
@@ -35,6 +35,8 @@ export async function jsdoc(options: OptionsJsdoc = {}): Promise<TypedFlatConfig
 							'jsdoc/multiline-blocks': 'warn',
 						}
 					: {},
+
+				...overrides,
 			},
 		},
 	];

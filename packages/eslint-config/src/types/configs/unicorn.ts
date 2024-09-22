@@ -1,3 +1,4 @@
+import type { OptionsOverrides } from './overrides';
 import type { OptionsRecommended } from './recommended';
 
-export type OptionsUnicorn = OptionsRecommended;
+export type OptionsUnicorn = OptionsOverrides & OptionsRecommended;

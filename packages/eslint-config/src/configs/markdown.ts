@@ -6,6 +6,7 @@ import { interopDefault, parserPlain } from '../utils';
 export async function markdown(options: OptionsMarkdown = {}): Promise<TypedFlatConfigItem[]> {
 	const { componentExts = [], files = [GLOB_MARKDOWN], overrides = {} } = options;
 	const pluginMarkdown = await interopDefault(import('@eslint/markdown'));
+	const passthroughProcessor = mergeProcessors([pluginMarkdown.processors!.markdown, processorPassThrough]);
 
 	return [
 		{
@@ -21,10 +22,7 @@ export async function markdown(options: OptionsMarkdown = {}): Promise<TypedFlat
 			// `@eslint/markdown` only creates virtual files for code blocks,
 			// but not the markdown file itself. we use `eslint-merge-processors` to
 			// add a pass-through processor for the markdown file itself.
-			processor: mergeProcessors([
-				pluginMarkdown.processors!.markdown,
-				processorPassThrough,
-			]),
+			processor: passthroughProcessor,
 		},
 		{
 			files,

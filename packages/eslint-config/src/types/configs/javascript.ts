@@ -3,4 +3,4 @@ import type { OptionsOverrides } from './overrides';
 import type { OptionsStylistic } from './stylistic';
 
 export type OptionsJavascript = OptionsOverrides & OptionsIsInEditor;
-export type OptionsJsdoc = OptionsStylistic;
+export type OptionsJsdoc = OptionsOverrides & OptionsStylistic;

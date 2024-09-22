@@ -30,6 +30,8 @@ export async function unicorn(options: OptionsUnicorn = {}): Promise<TypedFlatCo
 							'unicorn/prefer-type-error': 'error',
 							'unicorn/throw-new-error': 'error',
 						}),
+
+				...options.overrides,
 			},
 		},
 	];

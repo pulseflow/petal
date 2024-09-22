@@ -3,7 +3,7 @@ import { GLOB_TESTS } from '../globs';
 import { interopDefault } from '../utils';
 
 export async function test(options: OptionsTest = {}): Promise<TypedFlatConfigItem[]> {
-	const { files = GLOB_TESTS, overrides = {} } = options;
+	const { files = GLOB_TESTS, overrides = {}, typecheck = false } = options;
 
 	const [pluginTest, pluginPetal] = await Promise.all([
 		interopDefault(import('@vitest/eslint-plugin')),
@@ -12,10 +12,20 @@ export async function test(options: OptionsTest = {}): Promise<TypedFlatConfigIt
 
 	return [
 		{
+			languageOptions: {
+				globals: {
+					...pluginTest.environments.env.globals,
+				},
+			},
 			name: 'petal/test/setup',
 			plugins: {
 				petal: pluginPetal,
 				test: pluginTest,
+			},
+			settings: {
+				vitest: {
+					typecheck,
+				},
 			},
 		},
 		{

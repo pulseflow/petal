@@ -1,13 +1,31 @@
+import type { FileExtension, ImportResolver } from 'eslint-plugin-import-x/types.js';
 import type { OptionsImports, TypedFlatConfigItem } from '../types';
 import { interopDefault } from '../utils';
 
 export async function imports(options: OptionsImports = {}): Promise<TypedFlatConfigItem[]> {
-	const { stylistic = true } = options;
+	const { overrides = {}, stylistic = true, tsResolverOptions } = options;
 
 	const [pluginImport, pluginPetal] = await Promise.all([
 		interopDefault(import('eslint-plugin-import-x')),
 		interopDefault(import('eslint-plugin-petal')),
 	] as const);
+
+	const importResolver: ImportResolver = {
+		node: {
+			extensions: [
+				'.js',
+				'.jsx',
+				...options.typescript ? ['.ts', '.tsx'] : [],
+			],
+			...options.typescript && {
+				typescript: tsResolverOptions ?? true,
+			},
+		},
+	};
+
+	const importParsers: Record<string, readonly FileExtension[]> = {
+		'@typescript-eslint/parser': ['.ts', '.tsx'],
+	};
 
 	return [
 		{
@@ -33,6 +51,14 @@ export async function imports(options: OptionsImports = {}): Promise<TypedFlatCo
 							'import/newline-after-import': ['error', { count: 1 }],
 						}
 					: {},
+
+				...overrides,
+			},
+			settings: {
+				...options.typescript && {
+					'import-x/parsers': importParsers,
+				},
+				'import-x/resolver': importResolver,
 			},
 		},
 	];

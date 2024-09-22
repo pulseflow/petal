@@ -64,8 +64,8 @@ export async function typescript(options: OptionsTypeScript = {}): Promise<Typed
 								tsconfigRootDir: process.cwd(),
 							}
 						: {},
-					...parserOptions as Linter.ParserOptions,
-				},
+					...parserOptions,
+				} as import('@typescript-eslint/parser').ParserOptions,
 			},
 			name: `petal/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`,
 		});

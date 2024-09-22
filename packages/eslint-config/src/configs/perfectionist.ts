@@ -1,12 +1,19 @@
 import type { TypedFlatConfigItem } from '../types';
 import { interopDefault } from '../utils';
 
+type SortConfig = ['error', {
+	type?: ('alphabetical' | 'natural' | 'line-length');
+	order?: ('asc' | 'desc');
+}];
+
 /**
  * Perfectionist plugin for props and items sorting.
  *
  * @see https://github.com/azat-io/eslint-plugin-perfectionist
  */
 export async function perfectionist(): Promise<TypedFlatConfigItem[]> {
+	const sortConfig: SortConfig = ['error', { order: 'asc', type: 'natural' }];
+
 	return [
 		{
 			name: 'petal/perfectionist/setup',
@@ -14,8 +21,8 @@ export async function perfectionist(): Promise<TypedFlatConfigItem[]> {
 				perfectionist: await interopDefault(import('eslint-plugin-perfectionist')),
 			},
 			rules: {
-				'perfectionist/sort-array-includes': ['error', { order: 'asc', type: 'natural' }],
-				'perfectionist/sort-exports': ['error', { order: 'asc', type: 'natural' }],
+				'perfectionist/sort-array-includes': sortConfig,
+				'perfectionist/sort-exports': sortConfig,
 				'perfectionist/sort-imports': ['error', {
 					groups: [
 						'type',
@@ -33,9 +40,9 @@ export async function perfectionist(): Promise<TypedFlatConfigItem[]> {
 					order: 'asc',
 					type: 'natural',
 				}],
-				'perfectionist/sort-named-exports': ['error', { order: 'asc', type: 'natural' }],
-				'perfectionist/sort-named-imports': ['error', { order: 'asc', type: 'natural' }],
-				'perfectionist/sort-sets': ['error', { order: 'asc', type: 'natural' }],
+				'perfectionist/sort-named-exports': sortConfig,
+				'perfectionist/sort-named-imports': sortConfig,
+				'perfectionist/sort-sets': sortConfig,
 			},
 		},
 	];
