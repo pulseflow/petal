@@ -1,4 +1,3 @@
-import type { Linter } from 'eslint';
 import type { OptionsTypeScript, TypedFlatConfigItem } from '../types';
 import process from 'node:process';
 import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_TS, GLOB_TSX } from '../globs';
