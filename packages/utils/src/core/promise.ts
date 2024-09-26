@@ -1,5 +1,4 @@
-import type { Fn } from '../types';
-
+import type { StrictFn } from '../types';
 import pLimit from 'p-limit';
 import { remove } from './array';
 
@@ -149,7 +148,7 @@ export function createSingletonPromise<T>(fn: () => Promise<T>): SingletonPromis
  *
  * @category Promise
  */
-export function sleep(ms: number, callback?: Fn<any>): Promise<void> {
+export function sleep(ms: number, callback?: StrictFn<any>): Promise<void> {
 	return new Promise<void>(resolve =>
 		setTimeout(async () => {
 			await callback?.();

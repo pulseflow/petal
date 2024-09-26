@@ -1,18 +1,4 @@
-/**
- * Human friendly durations object.
- *
- * @public
- */
-export interface HumanDuration {
-	years?: number;
-	months?: number;
-	weeks?: number;
-	days?: number;
-	hours?: number;
-	minutes?: number;
-	seconds?: number;
-	milliseconds?: number;
-}
+import type { HumanDuration } from '../types';
 
 /** Get `Date.now()` as a timestamp. */
 export const timestamp = (): number => +Date.now();

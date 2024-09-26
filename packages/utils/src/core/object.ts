@@ -1,8 +1,8 @@
-import type { DeepMerge } from '../types';
-import { isObject } from './assert';
+import type { DeepMerge, ObjectKeys } from '../types';
 import { notNullish } from './guards';
+import { toString } from './string';
 
-const isMergableObject = (item: any): item is object => isObject(item) && !Array.isArray(item);
+const isMergableObject = (item: any): item is object => toString(item) === '[object Object]' && !Array.isArray(item);
 
 /**
  * Map key/value pairs for an object, and construct a new one
@@ -31,7 +31,7 @@ const isMergableObject = (item: any): item is object => isObject(item) && !Array
  * // { b: 2 }
  * ```
  */
-export function objectMap<K extends string, V, NK extends string | number | symbol = K, NV = V>(obj: Record<K, V>, fn: (key: K, value: V) => [NK, NV] | undefined): Record<NK, NV> {
+export function objectMap<K extends string, V, NK extends PropertyKey = K, NV = V>(obj: Record<K, V>, fn: (key: K, value: V) => [NK, NV] | undefined): Record<NK, NV> {
 	return Object.fromEntries(Object.entries(obj).map(([k, v]) => fn(k as K, v as V)).filter(notNullish)) as Record<NK, NV>;
 }
 
@@ -50,8 +50,8 @@ export const isKeyOf = <T extends object>(obj: T, k: keyof any): k is keyof T =>
  *
  * @category Object
  */
-export function objectKeys<T extends object>(obj: T): Array<`${keyof T & (string | number | boolean | null | undefined)}`> {
-	return Object.keys(obj) as Array<`${keyof T & (string | number | boolean | null | undefined)}`>;
+export function objectKeys<T extends object>(obj: T): ObjectKeys<T> {
+	return Object.keys(obj) as ObjectKeys<T>;
 }
 
 /**

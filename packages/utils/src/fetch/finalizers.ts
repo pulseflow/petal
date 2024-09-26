@@ -1,6 +1,5 @@
 import type { Awaitable } from '../types';
 import type { WithStatus } from './const';
-import { isString } from '../core';
 import { SYM_STATUS } from './const';
 
 async function statusWrapper<T>(fn: Awaitable<T>, status: number): Promise<WithStatus<T>> {
@@ -27,7 +26,7 @@ export async function toWrapped(res: Response): Promise<WrappedResponse> {
 				const banned = Object.getOwnPropertyNames(Object.getPrototypeOf(target.headers));
 				return new Proxy(target.headers, {
 					get: (target: Headers, prop: keyof Headers) => {
-						if (!isString(prop) || banned.includes(prop))
+						if (typeof prop !== 'string' || banned.includes(prop))
 							return value;
 						else return target.get(prop);
 					},

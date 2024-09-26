@@ -81,6 +81,7 @@ type FactoryComposer = FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
  * @param {FactoryOptions} options The options for generating the ESLint configurations.
  * @param {UserConfigs} userConfigs The user configurations to be merged with the generated configurations.
  * @returns {FactoryComposer} The merged ESLint configurations.
+ * @public
  */
 export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserConfig[]): FactoryComposer {
 	const {

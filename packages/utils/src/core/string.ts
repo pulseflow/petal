@@ -1,5 +1,3 @@
-import { isObject } from './assert';
-
 export const toString = (v: any): string => Object.prototype.toString.call(v);
 
 export type Strings = string[] | ReadonlyArray<string>;
@@ -56,7 +54,7 @@ export function template(str: string, ...args: (string | number | bigint | undef
 export function template(str: string, ...args: any[]): string {
 	const [firstArg, fallback] = args;
 
-	if (isObject(firstArg)) {
+	if (toString(firstArg) === '[object Object]') {
 		const vars = firstArg as Record<string, any>;
 		return str.replace(/\{(\w+)\}/g, (_, key) => vars[key] || ((typeof fallback === 'function' ? fallback(key) : fallback) ?? key));
 	}

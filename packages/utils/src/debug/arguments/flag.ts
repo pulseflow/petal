@@ -1,4 +1,4 @@
-import { isUndefined } from '../../core';
+import { toString } from '../../core';
 
 export const sym_string: unique symbol = Symbol('@flowr/utils/arg:flag:string');
 export const sym_integer: unique symbol = Symbol('@flowr/utils/arg:flag:integer');
@@ -44,9 +44,9 @@ export class Flag<N extends string, T extends FlagType, A extends boolean, F ext
 				? [...(existing ?? []) as OuterFlagType<T, true>, true]
 				: true;
 
-		if (!isUndefined(existing))
+		if (toString(existing) !== '[object Undefined]')
 			return existing;
-		if (!isUndefined(this.options.fallback))
+		if (toString(this.options.fallback) !== '[object Undefined]')
 			return this.options.fallback;
 		if (this.options.array)
 			return [];

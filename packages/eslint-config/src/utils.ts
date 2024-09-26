@@ -9,7 +9,8 @@ const scopeUrl = fileURLToPath(new URL('.', import.meta.url));
 const isCwdInScope = isPackageExists('@flowr/eslint-config');
 
 /**
- * A simple parser for use in AST-agnostic configs (i.e. markdown formatters, `eslint-plugin-format`)
+ * A simple parser for use in AST-agnostic configs (i.e. `@eslint/markdown`, `eslint-plugin-format`).
+ *
  * @public
  */
 export const parserPlain: Linter.Parser = {

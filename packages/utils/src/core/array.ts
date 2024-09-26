@@ -1,4 +1,4 @@
-import type { Arrayable, ExtractKeysByType, Nullable } from '../types';
+import type { ExtractKeysByType, Nullable, StrictArrayable } from '../types';
 import { clamp } from './math';
 
 /**
@@ -10,7 +10,7 @@ import { clamp } from './math';
  * @example const array: Array<number> = toArray(1); // Arrayable<T> supports non-arrays!
  * @category Array
  */
-export function toArray<T>(array?: Nullable<Arrayable<T>>): Array<T> {
+export function toArray<T>(array?: Nullable<StrictArrayable<T>>): Array<T> {
 	array = array ?? [];
 	return Array.isArray(array) ? array : [array];
 }
@@ -24,7 +24,7 @@ export function toArray<T>(array?: Nullable<Arrayable<T>>): Array<T> {
  * @example const flattened: Array<number> = flattenArrayable(1); // Arrayable<T> supports non-arrays!
  * @category Array
  */
-export const flattenArrayable = <T>(array?: Nullable<Arrayable<T | Array<T>>>): Array<T> => toArray(array).flat(1) as Array<T>;
+export const flattenArrayable = <T>(array?: Nullable<StrictArrayable<T | Array<T>>>): Array<T> => toArray(array).flat(1) as Array<T>;
 
 /**
  * Merge multiple nullable `Array<T>`s and `Arrayable<T>`s into one `Array<T>`.
@@ -34,7 +34,7 @@ export const flattenArrayable = <T>(array?: Nullable<Arrayable<T | Array<T>>>): 
  * @example const merged: Array<number> = mergeArrayable([1, 2, 3, 4], [5, 6, 7, 8]);
  * @category Array
  */
-export const mergeArrayable = <T>(...args: Nullable<Arrayable<T>>[]): Array<T> => args.flatMap(i => toArray(i));
+export const mergeArrayable = <T>(...args: Nullable<StrictArrayable<T>>[]): Array<T> => args.flatMap(i => toArray(i));
 
 /**
  * A function which filters a partionable `T[]`, taking in the callback of `Array<T>.forEach`.
@@ -250,7 +250,7 @@ export const min = <T>(arr: T[], prop: ExtractKeysByType<T, number>): number => 
 export const min_by = <T>(arr: T[], prop: ExtractKeysByType<T, number>): T => arr.reduce((a, b) => a[prop] < b[prop] ? a : b);
 export const min_map = <T, U>(arr: T[], fn: (a: T) => U): T => arr.reduce((a, b) => fn(a) < fn(b) ? a : b);
 export const zip = <T>(...arr: T[][]): T[][] => Array.from({ length: max(arr, 'length') }).fill(null).map((_, i) => arr.map(a => a[i]));
-export const get_dimension = (a: Arrayable<any>, d = 0): number => Array.isArray(a) ? get_dimension(a[0], d + 1) : d;
+export const get_dimension = (a: StrictArrayable<any>, d = 0): number => Array.isArray(a) ? get_dimension(a[0], d + 1) : d;
 
 export function group_by<T>(arr: T[], prop: keyof T): T[][] {
 	const groups = new Map<any, T[]>();

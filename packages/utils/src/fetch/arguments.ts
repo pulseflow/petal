@@ -1,7 +1,6 @@
-import { isObject, isString } from '../core';
+import { toString } from '../core';
 
-type Key = string | number | symbol;
-type Tuples<K extends Key, V> = [K, V][];
+type Tuples<K extends PropertyKey, V> = [K, V][];
 export type RecordOrTuples<K extends string, V> =
 	| Partial<Record<K, V>>
 	| Tuples<K, V>
@@ -12,9 +11,9 @@ export function toTuples<K extends string, V>(t: RecordOrTuples<K, V> | string, 
 		return [...t];
 	if (Array.isArray(t))
 		return t;
-	if (isObject(t))
+	if (toString(t) === '[object Object]')
 		return Object.entries(t) as Tuples<K, V>;
-	if (isString(t) && isString(v))
+	if (typeof t === 'string' && typeof v === 'string')
 		return [[t as K, v]];
 	throw new TypeError(`invalid toTuples input: ${t}`);
 }

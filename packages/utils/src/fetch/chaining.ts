@@ -1,7 +1,7 @@
 import type { RecordOrTuples } from './arguments';
 import type { Method } from './const';
 import type { RequestBuilder } from './request';
-import { isFunction, isNull, isObject, isString } from '../core';
+import { toString } from '../core';
 import { METHODS_SUPPORTED } from './const';
 
 export function chain<T>(this: RequestBuilder<T>, ...args: (Parameters<typeof _chain<T>>[number])[]): RequestBuilder<T> {
@@ -9,18 +9,18 @@ export function chain<T>(this: RequestBuilder<T>, ...args: (Parameters<typeof _c
 }
 
 function _chain<T>(this: RequestBuilder<T>, arg: Method | string | RecordOrTuples<string, any> | null): RequestBuilder<T> {
-	if (isNull(arg))
+	if (toString(arg) === '[object Null]')
 		return this;
 
-	if (isString(arg)) {
+	if (typeof arg === 'string') {
 		if (METHODS_SUPPORTED.includes(arg.toUpperCase() as Method))
 			return this.method(arg as Method);
 
 		return this.path(arg);
 	}
 
-	if (isObject(arg))
-		return this._method === 'GET' ? this.query(arg) : this.body(arg, 'json');
+	if (toString(arg) === '[object Object]')
+		return this._method === 'GET' ? this.query(arg!) : this.body(arg, 'json');
 
 	throw new TypeError(`invalid chain input: ${arg}`);
 }
@@ -45,7 +45,7 @@ export function proxy<T>(request: RequestBuilder<T>, prop?: keyof RequestBuilder
 				return res[prop as Followup].bind(res);
 			}
 
-			if (isFunction(request[prop]))
+			if (typeof request[prop] === 'function')
 				return proxy<T>(request, prop);
 
 			return request[prop];

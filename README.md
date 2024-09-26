@@ -23,6 +23,6 @@ A monorepo of configs and packages used to speed up development @ Pulseflow and 
 - [ESLint]: used for static code analysis with auto-fixing.
 - [Vitest]: our preferred JavaScript test framework.
 
-[eslint]: https://eslint.org/
-[typescript]: https://www.typescriptlang.org/
-[vitest]: https://vitest.dev/
+[ESLint]: https://eslint.org/
+[TypeScript]: https://www.typescriptlang.org/
+[Vitest]: https://vitest.dev/

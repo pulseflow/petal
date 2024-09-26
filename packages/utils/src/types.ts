@@ -1,5 +1,3 @@
-import { isFunction, isString } from './core';
-
 /**
  * Matches any [primitive value](https://developer.mozilla.org/en-US/docs/Glossary/Primitive).
  */
@@ -26,17 +24,21 @@ export type Nullable<T> = T | null | undefined;
 export type StrictNullable<T> = T | null;
 
 /** Possibly an `Array<T>` */
-export type Arrayable<T> = T | Array<T>;
+export type Arrayable<T> = T | ArrayLike<T>;
+export type StrictArrayable<T> = T | Array<T>;
 
 export type ToString<T> = T extends `${infer V}` ? V : never;
 
 /** Possibly a Function */
-export type Fn<Return = void> = () => Return;
-export type ArgsFn<Return = any, Args extends any[] = any[]> = (...args: Args) => Return;
+export type Fn = () => any;
+export type StrictFn<Return = any> = () => Return;
+
+export type ArgsFn = (...args: any[]) => any;
+export type StrictArgsFn<Return = any, Args extends any[] = any[]> = (...args: Args) => Return;
 
 export type ClassConstructor<Return = void, Args extends any[] = any[]> = new (...args: Args) => Return;
 
-/** Infers the eleement type of an Array */
+/** Infers the element type of an Array */
 export type ElementOf<T> = T extends (infer E)[] ? E : never;
 
 /**
@@ -60,6 +62,8 @@ export type DeepMerge<F, S> = MergeInsertions<{
 		? DeepMerge<F[K], S[K]> : K extends keyof S ? S[K] : K extends keyof F ? F[K] : never;
 }>;
 
+export type ObjectKeys<T> = Array<`${keyof T & (string | number | boolean | null | undefined)}`>;
+
 export type Key<T> = T extends ReadonlyMap<infer U> ? keyof U : T extends Record<infer U, any> ? U : never;
 
 export type ExtractKeysByType<T, U> = {
@@ -67,8 +71,6 @@ export type ExtractKeysByType<T, U> = {
 }[Extract<keyof T, string>];
 
 export type ParametersExceptFirst<F> = F extends (arg0: any, ...rest: infer R) => any ? R : never;
-
-export const identity = <T>(arg: T): T => arg;
 
 class _EmptyClass {}
 
@@ -81,11 +83,11 @@ export function boundMethods<T extends _EmptyClass>(t: T): {
 	while (result && result !== Object.prototype) {
 		const keys = Reflect.ownKeys(result);
 		keys.forEach((key) => {
-			if (!isString(key))
+			if (typeof key !== 'string')
 				return;
 			if (!Reflect.has(t, key))
 				return;
-			if (isFunction((t as any)[key]) && key !== 'constructor')
+			if (typeof (t as any)[key] === 'function' && key !== 'constructor')
 				methods[key] = (t as any)[key].bind();
 		});
 
@@ -116,7 +118,7 @@ export type PickOptional<T> = Pick<T, { [K in keyof T]-?: object extends Pick<T,
 
 export type Rename<T, K extends keyof T, V extends string> = Omit<T, K> & Record<V, T[K]>;
 
-export function rename<T extends Record<string | number | symbol, any>, K extends keyof T, V extends string>(obj: T, from: K, to: V): Rename<T, K, V> {
+export function rename<T extends Record<PropertyKey, any>, K extends keyof T, V extends string>(obj: T, from: K, to: V): Rename<T, K, V> {
 	return ({ ...omit(obj, from), [to]: obj[from] }) as Rename<T, K, V>;
 }
 
@@ -175,3 +177,52 @@ export interface ReadonlyMapConstructor {
 }
 
 export const M = Map as any as ReadonlyMapConstructor;
+
+/**
+ * A type representing all allowed JSON primitive values.
+ *
+ * @public
+ * @category JSON
+ */
+export type JsonPrimitive = number | string | boolean | null;
+
+/**
+ * A type representing all allowed JSON object values.
+ *
+ * @public
+ * @category JSON
+ */
+export type JsonObject = { [key in string]?: JsonValue };
+
+/**
+ * A type representing all allowed JSON array values.
+ *
+ * @public
+ * @category JSON
+ */
+export interface JsonArray extends Array<JsonValue> {}
+
+/**
+ * A type representing all allowed JSON values.
+ *
+ * @public
+ * @category JSON
+ */
+export type JsonValue = JsonObject | JsonArray | JsonPrimitive | unknown;
+
+/**
+ * Human friendly durations object.
+ *
+ * @public
+ * @category Time
+ */
+export interface HumanDuration {
+	years?: number;
+	months?: number;
+	weeks?: number;
+	days?: number;
+	hours?: number;
+	minutes?: number;
+	seconds?: number;
+	milliseconds?: number;
+}

@@ -17,7 +17,9 @@
 		"create-app",
 		"petal",
 		"tooling",
-		"build"
+		"build",
+		"create-petal",
+		"flowr"
 	],
 	"sideEffects": false,
 	"exports": {

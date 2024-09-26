@@ -5,6 +5,11 @@
 
 export type VendoredPrettierOptions = Partial<VendoredPrettierOptionsRequired>;
 
+export interface VendoredPrettierRuleOptions extends VendoredPrettierOptions {
+	parser?: ParserName;
+	[k: string]: unknown | undefined;
+};
+
 export interface VendoredPrettierOptionsRequired {
 	/**
 	 * Specify the line length that the printer will wrap on.
@@ -119,3 +124,33 @@ export interface VendoredPrettierOptionsRequired {
 	 */
 	xmlWhitespaceSensitivity: 'ignore' | 'strict' | 'preserve';
 }
+
+export type ParserName = BuiltInParserName | ExternalParserName;
+
+export type BuiltInParserName =
+	| 'acorn'
+	| 'angular'
+	| 'babel-flow'
+	| 'babel-ts'
+	| 'babel'
+	| 'css'
+	| 'espree'
+	| 'flow'
+	| 'glimmer'
+	| 'graphql'
+	| 'html'
+	| 'json-stringify'
+	| 'json'
+	| 'json5'
+	| 'less'
+	| 'lwc'
+	| 'markdown'
+	| 'mdx'
+	| 'meriyah'
+	| 'scss'
+	| 'typescript'
+	| 'vue'
+	| 'xml'
+	| 'yaml';
+
+export type ExternalParserName = 'slidev' | 'astro';

@@ -16,7 +16,9 @@
 	"keywords": [
 		"utils",
 		"flowr",
-		"petal"
+		"petal",
+		"utils",
+		"helpers"
 	],
 	"sideEffects": false,
 	"exports": {

@@ -5,7 +5,6 @@ import type { Finalizer } from './finalizers';
 import { Buffer } from 'node:buffer';
 import { join } from 'pathe';
 import { version } from '../../package.json';
-import { isString } from '../core';
 import { toTuples } from './arguments';
 import { DEF_REFDIR_COUNT, DEF_TIMEOUT } from './const';
 import { fetchWrapper } from './fetch';
@@ -35,7 +34,7 @@ export class RequestBuilder<T> {
 		finalizer: Finalizer<T>,
 		options: Options = defaultOptions,
 	) {
-		this._url = isString(input) ? new URL(input) : input;
+		this._url = typeof input === 'string' ? new URL(input) : input;
 		this._search = [...this._url.searchParams];
 		this._options = options ?? {};
 		this._finalizer = finalizer;

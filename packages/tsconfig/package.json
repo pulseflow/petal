@@ -16,7 +16,9 @@
 		"config",
 		"tsconfig",
 		"tsconfigs",
-		"typescript"
+		"typescript",
+		"petal",
+		"flowr"
 	],
 	"sideEffects": false,
 	"main": "tsconfig.strict.json",

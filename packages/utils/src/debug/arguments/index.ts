@@ -1,3 +1,9 @@
+/**
+ * A simple, strongly typed argument parser.
+ *
+ * @module
+ */
+
 import type { Aliases, OptionFlag, ParsedFlags } from './flag';
 import type { OptionFlags } from './options';
 import { parseInput } from './input';

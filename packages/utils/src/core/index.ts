@@ -1,12 +1,10 @@
 export * from './array';
-export * from './assert';
 // export * from './crypto';
 export * from './equal';
 export * from './event';
 export * from './function';
 export * from './guards';
 export * from './io';
-export * from './json';
 export * from './math';
 export * from './object';
 export * from './promise';
