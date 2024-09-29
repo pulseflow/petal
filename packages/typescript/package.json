@@ -1,6 +1,6 @@
 {
 	"name": "@flowr/typescript",
-	"version": "4.4.0",
+	"version": "4.4.1",
 	"description": "Common TSConfigs and TypeScript in Petal standardized projects",
 	"author": "Petal Contributors",
 	"license": "(LicenseRef-OQL-1.2 OR MIT or Apache-2.0)",
