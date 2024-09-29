@@ -1,5 +1,5 @@
 {
-	"extends": "@flowr/tsconfig/tsconfig.strict.json",
+	"extends": "@flowr/typescript/tsconfig.strict.json",
 	"compilerOptions": {
 		"types": ["vitest/globals", "node", "vite/client"],
 		"exactOptionalPropertyTypes": false,

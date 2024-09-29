@@ -1,4 +1,4 @@
-# @flowr/tsconfig
+# @flowr/typescript
 
 A collection of different base `tsconfig.json` to be extended from in your project.
 
@@ -7,7 +7,7 @@ A collection of different base `tsconfig.json` to be extended from in your proje
 Using npm or yarn:
 
 ```sh
-pnpm add -D @flowr/tsconfig
+pnpm add -D @flowr/typescript
 ```
 
 ## Contributing

@@ -9,7 +9,7 @@ A monorepo of configs and packages used to speed up development @ Pulseflow and 
 
 - [`@flowr/eslint-config`](./packages/eslint-config): Standardized Petal specification linting configuration
 - [`eslint-plugin-petal`](./packages/petal-plugin): Custom ESLint rules for the Petal specification
-- [`@flowr/tsconfig`](./packages/tsconfig): Common TSConfigs in Petal standardized projects
+- [`@flowr/typescript`](./packages/typescript): Common TSConfigs in Petal standardized projects
 
 ## Petal Utilities
 
