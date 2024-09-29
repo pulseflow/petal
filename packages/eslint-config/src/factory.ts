@@ -79,7 +79,7 @@ type FactoryComposer = FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
  * Construct a Petal ESLint config.
  *
  * @param {FactoryOptions} options The options for generating the ESLint configurations.
- * @param {UserConfigs} userConfigs The user configurations to be merged with the generated configurations.
+ * @param {UserConfig[]} userConfigs The user configurations to be merged with the generated configurations.
  * @returns {FactoryComposer} The merged ESLint configurations.
  * @public
  */

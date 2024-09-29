@@ -31,7 +31,6 @@
 		"start": "pnpm --filter=./packages/* run start",
 		"lint": "pnpm eslint --cache . --flag unstable_ts_config",
 		"lint:fix": "pnpm lint --fix",
-		"release": "pnpm bumpp -r",
 		"dev": "pnpm stub"
 	},
 	"workspaces": {
@@ -41,9 +40,8 @@
 	},
 	"devDependencies": {
 		"@flowr/eslint-config": "workspace:^",
-		"@flowr/tsconfig": "workspace:^",
-		"@types/node": "^22.7.2",
-		"bumpp": "^9.5.2",
+		"@flowr/typescript": "workspace:^",
+		"@types/node": "^22.7.4",
 		"esbuild": "^0.24.0",
 		"eslint": "^9.11.1",
 		"jiti": "^2.0.0",

@@ -284,11 +284,5 @@ export async function formatters(options: OptionsFormatters | true = {}, stylist
 			},
 		});
 
-	if (options.prettierConfigs)
-		options.prettierConfigs({
-			defaultOptions: prettierOptions,
-			defaultXmlOptions: prettierXmlOptions,
-		}).forEach(i => configs.push(i));
-
 	return configs;
 }
