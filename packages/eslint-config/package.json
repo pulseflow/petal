@@ -152,7 +152,7 @@
 		"eslint-plugin-jsdoc": "^50.3.0",
 		"eslint-plugin-jsonc": "^2.16.0",
 		"eslint-plugin-n": "^17.10.3",
-		"eslint-plugin-perfectionist": "^3.7.0",
+		"eslint-plugin-perfectionist": "^3.9.1",
 		"eslint-plugin-petal": "workspace:^",
 		"eslint-plugin-regexp": "^2.6.0",
 		"eslint-plugin-toml": "^0.11.1",
