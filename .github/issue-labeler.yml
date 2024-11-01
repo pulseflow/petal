@@ -1,0 +1,54 @@
+packages:actions:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\nactions\n'
+packages:builder:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\nbuilder\n'
+packages:console:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\nconsole\n'
+packages:create-petal:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\ncreate-petal\n'
+packages:crypto:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\ncrypto\n'
+packages:eslint:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\neslint\n'
+packages:eslint-plugin:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\neslint-plugin\n'
+packages:fetch:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\nfetch\n'
+packages:iterator:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\niterator\n'
+packages:loader:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\nloader\n'
+packages:metadata:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\nmetadata\n'
+packages:node:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\nnode\n'
+packages:result:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\nresult\n'
+packages:scripts:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\nscripts\n'
+packages:store:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\nstore\n'
+packages:types:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\ntypes\n'
+packages:typescript:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\ntypescript\n'
+packages:utilities:
+  - '### Which (application|package|application or package) is this (bug
+    report|feature request) for\?\n\nutilities\n'

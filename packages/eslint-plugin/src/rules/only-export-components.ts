@@ -1,9 +1,9 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import type { JSONSchema4 } from '@typescript-eslint/utils/json-schema';
-import { createEslintRule } from '../utils';
+import { createEslintRule } from '../utils.ts';
 
 export const RULE_NAME = 'only-export-components';
-export type MessageIds = 'exportAll' | 'namedExport' | 'anonymousExport' | 'localComponents' | 'noExport';
+export type MessageIds = 'exportAll' | 'namedExport' | 'anonymousExport' | 'localComponents' | 'noExport' | 'noAMI';
 export type Options = [{
 	allowConstantExport?: boolean;
 	checkJS?: boolean;
@@ -14,8 +14,8 @@ const defaultOptions: Options = [{}];
 const possibleRegex = /^[A-Z][a-zA-Z0-9]*$/u;
 const strictRegex = /^[A-Z][\dA-Z]*[a-z][\dA-Za-z]*$/u;
 const reactHOCs = new Set(['forwardRef', 'memo']);
-type ToString<T> = T extends `${infer V}` ? V : never;
-const notReactComponentExpression = new Set<ToString<TSESTree.Expression['type']>>([
+type ToString<Type> = Type extends `${infer String}` ? String : never;
+const notReactComponentExpression: Set<ToString<TSESTree.Expression['type']>> = new Set([
 	'ArrayExpression',
 	'AwaitExpression',
 	'BinaryExpression',
@@ -33,30 +33,6 @@ const notReactComponentExpression = new Set<ToString<TSESTree.Expression['type']
 // Adapted from https://github.com/ArnaudBarre/eslint-plugin-react-refresh
 
 export default createEslintRule<Options, MessageIds>({
-	name: RULE_NAME,
-	meta: {
-		type: 'problem',
-		docs: {
-			description: 'Validates that React components can be safely updated with fast refresh',
-		},
-		schema: [{
-			type: 'object',
-			properties: {
-				allowConstantExport: { type: 'boolean' },
-				checkJS: { type: 'boolean' },
-				allowExportNames: { type: 'array', items: { type: 'string' } },
-			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
-			additionalProperties: false,
-		}],
-		messages: {
-			exportAll: 'This rule is unable to verify that `export *` only exports components.',
-			namedExport: 'Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.',
-			anonymousExport: 'Fast refresh is unable to handle anonymous components. Add a name to this export.',
-			localComponents: 'Fast refresh only works when a file only exports components. Move your component(s) to a seperate file.',
-			noExport: 'Fast refresh only works when a file has exports. Move your component(s) to a seperate file.',
-		},
-	},
-	defaultOptions,
 	create: (context, [options = {}] = defaultOptions) => {
 		if (['.test.', '.spec.', '.cy.', '.stories.'].some(f => context.filename.includes(f)))
 			return {};
@@ -82,11 +58,7 @@ export default createEslintRule<Options, MessageIds>({
 						localComponents.push(id);
 				};
 
-				const handleExportIdentifier = (
-					id: TSESTree.BindingName,
-					isFn?: boolean,
-					init?: TSESTree.Expression | null,
-				): void => {
+				const handleExportIdentifier = (id: TSESTree.BindingName, isFn?: boolean, init?: TSESTree.Expression | null): void => {
 					if (id.type !== 'Identifier') {
 						nonComponentExports.push(id);
 						return;
@@ -156,17 +128,22 @@ export default createEslintRule<Options, MessageIds>({
 					}
 					else if (node.type === 'ExportDefaultDeclaration') {
 						ruleContext.hasExports = true;
+						const declaration
+							= node.declaration.type === 'TSAsExpression'
+							|| node.declaration.type === 'TSSatisfiesExpression'
+								? node.declaration.expression
+								: node.declaration;
 						if (
-							node.declaration.type === 'VariableDeclaration'
-							|| node.declaration.type === 'FunctionDeclaration'
-							|| node.declaration.type === 'CallExpression'
+							declaration.type === 'VariableDeclaration'
+							|| declaration.type === 'FunctionDeclaration'
+							|| declaration.type === 'CallExpression'
 						)
-							handleExportDeclaration(node.declaration);
+							handleExportDeclaration(declaration);
 
-						if (node.declaration.type === 'Identifier')
-							handleExportIdentifier(node.declaration);
+						if (declaration.type === 'Identifier')
+							handleExportIdentifier(declaration);
 
-						if (node.declaration.type === 'ArrowFunctionExpression')
+						if (declaration.type === 'ArrowFunctionExpression')
 							context.report({ messageId: 'anonymousExport', node });
 					}
 					else if (node.type === 'ExportNamedDeclaration') {
@@ -175,7 +152,12 @@ export default createEslintRule<Options, MessageIds>({
 						ruleContext.hasExports = true;
 						if (node.declaration)
 							handleExportDeclaration(node.declaration);
-						node.specifiers.forEach(i => handleExportIdentifier(i.exported.name === 'default' ? i.local : i.exported));
+						node.specifiers.forEach((i) => {
+							if (i.exported.type === 'Literal' || i.local.type === 'Literal')
+								context.report({ messageId: 'noAMI', node });
+							else
+								handleExportIdentifier(i.exported.name === 'default' ? i.local : i.exported);
+						});
 					}
 					else if (node.type === 'VariableDeclaration') {
 						node.declarations.forEach(v => handleLocalIdentifier(v.id));
@@ -200,6 +182,31 @@ export default createEslintRule<Options, MessageIds>({
 			},
 		};
 	},
+	defaultOptions,
+	meta: {
+		docs: {
+			description: 'Validates that React components can be safely updated with fast refresh',
+		},
+		messages: {
+			anonymousExport: 'Fast refresh is unable to handle anonymous components. Add a name to this export.',
+			exportAll: 'This rule is unable to verify that `export *` only exports components.',
+			localComponents: 'Fast refresh only works when a file only exports components. Move your component(s) to a seperate file.',
+			namedExport: 'Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.',
+			noAMI: 'Fast refrsh only works when a file uses standard imports, not arbitrary modules.',
+			noExport: 'Fast refresh only works when a file has exports. Move your component(s) to a seperate file.',
+		},
+		schema: [{
+			additionalProperties: false,
+			properties: {
+				allowConstantExport: { type: 'boolean' },
+				allowExportNames: { items: { type: 'string' }, type: 'array' },
+				checkJS: { type: 'boolean' },
+			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
+			type: 'object',
+		}],
+		type: 'problem',
+	},
+	name: RULE_NAME,
 });
 
 function canBeReactFunctionComponent(init: TSESTree.Expression | null): boolean {

@@ -1,3 +1,4 @@
+import console from 'node:console';
 import process from 'node:process';
 
 export async function main(_cwd = process.cwd(), _argv = process.argv): Promise<void> {

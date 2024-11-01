@@ -1,3 +1,3 @@
-import shared from '../../shared.config';
+import { createVitestConfig } from '../scripts/vitest.config.ts';
 
-export default shared.vitest`create-petal`;
+export default createVitestConfig`create-petal`;

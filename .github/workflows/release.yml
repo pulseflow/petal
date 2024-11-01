@@ -37,14 +37,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: setup ni
+        run: npm i -g @antfu/ni
+
       - name: install dependencies
-        run: pnpm install
+        run: nci
 
       - name: build packages
-        run: pnpm build
+        run: nr build
 
       - name: publish packages
-        run: pnpm -r publish --access public --no-git-checks
+        run: pnpm -r publish --access public --no-git-checks --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: true

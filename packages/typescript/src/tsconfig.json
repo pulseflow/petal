@@ -1,0 +1,29 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig.json",
+	"display": "Base",
+	"_version": "1.0.0",
+
+	"compilerOptions": {
+		"incremental": true,
+		"target": "ESNext",
+		"jsx": "preserve",
+		"lib": ["ESNext", "ESNext.Disposable"],
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"resolveJsonModule": true,
+		"allowArbitraryExtensions": false,
+		"allowImportingTsExtensions": true,
+		"allowJs": true,
+		"strict": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": true,
+		"noErrorTruncation": true,
+		"declaration": true,
+		"declarationMap": true,
+		"outDir": "dist",
+		"sourceMap": true,
+		"stripInternal": true,
+		"esModuleInterop": true,
+		"verbatimModuleSyntax": true
+	}
+}

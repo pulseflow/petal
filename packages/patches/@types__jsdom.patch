@@ -1,0 +1,14 @@
+diff --git a/base.d.ts b/base.d.ts
+index 420870f8a8db41b7a4117f9913bcad5d02bc6c19..a4d950214a8a13df6527b95798ead9a9338ca256 100644
+--- a/base.d.ts
++++ b/base.d.ts
+@@ -196,7 +196,9 @@ declare module "jsdom" {
+ 
+         /* ECMAScript Globals */
+         globalThis: DOMWindow;
++		// @ts-ignore
+         readonly ["Infinity"]: number;
++		// @ts-ignore
+         readonly ["NaN"]: number;
+         readonly undefined: undefined;
+ 

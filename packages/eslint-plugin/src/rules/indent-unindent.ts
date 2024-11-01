@@ -1,5 +1,5 @@
-import { unindent } from '@flowr/utils';
-import { createEslintRule } from '../utils';
+import { unindent } from '@flowr/utilities/unindent';
+import { createEslintRule } from '../utils.ts';
 
 export const RULE_NAME = 'indent-unindent';
 export type MessageIds = 'indentUnindent';
@@ -12,35 +12,8 @@ const defaultOptions: Options = [{
 }];
 
 export default createEslintRule<Options, MessageIds>({
-	name: RULE_NAME,
-	meta: {
-		type: 'layout',
-		docs: {
-			description: 'Enforce consistent indentation in the `unindent` template tag',
-		},
-		fixable: 'code',
-		schema: [
-			{
-				type: 'object',
-				properties: {
-					tags: {
-						type: 'array',
-						items: {
-							type: 'string',
-						},
-						default: defaultOptions[0].tags,
-					},
-				},
-				additionalProperties: false,
-			},
-		],
-		messages: {
-			indentUnindent: 'Consistent indentation in unindent tag',
-		},
-	},
-	defaultOptions,
 	create: (context) => {
-		const { tags = ['$', 'unindent', 'unIndent'] } = context.options?.[0] ?? {};
+		const { tags = ['$', 'unindent', 'unIndent'] } = context.options[0] ?? {};
 		const tagSet = new Set(tags);
 
 		return {
@@ -52,23 +25,47 @@ export default createEslintRule<Options, MessageIds>({
 					return;
 				if (node.quasi.quasis.length !== 1)
 					return;
+
 				const quasi = node.quasi.quasis[0];
 				const value = quasi.value.raw;
-				const lineStartIndex = context.sourceCode.getIndexFromLoc({ line: node.loc.start.line, column: 0 });
+				const lineStartIndex = context.sourceCode.getIndexFromLoc({ column: 0, line: node.loc.start.line });
 				const baseIndent = context.sourceCode.text.slice(lineStartIndex).match(/^\s*/)?.[0] ?? '';
-				const targetIndent = `${baseIndent}	`;
-				const pure: string = unindent([value] as any);
-				let final = pure.split('\n').map(l => targetIndent + l).join('\n');
-
-				final = `\n${final}\n${baseIndent}`;
+				const final = `\n${unindent(value).split('\n').map(l => `${baseIndent}	${l}`).join('\n')}\n${baseIndent}`;
 
 				if (final !== value)
 					context.report({
-						node: quasi,
-						messageId: 'indentUnindent',
 						fix: fixer => fixer.replaceText(quasi, `\`${final}\``),
+						messageId: 'indentUnindent',
+						node: quasi,
 					});
 			},
 		};
 	},
+	defaultOptions,
+	meta: {
+		docs: {
+			description: 'Enforce consistent indentation in the `unindent` template tag',
+		},
+		fixable: 'code',
+		messages: {
+			indentUnindent: 'Consistent indentation in unindent tag',
+		},
+		schema: [
+			{
+				additionalProperties: false,
+				properties: {
+					tags: {
+						default: defaultOptions[0].tags,
+						items: {
+							type: 'string',
+						},
+						type: 'array',
+					},
+				},
+				type: 'object',
+			},
+		],
+		type: 'layout',
+	},
+	name: RULE_NAME,
 });

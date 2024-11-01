@@ -1,0 +1,79 @@
+{
+	"$schema": "https://json.schemastore.org/package.json",
+	"name": "@flowr/loader",
+	"type": "module",
+	"version": "4.4.1",
+	"description": "A simple TypeScript code piece loader",
+	"author": "@flowr",
+	"contributors": [
+		"Pauline <git@ethanlibs.co>"
+	],
+	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
+	"funding": "https://ko-fi.com/pauliesnug",
+	"homepage": "https://petal.dyn.gay",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal.git",
+		"directory": "packages/loader"
+	},
+	"bugs": "https://github.com/pulseflow/petal/issues",
+	"keywords": [
+		"@flowr/store",
+		"petal",
+		"store",
+		"runtime",
+		"flowr",
+		"promise",
+		"typescript",
+		"ts",
+		"wrapper",
+		"try catch"
+	],
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"import": {
+				"types": "./dist/esm/index.d.ts",
+				"default": "./dist/esm/index.js"
+			},
+			"require": {
+				"types": "./dist/cjs/index.d.cts",
+				"default": "./dist/cjs/index.cjs"
+			}
+		},
+		"./package.json": "./package.json"
+	},
+	"main": "./dist/cjs/index.cjs",
+	"module": "./dist/esm/index.js",
+	"types": "./dist/esm/index.d.ts",
+	"files": [
+		"LICENSE*",
+		"README.md",
+		"dist/**/*.cjs",
+		"dist/**/*.d.cts",
+		"dist/**/*.d.mts",
+		"dist/**/*.d.ts",
+		"dist/**/*.js",
+		"dist/**/*.mjs"
+	],
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"build": "tsup && pnpm build:cjs",
+		"start": "tsup --watch",
+		"build:cjs": "tsx ../scripts/src/cjs.ts"
+	},
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
+	"dependencies": {
+		"tslib": "^2.8.1"
+	},
+	"devDependencies": {
+		"@flowr/types": "workspace:^",
+		"@flowr/utilities": "workspace:^",
+		"pathe": "^1.1.2"
+	}
+}

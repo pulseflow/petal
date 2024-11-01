@@ -1,0 +1,77 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"globalDependencies": ["tsconfig.json"],
+	"globalEnv": [],
+	"cacheDir": ".turbo/cache",
+	"daemon": true,
+	"envMode": "strict",
+	"ui": "stream",
+	"dangerouslyDisablePackageManagerCheck": false,
+	"globalPassThroughEnv": [],
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"inputs": ["bin/**", "src/**", "scripts/**", "package.json", "tsup.config.ts", "tsconfig.json"],
+			"outputs": ["dist/**", "src/index.ts"],
+			"cache": true,
+			"persistent": false,
+			"env": [],
+			"passThroughEnv": [],
+			"interactive": false,
+			"outputLogs": "errors-only"
+		},
+		"start": {
+			"dependsOn": ["^start"],
+			"inputs": ["bin/**", "src/**", "scripts/**", "package.json", "tsup.config.ts", "tsconfig.json"],
+			"cache": false,
+			"persistent": true,
+			"interactive": true,
+			"env": [],
+			"passThroughEnv": [],
+			"outputLogs": "errors-only",
+			"outputs": []
+		},
+		"test": {
+			"dependsOn": ["^build"],
+			"cache": true,
+			"persistent": false,
+			"interactive": false,
+			"env": [],
+			"passThroughEnv": [],
+			"inputs": ["tests/**", "fixtures/**", "__fixtures__/**", "vitest.config.ts", "tsconfig.json", "src/**", "package.json"],
+			"outputs": ["coverage/**"],
+			"outputLogs": "new-only"
+		},
+		"lint": {
+			"dependsOn": ["@flowr/eslint#build", "@flowr/utilities#build", "@flowr/eslint-plugin#build"],
+			"cache": true,
+			"persistent": false,
+			"env": [],
+			"passThroughEnv": [],
+			"interactive": false,
+			"inputs": ["eslint.config.ts", "src/**", "tests/**", "tsconfig.json", "package.json", "scripts/**", "tsconfig.eslint.json", "bin/**"],
+			"outputs": [".eslintcache"],
+			"outputLogs": "errors-only"
+		},
+		"format": {
+			"dependsOn": ["@flowr/eslint#build", "@flowr/utilities#build", "@flowr/eslint-plugin#build"],
+			"cache": true,
+			"persistent": false,
+			"env": [],
+			"interactive": false,
+			"passThroughEnv": [],
+			"inputs": ["eslint.config.ts", "src/**", "tests/**", "tsconfig.json", "package.json", "scripts/**", "tsconfig.eslint.json", "bin/**"],
+			"outputs": [".eslintcache"],
+			"outputLogs": "errors-only"
+		},
+		"docs": {
+			"dependsOn": ["^build"],
+			"persistent": false,
+			"env": [],
+			"passThroughEnv": [],
+			"interactive": false,
+			"outputs": ["docs/**"],
+			"outputLogs": "errors-only"
+		}
+	}
+}

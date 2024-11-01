@@ -1,12 +1,12 @@
 {
-	"extends": "@flowr/typescript/tsconfig.strict.json",
+	"$schema": "https://json.schemastore.org/tsconfig.json",
+	"extends": "./packages/typescript/src/tsconfig.json",
 	"compilerOptions": {
+		"incremental": false,
+		"lib": ["ESNext", "ESNext.Disposable", "DOM"],
 		"types": ["vitest/globals", "node", "vite/client"],
-		"exactOptionalPropertyTypes": false,
-		"noPropertyAccessFromIndexSignature": false,
-		"removeComments": false,
-		"skipDefaultLibCheck": true,
-		"skipLibCheck": true
+		"noEmit": true,
+		"verbatimModuleSyntax": true
 	},
 	"exclude": [
 		"**/vendor/**",
@@ -15,6 +15,8 @@
 		"**/build/**",
 		"**/fixtures/**",
 		"**/.fixtures/**",
-		"**/_fixtures/**"
+		"**/_fixtures/**",
+		"**/bin/**",
+		"**/.turbo/**"
 	]
 }

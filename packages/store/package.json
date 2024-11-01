@@ -1,0 +1,73 @@
+{
+	"$schema": "https://json.schemastore.org/package.json",
+	"name": "@flowr/store",
+	"type": "module",
+	"version": "4.4.1",
+	"description": "Node-specific opinionated TypeScript utilities",
+	"author": "@flowr",
+	"contributors": ["Pauline <git@ethanlibs.co>"],
+	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
+	"funding": "https://ko-fi.com/pauliesnug",
+	"homepage": "https://petal.dyn.gay",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal.git",
+		"directory": "packages/store"
+	},
+	"bugs": "https://github.com/pulseflow/petal/issues",
+	"keywords": [
+		"@flowr/store",
+		"petal",
+		"store",
+		"runtime",
+		"flowr",
+		"promise",
+		"typescript",
+		"ts",
+		"wrapper",
+		"try catch"
+	],
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"import": {
+				"types": "./dist/esm/index.d.ts",
+				"default": "./dist/esm/index.js"
+			},
+			"require": {
+				"types": "./dist/cjs/index.d.cts",
+				"default": "./dist/cjs/index.cjs"
+			}
+		},
+		"./package.json": "./package.json"
+	},
+	"main": "./dist/cjs/index.cjs",
+	"module": "./dist/esm/index.js",
+	"types": "./dist/esm/index.d.ts",
+	"files": [
+		"LICENSE*",
+		"README.md",
+		"dist/**/*.cjs",
+		"dist/**/*.d.cts",
+		"dist/**/*.d.mts",
+		"dist/**/*.d.ts",
+		"dist/**/*.js",
+		"dist/**/*.mjs"
+	],
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"build": "pnpm gen && tsup && pnpm build:cjs",
+		"start": "pnpm gen && tsup --watch",
+		"build:cjs": "tsx ../scripts/src/cjs.ts",
+		"gen": "tsx ../scripts/src/gen.ts store --write"
+	},
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
+	"devDependencies": {
+		"pathe": "^1.1.2"
+	}
+}

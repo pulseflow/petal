@@ -1,10 +1,14 @@
 {
+	"$schema": "https://json.schemastore.org/package.json",
 	"name": "eslint-plugin-petal",
 	"type": "module",
 	"version": "4.4.1",
 	"description": "Custom ESLint rules for the Petal specification",
-	"author": "Petal Contributors",
-	"license": "(LicenseRef-OQL-1.2 OR MIT or Apache-2.0)",
+	"author": "@flowr",
+	"contributors": [
+		"Pauline <git@ethanlibs.co>"
+	],
+	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
 	"repository": {
@@ -16,6 +20,7 @@
 	"keywords": [
 		"eslint",
 		"eslint-plugin",
+		"eslint-plugin-petal",
 		"react",
 		"typescript",
 		"flowr",
@@ -24,14 +29,20 @@
 	"sideEffects": false,
 	"exports": {
 		".": {
-			"import": "./dist/index.mjs",
-			"require": "./dist/index.cjs"
+			"import": {
+				"types": "./dist/esm/index.d.ts",
+				"default": "./dist/esm/index.js"
+			},
+			"require": {
+				"types": "./dist/cjs/index.d.cts",
+				"default": "./dist/cjs/index.cjs"
+			}
 		},
 		"./package.json": "./package.json"
 	},
-	"main": "./dist/index.mjs",
-	"module": "./dist/index.mjs",
-	"types": "./dist/index.d.ts",
+	"main": "./dist/cjs/index.cjs",
+	"module": "./dist/esm/index.js",
+	"types": "./dist/esm/index.d.ts",
 	"files": [
 		"LICENSE*",
 		"README.md",
@@ -47,18 +58,15 @@
 	},
 	"scripts": {
 		"start": "tsx src/index.ts",
-		"build": "unbuild",
-		"stub": "unbuild --stub"
+		"build": "tsup"
 	},
 	"peerDependencies": {
-		"eslint": "^9.11.1"
-	},
-	"dependencies": {
-		"@flowr/utils": "workspace:^"
+		"eslint": "^9.14.0"
 	},
 	"devDependencies": {
-		"@typescript-eslint/utils": "^8.7.0",
-		"eslint": "^9.11.1",
+		"@flowr/utilities": "workspace:^",
+		"@typescript-eslint/utils": "^8.12.0",
+		"eslint": "^9.14.0",
 		"eslint-vitest-rule-tester": "^0.6.1",
 		"jsonc-eslint-parser": "^2.4.0"
 	},

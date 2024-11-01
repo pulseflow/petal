@@ -1,3 +1,3 @@
-import shared from '../../shared.config';
+import { createVitestConfig } from '../scripts/vitest.config.js';
 
-export default shared.vitest`eslint-plugin`;
+export default createVitestConfig`eslint-plugin`;

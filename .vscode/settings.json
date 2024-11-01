@@ -2,11 +2,13 @@
 	// Disable the default formatter
 	"prettier.enable": false,
 	"editor.formatOnSave": false,
+
 	// Auto fix
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "explicit",
 		"source.organizeImports": "never"
 	},
+
 	// Silent the stylistic rules in you IDE, but still auto fix them
 	"eslint.rules.customizations": [
 		{ "rule": "style/*", "severity": "off", "fixable": true },
@@ -19,9 +21,7 @@
 		{ "rule": "*quotes", "severity": "off", "fixable": true },
 		{ "rule": "*semi", "severity": "off", "fixable": true }
 	],
-	"svelte.enable-ts-plugin": false,
-	"svelte.plugin.svelte.enable": false,
-	"svelte.plugin.typescript.enable": false,
+	"deno.enable": false,
 
 	"eslint.validate": [
 		"javascript",
@@ -32,13 +32,15 @@
 		"html",
 		"markdown",
 		"json",
+		"json5",
 		"jsonc",
 		"yaml",
-		"astro",
 		"toml",
-		"graphql",
-		"gql",
 		"xml",
+		"gql",
+		"graphql",
+		"astro",
+		"svelte",
 		"css",
 		"less",
 		"scss",
@@ -46,7 +48,14 @@
 		"postcss"
 	],
 
-	"eslint.runtime": "node",
+	// Custom Options
+	"files.associations": {
+		"tsconfig.json": "jsonc",
+		"tsconfig.eslint.json": "jsonc",
+		"tsconfig.docs.json": "jsonc"
+	},
+	"npm.packageManager": "pnpm",
+
 	"eslint.options": {
 		"flags": ["unstable_ts_config"]
 	}

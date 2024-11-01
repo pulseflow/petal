@@ -1,6 +1,6 @@
 import type { JSONSchema4 } from '@typescript-eslint/utils/json-schema';
 import { readFileSync } from 'node:fs';
-import { createEslintRule } from '../utils';
+import { createEslintRule } from '../utils.ts';
 
 type CommentSyntax = string | [string, string];
 type DecorSyntax = string | [string, string, string];
@@ -24,120 +24,62 @@ const defaultOptions: Options = [{}];
 
 const validSyntax: JSONSchema4[] = [
 	{
-		type: 'object',
-		properties: {
-			syntax: { type: 'string' },
-			decor: { type: 'string' },
-		},
 		additionalProperties: false,
+		properties: {
+			decor: { type: 'string' },
+			syntax: { type: 'string' },
+		},
+		type: 'object',
 	},
 	{
-		type: 'object',
+		additionalProperties: false,
 		properties: {
-			syntax: {
-				type: 'array',
-				items: { type: 'string' },
-				minItems: 2,
-				maxItems: 2,
-			},
 			decor: {
-				type: 'array',
 				items: { type: 'string' },
-				minItems: 3,
 				maxItems: 3,
+				minItems: 3,
+				type: 'array',
+			},
+			syntax: {
+				items: { type: 'string' },
+				maxItems: 2,
+				minItems: 2,
+				type: 'array',
 			},
 		},
-		additionalProperties: false,
+		type: 'object',
 	},
 ];
 
 const validSources: JSONSchema4[] = [
 	{
-		type: 'object',
-		required: ['files'],
+		additionalProperties: false,
 		properties: {
 			files: {
-				type: 'array',
 				items: { type: 'string' },
 				minItems: 1,
+				type: 'array',
 			},
 		},
-		additionalProperties: false,
+		required: ['files'],
+		type: 'object',
 	},
 	{
-		type: 'object',
-		required: ['text'],
+		additionalProperties: false,
 		properties: {
 			text: {
 				oneOf: [
 					{ type: 'string' },
-					{ type: 'array', items: { type: 'string' } },
+					{ items: { type: 'string' }, type: 'array' },
 				],
 			},
 		},
-		additionalProperties: false,
+		required: ['text'],
+		type: 'object',
 	},
 ];
 
 export default createEslintRule<Options, MessageIds>({
-	name: RULE_NAME,
-	meta: {
-		type: 'layout',
-		docs: {
-			description: 'Enforce a file header across files.',
-		},
-		fixable: 'code',
-		schema: [{
-			type: 'object',
-			additionalProperties: false,
-			allOf: [{ anyOf: validSyntax }, { oneOf: validSources }],
-			properties: {
-				syntax: {
-					type: ['string', 'array'],
-					items: { type: 'string' },
-					minItems: 2,
-					maxItems: 2,
-				},
-				decor: {
-					type: ['string', 'array'],
-					items: { type: 'string' },
-					minItems: 3,
-					maxItems: 3,
-				},
-				files: {
-					type: 'array',
-					items: { type: 'string' },
-					minItems: 1,
-				},
-				text: {
-					oneOf: [
-						{ type: 'string' },
-						{ type: 'array', items: { type: 'string' } },
-					],
-				},
-				templates: {
-					type: 'object',
-					additionalProperties: false,
-					patternProperties: {
-						'\\w+$': {
-							type: 'array',
-							items: { type: 'string' },
-							minItems: 2,
-							maxItems: 2,
-						},
-					},
-				},
-				newlines: { type: 'number', minimum: 0 },
-				linebreak: { type: 'string', pattern: '^(unix|windows)$' },
-			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
-		}],
-		messages: {
-			headerSpacing: '',
-			invalidHeader: '',
-			missingHeader: '',
-		},
-	},
-	defaultOptions,
 	create: (context, [options = {}] = defaultOptions) => {
 		const syntax = options.syntax ?? ['/*', '*/'];
 		const decor = options.decor ?? (Array.isArray(syntax) ? ['\n', ' * ', '\n '] : ' ');
@@ -155,19 +97,77 @@ export default createEslintRule<Options, MessageIds>({
 
 		if (!matchHeader(stripHeader(srcHeader.trim(), syntax), headers, templates))
 			context.report({
-				messageId: srcHeader.trim() ? 'invalidHeader' : 'missingHeader',
-				loc: { line: 1, column: 0 },
 				fix: f => f.replaceTextRange([offset, offset + srcHeader.length], makeHeader(headers, templates) + trailingLines),
+				loc: { column: 0, line: 1 },
+				messageId: srcHeader.trim() ? 'invalidHeader' : 'missingHeader',
 			});
 		else if (!srcHeader.startsWith(syntax[0]) || /\r?\n*$/.exec(srcHeader)?.[0] !== trailingLines)
 			context.report({
-				messageId: 'headerSpacing',
-				loc: { line: 1, column: 0 },
 				fix: f => f.replaceTextRange([offset, offset + srcHeader.length], srcHeader.trim() + trailingLines),
+				loc: { column: 0, line: 1 },
+				messageId: 'headerSpacing',
 			});
 
 		return {};
 	},
+	defaultOptions,
+	meta: {
+		docs: {
+			description: 'Enforce a file header across files.',
+		},
+		fixable: 'code',
+		messages: {
+			headerSpacing: '',
+			invalidHeader: '',
+			missingHeader: '',
+		},
+		schema: [{
+			additionalProperties: false,
+			allOf: [{ anyOf: validSyntax }, { oneOf: validSources }],
+			properties: {
+				decor: {
+					items: { type: 'string' },
+					maxItems: 3,
+					minItems: 3,
+					type: ['string', 'array'],
+				},
+				files: {
+					items: { type: 'string' },
+					minItems: 1,
+					type: 'array',
+				},
+				linebreak: { pattern: '^(unix|windows)$', type: 'string' },
+				newlines: { minimum: 0, type: 'number' },
+				syntax: {
+					items: { type: 'string' },
+					maxItems: 2,
+					minItems: 2,
+					type: ['string', 'array'],
+				},
+				templates: {
+					additionalProperties: false,
+					patternProperties: {
+						'\\w+$': {
+							items: { type: 'string' },
+							maxItems: 2,
+							minItems: 2,
+							type: 'array',
+						},
+					},
+					type: 'object',
+				},
+				text: {
+					oneOf: [
+						{ type: 'string' },
+						{ items: { type: 'string' }, type: 'array' },
+					],
+				},
+			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
+			type: 'object',
+		}],
+		type: 'layout',
+	},
+	name: RULE_NAME,
 });
 
 const mapLines = (text: string, f: (line: string) => string): string => text.split('\n').map(f).join('\n');
@@ -185,7 +185,7 @@ function makeComment(text: string, syntax: CommentSyntax, decor: DecorSyntax): s
 
 	return Array.isArray(syntax)
 		? syntax[0] + decor[0] + mapLines(text, x => (decor[1] + x).trimEnd()) + decor[2] + syntax[1]
-		: mapLines(text, x => (syntax + decor + x).trimEnd());
+		: mapLines(text, x => (syntax + decor.toString() + x).trimEnd());
 }
 
 function matchHeader(src: string, headers: string[], templates: TemplatesSyntax): boolean {

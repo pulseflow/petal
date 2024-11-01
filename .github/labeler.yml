@@ -1,0 +1,90 @@
+packages:actions:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/actions/*
+          - packages/actions/**/*
+packages:builder:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/builder/*
+          - packages/builder/**/*
+packages:console:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/console/*
+          - packages/console/**/*
+packages:create-petal:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/create-petal/*
+          - packages/create-petal/**/*
+packages:crypto:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/crypto/*
+          - packages/crypto/**/*
+packages:eslint:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/eslint/*
+          - packages/eslint/**/*
+packages:eslint-plugin:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/eslint-plugin/*
+          - packages/eslint-plugin/**/*
+packages:fetch:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/fetch/*
+          - packages/fetch/**/*
+packages:iterator:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/iterator/*
+          - packages/iterator/**/*
+packages:loader:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/loader/*
+          - packages/loader/**/*
+packages:metadata:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/metadata/*
+          - packages/metadata/**/*
+packages:node:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/node/*
+          - packages/node/**/*
+packages:result:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/result/*
+          - packages/result/**/*
+packages:scripts:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/scripts/*
+          - packages/scripts/**/*
+packages:store:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/store/*
+          - packages/store/**/*
+packages:types:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/types/*
+          - packages/types/**/*
+packages:typescript:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/typescript/*
+          - packages/typescript/**/*
+packages:utilities:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/utilities/*
+          - packages/utilities/**/*

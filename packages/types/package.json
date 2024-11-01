@@ -1,0 +1,54 @@
+{
+	"$schema": "https://json.schemastore.org/package.json",
+	"name": "@flowr/types",
+	"type": "module",
+	"version": "4.4.1",
+	"description": "Essential TypeScript types used in @flowr/utilities",
+	"author": "@flowr",
+	"contributors": ["Pauline <git@ethanlibs.co>"],
+	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
+	"funding": "https://ko-fi.com/pauliesnug",
+	"homepage": "https://petal.dyn.gay",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pulseflow/petal.git",
+		"directory": "packages/types"
+	},
+	"bugs": "https://github.com/pulseflow/petal/issues",
+	"keywords": [
+		"@flowr/types",
+		"flowr",
+		"types",
+		"typescript",
+		"ts",
+		"wrapper",
+		"standalone",
+		"browser",
+		"type-fest",
+		"ts",
+		"utility"
+	],
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"types": "./src/index.ts"
+		},
+		"./package.json": "./package.json"
+	},
+	"types": "src/index.ts",
+	"files": [
+		"LICENSE*",
+		"README.md",
+		"src/**/*.ts"
+	],
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"build": "tsx ../scripts/src/gen.ts types --write"
+	},
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	}
+}

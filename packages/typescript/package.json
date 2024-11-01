@@ -1,9 +1,14 @@
 {
+	"$schema": "https://json.schemastore.org/package.json",
 	"name": "@flowr/typescript",
+	"type": "module",
 	"version": "4.4.1",
 	"description": "Common TSConfigs and TypeScript in Petal standardized projects",
-	"author": "Petal Contributors",
-	"license": "(LicenseRef-OQL-1.2 OR MIT or Apache-2.0)",
+	"author": "@flowr",
+	"contributors": [
+		"Pauline <git@ethanlibs.co>"
+	],
+	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
 	"repository": {
@@ -13,6 +18,7 @@
 	},
 	"bugs": "https://github.com/pulseflow/petal/issues",
 	"keywords": [
+		"@flowr/typescript",
 		"config",
 		"tsconfig",
 		"tsconfigs",
@@ -21,15 +27,44 @@
 		"flowr"
 	],
 	"sideEffects": false,
-	"main": "tsconfig.strict.json",
+	"exports": {
+		".": {
+			"types": "./src/tsconfig.json",
+			"import": "./src/tsconfig.json",
+			"require": "./src/tsconfig.json"
+		},
+		"./base": {
+			"types": "./src/tsconfig.json",
+			"import": "./src/tsconfig.json",
+			"require": "./src/tsconfig.json"
+		},
+		"./decorators": {
+			"types": "./src/decorators.json",
+			"import": "./src/decorators.json",
+			"require": "./src/decorators.json"
+		},
+		"./strict": {
+			"types": "./src/strict.json",
+			"import": "./src/strict.json",
+			"require": "./src/strict.json"
+		},
+		"./node": {
+			"types": "./src/node.json",
+			"import": "./src/node.json",
+			"require": "./src/node.json"
+		},
+		"./dom": {
+			"types": "./src/dom.json",
+			"import": "./src/dom.json",
+			"require": "./src/dom.json"
+		},
+		"./package.json": "./package.json"
+	},
+	"main": "src/tsconfig.json",
 	"files": [
 		"LICENSE*",
 		"README.md",
-		"tsconfig.base.json",
-		"tsconfig.dom.json",
-		"tsconfig.node.json",
-		"tsconfig.strict.json",
-		"tsconfig.strictest.json"
+		"src/**/*.json"
 	],
 	"engines": {
 		"node": ">=20"
@@ -38,7 +73,9 @@
 		"typescript": ">=5"
 	},
 	"devDependencies": {
-		"typescript": "^5.6.2"
+		"@vitest/coverage-v8": "^2.1.4",
+		"typescript": "^5.6.2",
+		"vitest": "^2.1.4"
 	},
 	"publishConfig": {
 		"access": "public",

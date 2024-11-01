@@ -1,10 +1,12 @@
 {
+	"$schema": "https://json.schemastore.org/package.json",
 	"name": "create-petal",
 	"type": "module",
 	"version": "4.4.1",
 	"description": "A CLI utility to create a new petal app",
-	"author": "Petal Contributors",
-	"license": "(LicenseRef-OQL-1.2 OR MIT or Apache-2.0)",
+	"author": "@flowr",
+	"contributors": ["Pauline <git@ethanlibs.co>"],
+	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
 	"repository": {
@@ -24,14 +26,20 @@
 	"sideEffects": false,
 	"exports": {
 		".": {
-			"import": "./dist/index.mjs",
-			"default": "./dist/index.mjs"
+			"import": {
+				"types": "./dist/esm/index.d.ts",
+				"default": "./dist/esm/index.js"
+			},
+			"require": {
+				"types": "./dist/cjs/index.d.cts",
+				"default": "./dist/cjs/index.cjs"
+			}
 		},
 		"./package.json": "./package.json"
 	},
-	"main": "./dist/index.mjs",
-	"module": "./dist/index.mjs",
-	"types": "./dist/index.d.ts",
+	"main": "./dist/cjs/index.cjs",
+	"module": "./dist/esm/index.js",
+	"types": "./dist/esm/index.d.ts",
 	"bin": {
 		"create-petal": "./bin/index.js"
 	},
@@ -50,15 +58,15 @@
 		"node": ">=20"
 	},
 	"scripts": {
-		"build": "unbuild",
-		"stub": "unbuild --stub"
+		"build": "tsup",
+		"start": "tsup --watch"
 	},
 	"dependencies": {
 		"@astrojs/cli-kit": "^0.4.1",
 		"giget": "^1.2.3"
 	},
 	"devDependencies": {
-		"@flowr/utils": "workspace:^",
+		"@flowr/utilities": "workspace:^",
 		"strip-ansi": "^7.1.0",
 		"strip-json-comments": "^5.0.1",
 		"yargs": "^17.7.2"

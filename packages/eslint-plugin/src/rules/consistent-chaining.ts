@@ -1,7 +1,7 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import type { JSONSchema4 } from '@typescript-eslint/utils/json-schema';
 import type { RuleFix, RuleFixer } from '@typescript-eslint/utils/ts-eslint';
-import { createEslintRule } from '../utils';
+import { createEslintRule } from '../utils.ts';
 
 export const RULE_NAME = 'consistent-chaining';
 export type MessageIds = 'shouldWrap' | 'shouldNotWrap';
@@ -14,32 +14,8 @@ const defaultOptions: Options = [{
 }];
 
 export default createEslintRule<Options, MessageIds>({
-	name: RULE_NAME,
-	meta: {
-		type: 'layout',
-		docs: {
-			description: 'Consistent line breaks for objects, arrays, and named import chaining.',
-		},
-		fixable: 'whitespace',
-		schema: [{
-			type: 'object',
-			properties: {
-				allowLeadingPropertyAccess: {
-					type: 'boolean',
-					description: 'Allow leading property access to be on the same line',
-					default: defaultOptions[0].allowLeadingPropertyAccess,
-				},
-			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
-			additionalProperties: false,
-		}],
-		messages: {
-			shouldWrap: 'Should have line breaks between items in node {{name}}',
-			shouldNotWrap: 'Should not have line breaks between items in node {{name}}',
-		},
-	},
-	defaultOptions,
 	create: (context, [options = {}] = defaultOptions) => {
-		const knownRoot = new WeakSet<TSESTree.Node>();
+		const knownRoot: WeakSet<TSESTree.Node> = new WeakSet();
 
 		return {
 			MemberExpression: (node) => {
@@ -48,7 +24,7 @@ export default createEslintRule<Options, MessageIds>({
 					current: TSESTree.Node | undefined;
 					mode: 'single' | 'multi' | null;
 					leadingPropertyAccess?: boolean;
-				} = { root: node, current: undefined, mode: null, leadingPropertyAccess: options.allowLeadingPropertyAccess ?? true };
+				} = { current: undefined, leadingPropertyAccess: options.allowLeadingPropertyAccess ?? true, mode: null, root: node };
 
 				while (store.root.parent && ['CallExpression', 'MemberExpression'].includes(store.root.parent.type))
 					store.root = store.root.parent;
@@ -61,6 +37,7 @@ export default createEslintRule<Options, MessageIds>({
 				store.current = store.root;
 
 				while (store.current)
+					// eslint-disable-next-line ts/switch-exhaustiveness-check -- default fallback ast
 					switch (store.current.type) {
 						case 'MemberExpression': {
 							if (!store.current.computed)
@@ -107,15 +84,39 @@ export default createEslintRule<Options, MessageIds>({
 
 					if (store.mode !== currentMode)
 						context.report({
-							messageId: store.mode === 'single' ? 'shouldNotWrap' : 'shouldWrap',
-							loc: token.loc,
 							data: {
 								name: store.root.type,
 							},
 							fix: getFixer,
+							loc: token.loc,
+							messageId: store.mode === 'single' ? 'shouldNotWrap' : 'shouldWrap',
 						});
 				});
 			},
 		};
 	},
+	defaultOptions,
+	meta: {
+		docs: {
+			description: 'Consistent line breaks for objects, arrays, and named import chaining.',
+		},
+		fixable: 'whitespace',
+		messages: {
+			shouldNotWrap: 'Should not have line breaks between items in node {{name}}',
+			shouldWrap: 'Should have line breaks between items in node {{name}}',
+		},
+		schema: [{
+			additionalProperties: false,
+			properties: {
+				allowLeadingPropertyAccess: {
+					default: defaultOptions[0].allowLeadingPropertyAccess,
+					description: 'Allow leading property access to be on the same line',
+					type: 'boolean',
+				},
+			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
+			type: 'object',
+		}],
+		type: 'layout',
+	},
+	name: RULE_NAME,
 });

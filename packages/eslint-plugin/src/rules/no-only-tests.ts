@@ -1,6 +1,6 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import type { JSONSchema4 } from '@typescript-eslint/utils/json-schema';
-import { createEslintRule } from '../utils';
+import { createEslintRule } from '../utils.ts';
 
 export const RULE_NAME = 'no-only-tests';
 export type MessageIds = 'noOnlyTests' | 'noOnlyFunction';
@@ -22,21 +22,21 @@ function getCallPath(node: TSESTree.Node, path: string[] = []): string[] {
 }
 
 const defaultOptions: Options = [{
-	/// @keep-sorted
+	// @keep-sorted
 	blocks: [
-		'describe',
-		'it',
-		'context',
-		'test',
-		'tape',
-		'fixture',
-		'serial',
-		'Feature',
-		'Scenario',
-		'Given',
 		'And',
-		'When',
+		'context',
+		'describe',
+		'Feature',
+		'fixture',
+		'Given',
+		'it',
+		'Scenario',
+		'serial',
+		'tape',
+		'test',
 		'Then',
+		'When',
 	],
 	focus: ['only'],
 	functions: [],
@@ -45,49 +45,6 @@ const defaultOptions: Options = [{
 // Adapted from https://github.com/levibuzolic/eslint-plugin-no-only-tests
 
 export default createEslintRule<Options, MessageIds>({
-	name: RULE_NAME,
-	meta: {
-		type: 'suggestion',
-		docs: {
-			description: 'Disallows .only blocks in testing',
-		},
-		fixable: 'code',
-		schema: [{
-			type: 'object',
-			properties: {
-				blocks: {
-					type: 'array',
-					items: {
-						type: 'string',
-					},
-					uniqueItems: true,
-					default: defaultOptions[0].blocks,
-				},
-				focus: {
-					type: 'array',
-					items: {
-						type: 'string',
-					},
-					uniqueItems: true,
-					default: defaultOptions[0].focus,
-				},
-				functions: {
-					type: 'array',
-					items: {
-						type: 'string',
-					},
-					uniqueItems: true,
-					default: defaultOptions[0].functions,
-				},
-			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
-			additionalProperties: false,
-		}],
-		messages: {
-			noOnlyTests: 'Should not use .only blocks in tests at {{callPath}}',
-			noOnlyFunction: 'Should not use function {{name}} in tests.',
-		},
-	},
-	defaultOptions,
 	create: (context, [options = {}] = defaultOptions) => {
 		const blocks = options.blocks || defaultOptions[0].blocks || [];
 		const focus = options.focus || defaultOptions[0].focus || [];
@@ -96,7 +53,7 @@ export default createEslintRule<Options, MessageIds>({
 		return {
 			Identifier: (node) => {
 				if (functions.length && functions.includes(node.name))
-					context.report({ node, data: { name: node.name }, messageId: 'noOnlyFunction' });
+					context.report({ data: { name: node.name }, messageId: 'noOnlyFunction', node });
 
 				const parentObject = 'object' in node.parent ? node.parent.object : undefined;
 				if (parentObject == null)
@@ -110,8 +67,51 @@ export default createEslintRule<Options, MessageIds>({
 						return callPath.startsWith(block.replace(/\*$/, ''));
 					return callPath.startsWith(`${block}.`);
 				}))
-					context.report({ node, messageId: 'noOnlyTests', fix: f => f.removeRange([node.range[0] - 1, node.range[1]]) });
+					context.report({ fix: f => f.removeRange([node.range[0] - 1, node.range[1]]), messageId: 'noOnlyTests', node });
 			},
 		};
 	},
+	defaultOptions,
+	meta: {
+		docs: {
+			description: 'Disallows .only blocks in testing',
+		},
+		fixable: 'code',
+		messages: {
+			noOnlyFunction: 'Should not use function {{name}} in tests.',
+			noOnlyTests: 'Should not use .only blocks in tests at {{callPath}}',
+		},
+		schema: [{
+			additionalProperties: false,
+			properties: {
+				blocks: {
+					default: defaultOptions[0].blocks,
+					items: {
+						type: 'string',
+					},
+					type: 'array',
+					uniqueItems: true,
+				},
+				focus: {
+					default: defaultOptions[0].focus,
+					items: {
+						type: 'string',
+					},
+					type: 'array',
+					uniqueItems: true,
+				},
+				functions: {
+					default: defaultOptions[0].functions,
+					items: {
+						type: 'string',
+					},
+					type: 'array',
+					uniqueItems: true,
+				},
+			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
+			type: 'object',
+		}],
+		type: 'suggestion',
+	},
+	name: RULE_NAME,
 });

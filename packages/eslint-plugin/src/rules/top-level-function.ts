@@ -1,23 +1,10 @@
-import { createEslintRule } from '../utils';
+import { createEslintRule } from '../utils.ts';
 
 export const RULE_NAME = 'top-level-function';
 export type MessageIds = 'topLevelFunctionDeclaration';
 export type Options = [];
 
 export default createEslintRule<Options, MessageIds>({
-	name: RULE_NAME,
-	meta: {
-		type: 'problem',
-		docs: {
-			description: 'Enforce top-level functions to be declared with function keyword',
-		},
-		fixable: 'code',
-		schema: [],
-		messages: {
-			topLevelFunctionDeclaration: 'Top-level functions should be declared with function keyword',
-		},
-	},
-	defaultOptions: [],
 	create: context => ({
 		VariableDeclaration: (node) => {
 			if (node.parent.type !== 'Program' && node.parent.type !== 'ExportNamedDeclaration')
@@ -49,12 +36,6 @@ export default createEslintRule<Options, MessageIds>({
 			const id = declaration.id;
 
 			context.report({
-				node,
-				loc: {
-					start: id.loc.start,
-					end: body.loc.start,
-				},
-				messageId: 'topLevelFunctionDeclaration',
 				fix: (f) => {
 					const code = context.sourceCode.text;
 					const textName = code.slice(id.range[0], id.range[1]);
@@ -75,7 +56,26 @@ export default createEslintRule<Options, MessageIds>({
 					const final = `${textAsync}function ${textName} ${textGeneric}(${textArgs})${textTypeReturn} ${textBody}`;
 					return f.replaceTextRange([node.range[0], node.range[1]], final);
 				},
+				loc: {
+					end: body.loc.start,
+					start: id.loc.start,
+				},
+				messageId: 'topLevelFunctionDeclaration',
+				node,
 			});
 		},
 	}),
+	defaultOptions: [],
+	meta: {
+		docs: {
+			description: 'Enforce top-level functions to be declared with function keyword',
+		},
+		fixable: 'code',
+		messages: {
+			topLevelFunctionDeclaration: 'Top-level functions should be declared with function keyword',
+		},
+		schema: [],
+		type: 'problem',
+	},
+	name: RULE_NAME,
 });

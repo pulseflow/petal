@@ -1,23 +1,10 @@
-import { createEslintRule } from '../utils';
+import { createEslintRule } from '../utils.ts';
 
 export const RULE_NAME = 'if-newline';
 export type MessageIds = 'missingIfNewline';
 export type Options = [];
 
 export default createEslintRule<Options, MessageIds>({
-	name: RULE_NAME,
-	meta: {
-		type: 'layout',
-		docs: {
-			description: 'Newline after if',
-		},
-		fixable: 'whitespace',
-		schema: [],
-		messages: {
-			missingIfNewline: 'Expect newline after if',
-		},
-	},
-	defaultOptions: [],
 	create: context => ({
 		IfStatement: (node) => {
 			if (!node.consequent)
@@ -26,14 +13,27 @@ export default createEslintRule<Options, MessageIds>({
 				return;
 			if (node.test.loc.end.line === node.consequent.loc.start.line)
 				context.report({
-					node,
+					fix: f => f.replaceTextRange([node.consequent.range[0], node.consequent.range[0]], '\n'),
 					loc: {
-						start: node.test.loc.end,
 						end: node.consequent.loc.start,
+						start: node.test.loc.end,
 					},
 					messageId: 'missingIfNewline',
-					fix: f => f.replaceTextRange([node.consequent.range[0], node.consequent.range[0]], '\n'),
+					node,
 				});
 		},
 	}),
+	defaultOptions: [],
+	meta: {
+		docs: {
+			description: 'Newline after if',
+		},
+		fixable: 'whitespace',
+		messages: {
+			missingIfNewline: 'Expect newline after if',
+		},
+		schema: [],
+		type: 'layout',
+	},
+	name: RULE_NAME,
 });

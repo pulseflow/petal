@@ -1,32 +1,20 @@
-import { defineConfig } from '@flowr/eslint-config';
+import { defineConfig } from '@flowr/eslint';
 
-export default defineConfig(
-	{
-		typescript: true,
-		astro: false,
-		type: 'lib',
-	},
-	{
-		name: 'user/ignores/fixtures',
-		ignores: [
-			'fixtures',
-			'_fixtures',
-			'**/_fixtures/**',
-			'**/fixtures/**',
-		],
-	},
-	{
-		name: 'user/perfectionist/sort',
-		files: ['packages/eslint-config/src/**/*.ts'],
-		rules: {
-			'perfectionist/sort-objects': 'error',
+export default defineConfig({
+	ignores: ['fixtures', '_fixtures', '**/_fixtures/**', '**/fixtures/**'],
+	type: 'lib',
+	typescript: {
+		overridesTypeAware: {
+			'ts/no-unsafe-argument': 'off',
+			'ts/no-unsafe-assignment': 'off',
+			'ts/no-unsafe-member-access': 'off',
+			'ts/no-unsafe-return': 'off',
+			'ts/strict-boolean-expressions': 'off',
 		},
+		tsconfigPath: 'tsconfig.json',
 	},
-	{
-		name: 'user/test/indent',
-		files: ['packages/eslint-plugin/src/rules/**/*.test.ts'],
-		rules: {
-			'petal/indent-unindent': 'error',
-		},
-	},
-);
+}, {
+	files: ['packages/eslint-plugin/src/rules/**/*.test.ts'],
+	name: 'user/test/indent',
+	rules: { 'petal/indent-unindent': 'error' },
+});
