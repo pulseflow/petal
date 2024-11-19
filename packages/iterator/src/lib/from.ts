@@ -31,7 +31,7 @@ export function from(value: any): any {
 	if (typeof value === 'string')
 		return value[Symbol.iterator]();
 
-	throw new TypeError(`${String(value)} cannot be converted to an iterable!`);
+	throw new TypeError(`${String(value)} cannot be converted to an iterable`);
 }
 
 export type IterableResolvable<ElementType> =

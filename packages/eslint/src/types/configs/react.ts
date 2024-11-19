@@ -1,6 +1,6 @@
 import type { OptionsAccessibility } from './accessibility';
 import type { OptionsFiles } from './files';
 import type { OptionsOverrides } from './overrides';
-import type { OptionsTypeScriptWithTypes } from './typescript';
+import type { OptionsTypeScriptParserOptions, OptionsTypeScriptWithTypes } from './typescript';
 
-export type OptionsReact = OptionsTypeScriptWithTypes & OptionsOverrides & OptionsFiles & OptionsAccessibility;
+export type OptionsReact = OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptions & OptionsOverrides & OptionsFiles & OptionsAccessibility;

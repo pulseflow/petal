@@ -1,9 +1,3 @@
-packages:actions:
-  - '### Which (application|package|application or package) is this (bug
-    report|feature request) for\?\n\nactions\n'
-packages:builder:
-  - '### Which (application|package|application or package) is this (bug
-    report|feature request) for\?\n\nbuilder\n'
 packages:console:
   - '### Which (application|package|application or package) is this (bug
     report|feature request) for\?\n\nconsole\n'
@@ -37,9 +31,6 @@ packages:node:
 packages:result:
   - '### Which (application|package|application or package) is this (bug
     report|feature request) for\?\n\nresult\n'
-packages:scripts:
-  - '### Which (application|package|application or package) is this (bug
-    report|feature request) for\?\n\nscripts\n'
 packages:store:
   - '### Which (application|package|application or package) is this (bug
     report|feature request) for\?\n\nstore\n'

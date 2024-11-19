@@ -157,7 +157,7 @@ export class Store<T extends Piece, StoreName extends StoreRegistryKey = StoreRe
 
 		this[ManuallyRegisteredPiecesSymbol].set(entry.name, entry);
 		if (this.#initialized) {
-			const piece = this.construct(entry.piece as unknown as Constructor<T>, {
+			const piece = this.construct(entry.piece, {
 				extension: VirtualPath,
 				name: entry.name,
 				path: VirtualPath,

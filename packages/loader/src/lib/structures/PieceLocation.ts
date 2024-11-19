@@ -1,4 +1,4 @@
-import { basename, relative, sep } from 'node:path';
+import { basename, relative, sep } from 'pathe';
 import { VirtualPath } from '../utils.ts';
 
 /**

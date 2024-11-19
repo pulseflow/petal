@@ -1,3 +1,3 @@
-import { createTsupConfig } from '../scripts/tsup.config.js';
+import { createTsupConfig } from '../scripts/tsup.config.ts';
 
-export default createTsupConfig('metadata', { iifeOptions: { disabled: true } });
+export default createTsupConfig('metadata', { iife: { disabled: true } });

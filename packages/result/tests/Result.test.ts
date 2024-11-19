@@ -816,33 +816,51 @@ describe('result', () => {
 	});
 
 	describe('ok', () => {
-		it('given ok then returns { isOk->true, isErr->false }', () => {
+		it('given ok without an argument then returns Ok<undefined>', () => {
+			const x = ok();
+			expectTypeOf(x).toMatchTypeOf<Ok<undefined>>();
+			expectTypeOf(x).toMatchTypeOf<Result<undefined, Error>>();
+			expect<boolean>(x.isOk()).toBe(true);
+			expect<boolean>(x.isErr()).toBe(false);
+		});
+
+		it('given ok with an argument then returns Ok<T>', () => {
 			const x = ok(42);
 
+			expectTypeOf(x).toMatchTypeOf<Ok<number>>();
+			expectTypeOf(x).toMatchTypeOf<Result<number, Error>>();
 			expect<boolean>(x.isOk()).toBe(true);
 			expect<boolean>(x.isErr()).toBe(false);
 		});
 	});
 
 	describe('err', () => {
-		it('given err then returns { isOk->false, isErr->true }', () => {
-			const x = err(new Error('throws'));
+		it('given err without an argument then returns Err<undefined>', () => {
+			const x = err();
+			expectTypeOf(x).toMatchTypeOf<Err<undefined>>();
+			expectTypeOf(x).toMatchTypeOf<Result<number, undefined>>();
+			expect<boolean>(x.isOk()).toBe(false);
+			expect<boolean>(x.isErr()).toBe(true);
+		});
 
+		it('given err with an argument then returns Err<T>', () => {
+			const x = err(new Error('girls kissing'));
+
+			expectTypeOf(x).toMatchTypeOf<Err<Error>>();
+			expectTypeOf(x).toMatchTypeOf<Result<number, Error>>();
 			expect<boolean>(x.isOk()).toBe(false);
 			expect<boolean>(x.isErr()).toBe(true);
 		});
 	});
 
 	describe('from', () => {
-		const { from } = Result;
-
 		it.each([
 			['T', 42],
 			['Ok(T)', ok(42)],
 			['() => T', () => 42],
 			['() => Ok(T)', () => ok(42)],
 		])('given from(%s) then returns Ok(T)', (_, cb) => {
-			const x = from(cb);
+			const x = Result.from(cb);
 
 			expect(x).toStrictEqual(ok(42));
 		});
@@ -852,7 +870,7 @@ describe('result', () => {
 			['() => Err(E)', () => err(error)],
 			['() => throw E', makeThrow],
 		])('given from(%s) then returns Err(E)', (_, resolvable) => {
-			const x = from(resolvable);
+			const x = Result.from(resolvable);
 
 			expect(x).toStrictEqual(err(error));
 		});
@@ -881,8 +899,7 @@ describe('result', () => {
 			['() => throw E', makeThrow],
 			['() => Promise.reject(E)', async () => Promise.reject(error)],
 			['() => Err(E)', () => err(error)],
-			// eslint-disable-next-line ts/promise-function-async -- nosonar
-			['() => Promise.reject(Err(E))', () => Promise.reject(err(error))],
+			['() => Promise.reject(Err(E))', async () => Promise.reject(err(error))],
 		])('given fromAsync(%s) then returns Err(E)', async (_, resolvable) => {
 			let x = await fromAsync(resolvable);
 

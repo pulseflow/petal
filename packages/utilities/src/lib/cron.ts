@@ -1,5 +1,5 @@
-import { Time } from './durationFormatter';
-import { range } from './range';
+import { Time } from './durationFormatter.ts';
+import { range } from './range.ts';
 
 export const predefined = {
 	'@annually': '0 0 1 1 *',

@@ -914,9 +914,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 */
 	public intoPromise(): If<Success, Promise<Ok<Awaited<T>>>, Promise<Err<Awaited<E>>>> {
 		return this.match({
-			// eslint-disable-next-line ts/await-thenable -- nosonar
 			err: async error => err(await error),
-			// eslint-disable-next-line ts/await-thenable -- nosonar
 			ok: async value => ok(await value),
 		});
 	}
@@ -1008,10 +1006,12 @@ export class Result<T, E, const Success extends boolean = boolean> {
 		return this.match({ err: () => 'Err', ok: () => 'Ok' });
 	}
 
+	public static ok<T = undefined, E = any>(this: void, value?: T): Ok<T, E>;
 	public static ok<T, E = any>(this: void, value: T): Ok<T, E> {
 		return new Result<T, E, true>(value, true);
 	}
 
+	public static err<E = undefined, T = any>(this: void, value?: E): Err<E, T>;
 	public static err<E, T = any>(this: void, value: E): Err<E, T> {
 		return new Result<T, E, false>(value, false);
 	}

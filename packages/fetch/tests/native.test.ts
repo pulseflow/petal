@@ -162,7 +162,7 @@ describe('fetch', () => {
 			}
 		});
 
-		it('given fetch w/ unknown path AND URL object then returns FetchError', async () => {
+		it('given fetch w/ unknown path and URL object then returns FetchError', async () => {
 			const url = new URL('http://localhost/404');
 			const fetchResult = fetch(url, FetchResultTypes.JSON);
 
@@ -175,7 +175,7 @@ describe('fetch', () => {
 			catch (error) {
 				expect((error as QueryError).message).toBe(`Failed to request '${url}' with code 404.`);
 				expect((error as QueryError).code).toBe(404);
-				expect((error as QueryError).url).toBe(url.href);
+				expect((error as QueryError).url).toBe(url);
 				expect((error as QueryError).toJSON()).toStrictEqual({ success: false });
 			}
 		});

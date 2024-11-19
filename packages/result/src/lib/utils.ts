@@ -6,8 +6,8 @@ export type If<Value extends boolean, TrueResult, FalseResult> = Value extends t
 		? FalseResult
 		: TrueResult | FalseResult;
 
-export function isFunction<A extends readonly any[], R>(cb: (...args: A) => R): true;
-export function isFunction(input: any): input is (...args: readonly any[]) => any;
+export function isFunction<A extends any[], R>(input: (...args: A) => R): true;
+export function isFunction(input: any): input is (...args: any[]) => any;
 export function isFunction(input: unknown): boolean {
 	return typeof input === 'function';
 }

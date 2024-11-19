@@ -78,15 +78,14 @@ runWithConfig`ts-strict` (
 
 runWithConfig`ts-strict-with-react` (
 	{
-		react: true,
 		typescript: {
 			tsconfigPath: './tsconfig.json',
 		},
+		react: true,
 	},
 	{
 		rules: {
 			'ts/no-unsafe-return': ['off'],
-			'ts/strict-boolean-expressions': ['off'],
 		},
 	},
 );

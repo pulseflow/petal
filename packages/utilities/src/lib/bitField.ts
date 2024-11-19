@@ -15,16 +15,16 @@ export class BitField<Flags extends Record<string, number> | Record<string, bigi
 		if (entries.length === 0)
 			throw new TypeError('flags must be a non-empty object');
 
-		const type = typeof entries[0][1] as Flags[keyof Flags] extends number ? 'number' : 'bigint';
+		const type = typeof entries[0][1];
 		if (type !== 'number' && type !== 'bigint')
 			throw new TypeError('A bitfield can only use numbers or bigints for its values');
 
-		this.type = type;
+		this.type = type as any;
 		this.flags = flags;
 		this[FlagEntriesSymbol] = entries;
 
 		if (type === 'number') {
-			this.zero = 0 as Flags[keyof Flags] extends number ? 0 : 0n;
+			this.zero = 0 as any;
 
 			let mask = 0;
 			for (const [key, value] of entries) {
@@ -37,10 +37,10 @@ export class BitField<Flags extends Record<string, number> | Record<string, bigi
 				mask |= value;
 			}
 
-			this.mask = mask as ValueType<this>;
+			this.mask = mask as any;
 		}
 		else {
-			this.zero = 0n as Flags[keyof Flags] extends number ? 0 : 0n;
+			this.zero = 0n as any;
 
 			let mask = 0n;
 			for (const [key, value] of entries) {
@@ -51,7 +51,7 @@ export class BitField<Flags extends Record<string, number> | Record<string, bigi
 				mask |= value;
 			}
 
-			this.mask = mask as ValueType<this>;
+			this.mask = mask as any;
 		}
 	}
 
@@ -65,23 +65,18 @@ export class BitField<Flags extends Record<string, number> | Record<string, bigi
 	 * @returns The resolved value.
 	 */
 	public resolve(resolvable: ValueResolvable<this>): ValueType<this> {
+		// eslint-disable-next-line ts/switch-exhaustiveness-check -- default is a catch-all
 		switch (typeof resolvable) {
 			case 'string':
 				if ((resolvable as string) in this.flags)
-					return this.flags[resolvable as keyof Flags] as unknown as ValueType<this>;
+					return this.flags[resolvable as keyof Flags] as any;
 				throw new RangeError('Received a name that could not be resolved to a property of flags');
 			case this.type:
-				return ((resolvable as ValueType<this>) & this.mask) as ValueType<this>;
+				return ((resolvable as ValueType<this>) & this.mask) as any;
 			case 'object':
 				if (Array.isArray(resolvable))
 					return resolvable.reduce((acc, value) => this.resolve(value) | acc, this.zero);
 				throw new TypeError('Received an object value that is not an Array');
-			case 'bigint':
-			case 'symbol':
-			case 'boolean':
-			case 'number':
-			case 'undefined':
-			case 'function':
 			default:
 				throw new TypeError(`Received a value that is not either type "string", type "${this.type}", or an Array`);
 		}
@@ -260,7 +255,6 @@ export class BitField<Flags extends Record<string, number> | Record<string, bigi
 	public *toKeys(field: ValueResolvable<this>): IterableIterator<keyof Flags> {
 		const bits = this.resolve(field);
 		for (const [key, bit] of this[FlagEntriesSymbol])
-			// Inline `.has` code for lower overhead:
 			if ((bits & bit) === bit)
 				yield key;
 	}
@@ -309,7 +303,6 @@ export class BitField<Flags extends Record<string, number> | Record<string, bigi
 	public *toEntries(field: ValueResolvable<this>): IterableIterator<[key: keyof Flags, value: ValueType<this>]> {
 		const bits = this.resolve(field);
 		for (const [key, bit] of this[FlagEntriesSymbol])
-			// Inline `.has` code for lower overhead:
 			if ((bits & bit) === bit)
 				yield [key, bit as unknown as ValueType<this>];
 	}

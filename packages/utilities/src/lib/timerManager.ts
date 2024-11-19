@@ -18,7 +18,7 @@ export class TimerManager extends null {
 	 * @param delay amount of time before running the callback
 	 * @param args additional arguments to pass back to the callback
 	 */
-	public static setTimeout<A = unknown>(fn: (...args: A[]) => void, delay: number, ...args: A[]): NodeJS.Timeout {
+	public static setTimeout<Argument = unknown>(fn: (...args: Argument[]) => void, delay: number, ...args: Argument[]): NodeJS.Timeout {
 		const timeout = setTimeout(() => {
 			this.storedTimeouts.delete(timeout);
 			fn(...args);
@@ -42,7 +42,7 @@ export class TimerManager extends null {
 	 * @param delay amount of time before running the callback
 	 * @param args additional arguments to pass back to the callback
 	 */
-	public static setInterval<A = unknown>(fn: (...args: A[]) => void, delay: number, ...args: A[]): NodeJS.Timeout {
+	public static setInterval<Argument = unknown>(fn: (...args: Argument[]) => void, delay: number, ...args: Argument[]): NodeJS.Timeout {
 		const interval = setInterval(fn, delay, ...args);
 		this.storedIntervals.add(interval);
 		return interval;

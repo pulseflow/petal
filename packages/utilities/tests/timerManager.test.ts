@@ -33,9 +33,7 @@ describe('timerManager', () => {
 		}, 20_000);
 
 		expect(TimerManager.storedTimeouts.size).toBe(1);
-
 		TimerManager.clearTimeout(timer);
-
 		expect(TimerManager.storedTimeouts.size).toBe(0);
 	});
 

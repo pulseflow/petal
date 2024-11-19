@@ -73,9 +73,9 @@
 		"typescript": ">=5"
 	},
 	"devDependencies": {
-		"@vitest/coverage-v8": "^2.1.4",
+		"@vitest/coverage-v8": "^2.1.5",
 		"typescript": "^5.6.2",
-		"vitest": "^2.1.4"
+		"vitest": "^2.1.5"
 	},
 	"publishConfig": {
 		"access": "public",

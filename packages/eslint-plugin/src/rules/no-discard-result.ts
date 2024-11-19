@@ -27,6 +27,8 @@ function isCallback(checker: ts.TypeChecker, param: ts.Symbol, node: ts.Node): b
 	return false;
 }
 
+function isThenableType(checker: ts.TypeChecker, node: ts.Node, type: ts.Type): boolean;
+function isThenableType(checker: ts.TypeChecker, node: ts.Expression, type?: ts.Type): boolean;
 function isThenableType(checker: ts.TypeChecker, node: ts.Node, type = checker.getTypeAtLocation(node)): boolean {
 	for (const t of unionTypeParts(checker.getApparentType(type))) {
 		const then = t.getProperty('then');
@@ -35,7 +37,6 @@ function isThenableType(checker: ts.TypeChecker, node: ts.Node, type = checker.g
 			continue;
 
 		const thenType = checker.getTypeOfSymbolAtLocation(then, node);
-
 		for (const t of unionTypeParts(thenType))
 			for (const signature of t.getCallSignatures())
 				if (signature.parameters.length !== 0 && isCallback(checker, signature.parameters[0], node))
@@ -58,7 +59,7 @@ function getResultType(service: ParserServicesWithTypeInformation, checker: ts.T
 function unwrapPotentialPromise(checker: ts.TypeChecker, node: ts.CallExpression, type = checker.getTypeAtLocation(node)): ts.Type {
 	if (isUnionType(type)) {
 		const { ...copy } = type; // avoids mutation
-		copy.types = type.types.filter(Boolean); // filters out nullish values
+		copy.types = type.types.filter(s => Boolean(s)); // filters out nullish values
 		if (copy.types.length === 1)
 			return unwrapPotentialPromise(checker, node, copy.types[0]);
 
@@ -74,9 +75,9 @@ function unwrapPotentialPromise(checker: ts.TypeChecker, node: ts.CallExpression
 
 function hasResultLikeReturnType(
 	service: ParserServicesWithTypeInformation,
-	checker: ts.TypeChecker = service.program.getTypeChecker(),
 	node: TSESTree.CallExpression,
 ): boolean {
+	const checker = service.program.getTypeChecker();
 	const nodeMap = service.esTreeNodeToTSNodeMap.get(node);
 	const functionDeclaration = checker.getResolvedSignature(nodeMap);
 
@@ -112,7 +113,7 @@ function isDiscardedResult(node: TSESTree.Node): boolean {
 export default createEslintRule<Options, MessageIds>({
 	create: context => ({
 		CallExpression: (node) => {
-			if (hasResultLikeReturnType(ESLintUtils.getParserServices(context), undefined, node))
+			if (hasResultLikeReturnType(ESLintUtils.getParserServices(context), node))
 				if (isDiscardedResult(node))
 					context.report({ messageId: 'discardedResult', node });
 		},

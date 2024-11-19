@@ -1,3 +1,3 @@
-import { createTsupConfig } from '../scripts/tsup.config.js';
+import { createTsupConfig } from '../scripts/tsup.config.ts';
 
-export default createTsupConfig('store', { iifeOptions: { disabled: true } });
+export default createTsupConfig('store', { iife: { disabled: true } });

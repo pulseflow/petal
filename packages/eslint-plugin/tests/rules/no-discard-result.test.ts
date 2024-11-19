@@ -1,4 +1,5 @@
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
+import tsParser from '@typescript-eslint/parser';
 import rule, { RULE_NAME } from '../../src/rules/no-discard-result';
 import { $, run } from '../utilities';
 
@@ -86,8 +87,30 @@ run({
 
 	parserOptions: {
 		ecmaVersion: 'latest',
-		project: fileURLToPath(new URL('../tsconfig.json', import.meta.url)),
-		tsconfigRootDir: fileURLToPath(new URL('..', import.meta.url)),
+		parser: tsParser,
+		tsconfigRootDir: join(import.meta.dirname, '../fixtures'),
+		projectService: {
+		},
+		parserOptions: {
+			tsconfigRootDir: join(import.meta.dirname, '../fixtures'),
+			projectService: {
+			},
+		},
+	},
+
+	languageOptions: {
+		parserOptions: {
+			ecmaVersion: 'latest',
+			parser: tsParser,
+			tsconfigRootDir: join(import.meta.dirname, '../fixtures'),
+			projectService: {
+			},
+			parserOptions: {
+				tsconfigRootDir: join(import.meta.dirname, '../fixtures'),
+				projectService: {
+				},
+			},
+		},
 	},
 	rule,
 

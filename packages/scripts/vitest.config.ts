@@ -40,3 +40,5 @@ export function createVitestConfig(name: string | TemplateStringsArray, options:
 		},
 	});
 }
+
+export default createVitestConfig`scripts`;

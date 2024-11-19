@@ -2,7 +2,6 @@ import 'tslib';
 
 export * from './lib/errors/LoaderError.ts';
 export * from './lib/errors/MissingExportsError.ts';
-export * from './lib/plugins/Plugin.ts';
 export type * from './lib/strategies/ILoaderStrategy.ts';
 export * from './lib/strategies/LoaderStrategy.ts';
 export * from './lib/structures/AliasPiece.ts';

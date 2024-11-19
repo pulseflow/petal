@@ -58,6 +58,33 @@ describe('option', () => {
 			});
 		});
 
+		describe('isNoneOr', () => {
+			it('given some and true-returning callback then returns true', () => {
+				const x = some(2);
+				const cb = vi.fn((value: number) => value > 1);
+				expect(x.isNoneOr(cb)).toBe(true);
+				expect(cb).toHaveBeenCalledTimes(1);
+				expect(cb).toHaveBeenCalledWith(2);
+				expect(cb).toHaveLastReturnedWith(true);
+			});
+
+			it('given some and false-returning callback then returns false', () => {
+				const x = some(0);
+				const cb = vi.fn((value: number) => value > 1);
+				expect(x.isNoneOr(cb)).toBe(false);
+				expect(cb).toHaveBeenCalledTimes(1);
+				expect(cb).toHaveBeenCalledWith(0);
+				expect(cb).toHaveLastReturnedWith(false);
+			});
+
+			it('given none then always returns false', () => {
+				const x = none;
+				const cb = vi.fn((value: number) => value > 1);
+				expect(x.isNoneOr(cb)).toBe(true);
+				expect(cb).not.toHaveBeenCalled();
+			});
+		});
+
 		describe('expect', () => {
 			it('given ok then returns value', () => {
 				const x = some(2);
@@ -768,9 +795,18 @@ describe('option', () => {
 	});
 
 	describe('some', () => {
-		it('given some then returns Some', () => {
+		it('given some without an argument then returns Some<undefined>', () => {
+			const x = some();
+
+			expectTypeOf(x).toMatchTypeOf<Some<undefined>>();
+			expect(x.isSome()).toBe(true);
+			expect(x.isNone()).toBe(false);
+		});
+
+		it('given some with an argument then returns Some<T>', () => {
 			const x = some(42);
 
+			expectTypeOf(x).toMatchTypeOf<Some<number>>();
 			expect(x.isSome()).toBe(true);
 			expect(x.isNone()).toBe(false);
 		});

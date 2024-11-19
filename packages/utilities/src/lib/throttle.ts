@@ -1,4 +1,4 @@
-export type ThrottleFn<Function extends (...args: unknown[]) => unknown> = Function & { flush: () => void };
+export type ThrottleFn<Function extends (...args: any[]) => any> = Function & { flush: () => void };
 
 /**
  * Creates a throttled function that only invokes `func` at most once per
@@ -10,7 +10,7 @@ export type ThrottleFn<Function extends (...args: unknown[]) => unknown> = Funct
  *
  * @returns Returns the new throttled function.
  */
-export function throttle<Function extends (...args: unknown[]) => unknown>(func: Function, wait: number): ThrottleFn<Function> {
+export function throttle<Function extends (...args: any[]) => any>(func: Function, wait: number): ThrottleFn<Function> {
 	let prev = 0;
 	let prevValue: ReturnType<Function>;
 

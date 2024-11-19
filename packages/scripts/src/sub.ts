@@ -25,7 +25,6 @@ const EXPORT_MAP: Map<string, ExportType | string> = new Map([
 	[
 		'.',
 		{
-			browser: './dist/iife/index.global.js',
 			import: {
 				types: './dist/esm/index.d.ts',
 				default: './dist/esm/index.js',
@@ -34,6 +33,7 @@ const EXPORT_MAP: Map<string, ExportType | string> = new Map([
 				types: './dist/cjs/index.d.cts',
 				default: './dist/cjs/index.cjs',
 			},
+			browser: './dist/iife/index.global.js',
 		},
 	],
 ]);

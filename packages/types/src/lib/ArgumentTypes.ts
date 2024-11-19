@@ -1,1 +1,1 @@
-export type ArgumentTypes<F extends (...args: unknown[]) => unknown> = F extends (...args: infer A) => unknown ? A : never;
+export type ArgumentTypes<F extends (...args: any[]) => any> = F extends (...args: infer A) => any ? A : never;

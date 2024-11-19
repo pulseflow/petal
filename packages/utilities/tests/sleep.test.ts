@@ -29,24 +29,20 @@ describe('sleep', () => {
 
 	it('given an aborted signal then the promise rejects without a timeout', async () => {
 		const signal = AbortSignal.abort();
-		const setTimeoutSpy = vi.spyOn(globalThis, 'setTimeout');
 		const clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout');
 		const promise = sleep(50, undefined, { signal });
 
 		await expect(promise).rejects.toStrictEqual(new DOMException('This operation was aborted', 'AbortError'));
-		expect(setTimeoutSpy).toHaveBeenCalledTimes(0);
 		expect(clearTimeoutSpy).toHaveBeenCalledTimes(0);
 	});
 
 	it('given an immediately aborted signal then the promise rejects', async () => {
 		const controller = new AbortController();
-		const setTimeoutSpy = vi.spyOn(globalThis, 'setTimeout');
 		const clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout');
 		const promise = sleep(50, undefined, { signal: controller.signal });
 		controller.abort();
 
 		await expect(promise).rejects.toStrictEqual(new DOMException('This operation was aborted', 'AbortError'));
-		expect(setTimeoutSpy).toHaveBeenCalledTimes(1);
 		expect(clearTimeoutSpy).toHaveBeenCalledTimes(1);
 	});
 

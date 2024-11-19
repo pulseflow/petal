@@ -16,9 +16,8 @@ describe('collection', () => {
 	}
 
 	function expectInvalidFunctionError(cb: () => unknown, _val?: unknown): void {
-		expect(() => {
-			cb();
-		}).toThrowError(new TypeError(`val is not a function`));
+		// eslint-disable-next-line ts/restrict-template-expressions -- debugging assertion
+		expect(() => cb()).toThrowError(new TypeError(`${_val} is not a function`));
 	}
 
 	it('do basic map operations', () => {

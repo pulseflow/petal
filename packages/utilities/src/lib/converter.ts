@@ -414,6 +414,33 @@ export const definitions: UnitDefinition[] = [
 	},
 ];
 
+export enum ConverterErrorType {
+	MissingInput = 'MISSING_INPUT',
+	ValueNotNumber = 'VALUE_NOT_NUMBER',
+	FromUnitNotString = 'FROM_UNIT_NOT_STRING',
+	ToUnitNotString = 'TO_UNIT_NOT_STRING',
+	FromUnitNotSupported = 'FROM_UNIT_NOT_SUPPORTED',
+	ToUnitNotSupported = 'TO_UNIT_NOT_SUPPORTED',
+	NoDataFound = 'NO_DATA_FOUND',
+	FromUnitHasUniqueTransform = 'FROM_UNIT_HAS_UNIQUE_TRANSFORM',
+}
+
+export class ConverterError extends Error {
+	/**
+	 * The type of the error that was thrown.
+	 */
+	public readonly type: ConverterErrorType;
+
+	public constructor(type: ConverterErrorType, message: string) {
+		super(message);
+		this.type = type;
+	}
+
+	public override get name(): string {
+		return `${super.name} [${this.type}]`;
+	}
+}
+
 /**
  * Converts input from one unit to another unit
  *
@@ -422,6 +449,7 @@ export const definitions: UnitDefinition[] = [
  * @param toUnit The unit to convert to
  * @param options Options for the conversion
  * @returns Will return a number if the function succeeded or a string with an error message if not
+ * @throws A {@link ConverterError `ConverterError`} with an error message and type.
  * @example
  * ```ts
  * convert(5, 'm', 'ft')
@@ -434,88 +462,65 @@ export const definitions: UnitDefinition[] = [
  * @public
  */
 export function convert(value: number, fromUnit: string, toUnit: string, options: ConvertOptions = { precision: 8 }): number | string {
-	try {
-		if (!value || !fromUnit || !toUnit)
-			throw new Error('missing_input');
-		if (typeof value !== 'number')
-			throw new Error('value_not_number');
-		if (typeof fromUnit !== 'string')
-			throw new Error('fromUnit_not_string');
-		if (typeof toUnit !== 'string')
-			throw new Error('toUnit_not_string');
+	if (!value || !fromUnit || !toUnit)
+		throw new ConverterError(ConverterErrorType.MissingInput, 'some input arguments are absent, please supply all arguments');
+	if (typeof value !== 'number')
+		throw new ConverterError(ConverterErrorType.ValueNotNumber, `the input value (${value}) is not of type number`);
+	if (typeof fromUnit !== 'string')
+		throw new ConverterError(ConverterErrorType.FromUnitNotString, `the fromUnit (${fromUnit}) is not of type string`);
+	if (typeof toUnit !== 'string')
+		throw new ConverterError(ConverterErrorType.ToUnitNotString, `the toUnit (${toUnit}) is not of type string`);
 
-		const supportedIds = Object.values(definitions).map((definition: UnitDefinition) => definition.data.map((data: UnitData) => data.id)).flat();
+	const supportedIds = Object.values(definitions).map((definition: UnitDefinition) => definition.data.map((data: UnitData) => data.id)).flat();
 
-		if (!supportedIds.includes(fromUnit))
-			throw new Error('fromUnit_not_supported');
-		if (!supportedIds.includes(fromUnit))
-			throw new Error('toUnit_not_supported');
-		if (!options.precision)
-			options.precision = 2;
-		if (fromUnit === toUnit)
-			return value;
+	if (!supportedIds.includes(fromUnit))
+		throw new ConverterError(ConverterErrorType.FromUnitNotSupported, `the fromUnit (${fromUnit}) is not supported by this library`);
+	if (!supportedIds.includes(fromUnit))
+		throw new ConverterError(ConverterErrorType.ToUnitNotSupported, `the toUnit (${toUnit}) is not supported by this library`);
+	if (fromUnit === toUnit)
+		return value;
 
-		let definitionData: UnitDefinition = {
-			data: [{ id: '', multiplier: 1, system: System.PRIMARY }],
-			name: '',
-			primary: { default: '', ratio: 1, transform: undefined },
-			secondary: { default: '', ratio: 1, transform: undefined },
-		};
+	let definitionData: UnitDefinition = {
+		data: [{ id: '', multiplier: 1, system: System.PRIMARY }],
+		name: '',
+		primary: { default: '', ratio: 1, transform: undefined },
+		secondary: { default: '', ratio: 1, transform: undefined },
+	};
 
-		Object.values(definitions).forEach((d) => {
-			const idsInDefinition = d.data.map((unit: UnitData) => unit.id);
-			if (idsInDefinition.includes(fromUnit) && idsInDefinition.includes(toUnit))
-				definitionData = d;
-		});
+	Object.values(definitions).forEach((d) => {
+		const idsInDefinition = d.data.map((unit: UnitData) => unit.id);
+		if (idsInDefinition.includes(fromUnit) && idsInDefinition.includes(toUnit))
+			definitionData = d;
+	});
 
-		if (!definitionData.name)
-			throw new Error('no_data_found');
+	if (!definitionData.name)
+		throw new ConverterError(ConverterErrorType.NoDataFound, `cannot convert incompatible unit of fromUnit (${fromUnit}) to toUnit (${toUnit})`);
 
-		const fromData = definitionData.data.find(unit => unit.id === fromUnit);
-		const toData = definitionData.data.find(unit => unit.id === toUnit);
-		if (!fromData)
-			throw new Error('fromUnit_not_supported');
-		if (!toData)
-			throw new Error('toUnit_not_supported');
-		if (fromData.uniqueTransform)
-			throw new Error('fromUnit_has_uniqueTransform');
+	const fromData = definitionData.data.find(unit => unit.id === fromUnit);
+	const toData = definitionData.data.find(unit => unit.id === toUnit);
+	if (!fromData)
+		throw new ConverterError(ConverterErrorType.FromUnitNotSupported, `the fromUnit (${fromUnit}) is not supported by this library`);
+	if (!toData)
+		throw new ConverterError(ConverterErrorType.ToUnitNotSupported, `the toUnit (${toUnit}) is not supported by this library`);
+	if (fromData.uniqueTransform)
+		throw new ConverterError(ConverterErrorType.FromUnitHasUniqueTransform, uniqueTransformError);
 
-		let result = value * fromData.multiplier;
-		if (fromData.valueShift)
-			result -= fromData.valueShift;
+	let result = value * fromData.multiplier;
+	if (fromData.valueShift)
+		result -= fromData.valueShift;
 
-		if (fromData.system !== toData.system) {
-			const { transform } = definitionData[fromData.system]!;
-			if (typeof transform === 'function')
-				result = transform(result);
-			else result *= definitionData[fromData.system]!.ratio;
-		}
-
-		if (toData.valueShift)
-			result += toData.valueShift;
-		if (toData.uniqueTransform)
-			return toData.uniqueTransform(result);
-		return roundNumber(result / toData.multiplier, options.precision);
+	if (fromData.system !== toData.system) {
+		const { transform } = definitionData[fromData.system]!;
+		if (typeof transform === 'function')
+			result = transform(result);
+		else result *= definitionData[fromData.system]!.ratio;
 	}
-	catch (err) {
-		if (/missing_input/i.test((err as Error).message))
-			throw new ConverterError('some input arguments are absent, please supply all arguments');
-		if (/value_not_number/i.test((err as Error).message))
-			throw new ConverterError('the input value is not of type number');
-		if (/fromUnit_not_string/i.test((err as Error).message))
-			throw new ConverterError('the fromUnit is not of type string');
-		if (/toUnit_not_string/i.test((err as Error).message))
-			throw new ConverterError('the toUnit is not of type string');
-		if (/fromUnit_not_supported/i.test((err as Error).message))
-			throw new ConverterError('the fromUnit is not supported by this library');
-		if (/toUnit_not_supported/i.test((err as Error).message))
-			throw new ConverterError('the toUnit is not supported by this library');
-		if (/no_data_found/i.test((err as Error).message))
-			throw new ConverterError(`cannot convert incompatible unit of ${fromUnit} to ${toUnit}`);
-		if (/fromUnit_has_uniqueTransform/i.test((err as Error).message))
-			throw new ConverterError(uniqueTransformError);
-		throw new ConverterError(`unhandled error, message: ${(err as Error).message}`);
-	}
+
+	if (toData.valueShift)
+		result += toData.valueShift;
+	if (toData.uniqueTransform)
+		return toData.uniqueTransform(result);
+	return roundNumber(result / toData.multiplier, options.precision);
 }
 
 /** Measure system data */
@@ -563,17 +568,4 @@ export interface UnitData {
 export interface ConvertOptions {
 	/** The decimal precision to return */
 	precision: number;
-}
-
-export class ConverterError extends Error {
-	/**
-	 * Create an ConverterError
-	 * @param message The message the error should show
-	 */
-	public constructor(message: string) {
-		super(message);
-		this.message = message;
-		this.name = 'ConverterError';
-		this.stack = '';
-	}
 }

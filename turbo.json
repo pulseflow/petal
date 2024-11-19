@@ -1,6 +1,6 @@
 {
 	"$schema": "https://turbo.build/schema.json",
-	"globalDependencies": ["tsconfig.json"],
+	"globalDependencies": ["tsconfig.json", "./packages/scripts/tsup.config.ts"],
 	"globalEnv": [],
 	"cacheDir": ".turbo/cache",
 	"daemon": true,

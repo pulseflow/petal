@@ -1,15 +1,15 @@
 import { isFunction } from './isFunction';
 
 export interface Thenable {
-	then: (...args: unknown[]) => unknown;
-	catch: (...args: unknown[]) => unknown;
+	then: (...args: never[]) => never;
+	catch: (...args: never[]) => never;
 }
 
-function hasThen(input: { then?: (...args: unknown[]) => unknown }): boolean {
+function hasThen(input: { then?: (...args: never[]) => never }): boolean {
 	return Reflect.has(input, 'then') && isFunction(input.then);
 }
 
-function hasCatch(input: { catch?: (...args: unknown[]) => unknown }): boolean {
+function hasCatch(input: { catch?: (...args: never[]) => never }): boolean {
 	return Reflect.has(input, 'catch') && isFunction(input.catch);
 }
 

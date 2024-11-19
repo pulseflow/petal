@@ -3,7 +3,7 @@ import type { Builtin } from './Builtin';
 
 export type DeepReadonly<Type> = Type extends Builtin
 	? Type
-	: Type extends AbstractConstructor<unknown> | ((...args: unknown[]) => unknown)
+	: Type extends AbstractConstructor<unknown> | ((...args: any[]) => any)
 		? Type
 		: Type extends ReadonlyMap<infer Key, infer Value>
 			? ReadonlyMap<DeepReadonly<Key>, DeepReadonly<Value>>

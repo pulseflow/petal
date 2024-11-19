@@ -1,9 +1,9 @@
 import type { AbstractCtor } from '@flowr/types';
 import { readFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
-import { isNullish } from '@flowr/utilities';
+import { isNullish } from '@flowr/utilities/isNullish';
+import { dirname, join } from 'pathe';
 
 export const VirtualPath = '::virtual::';
 export const ManuallyRegisteredPiecesSymbol: unique symbol = Symbol('@flowr/pieces:ManuallyRegisteredPieces');
@@ -36,7 +36,7 @@ export interface RootData {
 	type: 'ESM' | 'CommonJS';
 }
 
-const dataStore: { data: RootData | null } = { data: null };
+let data: RootData | null = null;
 
 /**
  * Returns the directory name of a given path by joining the current working directory (cwd) with the joinable path.
@@ -51,7 +51,7 @@ const dirnameWithPath = (cwd: string, joinablePath: string): string => dirname(j
  * Get the {@link RootData} of the current project.
  * @returns The root data
  */
-export const getRootData = (): RootData => (dataStore.data ??= parseRootData());
+export const getRootData = (): RootData => (data ??= parseRootData());
 
 /**
  * Retrieves the root data of the project.
@@ -86,7 +86,6 @@ export const getRootData = (): RootData => (dataStore.data ??= parseRootData());
  */
 export function parseRootData(): RootData {
 	const cwd = process.cwd();
-
 	let file: PartialPackageJson | undefined;
 
 	try {

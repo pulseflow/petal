@@ -1,6 +1,6 @@
 import type { Options } from 'tsup';
 import { esbuildPluginFilePathExtensions } from 'esbuild-plugin-file-path-extensions';
-import { createTsupConfig } from '../scripts/tsup.config.js';
+import { createTsupConfig } from '../scripts/tsup.config.ts';
 
 const options: Options = {
 	entry: ['src/**'],
@@ -8,7 +8,7 @@ const options: Options = {
 };
 
 export default createTsupConfig('store', {
-	cjsOptions: options,
-	esmOptions: options,
-	iifeOptions: { disabled: true },
+	cjs: options,
+	esm: options,
+	iife: { disabled: true },
 });

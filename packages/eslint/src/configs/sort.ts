@@ -78,7 +78,7 @@ export async function sortPackageJson(): Promise<TypedFlatConfigItem[]> {
 						pathPattern: '^(?:resolutions|overrides|pnpm.overrides)$',
 					},
 					{
-						order: ['types', 'import', 'require', 'default'],
+						order: ['types', 'import', 'require', 'browser', 'unpkg', 'default'],
 						pathPattern: '^exports.*$',
 					},
 					{

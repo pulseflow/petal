@@ -1,4 +1,4 @@
 {
 	"type": "module",
-	"main": "./dist/lib/index.js"
+	"main": "dist/lib/index.js"
 }

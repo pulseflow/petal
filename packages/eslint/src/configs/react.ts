@@ -1,6 +1,6 @@
 import type { OptionsReact, TypedFlatConfigItem } from '../types/index.ts';
 import { isPackageExists } from 'local-pkg';
-import { GLOB_SRC } from '../globs.ts';
+import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_SRC, GLOB_TS, GLOB_TSX } from '../globs.ts';
 import { ensurePackages, interopDefault } from '../utils.ts';
 
 const ReactRefreshAllowConstantExportPackages = ['vite'];
@@ -8,7 +8,7 @@ const RemixPackages = ['@remix-run/node', '@remix-run/react', '@remix-run/serve'
 const NextJsPackages = ['next'];
 
 export async function react(options: OptionsReact = {}): Promise<TypedFlatConfigItem[]> {
-	const { accessibility = false, files = [GLOB_SRC], overrides = {} } = options;
+	const { accessibility = false, files = [GLOB_SRC], overrides = {}, filesTypeAware = [GLOB_TS, GLOB_TSX], ignoresTypeAware = [`${GLOB_MARKDOWN}/**`, GLOB_ASTRO_TS], tsconfigPath } = options;
 	await ensurePackages(['@eslint-react/eslint-plugin', 'eslint-plugin-react-hooks']);
 
 	if (accessibility)
@@ -24,6 +24,10 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
 	const isUsingRemix = RemixPackages.some(p => isPackageExists(p));
 	const isUsingNext = NextJsPackages.some(p => isPackageExists(p));
 	const plugins = pluginReact.configs.all.plugins;
+	const isTypeAware = !!tsconfigPath;
+	const typeAwareRules: TypedFlatConfigItem['rules'] = {
+		'react/no-leaked-conditional-rendering': 'warn',
+	};
 
 	return [
 		{
@@ -147,5 +151,13 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
 				...overrides,
 			},
 		},
+		...isTypeAware
+			? [{
+					files: filesTypeAware,
+					ignores: ignoresTypeAware,
+					name: 'petal/react/type-aware-rules',
+					rules: { ...typeAwareRules },
+				}]
+			: [],
 	];
 }

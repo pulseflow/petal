@@ -2,17 +2,17 @@ import { BitField } from '../src/lib/bitField';
 
 describe('bitField', () => {
 	const NumberFlags = {
-		Delete: 8,
-		Edit: 4,
 		Read: 1,
 		Write: 2,
+		Edit: 4,
+		Delete: 8,
 	} as const;
 
 	const BigIntFlags = {
-		Delete: 8n,
-		Edit: 4n,
 		Read: 1n,
 		Write: 2n,
+		Edit: 4n,
+		Delete: 8n,
 	} as const;
 
 	describe('constructor', () => {
@@ -35,16 +35,14 @@ describe('bitField', () => {
 		});
 
 		it.each([true, 42, 10n, 'foo', undefined])('given a non-object then throws TypeError', (value) => {
-			// @ts-expect-error: testing invalid types
-			const given = () => new BitField(value);
+			const given = () => new BitField(value as any);
 			const expected = 'flags must be a non-null object';
 
 			expect(given).toThrowError(expected);
 		});
 
 		it('given a null object then throws TypeError', () => {
-			// @ts-expect-error: testing invalid types
-			const given = () => new BitField(null);
+			const given = () => new BitField(null as any);
 			const expected = 'flags must be a non-null object';
 
 			expect(given).toThrowError(expected);
@@ -58,8 +56,7 @@ describe('bitField', () => {
 		});
 
 		it.each([true, {}, undefined, null, 'foo'])('given a null object then throws TypeError', (value) => {
-			// @ts-expect-error: testing invalid types
-			const given = () => new BitField({ Read: value });
+			const given = () => new BitField({ Read: value } as any);
 			const expected = 'A bitfield can only use numbers or bigints for its values';
 
 			expect(given).toThrowError(expected);
@@ -67,8 +64,7 @@ describe('bitField', () => {
 
 		describe('number', () => {
 			it.each([true, {}, 42n, undefined, null, 'foo'])('given a null object then throws TypeError', (value) => {
-				// @ts-expect-error: testing invalid types
-				const given = () => new BitField({ Read: 1, Write: value });
+				const given = () => new BitField({ Read: 1, Write: value } as any);
 				const expected = 'The property "Write" does not resolve to a number';
 
 				expect(given).toThrowError(expected);
@@ -91,8 +87,7 @@ describe('bitField', () => {
 
 		describe('bigint', () => {
 			it.each([true, {}, 42, undefined, null, 'foo'])('given a null object then throws TypeError', (value) => {
-				// @ts-expect-error: testing invalid types
-				const given = () => new BitField({ Read: 1n, Write: value });
+				const given = () => new BitField({ Read: 1n, Write: value } as any);
 				const expected = 'The property "Write" does not resolve to a bigint';
 
 				expect(given).toThrowError(expected);
@@ -147,24 +142,21 @@ describe('bitField', () => {
 			});
 
 			it.each([4n, undefined, true])('given %o then throws TypeError', (value) => {
-				// @ts-expect-error: testing invalid types
-				const given = () => bitfield.resolve(value);
+				const given = () => bitfield.resolve(value as any);
 				const expected = 'Received a value that is not either type "string", type "number", or an Array';
 
 				expect(given).toThrowError(expected);
 			});
 
 			it.each(['Execute', 'Foo'])('given %s then throws RangeError', (value) => {
-				// @ts-expect-error: testing invalid types
-				const given = () => bitfield.resolve(value);
+				const given = () => bitfield.resolve(value as any);
 				const expected = 'Received a name that could not be resolved to a property of flags';
 
 				expect(given).toThrowError(expected);
 			});
 
 			it.each([null, {}])('given non-Array object then throws TypeError', (value) => {
-				// @ts-expect-error: testing invalid types
-				const given = () => bitfield.resolve(value);
+				const given = () => bitfield.resolve(value as any);
 				const expected = 'Received an object value that is not an Array';
 
 				expect(given).toThrowError(expected);
@@ -439,21 +431,21 @@ describe('bitField', () => {
 
 			it('given ∅ then returns object with false values', () => {
 				const given = bitfield.toObject(bitfield.zero);
-				const expected: Expected = { Delete: false, Edit: false, Read: false, Write: false };
+				const expected: Expected = { Read: false, Write: false, Edit: false, Delete: false };
 
 				expect<Expected>(given).toEqual(expected);
 			});
 
 			it('given multiple values then returns array with given values', () => {
 				const given = bitfield.toObject(['Read', 'Delete']);
-				const expected: Expected = { Delete: true, Edit: false, Read: true, Write: false };
+				const expected: Expected = { Read: true, Write: false, Edit: false, Delete: true };
 
 				expect<Expected>(given).toEqual(expected);
 			});
 
 			it('given out-of-range values then returns array with correct values', () => {
 				const given = bitfield.toObject(['Read', 'Delete', 16]);
-				const expected: Expected = { Delete: true, Edit: false, Read: true, Write: false };
+				const expected: Expected = { Read: true, Write: false, Edit: false, Delete: true };
 
 				expect<Expected>(given).toEqual(expected);
 			});

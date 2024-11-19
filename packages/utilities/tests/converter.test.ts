@@ -1,4 +1,4 @@
-import { convert, ConverterError } from '../src/lib/converter';
+import { convert } from '../src/lib/converter';
 
 describe('converter', () => {
 	describe('verify support for all combinations', () => {
@@ -147,12 +147,5 @@ describe('converter', () => {
 			const actual = convert(1, 'hz', 'rad/s', { precision: 2 });
 			expect(actual).toBe(expected);
 		});
-	});
-
-	it('confirm error class returns assigned properties', () => {
-		const expected = { message: 'Mocha', name: 'ConverterError' };
-		const actual = new ConverterError('Mocha');
-		expect(actual.name).toBe(expected.name);
-		expect(actual.message).toBe(expected.message);
 	});
 });

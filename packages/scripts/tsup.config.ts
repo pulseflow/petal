@@ -2,7 +2,7 @@ import { defineConfig, type Options } from 'tsup';
 import { capitalizeFirstLetter } from '../utilities/src/lib/capitalizeFirstLetter';
 
 // @keep-sorted
-const baseOptions: Options = {
+export const baseOptions: Options = {
 	bundle: true,
 	cjsInterop: true,
 	clean: true,
@@ -19,7 +19,6 @@ const baseOptions: Options = {
 	legacyOutput: false,
 	metafile: false,
 	minify: false,
-	noExternal: ['@flowr/utilities', '@flowr/types'],
 	platform: 'neutral',
 	publicDir: false,
 	pure: [],
@@ -41,15 +40,16 @@ const baseOptions: Options = {
 	watch: false,
 };
 
-export interface TsupDisabled extends Options {
-	disabled?: boolean;
-}
+export const outExtension: Options['outExtension'] = (context) => {
+	if (context.format === 'cjs')
+		return ({ dts: '.d.cts', js: '.cjs' });
+	else if (context.format === 'iife')
+		return ({ dts: '.d.ts', js: '.js' });
+	else return {};
+};
 
-export interface ExtendedTsupOptions {
-	esmOptions?: Options;
-	cjsOptions?: TsupDisabled;
-	iifeOptions?: TsupDisabled;
-}
+export type TsupDisabled = Options & { disabled?: boolean };
+export interface ExtendedTsupOptions { esm?: Options; cjs?: TsupDisabled; iife?: TsupDisabled }
 
 export function createTsupConfig(name: string | TemplateStringsArray, options: ExtendedTsupOptions = {}): Array<ReturnType<typeof defineConfig>> {
 	name = name.toString();
@@ -61,30 +61,31 @@ export function createTsupConfig(name: string | TemplateStringsArray, options: E
 			...baseOptions,
 			format: 'esm',
 			outDir: 'dist/esm',
-			outExtension: () => ({ dts: '.d.ts', js: '.js' }),
-			...options.esmOptions,
+			outExtension,
+			...options.esm,
 		}),
-		...options.cjsOptions?.disabled
+		...options.cjs?.disabled
 			? []
 			: [defineConfig({
 					name: `${name}/cjs`,
 					...baseOptions,
 					format: 'cjs',
 					outDir: 'dist/cjs',
-					outExtension: () => ({ dts: '.d.cts', js: '.cjs' }),
-					...options.cjsOptions,
+					outExtension,
+					...options.cjs,
 				})],
-		...options.iifeOptions?.disabled
+		...options.iife?.disabled
 			? []
 			: [defineConfig({
 					...baseOptions,
 					dts: false,
 					entry: ['src/index.ts'],
 					format: 'iife',
+					target: ['esnext', 'firefox78', 'edge88', 'safari14', 'chrome87'],
 					globalName,
 					name: `${name}/iife`,
 					outDir: 'dist/iife',
-					...options.iifeOptions,
+					...options.iife,
 				})],
 	];
 }

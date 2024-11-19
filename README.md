@@ -30,6 +30,7 @@ For those using the Node runtime, the current minimum version for usage and deve
 ### TODO
 
 - [ ] Use [`magic-regexp`](https://regexp.dev).
+- [ ] Look into `@eslint/markdown`, `@eslint/css`, and `@eslint/json`.
 
 [ESLint]: https://eslint.org/
 [TypeScript]: https://www.typescriptlang.org/

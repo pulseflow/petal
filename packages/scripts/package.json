@@ -59,10 +59,10 @@
 		"@actions/glob": "^0.5.0",
 		"commander": "^12.1.0",
 		"tslib": "^2.8.1",
-		"undici": "^6.20.1",
+		"undici": "^6.21.0",
 		"yaml": "^2.6.0"
 	},
 	"devDependencies": {
-		"@turbo/gen": "^2.2.3"
+		"@turbo/gen": "^2.3.0"
 	}
 }

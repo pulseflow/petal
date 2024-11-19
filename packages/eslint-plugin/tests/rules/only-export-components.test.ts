@@ -169,6 +169,22 @@ const valids: ValidTestCase[] = [
 		code: 'export { App as default }; const App = () => <>Test</>;',
 		name: 'Export as default',
 	},
+	{
+		code: 'const MyComponent = () => {}; export default connect(() => ({}))(MyComponent);',
+		name: 'Allow connect from react-redux',
+	},
+	{
+		name: 'Two components, one of them with \'Context\' in its name',
+		code: 'export const MyComponent = () => {}; export const ChatContext = () => {};',
+	},
+	{
+		name: 'Component & local React context',
+		code: 'export const MyComponent = () => {}; const MyContext = createContext(\'test\');',
+	},
+	{
+		name: 'Only React context',
+		code: 'export const MyContext = createContext(\'test\');',
+	},
 ];
 
 const invalid: InvalidTestCase[] = [
@@ -254,6 +270,21 @@ const invalid: InvalidTestCase[] = [
 		errors: [{ messageId: 'namedExport' }],
 		name: 'Component and export non in allowExportNames',
 		options: [{ allowExportNames: ['loader', 'meta'] }],
+	},
+	{
+		code: 'const Foo = () => {}; export { Foo as "🍌"}',
+		errors: [{ messageId: 'localComponents' }],
+		name: 'Export with arbitrary module identifier',
+	},
+	{
+		errors: [{ messageId: 'reactContext' }],
+		code: 'export const MyComponent = () => {}; export const MyContext = createContext("test");',
+		name: 'Component and React Context',
+	},
+	{
+		name: 'Component and React Context with React import',
+		code: 'export const MyComponent = () => {}; export const MyContext = React.createContext(\'test\');',
+		errors: [{ messageId: 'reactContext' }],
 	},
 ];
 

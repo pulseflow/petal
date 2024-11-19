@@ -1,4 +1,4 @@
-import { Time } from './durationFormatter';
+import { Time } from './durationFormatter.ts';
 
 const tokens = new Map([
 	['nanosecond', Time.Nanosecond],

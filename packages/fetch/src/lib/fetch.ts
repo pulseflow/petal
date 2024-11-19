@@ -168,7 +168,7 @@ export async function fetch<R>(url: URL | string, options?: RequestOptions | Fet
 		case FetchResultTypes.Text:
 			return result.text();
 		default:
-			throw new Error(`Unknown FetchResultType!`);
+			throw new Error(`Unknown type "${type}"!`);
 	}
 }
 

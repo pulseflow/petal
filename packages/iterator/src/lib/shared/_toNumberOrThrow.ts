@@ -20,9 +20,10 @@ export function toNumberOrThrow(value: NumberResolvable): number {
 
 export type NumberResolvable = number | boolean | null | { valueOf: () => number | boolean | null } | { [Symbol.toPrimitive]: () => number | boolean | null };
 
-function assertNumber(value: number, _original: unknown): number {
+function assertNumber(value: number, original: unknown): number {
 	if (Number.isNaN(value))
-		throw new RangeError(`original must be a non-NaN number`);
+		// eslint-disable-next-line ts/restrict-template-expressions -- logging assertions
+		throw new RangeError(`${original} must be a non-NaN number`);
 
 	return value;
 }

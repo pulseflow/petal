@@ -3,7 +3,14 @@ import type { JSONSchema4 } from '@typescript-eslint/utils/json-schema';
 import { createEslintRule } from '../utils.ts';
 
 export const RULE_NAME = 'only-export-components';
-export type MessageIds = 'exportAll' | 'namedExport' | 'anonymousExport' | 'localComponents' | 'noExport' | 'noAMI';
+export type MessageIds =
+	| 'exportAll'
+	| 'namedExport'
+	| 'anonymousExport'
+	| 'localComponents'
+	| 'noExport'
+	| 'noAMI'
+	| 'reactContext';
 export type Options = [{
 	allowConstantExport?: boolean;
 	checkJS?: boolean;
@@ -48,8 +55,9 @@ export default createEslintRule<Options, MessageIds>({
 					reactIsInScope: false,
 				};
 				const localComponents: TSESTree.Identifier[] = [];
-				const nonComponentExports: TSESTree.BindingName[] = [];
+				const nonComponentExports: Array<TSESTree.BindingName | TSESTree.StringLiteral> = [];
 				const allowExportNamesSet = options.allowExportNames ? new Set(options.allowExportNames) : undefined;
+				const reactContextExports: TSESTree.Identifier[] = [];
 
 				const handleLocalIdentifier = (id: TSESTree.BindingName): void => {
 					if (id.type !== 'Identifier')
@@ -58,7 +66,7 @@ export default createEslintRule<Options, MessageIds>({
 						localComponents.push(id);
 				};
 
-				const handleExportIdentifier = (id: TSESTree.BindingName, isFn?: boolean, init?: TSESTree.Expression | null): void => {
+				const handleExportIdentifier = (id: TSESTree.BindingName | TSESTree.StringLiteral, isFn?: boolean, init?: TSESTree.Expression | null): void => {
 					if (id.type !== 'Identifier') {
 						nonComponentExports.push(id);
 						return;
@@ -77,14 +85,23 @@ export default createEslintRule<Options, MessageIds>({
 						else nonComponentExports.push(id);
 					}
 					else {
+						if (
+							init && init.type === 'CallExpression'
+							&& ((init.callee.type === 'Identifier'
+								&& init.callee.name === 'createContext')
+							|| (init.callee.type === 'MemberExpression'
+								&& init.callee.property.type === 'Identifier'
+								&& init.callee.property.name === 'createContext'))
+						) {
+							reactContextExports.push(id);
+							return;
+						}
 						if (init && notReactComponentExpression.has(init.type)) {
 							nonComponentExports.push(id);
 							return;
 						}
-
 						if (!ruleContext.mayHaveReactExport && possibleRegex.test(id.name))
 							ruleContext.mayHaveReactExport = true;
-
 						if (!strictRegex.test(id.name))
 							nonComponentExports.push(id);
 					}
@@ -98,23 +115,19 @@ export default createEslintRule<Options, MessageIds>({
 							context.report({ messageId: 'anonymousExport', node });
 						else handleExportIdentifier(node.id, true);
 					else if (node.type === 'CallExpression')
-						if (node.callee.type !== 'Identifier')
-							if (
-								node.callee.type === 'MemberExpression'
-								&& node.callee.property.type === 'Identifier'
-								&& reactHOCs.has(node.callee.property.name)
-							)
+						if (node.callee.type === 'CallExpression' && node.callee.callee.type === 'Identifier' && node.callee.callee.name === 'connect')
+							ruleContext.mayHaveReactExport = true;
+						else if (node.callee.type !== 'Identifier')
+							if (node.callee.type === 'MemberExpression' && node.callee.property.type === 'Identifier' && reactHOCs.has(node.callee.property.name))
 								ruleContext.mayHaveReactExport = true;
-							else
-								context.report({ messageId: 'anonymousExport', node });
+							else context.report({ messageId: 'anonymousExport', node });
 						else if (!reactHOCs.has(node.callee.name))
 							context.report({ messageId: 'anonymousExport', node });
-						else if (node.arguments[0]?.type === 'FunctionExpression' && node.arguments[0].id)
+						else if (node.arguments[0].type === 'FunctionExpression' && node.arguments[0].id)
 							handleExportIdentifier(node.arguments[0].id, true);
 						else if (node.arguments[0]?.type === 'Identifier')
 							ruleContext.mayHaveReactExport = true;
-						else
-							context.report({ messageId: 'anonymousExport', node });
+						else context.report({ messageId: 'anonymousExport', node });
 					else if (node.type === 'TSEnumDeclaration')
 						nonComponentExports.push(node.id);
 				};
@@ -152,12 +165,7 @@ export default createEslintRule<Options, MessageIds>({
 						ruleContext.hasExports = true;
 						if (node.declaration)
 							handleExportDeclaration(node.declaration);
-						node.specifiers.forEach((i) => {
-							if (i.exported.type === 'Literal' || i.local.type === 'Literal')
-								context.report({ messageId: 'noAMI', node });
-							else
-								handleExportIdentifier(i.exported.name === 'default' ? i.local : i.exported);
-						});
+						node.specifiers.forEach(i => handleExportDeclaration(i.exported.type === 'Identifier' && i.exported.name === 'default' ? i.local : i.exported));
 					}
 					else if (node.type === 'VariableDeclaration') {
 						node.declarations.forEach(v => handleLocalIdentifier(v.id));
@@ -173,12 +181,16 @@ export default createEslintRule<Options, MessageIds>({
 					return;
 
 				if (ruleContext.hasExports)
-					if (ruleContext.mayHaveReactExport)
+					if (ruleContext.mayHaveReactExport) {
 						nonComponentExports.forEach(node => context.report({ messageId: 'namedExport', node }));
-					else if (localComponents.length)
+						reactContextExports.forEach(node => context.report({ messageId: 'reactContext', node }));
+					}
+					else if (localComponents.length) {
 						localComponents.forEach(node => context.report({ messageId: 'localComponents', node }));
-					else if (localComponents.length)
+					}
+					else if (localComponents.length) {
 						localComponents.forEach(node => context.report({ messageId: 'noExport', node }));
+					}
 			},
 		};
 	},
@@ -194,6 +206,7 @@ export default createEslintRule<Options, MessageIds>({
 			namedExport: 'Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.',
 			noAMI: 'Fast refrsh only works when a file uses standard imports, not arbitrary modules.',
 			noExport: 'Fast refresh only works when a file has exports. Move your component(s) to a seperate file.',
+			reactContext: 'Fast refresh only works when a file only exports components. Move your React context(s) to a seperate file.',
 		},
 		schema: [{
 			additionalProperties: false,

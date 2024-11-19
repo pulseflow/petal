@@ -64,7 +64,7 @@ export interface DebouncedFunc<FnArgumentsType extends unknown[], FnReturnType> 
  * @param options The options object.
  * @return Returns the new debounced function.
  */
-export function debounce<FnArgumentsType extends unknown[], FnReturnType>(
+export function debounce<FnArgumentsType extends any[], FnReturnType>(
 	func: (...args: FnArgumentsType) => FnReturnType,
 	options: DebounceSettings = {},
 ): DebouncedFunc<FnArgumentsType, FnReturnType> {

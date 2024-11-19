@@ -9,18 +9,10 @@ export interface OptionsStylistic {
 	stylistic?: boolean | StylisticConfig;
 }
 
-export interface StylisticConfig extends Pick<
+export type StylisticConfig = Pick<
 	import('@stylistic/eslint-plugin').StylisticCustomizeOptions,
-	'indent' | 'jsx' | 'semi'
->, OptionsOverrides {
-	/**
-	 * Quote style
-	 * Similar to `singleQuote` option in Prettier
-	 *
-	 * @default 'single'
-	 */
-	quotes?: 'single' | 'double';
-}
+	'indent' | 'quotes' | 'jsx' | 'semi'
+> & OptionsOverrides;
 
 export interface StylisticOptions extends StylisticConfig, OptionsOverrides {
 	/**

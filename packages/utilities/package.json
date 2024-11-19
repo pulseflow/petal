@@ -31,7 +31,6 @@
 	],
 	"exports": {
 		".": {
-			"browser": "./dist/iife/index.global.js",
 			"import": {
 				"types": "./dist/esm/index.d.ts",
 				"default": "./dist/esm/index.js"
@@ -39,7 +38,8 @@
 			"require": {
 				"types": "./dist/cjs/index.d.cts",
 				"default": "./dist/cjs/index.cjs"
-			}
+			},
+			"browser": "./dist/iife/index.global.js"
 		},
 		"./arrayStrictEquals": {
 			"import": {
@@ -69,6 +69,16 @@
 			"require": {
 				"types": "./dist/cjs/lib/bitField.d.cts",
 				"default": "./dist/cjs/lib/bitField.cjs"
+			}
+		},
+		"./boundMethods": {
+			"import": {
+				"types": "./dist/esm/lib/boundMethods.d.ts",
+				"default": "./dist/esm/lib/boundMethods.js"
+			},
+			"require": {
+				"types": "./dist/cjs/lib/boundMethods.d.cts",
+				"default": "./dist/cjs/lib/boundMethods.cjs"
 			}
 		},
 		"./capitalizeFirstLetter": {
@@ -319,6 +329,16 @@
 			"require": {
 				"types": "./dist/cjs/lib/getDeepObjectKeys.d.cts",
 				"default": "./dist/cjs/lib/getDeepObjectKeys.cjs"
+			}
+		},
+		"./getDimension": {
+			"import": {
+				"types": "./dist/esm/lib/getDimension.d.ts",
+				"default": "./dist/esm/lib/getDimension.js"
+			},
+			"require": {
+				"types": "./dist/cjs/lib/getDimension.d.cts",
+				"default": "./dist/cjs/lib/getDimension.cjs"
 			}
 		},
 		"./hasAtLeastOneKeyInMap": {
@@ -581,6 +601,16 @@
 				"default": "./dist/cjs/lib/objectValues.cjs"
 			}
 		},
+		"./omit": {
+			"import": {
+				"types": "./dist/esm/lib/omit.d.ts",
+				"default": "./dist/esm/lib/omit.js"
+			},
+			"require": {
+				"types": "./dist/cjs/lib/omit.d.cts",
+				"default": "./dist/cjs/lib/omit.cjs"
+			}
+		},
 		"./omitKeysFromObject": {
 			"import": {
 				"types": "./dist/esm/lib/omitKeysFromObject.d.ts",
@@ -600,6 +630,16 @@
 			"require": {
 				"types": "./dist/cjs/lib/partition.d.cts",
 				"default": "./dist/cjs/lib/partition.cjs"
+			}
+		},
+		"./pick": {
+			"import": {
+				"types": "./dist/esm/lib/pick.d.ts",
+				"default": "./dist/esm/lib/pick.js"
+			},
+			"require": {
+				"types": "./dist/cjs/lib/pick.d.cts",
+				"default": "./dist/cjs/lib/pick.cjs"
 			}
 		},
 		"./pickRandom": {
@@ -670,6 +710,16 @@
 			"require": {
 				"types": "./dist/cjs/lib/regExpEsc.d.cts",
 				"default": "./dist/cjs/lib/regExpEsc.cjs"
+			}
+		},
+		"./rename": {
+			"import": {
+				"types": "./dist/esm/lib/rename.d.ts",
+				"default": "./dist/esm/lib/rename.js"
+			},
+			"require": {
+				"types": "./dist/cjs/lib/rename.d.cts",
+				"default": "./dist/cjs/lib/rename.cjs"
 			}
 		},
 		"./retry": {
@@ -762,6 +812,16 @@
 				"default": "./dist/cjs/lib/stopwatch.cjs"
 			}
 		},
+		"./swap": {
+			"import": {
+				"types": "./dist/esm/lib/swap.d.ts",
+				"default": "./dist/esm/lib/swap.js"
+			},
+			"require": {
+				"types": "./dist/cjs/lib/swap.d.cts",
+				"default": "./dist/cjs/lib/swap.cjs"
+			}
+		},
 		"./throttle": {
 			"import": {
 				"types": "./dist/esm/lib/throttle.d.ts",
@@ -831,6 +891,16 @@
 				"types": "./dist/cjs/lib/unindent.d.cts",
 				"default": "./dist/cjs/lib/unindent.cjs"
 			}
+		},
+		"./untemplate": {
+			"import": {
+				"types": "./dist/esm/lib/untemplate.d.ts",
+				"default": "./dist/esm/lib/untemplate.js"
+			},
+			"require": {
+				"types": "./dist/cjs/lib/untemplate.d.cts",
+				"default": "./dist/cjs/lib/untemplate.cjs"
+			}
 		}
 	},
 	"main": "./dist/cjs/index.cjs",
@@ -872,10 +942,12 @@
 	},
 	"SIDE_EFFECTS": [
 		"./dist/esm/chunk-KH4UDUNJ.js",
+		"./dist/esm/chunk-W5OU3LPA.js",
 		"./dist/esm/chunk-NRZ6N7EF.js",
-		"./dist/esm/chunk-ABTV32L3.js",
+		"./dist/esm/chunk-7XQZEZGW.js",
 		"./dist/esm/chunk-TMPS34QW.js",
 		"./dist/esm/chunk-BPT4LK6Z.js",
+		"./dist/esm/chunk-DE4HICIY.js",
 		"./dist/esm/chunk-3UHRU2XY.js",
 		"./dist/esm/chunk-QQLVDTX2.js",
 		"./dist/esm/chunk-7CHXCRSG.js",
@@ -883,15 +955,15 @@
 		"./dist/esm/chunk-UXJTKJQU.js",
 		"./dist/esm/chunk-GBICWU25.js",
 		"./dist/esm/chunk-7OLL5IN4.js",
-		"./dist/esm/chunk-YV4BSVCW.js",
 		"./dist/esm/chunk-QAJAZWBL.js",
-		"./dist/esm/chunk-GAEZVOKJ.js",
 		"./dist/esm/chunk-GQQ27P4R.js",
 		"./dist/esm/chunk-EK2N3TZC.js",
 		"./dist/esm/chunk-6KKGHQJA.js",
 		"./dist/esm/chunk-6IHQ4J7Q.js",
+		"./dist/esm/chunk-SMF4ZSAZ.js",
 		"./dist/esm/chunk-3KHAGD5I.js",
 		"./dist/esm/chunk-HFABF7LA.js",
+		"./dist/esm/chunk-3RGNDQFH.js",
 		"./dist/esm/chunk-QWDAQH4J.js",
 		"./dist/esm/chunk-QIEXW6OI.js",
 		"./dist/esm/chunk-JBPLL3WN.js",
@@ -899,15 +971,16 @@
 		"./dist/esm/chunk-GTK4JKEG.js",
 		"./dist/esm/chunk-YO24QW7U.js",
 		"./dist/esm/chunk-4X33FJXC.js",
-		"./dist/esm/chunk-WOFGW7Y2.js",
 		"./dist/esm/chunk-7WMK52DC.js",
+		"./dist/esm/chunk-KT3ASSWR.js",
 		"./dist/esm/chunk-XU4VQA6E.js",
 		"./dist/esm/chunk-PZX3YXIQ.js",
 		"./dist/esm/chunk-IPNQ7HKI.js",
 		"./dist/esm/chunk-FQ6VNCUR.js",
-		"./dist/esm/chunk-7TAEOXIU.js",
+		"./dist/esm/chunk-K5V3IMNL.js",
+		"./dist/esm/chunk-WUCDYGWB.js",
 		"./dist/esm/chunk-GAMLSS57.js",
-		"./dist/esm/chunk-24JNQHBZ.js",
+		"./dist/esm/chunk-4C5SE7BE.js",
 		"./dist/esm/chunk-DNKF52KZ.js",
 		"./dist/esm/chunk-E3BLVHJY.js",
 		"./dist/esm/chunk-6RCL46UG.js",
@@ -916,16 +989,16 @@
 		"./dist/esm/chunk-TWPQRIYA.js",
 		"./dist/esm/chunk-7QXGL5PX.js",
 		"./dist/esm/chunk-7QVYU63E.js",
-		"./dist/esm/chunk-EEVWDBGF.js",
-		"./dist/esm/chunk-PYLDQC5B.js",
+		"./dist/esm/chunk-EWCRUDNY.js",
 		"./dist/esm/chunk-VTA5WZ7F.js",
 		"./dist/esm/chunk-OAOGU5I5.js",
 		"./dist/esm/chunk-7UVTFIHZ.js",
+		"./dist/esm/chunk-DT4A6YSQ.js",
 		"./dist/esm/chunk-MQMMOFTQ.js",
 		"./dist/esm/chunk-PRRKL2MU.js",
 		"./dist/esm/chunk-FBSMGDUQ.js",
 		"./dist/esm/chunk-KNIKI7TR.js",
-		"./dist/esm/chunk-K5NOYIQW.js",
+		"./dist/esm/chunk-Y35RYJD7.js",
 		"./dist/esm/chunk-P3ET2WKY.js",
 		"./dist/esm/chunk-NBLCMKV7.js",
 		"./dist/esm/chunk-ZEDYR3SF.js",
@@ -934,22 +1007,26 @@
 		"./dist/esm/chunk-T6ORITVN.js",
 		"./dist/esm/chunk-Q3DZBJIJ.js",
 		"./dist/esm/chunk-HPCNIEYV.js",
-		"./dist/esm/chunk-72OFFELV.js",
 		"./dist/esm/chunk-6KSNKKPM.js",
+		"./dist/esm/chunk-DIXH6U5I.js",
 		"./dist/esm/chunk-W4HTM5HL.js",
 		"./dist/esm/chunk-HOLJ23J4.js",
 		"./dist/esm/chunk-TUJ2ID5U.js",
-		"./dist/esm/chunk-3GOKWPCR.js",
+		"./dist/esm/chunk-UZWSWFRN.js",
 		"./dist/esm/chunk-LFTMOPB3.js",
+		"./dist/esm/chunk-H3CAV72N.js",
 		"./dist/esm/chunk-JYXDYXI4.js",
 		"./dist/esm/chunk-IV6EZHS3.js",
 		"./dist/esm/chunk-ZLEMRU5L.js",
 		"./dist/esm/chunk-67F4Y2A7.js",
+		"./dist/esm/chunk-HXWDVXPT.js",
 		"./dist/esm/chunk-K2RGD3BD.js",
 		"./dist/esm/chunk-CLRV5DI2.js",
-		"./dist/esm/chunk-3DGRWQGK.js",
+		"./dist/esm/chunk-CLCWNW5F.js",
 		"./dist/esm/chunk-YE66WIBM.js",
 		"./dist/esm/chunk-XYUJLUMM.js",
+		"./dist/esm/chunk-AZXYAT3D.js",
+		"./dist/esm/chunk-PDHODV3C.js",
 		"./dist/esm/chunk-SZIYVUQO.js",
 		"./dist/iife/index.global.js"
 	]
