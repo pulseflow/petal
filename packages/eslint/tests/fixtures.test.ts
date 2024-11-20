@@ -114,16 +114,15 @@ function runWithConfig(name: TemplateStringsArray) {
 			const from = resolve(fixturesDir, 'input');
 			const output = resolve(fixturesDir, 'output', name[0]);
 			const target = resolve(outputDir, name[0]);
+			const configString = JSON.stringify(configs);
+			const jsonString = JSON.stringify(items) as any ?? [];
 
 			await fs.copy(from, target, { filter: src => !src.includes('node_modules') });
 			await fs.writeFile(join(target, 'eslint.config.js'), `
 // @eslint-disable
 import { defineConfig } from '@flowr/eslint';
 
-export default defineConfig(
-	${JSON.stringify(configs)},
-	...${JSON.stringify(items) ?? []},
-);
+export default defineConfig(${configString}, ...${jsonString});
 `, 'utf-8');
 
 			if (process.platform === 'win32')

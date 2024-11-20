@@ -60,7 +60,7 @@
 		"commander": "^12.1.0",
 		"tslib": "^2.8.1",
 		"undici": "^6.21.0",
-		"yaml": "^2.6.0"
+		"yaml": "^2.6.1"
 	},
 	"devDependencies": {
 		"@turbo/gen": "^2.3.0"

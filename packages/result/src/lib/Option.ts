@@ -839,7 +839,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 *
 	 * @see {@linkplain https://doc.rust-lang.org/std/cmp/trait.PartialEq.html#method.ne}
 	 */
-	public ne(other: Option<T, boolean>): boolean {
+	public ne(other: Option<T>): boolean {
 		return !this.eq(other);
 	}
 

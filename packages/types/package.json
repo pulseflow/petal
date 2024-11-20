@@ -5,7 +5,9 @@
 	"version": "4.4.1",
 	"description": "Essential TypeScript types used in @flowr/utilities",
 	"author": "@flowr",
-	"contributors": ["Pauline <git@ethanlibs.co>"],
+	"contributors": [
+		"Pauline <git@ethanlibs.co>"
+	],
 	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
@@ -33,7 +35,166 @@
 		".": {
 			"types": "./src/index.ts"
 		},
-		"./package.json": "./package.json"
+		"./abstractConstructor": {
+			"types": "./src/lib/AbstractConstructor.ts"
+		},
+		"./abstractCtor": {
+			"types": "./src/lib/AbstractCtor.ts"
+		},
+		"./anyReadonlyArray": {
+			"types": "./src/lib/AnyReadonlyArray.ts"
+		},
+		"./argumentTypes": {
+			"types": "./src/lib/ArgumentTypes.ts"
+		},
+		"./arrayable": {
+			"types": "./src/lib/Arrayable.ts"
+		},
+		"./arrayElementType": {
+			"types": "./src/lib/ArrayElementType.ts"
+		},
+		"./awaitable": {
+			"types": "./src/lib/Awaitable.ts"
+		},
+		"./bindable": {
+			"types": "./src/lib/Bindable.ts"
+		},
+		"./builtin": {
+			"types": "./src/lib/Builtin.ts"
+		},
+		"./constructor": {
+			"types": "./src/lib/Constructor.ts"
+		},
+		"./ctor": {
+			"types": "./src/lib/Ctor.ts"
+		},
+		"./deepMerge": {
+			"types": "./src/lib/DeepMerge.ts"
+		},
+		"./deepPartial": {
+			"types": "./src/lib/DeepPartial.ts"
+		},
+		"./deepReadonly": {
+			"types": "./src/lib/DeepReadonly.ts"
+		},
+		"./deepRequired": {
+			"types": "./src/lib/DeepRequired.ts"
+		},
+		"./dictionary": {
+			"types": "./src/lib/Dictionary.ts"
+		},
+		"./dictionaryExtract": {
+			"types": "./src/lib/DictionaryExtract.ts"
+		},
+		"./dictionaryInfo": {
+			"types": "./src/lib/DictionaryInfo.ts"
+		},
+		"./dictionaryInfoMethod": {
+			"types": "./src/lib/DictionaryInfoMethod.ts"
+		},
+		"./dictionaryPosition": {
+			"types": "./src/lib/DictionaryPosition.ts"
+		},
+		"./extractKeysByType": {
+			"types": "./src/lib/ExtractKeysByType.ts"
+		},
+		"./firstArgument": {
+			"types": "./src/lib/FirstArgument.ts"
+		},
+		"./if": {
+			"types": "./src/lib/If.ts"
+		},
+		"./lastOf": {
+			"types": "./src/lib/LastOf.ts"
+		},
+		"./merge": {
+			"types": "./src/lib/Merge.ts"
+		},
+		"./mergeInsertions": {
+			"types": "./src/lib/MergeInsertions.ts"
+		},
+		"./mergeLeft": {
+			"types": "./src/lib/MergeLeft.ts"
+		},
+		"./mergeRight": {
+			"types": "./src/lib/MergeRight.ts"
+		},
+		"./mutable": {
+			"types": "./src/lib/Mutable.ts"
+		},
+		"./necessary": {
+			"types": "./src/lib/Necessary.ts"
+		},
+		"./necessaryExcept": {
+			"types": "./src/lib/NecessaryExcept.ts"
+		},
+		"./nonNullableProperties": {
+			"types": "./src/lib/NonNullableProperties.ts"
+		},
+		"./nullable": {
+			"types": "./src/lib/Nullable.ts"
+		},
+		"./nullish": {
+			"types": "./src/lib/Nullish.ts"
+		},
+		"./optional": {
+			"types": "./src/lib/Optional.ts"
+		},
+		"./optionalExcept": {
+			"types": "./src/lib/OptionalExcept.ts"
+		},
+		"./package.json": "./package.json",
+		"./parametersExceptFirst": {
+			"types": "./src/lib/ParametersExceptFirst.ts"
+		},
+		"./pickByValue": {
+			"types": "./src/lib/PickByValue.ts"
+		},
+		"./pickNecessary": {
+			"types": "./src/lib/PickNecessary.ts"
+		},
+		"./pickOptional": {
+			"types": "./src/lib/PickOptional.ts"
+		},
+		"./prettifyObject": {
+			"types": "./src/lib/PrettifyObject.ts"
+		},
+		"./primitive": {
+			"types": "./src/lib/Primitive.ts"
+		},
+		"./pushArray": {
+			"types": "./src/lib/PushArray.ts"
+		},
+		"./readonlyMap": {
+			"types": "./src/lib/ReadonlyMap.ts"
+		},
+		"./readonlyMapKey": {
+			"types": "./src/lib/ReadonlyMapKey.ts"
+		},
+		"./rename": {
+			"types": "./src/lib/Rename.ts"
+		},
+		"./requiredIf": {
+			"types": "./src/lib/RequiredIf.ts"
+		},
+		"./secondArgument": {
+			"types": "./src/lib/SecondArgument.ts"
+		},
+		"./strictRequired": {
+			"types": "./src/lib/StrictRequired.ts"
+		},
+		"./strings": {
+			"types": "./src/lib/Strings.ts"
+		},
+		"./swap": {
+			"types": "./src/lib/Swap.ts"
+		},
+		"./tuplifyUnion": {
+			"types": "./src/lib/TuplifyUnion.ts"
+		},
+		"./unionToIntersection": {
+			"types": "./src/lib/UnionToIntersection.ts"
+		}
 	},
 	"types": "src/index.ts",
 	"files": [
@@ -45,7 +206,10 @@
 		"node": ">=20"
 	},
 	"scripts": {
-		"build": "tsx ../scripts/src/gen.ts types --write"
+		"build": "pnpm gen && pnpm run '/^build:.*/'",
+		"build:sub-jsr": "pnpm tsx ../scripts/src/sub-jsr.ts types",
+		"build:sub": "pnpm tsx ../scripts/src/sub.ts types",
+		"gen": "tsx ../scripts/src/gen.ts types --write"
 	},
 	"publishConfig": {
 		"access": "public",

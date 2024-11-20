@@ -8,6 +8,7 @@ export class BitField<Flags extends Record<string, number> | Record<string, bigi
 	private readonly [FlagEntriesSymbol]: ReadonlyArray<[string, Flags[keyof Flags]]>;
 
 	public constructor(flags: Readonly<Flags>) {
+		// eslint-disable-next-line ts/no-unnecessary-condition -- iife
 		if (typeof flags !== 'object' || flags === null)
 			throw new TypeError('flags must be a non-null object');
 

@@ -83,4 +83,3 @@ export * from './lib/toArray.ts';
 export * from './lib/toString.ts';
 export * from './lib/toTitleCase.ts';
 export * from './lib/unindent.ts';
-export * from './lib/untemplate.ts';

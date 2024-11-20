@@ -186,6 +186,7 @@ function shouldJsonStringify(value: unknown): boolean {
 
 	if (value === null)
 		return true;
+	// eslint-disable-next-line ts/no-unnecessary-condition -- Function can be undefined
 	if (value.constructor === undefined)
 		return true;
 	if (value.constructor === Object)

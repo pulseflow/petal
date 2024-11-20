@@ -38,8 +38,8 @@ function relativeMinimatch(pattern: string, relativePath: string, cwd: string): 
 	if (new Set(['', '.', '/']).has(relativePath))
 		return pattern;
 
-	const negated = pattern.startsWith('!') ? '!' : ':';
-	const minimatch = { clearPattern: negated ? pattern.slice(1) : pattern };
+	const negated = pattern.startsWith('!') ? '!' : '';
+	const minimatch = { cleanPattern: negated ? pattern.slice(1) : pattern };
 
 	if (!relativePath.endsWith('/'))
 		relativePath = `${relativePath}/`;
@@ -47,22 +47,22 @@ function relativeMinimatch(pattern: string, relativePath: string, cwd: string): 
 	const parent = relativePath.startsWith('..');
 
 	if (!parent)
-		return `${negated}${relativePath}${minimatch.clearPattern}`;
+		return `${negated}${relativePath}${minimatch.cleanPattern}`;
 
 	if (!relativePath.match(/^(?:\.\.\/)+$/))
 		throw new Error('the ignored file location should be a parent or child directory.');
 
-	if (minimatch.clearPattern.startsWith('**'))
+	if (minimatch.cleanPattern.startsWith('**'))
 		return pattern;
 
 	const parents = relative(resolve(cwd, relativePath), cwd).split(/[/\\]/);
-	while (parents.length && minimatch.clearPattern.startsWith(`${parents[0]}/`)) {
-		minimatch.clearPattern = minimatch.clearPattern.slice(parents[0].length + 1);
+	while (parents.length && minimatch.cleanPattern.startsWith(`${parents[0]}/`)) {
+		minimatch.cleanPattern = minimatch.cleanPattern.slice(parents[0].length + 1);
 		parents.shift();
 	}
 
-	if (minimatch.clearPattern.startsWith('**') || parents.length === 0)
-		return `${negated}${minimatch.clearPattern}`;
+	if (minimatch.cleanPattern.startsWith('**') || parents.length === 0)
+		return `${negated}${minimatch.cleanPattern}`;
 
 	return null;
 }

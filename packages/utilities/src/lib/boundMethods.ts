@@ -2,7 +2,7 @@ export type BoundMethods<Object extends _EmptyClass> = { [Key in keyof Object & 
 
 export function boundMethods<Object extends _EmptyClass>(obj: Object): BoundMethods<Object> {
 	const state: {
-		currentObject: Object;
+		currentObject: Object | null;
 		methods: Record<string, unknown>;
 	} = {
 		currentObject: obj,

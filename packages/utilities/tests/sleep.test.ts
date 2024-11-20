@@ -1,11 +1,5 @@
 import { sleep } from '../src';
 
-const DOMException: typeof globalThis.DOMException
-	= globalThis.DOMException
-	// DOMException was only made a global in Node v17.0.0,
-	// but our CI runs on Node v16.6.0 too
-	?? AbortSignal.abort().reason.constructor;
-
 describe('sleep', () => {
 	it('given a number of ms then resolve the promise after that time', async () => {
 		vi.useFakeTimers({ advanceTimeDelta: 50, shouldAdvanceTime: true });

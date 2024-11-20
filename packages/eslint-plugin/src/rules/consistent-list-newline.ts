@@ -137,6 +137,7 @@ export default createEslintRule<Options, MessageIds>({
 			const endLoc = context.sourceCode.getLocFromIndex(endRange);
 
 			const lastItem = items[items.length - 1];
+			// eslint-disable-next-line ts/no-unnecessary-condition -- side effects
 			if (mode === 'newline' && endLoc.line === lastLine) {
 				context.report({
 					data: {
@@ -149,6 +150,7 @@ export default createEslintRule<Options, MessageIds>({
 					node: lastItem,
 				});
 			}
+			// eslint-disable-next-line ts/no-unnecessary-condition -- side effects
 			else if (mode === 'inline' && endLoc.line !== lastLine) {
 				// if there is only one multiline item, we allow the closing bracket to be on the a different line
 				if (items.length === 1 && items[0].loc.start.line !== items[1]?.loc.start.line)
@@ -274,4 +276,5 @@ export default createEslintRule<Options, MessageIds>({
 	name: RULE_NAME,
 });
 
+// eslint-disable-next-line ts/no-unnecessary-type-parameters -- type testing
 function exportType<A, _B extends A>(): void { }

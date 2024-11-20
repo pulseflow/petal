@@ -25,7 +25,7 @@ function* getDeepObjectKeysGenerator(
 
 	else
 		for (const [key, value] of Object.entries(obj))
-			yield * getDeepObjectKeysRecursive(value, `${key}`, { arrayKeysIndexStyle });
+			yield * getDeepObjectKeysRecursive(value, key, { arrayKeysIndexStyle });
 }
 
 function* getDeepArrayKeysRecursive(value: unknown, index: number, { arrayKeysIndexStyle }: GetDeepObjectKeysOptions): Generator<string> {

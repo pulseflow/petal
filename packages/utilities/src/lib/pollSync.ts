@@ -10,11 +10,6 @@ export interface SyncPollOptions extends Omit<PollOptions, 'signal'> {
 	timeout?: number | null | undefined;
 }
 
-const DOMException: typeof globalThis.DOMException
-	= globalThis.DOMException
-	// DOMException was only made a global in Node v17.0.0, but this library supports Node v16.0.0 and up
-	?? AbortSignal.abort().reason.constructor;
-
 /**
  * Executes a function {@link cb} and validates the result with function {@link cbCondition},
  * and repeats this until {@link cbCondition} returns `true` or the {@link timeout} is reached.

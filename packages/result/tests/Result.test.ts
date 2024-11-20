@@ -980,6 +980,7 @@ describe('result', () => {
 	});
 });
 
+// eslint-disable-next-line ts/no-unnecessary-type-parameters -- type testing
 function expectResultError<E>(message: string, value: E, cb: () => any) {
 	try {
 		cb();

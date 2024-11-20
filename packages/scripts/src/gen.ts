@@ -3,6 +3,7 @@ import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { sep as posixSep } from 'node:path/posix';
 import { sep as winSep } from 'node:path/win32';
 import process from 'node:process';
+import { green, red } from 'colorette';
 import { join, parse, relative, resolve } from 'pathe';
 import ts from 'typescript';
 
@@ -165,7 +166,7 @@ async function main() {
 	const index = await processPackage();
 
 	if (CHECK_MODE && currentFile !== index) {
-		console.error(`Index file for ${PACKAGE_NAME} is out of date.`);
+		console.error(red(`Index file for ${PACKAGE_NAME} is out of date.`));
 		process.exit(1);
 	}
 	else if (WRITE_MODE) {
@@ -173,7 +174,7 @@ async function main() {
 	}
 
 	if (VERSION_MODE)
-		console.info(`✅ Adding version statement to \`./packages/${PACKAGE_NAME}/src/index.ts\``);
+		console.info(green(`✅ Adding version statement to \`./packages/${PACKAGE_NAME}/src/index.ts\``));
 
 	return console.log(index);
 }

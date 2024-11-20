@@ -13,9 +13,9 @@ export type Options = [{
 function getCallPath(node: TSESTree.Node, path: string[] = []): string[] {
 	if (node.type === 'Identifier')
 		return [node.name, ...path];
-	if (node.type === 'MemberExpression' && node.object)
+	if (node.type === 'MemberExpression')
 		return getCallPath(node.object, [(node.property as TSESTree.Identifier).name, ...path]);
-	if (node.type === 'CallExpression' && node.callee)
+	if (node.type === 'CallExpression')
 		return getCallPath(node.callee, path);
 
 	return path;

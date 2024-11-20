@@ -295,8 +295,8 @@ export class Store<T extends Piece, StoreName extends StoreRegistryKey = StoreRe
 		Store.logger?.(`[STORE => ${this.name}] [INSERT] Loaded new piece '${piece.name}'.`);
 
 		// If the onLoad disabled the piece, call unload and return it:
+		// eslint-disable-next-line ts/no-unnecessary-condition -- side effects from onLoad
 		if (!piece.enabled) {
-			// Unload piece:
 			this.strategy.onUnload(this, piece);
 			await piece.onUnload();
 			Store.logger?.(`[STORE => ${this.name}] [INSERT] Unloaded new piece '${piece.name}' due to 'enabled' being 'false'.`);

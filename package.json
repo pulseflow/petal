@@ -4,7 +4,7 @@
 	"type": "module",
 	"version": "4.4.1",
 	"private": true,
-	"packageManager": "pnpm@9.13.2",
+	"packageManager": "pnpm@9.14.1",
 	"engineStrict": true,
 	"author": "@flowr",
 	"contributors": [
@@ -50,10 +50,6 @@
 	"devDependencies": {
 		"@arethetypeswrong/cli": "^0.17.0",
 		"@flowr/eslint": "workspace:^",
-		"@microsoft/api-extractor": "^7.47.11",
-		"@microsoft/api-extractor-model": "^7.29.8",
-		"@microsoft/tsdoc": "^0.15.0",
-		"@microsoft/tsdoc-config": "^0.17.0",
 		"@turbo/gen": "^2.3.0",
 		"@types/jsdom": "^21.1.7",
 		"@types/node": "^22.9.0",

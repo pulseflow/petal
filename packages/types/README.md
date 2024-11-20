@@ -14,12 +14,12 @@ pnpm add -D @flowr/types
 
 ## Usage
 
-You can import individual utility function from subpath like: `@flowr/types/Primitive` or the entire library.
+You can import individual utility function from subpath like: `@flowr/types/deepReadonly` or the entire library.
 
 ```ts
-import { Primitive } from '@flowr/types/Primitive';
+import type { DeepReadonly } from '@flowr/types';
 /* alternatively... */
-import { Primitive } from '@flowr/types';
+import type { DeepReadonly } from '@flowr/types/deepReadonly';
 ```
 
 ### Documentation

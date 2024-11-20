@@ -6,6 +6,7 @@ export type If<Value extends boolean, TrueResult, FalseResult> = Value extends t
 		? FalseResult
 		: TrueResult | FalseResult;
 
+// eslint-disable-next-line ts/no-unnecessary-type-parameters -- type testing
 export function isFunction<A extends any[], R>(input: (...args: A) => R): true;
 export function isFunction(input: any): input is (...args: any[]) => any;
 export function isFunction(input: unknown): boolean {

@@ -1,7 +1,7 @@
 import console from 'node:console';
 import { readFile, writeFile } from 'node:fs/promises';
 import process from 'node:process';
-import { bold, green, red } from 'colorette';
+import { bold, green, red, yellow } from 'colorette';
 import { destr } from 'destr';
 import { basename, resolve } from 'pathe';
 import { findFilesRecursivelyRegex } from '../../node/src/lib/findFilesRecursively';
@@ -22,17 +22,17 @@ async function main() {
 	const oldPackageJSON = JSON.stringify(packageJSON, null, '\t');
 
 	if (oldPackageJSON === newPackageJSON) {
-		console.log(green(`✅ The package.json file for ${PACKAGE_NAME} is up to date!`));
+		console.log(green(`✅ The package.json file for ${bold(PACKAGE_NAME)} is up to date!`));
 		process.exit(0);
 	}
 
 	if (CHECK_MODE) {
-		console.error(red(`The package.json file for ${PACKAGE_NAME} is not up to date! Run ${green(bold('pnpm build'))} to update it.`));
+		console.error(red(`The package.json file for ${bold(PACKAGE_NAME)} is not up to date! Run ${yellow(bold('pnpm build'))} to update it.`));
 		process.exit(1);
 	}
 
 	await writeFile(PACKAGE_PATH, newPackageJSON);
-	console.log(green(`✅ The package.json file for ${PACKAGE_NAME} is updated successfully!`));
+	console.log(green(`✅ The package.json file for ${bold(PACKAGE_NAME)} is updated successfully!`));
 }
 
 void main();

@@ -8,6 +8,7 @@
  * @typeParam Type the type to cast to {@link value}
  * @returns The value but as type `Type`
  */
+// eslint-disable-next-line ts/no-unnecessary-type-parameters -- testing
 export function cast<Type>(value: unknown): Type {
 	return value as Type;
 }

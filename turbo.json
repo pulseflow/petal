@@ -11,8 +11,8 @@
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
-			"inputs": ["bin/**", "src/**", "scripts/**", "package.json", "tsup.config.ts", "tsconfig.json"],
-			"outputs": ["dist/**", "src/index.ts"],
+			"inputs": ["bin/**", "src/**", "scripts/**", "tsup.config.ts", "tsconfig.json"],
+			"outputs": ["dist/**", "src/index.ts", "package.json", "jsr.json"],
 			"cache": true,
 			"persistent": false,
 			"env": [],

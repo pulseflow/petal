@@ -21,13 +21,13 @@ export default createEslintRule<Options, MessageIds>({
 
 			if (declaration.init?.type !== 'ArrowFunctionExpression')
 				return;
-			if (declaration.id?.type !== 'Identifier')
+			if (declaration.id.type !== 'Identifier')
 				return;
 			if (declaration.id.typeAnnotation)
 				return;
 			if (
 				declaration.init.body.type !== 'BlockStatement'
-				&& declaration.id?.loc.start.line === declaration.init?.body.loc.end.line
+				&& declaration.id.loc.start.line === declaration.init.body.loc.end.line
 			)
 				return;
 

@@ -824,6 +824,7 @@ export class Collection<Key, Value> extends Map<Key, Value> {
 	 * @returns Whether the collections have identical contents
 	 */
 	public equals(collection: ReadonlyCollection<Key, Value>): boolean {
+		// eslint-disable-next-line ts/no-unnecessary-condition -- iife
 		if (!collection)
 			return false;
 		if (this === collection)

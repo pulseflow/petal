@@ -132,7 +132,7 @@ export class Duration {
 	 */
 	public constructor(pattern: string) {
 		let result = 0;
-		let valid = false;
+		let valid = false as boolean;
 
 		pattern.toLowerCase()
 			.replace(Duration.commaRegex, '')

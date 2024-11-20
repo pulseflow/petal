@@ -95,7 +95,6 @@
 		"./toArray": "./src/lib/toArray.ts",
 		"./toString": "./src/lib/toString.ts",
 		"./toTitleCase": "./src/lib/toTitleCase.ts",
-		"./unindent": "./src/lib/unindent.ts",
-		"./untemplate": "./src/lib/untemplate.ts"
+		"./unindent": "./src/lib/unindent.ts"
 	}
 }

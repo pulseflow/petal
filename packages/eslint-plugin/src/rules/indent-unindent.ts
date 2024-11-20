@@ -13,13 +13,13 @@ const defaultOptions: Options = [{
 
 export default createEslintRule<Options, MessageIds>({
 	create: (context) => {
-		const { tags = ['$', 'unindent', 'unIndent'] } = context.options[0] ?? {};
+		const { tags = ['$', 'unindent', 'unIndent'] } = context.options[0];
 		const tagSet = new Set(tags);
 
 		return {
 			TaggedTemplateExpression: (node) => {
 				const id = node.tag;
-				if (!id || id.type !== 'Identifier')
+				if (id.type !== 'Identifier')
 					return;
 				if (!tagSet.has(id.name))
 					return;

@@ -87,7 +87,7 @@ function hasResultLikeReturnType(
 	const returnType = unwrapPotentialPromise(checker, nodeMap);
 	const resultType = getResultType(service, checker);
 
-	if (!returnType || !returnType.aliasSymbol || !resultType?.aliasSymbol)
+	if (!returnType.aliasSymbol || !resultType?.aliasSymbol)
 		return false;
 
 	// hacky bit of reflection logic until type relationship api https://github.com/microsoft/TypeScript/issues/9879

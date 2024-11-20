@@ -181,7 +181,7 @@ export const isPackageInScope = (name: string): boolean => isPackageExists(name,
  * ```
  */
 export async function ensurePackages(packages: Array<string | undefined>): Promise<void> {
-	if (process.env.CI || process.stdout.isTTY === false || isCwdInScope === false)
+	if (process.env.CI || !process.stdout.isTTY || !isCwdInScope)
 		return;
 
 	const nonExistingPackages = packages.filter(i => i && !isPackageInScope(i)) as string[];
@@ -201,6 +201,7 @@ export function resolveSubOptions<Key extends keyof OptionsConfig>(options: Opti
 	return typeof options[key] === 'boolean' ? {} as any : options[key] || {};
 }
 
+// eslint-disable-next-line ts/no-unnecessary-type-parameters -- weird types
 export function getOverrides<Key extends keyof OptionsConfig>(options: OptionsConfig, key: Key): Partial<Linter.RulesRecord & Rules> {
 	const sub = resolveSubOptions(options, key);
 	return { ...'overrides' in sub ? sub.overrides : {} };
@@ -212,6 +213,7 @@ export function isInEditorEnv(): boolean {
 	if (isInHook())
 		return false;
 
+	// eslint-disable-next-line ts/no-unnecessary-condition -- codeflow
 	return !!(false
 		|| process.env.VSCODE_PID
 		|| process.env.VSCODE_CWD
@@ -222,6 +224,7 @@ export function isInEditorEnv(): boolean {
 }
 
 export function isInHook(): boolean {
+	// eslint-disable-next-line ts/no-unnecessary-condition -- codeflow
 	return !!(false
 		|| process.env.GIT_PARAMS
 		|| process.env.VSCODE_GIT_COMMAND

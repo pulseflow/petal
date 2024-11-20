@@ -48,15 +48,15 @@ export function Enumerable<ClzArgs extends object>(value: boolean): EnumerableDe
  * Please note that with legacy decorators there is a high chance that this will not work due to how legacy decorators
  * are implemented. It is recommended to use the modern ECMAScript decorators.
  */
-export function EnumerableMethod<ClzArgs extends object>(value: boolean): EnumerableMethodDecorator<ClzArgs> {
+export function EnumerableMethod(value: boolean): EnumerableMethodDecorator {
 	return <Args = unknown[], ReturnType = unknown>(
 		target: ((...args: Args[]) => ReturnType) | unknown,
-		contextOrPropertyKey: (string | symbol) | ClassMethodDecoratorContext<ClzArgs, any>,
+		contextOrPropertyKey: (string | symbol) | ClassMethodDecoratorContext<object, any>,
 		descriptor?: TypedPropertyDescriptor<(...args: Args[]) => ReturnType>,
 	): void => {
 		if (descriptor === undefined) {
-			const typedContext = cast<ClassMethodDecoratorContext<ClzArgs, any>>(contextOrPropertyKey);
-			typedContext.addInitializer(function decorate(this: ClzArgs) {
+			const typedContext = cast<ClassMethodDecoratorContext<object, any>>(contextOrPropertyKey);
+			typedContext.addInitializer(function decorate(this: object) {
 				Reflect.defineProperty(this, typedContext.name, {
 					configurable: true,
 					enumerable: value,
@@ -66,7 +66,7 @@ export function EnumerableMethod<ClzArgs extends object>(value: boolean): Enumer
 			});
 		}
 		else {
-			Reflect.defineProperty(target as ClzArgs, contextOrPropertyKey as string | symbol, {
+			Reflect.defineProperty(target as object, contextOrPropertyKey as string | symbol, {
 				configurable: true,
 				enumerable: value,
 				value: descriptor.value,
@@ -81,26 +81,9 @@ export function EnumerableMethod<ClzArgs extends object>(value: boolean): Enumer
  *
  * @param ClzArgs - The class constructor arguments
  */
-export interface EnumerableDecorator<ClzArgs extends object> {
-	(target: undefined, contextOrPropertyKey: ClassFieldDecoratorContext<ClzArgs, any>): void; // modern
-	(target: ClzArgs, propertyKey: string | symbol): void; // legacy
-}
+export type EnumerableDecorator<ClzArgs extends object> = (target: undefined, contextOrPropertyKey: ClassFieldDecoratorContext<ClzArgs, any>) => void;
 
 /**
  * The return type for {@link EnumerableMethod}
- *
- * @param ClzArgs - The class constructor arguments
  */
-export interface EnumerableMethodDecorator<ClzArgs extends object> {
-	<Args extends any[], ReturnType = unknown>(
-		target: (...args: Args[]) => ReturnType,
-		context: ClassMethodDecoratorContext<ClzArgs, any>,
-		descriptor?: undefined
-	): void; // legacy
-
-	<Args extends any[], ReturnType = unknown>(
-		target: unknown,
-		propertyKey: string | symbol,
-		descriptor: TypedPropertyDescriptor<(...args: Args[]) => ReturnType>
-	): void; // modern
-}
+export type EnumerableMethodDecorator = (<Args extends any[]>(target: unknown, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<(...args: Args[]) => unknown>) => void);

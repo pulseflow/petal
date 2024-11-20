@@ -190,8 +190,8 @@ function makeComment(text: string, syntax: CommentSyntax, decor: DecorSyntax): s
 
 function matchHeader(src: string, headers: string[], templates: TemplatesSyntax): boolean {
 	for (const header of headers) {
-		const body = escapeRegex(header)
-			.replace(/\\\{(\w+)\\\}/g, (m, k) => templates[k]?.[0] ?? m);
+		// eslint-disable-next-line ts/no-unnecessary-condition -- weak types
+		const body = escapeRegex(header).replace(/\\\{(\w+)\\\}/g, (m, k) => templates[k]?.[0] ?? m);
 		if (new RegExp(`^${body}$`).test(src))
 			return true;
 	}
@@ -200,6 +200,7 @@ function matchHeader(src: string, headers: string[], templates: TemplatesSyntax)
 }
 
 function makeHeader(headers: string[], templates: TemplatesSyntax): string {
+	// eslint-disable-next-line ts/no-unnecessary-condition -- weak types
 	return headers[0].replace(/\{(\w+)\}/g, (m, k) => templates[k]?.[1] ?? m);
 }
 

@@ -17,9 +17,9 @@ pnpm add -D @flowr/utilities
 You can import individual utility function from subpath like: `@flowr/utilities/isFunction` or the entire library.
 
 ```ts
-import { isFunction } from '@flowr/utilities/isFunction';
 /* alternatively... */
 import { isFunction } from '@flowr/utilities';
+import { isFunction } from '@flowr/utilities/isFunction';
 ```
 
 ### Documentation

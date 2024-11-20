@@ -1,6 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import process from 'node:process';
-import { green } from 'colorette';
+import { bold, green } from 'colorette';
 import { join } from 'pathe';
 import { findFilesRecursivelyStringEndsWith } from '../../node/src/lib/findFilesRecursively';
 
@@ -14,7 +14,7 @@ async function main(): Promise<void> {
 				: line,
 		).join('\n'));
 
-	console.log(green(`✅ Fixed imports in .d.cts files in ${INPUT_PATH} to reference .cjs files`));
+	console.log(green(`✅ Fixed imports in .d.cts files in ${bold(INPUT_PATH)} to reference .cjs files`));
 }
 
 void main();
