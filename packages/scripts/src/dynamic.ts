@@ -18,7 +18,7 @@ async function main() {
 
 	const packageJsonRaw = await readFile(PACKAGE_PATH, 'utf8');
 	const packageJSON: object = destr(packageJsonRaw);
-	const newPackageJSON = JSON.stringify({ ...packageJSON, SIDE_EFFECTS }, null, '\t');
+	const newPackageJSON = JSON.stringify({ ...packageJSON, sideEffects: SIDE_EFFECTS }, null, '\t');
 	const oldPackageJSON = JSON.stringify(packageJSON, null, '\t');
 
 	if (oldPackageJSON === newPackageJSON) {

@@ -3,7 +3,7 @@
 	"name": "create-petal",
 	"type": "module",
 	"version": "4.4.1",
-	"description": "A CLI utility to create a new petal app",
+	"description": "A CLI utility to create a new Petal app",
 	"author": "@flowr",
 	"contributors": ["Pauline <git@ethanlibs.co>"],
 	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
