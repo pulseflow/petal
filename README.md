@@ -10,15 +10,15 @@
 - [`@flowr/eslint`](./packages/eslint): Standardized Petal specification linting configuration
 - [`eslint-plugin-petal`](./packages/eslint-plugin): Custom ESLint rules for the Petal specification
 - [`@flowr/fetch`](./packages/fetch): Small wrapper around `globalThis.fetch` for improved TypeScript and data support
-- [`@flowr/iterator`](./packages/iterator):
-- [`@flowr/loader`](./packages/loader):
-- [`@flowr/metadata`](./packages/metadata):
-- [`@flowr/node`](./packages/node):
-- [`@flowr/result`](./packages/result):
-- [`@flowr/store`](./packages/store):
-- [`@flowr/types`](./packages/types):
-- [`@flowr/typescript`](./packages/typescript):
-- [`@flowr/utilities`](./packages/utilities):
+- [`@flowr/iterator`](./packages/iterator): Opinionated collection of common iterator utilities
+- [`@flowr/loader`](./packages/loader): A simple TypeScript code piece loader
+- [`@flowr/metadata`](./packages/metadata): Useful TypeScript decorators for Petal projects
+- [`@flowr/node`](./packages/node): Node-specific opinionated TypeScript utilities
+- [`@flowr/result`](./packages/result): A TypeScript port of Rust's `Result<T>` and `Option<T>` structs
+- [`@flowr/store`](./packages/store): <TODO>
+- [`@flowr/types`](./packages/types): Essential TypeScript type utilities used in `@flowr/utilities`
+- [`@flowr/typescript`](./packages/typescript): A collection of different base `tsconfig.json` to be extended from in your project.
+- [`@flowr/utilities`](./packages/utilities): Opinionated collection of common TypeScript utilities
 
 ### Minimum Supported [Node.js](https://nodejs.org/) Version (MSNV)
 
