@@ -4,7 +4,7 @@
 	"type": "module",
 	"version": "4.4.1",
 	"private": true,
-	"packageManager": "pnpm@9.14.1",
+	"packageManager": "pnpm@9.14.4",
 	"engineStrict": true,
 	"author": "@flowr",
 	"contributors": [
@@ -50,28 +50,28 @@
 	"devDependencies": {
 		"@arethetypeswrong/cli": "^0.17.0",
 		"@flowr/eslint": "workspace:^",
-		"@turbo/gen": "^2.3.0",
+		"@turbo/gen": "^2.3.3",
 		"@types/jsdom": "^21.1.7",
-		"@types/node": "^22.9.0",
-		"@vitest/coverage-v8": "^2.1.5",
-		"@vitest/ui": "^2.1.5",
+		"@types/node": "^22.10.1",
+		"@vitest/coverage-v8": "^2.1.8",
+		"@vitest/ui": "^2.1.8",
 		"bumpp": "^9.8.1",
 		"colorette": "^2.0.20",
 		"destr": "^2.0.3",
 		"esbuild": "^0.24.0",
-		"esbuild-plugin-file-path-extensions": "^2.1.3",
-		"eslint": "^9.15.0",
-		"jiti": "^2.4.0",
+		"esbuild-plugin-file-path-extensions": "^2.1.4",
+		"eslint": "^9.16.0",
+		"jiti": "^2.4.1",
 		"jsdom": "^25.0.1",
 		"jsr": "^0.13.2",
-		"msw": "^2.6.5",
+		"msw": "^2.6.6",
 		"pathe": "^1.1.2",
 		"tsup": "^8.3.5",
 		"tsx": "^4.19.2",
-		"turbo": "^2.3.0",
-		"typescript": "^5.6.2",
-		"vite": "^5.4.11",
-		"vitest": "^2.1.5"
+		"turbo": "^2.3.3",
+		"typescript": "^5.7.2",
+		"vite": "^6.0.2",
+		"vitest": "^2.1.8"
 	},
 	"pnpm": {
 		"patchedDependencies": {
@@ -80,9 +80,9 @@
 	},
 	"resolutions": {
 		"@eslint-community/eslint-utils": "^4.4.1",
-		"@typescript-eslint/utils": "^8.15.0",
+		"@typescript-eslint/utils": "^8.17.0",
 		"esbuild": "^0.24.0",
-		"eslint": "^9.15.0",
+		"eslint": "^9.16.0",
 		"tsx": "^4.19.2"
 	}
 }

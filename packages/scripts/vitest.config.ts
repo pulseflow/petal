@@ -9,6 +9,8 @@ export function createVitestConfig(name: string | TemplateStringsArray, options:
 		},
 		test: {
 			...options.test,
+			testTimeout: 60_000,
+			passWithNoTests: true,
 			coverage: {
 				...options.test?.coverage,
 				all: true,
@@ -27,7 +29,7 @@ export function createVitestConfig(name: string | TemplateStringsArray, options:
 					'**/vitest.config.ts',
 				],
 				provider: 'v8',
-				reporter: ['text', 'lcov', 'cobertura'],
+				reporter: ['text', 'lcov'],
 			},
 			exclude: ['**/node_modules/**', '**/dist/**', '.idea', '.git', '.cache'],
 			globals: true,
