@@ -37,6 +37,7 @@
 		"./dist/esm/chunk-ZP5X2XSO.js",
 		"./dist/esm/chunk-KJ7PVWTC.js",
 		"./dist/esm/chunk-OHGSFKIM.js",
+		"./dist/esm/chunk-APKYFUQD.js",
 		"./dist/esm/chunk-PODDHA2X.js",
 		"./dist/esm/chunk-SYHLZP64.js",
 		"./dist/esm/chunk-GP4YLV7L.js",
@@ -1008,6 +1009,16 @@
 			"require": {
 				"types": "./dist/cjs/lib/unzip.d.cts",
 				"default": "./dist/cjs/lib/unzip.cjs"
+			}
+		},
+		"./windows": {
+			"import": {
+				"types": "./dist/esm/lib/windows.d.ts",
+				"default": "./dist/esm/lib/windows.js"
+			},
+			"require": {
+				"types": "./dist/cjs/lib/windows.d.cts",
+				"default": "./dist/cjs/lib/windows.cjs"
 			}
 		},
 		"./zip": {

@@ -5,7 +5,7 @@ import type { If } from './If.ts';
  * @example
  * ```typescript
  * declare function get<const Required extends boolean = false>(
- *   required?: Required
+ * 	required?: Required
  * ): If<Required, string>;
  *
  * const a = get(true);

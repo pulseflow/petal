@@ -1,17 +1,32 @@
-/* eslint-disable ts/no-use-before-define -- everything here is self-referencial */
-import { OptionError } from './error';
-import { type Err, err, type Ok, ok, type Result } from './Result';
-import { type Awaitable, type If, isFunction, returnThis } from './utils';
+import type { Err, Ok, Result } from './Result.ts';
+import { OptionError } from './error.ts';
+import { err, ok } from './Result.ts';
+import { type Awaitable, type If, isFunction, returnThis } from './utils.ts';
 
 const ValueProperty: unique symbol = Symbol.for('@flowr/result:Option.value');
 const ExistsProperty: unique symbol = Symbol.for('@flowr/result:Option.exists');
+
+export type Some<T> = Option<T, true>;
+export type None<T = any> = Option<T, false>;
+export type AnyOption = Option<any>;
+export type ResolvableOption<T, Exists extends boolean = boolean> = T | null | undefined | Option<T, Exists>;
+export type UnwrapSome<T extends AnyOption> = T extends Some<infer S> ? S : never;
+export type UnwrapSomeArray<T extends readonly AnyOption[] | []> = { -readonly [P in keyof T]: UnwrapSome<T[P]>; };
+
+export function resolveOption<T>(value: ResolvableOption<T>): Option<T> {
+	if (value === null || value === undefined)
+		return Option.none;
+	if (Option.isOption(value))
+		return value;
+	return Option.some(value);
+}
 
 export class Option<T, Exists extends boolean = boolean> {
 	/**
 	 * Branded value to ensure `Success` is typed correctly.
 	 * @internal
 	 */
-	protected declare __STATUS__: Exists;
+	declare protected __STATUS__: Exists;
 
 	private readonly [ValueProperty]: If<Exists, T, null>;
 	private readonly [ExistsProperty]: Exists;
@@ -108,7 +123,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * assert.equal(x.isNoneOr((x) => x > 1), true);
 	 * ```
 	 *
-	 * @see {@link https://doc.rust-lang.org/std/option/enum.Option.html#method.is_none_or}
+	 * @see {@linkplain https://doc.rust-lang.org/std/option/enum.Option.html#method.is_none_or}
 	 */
 	public isNoneOr<R extends T>(cb: (value: T) => value is R): this is None | Some<R>;
 	public isNoneOr<R extends boolean>(cb: (value: T) => R): If<Exists, R, true>;
@@ -192,7 +207,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap_or}
 	 */
 	public unwrapOr<OutputValue>(defaultValue: OutputValue): If<Exists, T, OutputValue> {
-		return this.match({ none: () => defaultValue, some: value => value });
+		return this.match({ some: value => value, none: () => defaultValue });
 	}
 
 	/**
@@ -210,7 +225,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap_or_else}
 	 */
 	public unwrapOrElse<OutputValue>(cb: () => OutputValue): If<Exists, T, OutputValue> {
-		return this.match({ none: cb, some: value => value });
+		return this.match({ some: value => value, none: cb });
 	}
 
 	/**
@@ -228,7 +243,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/option/enum.Option.html#method.map}
 	 */
 	public map<U>(cb: (value: T) => U): If<Exists, Some<U>, None> {
-		return this.match({ none: returnThis, some: value => some(cb(value)) });
+		return this.match({ some: value => Option.some(cb(value)), none: returnThis });
 	}
 
 	/**
@@ -254,7 +269,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @note This is an extension not supported in Rust
 	 */
 	public mapInto<OutputOption extends AnyOption>(cb: (value: T) => OutputOption): If<Exists, OutputOption, None> {
-		return this.match({ none: returnThis, some: value => cb(value) });
+		return this.match({ some: value => cb(value), none: returnThis });
 	}
 
 	/**
@@ -282,7 +297,7 @@ export class Option<T, Exists extends boolean = boolean> {
 		defaultValue: DefaultOutputValue,
 		cb: (value: T) => MappedOutputValue,
 	): If<Exists, MappedOutputValue, DefaultOutputValue> {
-		return this.match({ none: () => defaultValue, some: value => cb(value) });
+		return this.match({ some: value => cb(value), none: () => defaultValue });
 	}
 
 	/**
@@ -304,7 +319,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/option/enum.Option.html#method.map_or_else}
 	 */
 	public mapOrElse<OutputValue, OutputNone>(defaultValue: () => OutputNone, cb: (value: T) => OutputValue): If<Exists, OutputValue, OutputNone> {
-		return this.match({ none: () => defaultValue(), some: value => cb(value) });
+		return this.match({ some: value => cb(value), none: () => defaultValue() });
 	}
 
 	/**
@@ -330,7 +345,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @note This is an extension not supported in Rust
 	 */
 	public mapNoneInto<OutputOption extends AnyOption>(cb: () => OutputOption): If<Exists, Some<T>, OutputOption> {
-		return this.match({ none: cb, some: returnThis });
+		return this.match({ some: returnThis, none: cb });
 	}
 
 	/**
@@ -386,7 +401,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 *
 	 * Arguments passed to `okOr` are eagerly evaluated; if you are passing the result of a function call, it is
 	 * recommended to use {@link okOrElse}, which is lazily evaluated.
-	 * @param error The error to be used.
+	 * @param err The error to be used.
 	 *
 	 * @example
 	 * ```typescript
@@ -402,7 +417,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/option/enum.Option.html#method.ok_or}
 	 */
 	public okOr<ErrorValue>(error: ErrorValue): If<Exists, Ok<T>, Err<ErrorValue>> {
-		return this.match({ none: () => err(error), some: value => ok(value) });
+		return this.match({ some: value => ok(value), none: () => err(error) });
 	}
 
 	/**
@@ -423,7 +438,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/option/enum.Option.html#method.ok_or_else}
 	 */
 	public okOrElse<ErrorValue>(cb: () => ErrorValue): If<Exists, Ok<T>, Err<ErrorValue>> {
-		return this.match({ none: () => err(cb()), some: value => ok(value) });
+		return this.match({ some: value => ok(value), none: () => err(cb()) });
 	}
 
 	/**
@@ -488,13 +503,13 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/option/enum.Option.html#method.and}
 	 */
 	public and<OutputOption extends AnyOption>(option: OutputOption): If<Exists, OutputOption, None> {
-		return this.match({ none: returnThis, some: () => option });
+		return this.match({ some: () => option, none: returnThis });
 	}
 
 	/**
 	 * Calls `cb` if the result is {@link Ok `Ok`}, otherwise returns the {@link Err `Err`} value of self.
 	 *
-	 * This function can be used for control flow based on `Result` values.
+	 * This function can be used for control flow based on {@link Result `Result`} values.
 	 * @param cb The predicate.
 	 *
 	 * @example
@@ -511,7 +526,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.and_then}
 	 */
 	public andThen<OutputOption extends AnyOption>(cb: (value: T) => OutputOption): If<Exists, OutputOption, None> {
-		return this.match({ none: returnThis, some: value => cb(value) });
+		return this.match({ some: value => cb(value), none: returnThis });
 	}
 
 	/**
@@ -546,13 +561,13 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/option/enum.Option.html#method.or}
 	 */
 	public or<OutputOption extends AnyOption>(option: OutputOption): If<Exists, Some<T>, OutputOption> {
-		return this.match({ none: () => option, some: returnThis });
+		return this.match({ some: returnThis, none: () => option });
 	}
 
 	/**
 	 * Calls `cb` if the result is {@link Ok `Ok`}, otherwise returns the {@link Err `Err`} value of self.
 	 *
-	 * This function can be used for control flow based on `Result` values.
+	 * This function can be used for control flow based on {@link Result `Result`} values.
 	 * @param cb The predicate.
 	 *
 	 * @example
@@ -568,7 +583,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/option/enum.Option.html#method.or_else}
 	 */
 	public orElse<OutputOption extends AnyOption>(cb: () => OutputOption): If<Exists, Some<T>, OutputOption> {
-		return this.match({ none: () => cb(), some: returnThis });
+		return this.match({ some: returnThis, none: () => cb() });
 	}
 
 	/**
@@ -606,10 +621,8 @@ export class Option<T, Exists extends boolean = boolean> {
 		option: Option<OtherValue, OtherExists>,
 	): If<Exists, If<OtherExists, None, Some<T>>, Option<OtherValue, OtherExists>> {
 		return this.match<If<OtherExists, None, Some<T>>, Option<OtherValue, OtherExists>>({
+			some: () => (option.isNone() ? this : Option.none) as If<OtherExists, None, Some<T>>,
 			none: () => option,
-			some() {
-				return (option.isNone() ? this : none) as If<OtherExists, None, Some<T>>;
-			},
 		});
 	}
 
@@ -636,7 +649,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	public filter<R extends T>(predicate: (value: T) => value is R): Option<R>;
 	public filter(predicate: (value: T) => boolean): Option<T>;
 	public filter(predicate: (value: T) => boolean): Option<T> {
-		return this.isSomeAnd(predicate) ? this : none;
+		return this.isSomeAnd(predicate) ? this : Option.none;
 	}
 
 	/**
@@ -687,7 +700,7 @@ export class Option<T, Exists extends boolean = boolean> {
 		other: Option<OtherValue, OtherExists>,
 	): Option<[T, OtherValue], If<Exists, OtherExists, false>> {
 		// @ts-expect-error: Complex types
-		return this.isSome() && other.isSome() ? some([this[ValueProperty], other[ValueProperty]] as [T, OtherValue]) : none;
+		return this.isSome() && other.isSome() ? Option.some([this[ValueProperty], other[ValueProperty]] as [T, OtherValue]) : Option.none;
 	}
 
 	/**
@@ -723,7 +736,7 @@ export class Option<T, Exists extends boolean = boolean> {
 		f: (value0: T, value1: OtherValue) => ReturnValue,
 	): Option<ReturnValue, If<Exists, OtherExists, false>> {
 		// @ts-expect-error: Complex types
-		return this.isSome() && other.isSome() ? some(f(this[ValueProperty], other[ValueProperty])) : none;
+		return this.isSome() && other.isSome() ? Option.some(f(this[ValueProperty], other[ValueProperty])) : Option.none;
 	}
 
 	/**
@@ -749,13 +762,13 @@ export class Option<T, Exists extends boolean = boolean> {
 	): [Option<Value0, Exists>, Option<Value1, Exists>] {
 		// @ts-expect-error: Complex types
 		return this.match({
-			none: () => [none, none],
-			some: ([value0, value1]) => [some(value0), some(value1)],
+			some: ([value0, value1]) => [Option.some(value0), Option.some(value1)],
+			none: () => [Option.none, Option.none],
 		});
 	}
 
 	/**
-	 * Transposes an `Option` of a `Result` into a `Result` of an `Option`.
+	 * Transposes an `Option` of a {@link Result `Result`} into a {@link Result `Result`} of an `Option`.
 	 *
 	 * `none` will be mapped to `ok(none)`. `some(ok(v))` and `some(err(e))` will be mapped to `ok(some(v))` and `err(e)`.
 	 *
@@ -772,9 +785,8 @@ export class Option<T, Exists extends boolean = boolean> {
 		this: Option<Result<ResultValue, ResultError, ResultSuccess>, Exists>,
 	): If<Exists, Result<Some<ResultValue>, ResultError, ResultSuccess>, Ok<None>> {
 		return this.match<Result<Some<ResultValue>, ResultError, ResultSuccess>, Ok<None>>({
-			none: () => ok(none),
-			// @ts-expect-error: Complex types
-			some: result => result.map(some),
+			some: result => result.map(Option.some),
+			none: () => ok(Option.none),
 		});
 	}
 
@@ -800,7 +812,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.flatten}
 	 */
 	public flatten<InnerOption extends AnyOption, Exists extends boolean>(this: Option<InnerOption, Exists>): If<Exists, InnerOption, None> {
-		return this.match({ none: returnThis, some: inner => inner });
+		return this.match({ some: inner => inner, none: returnThis });
 	}
 
 	/**
@@ -817,8 +829,8 @@ export class Option<T, Exists extends boolean = boolean> {
 	public async intoPromise(): Promise<Option<Awaited<T>, Exists>> {
 		// @ts-expect-error: Complex types
 		return this.match({
-			none: async () => Promise.resolve(none),
-			some: async value => some(await value),
+			some: async value => Option.some(await value),
+			none: async () => Promise.resolve(Option.none),
 		});
 	}
 
@@ -844,10 +856,8 @@ export class Option<T, Exists extends boolean = boolean> {
 	}
 
 	/**
-	 * Runs {@link ok `ok`} function if self is {@link Ok `Ok`}, otherwise runs {@link err `err`} function.
+	 * Runs {@link ok `ok`} function if self is {@link Ok `Ok`}, otherwise runs {@link Err `Err`} function.
 	 * @param branches The branches to match.
-	 * @param branches.some The {@link some} branches to match.
-	 * @param branches.none The {@link none} branches to match.
 	 *
 	 * @example
 	 * ```typescript
@@ -904,7 +914,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	}
 
 	public get [Symbol.toStringTag](): If<Exists, 'Some', 'None'> {
-		return this.match({ none: () => 'None', some: () => 'Some' });
+		return this.match({ some: () => 'Some', none: () => 'None' });
 	}
 
 	public static readonly none: Option<any, false> = new Option(null, false);
@@ -958,12 +968,12 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @typeparam T The result's type.
 	 * @typeparam E The error's type.
 	 */
-	public static from<T>(this: void, op: OptionResolvable<T> | (() => OptionResolvable<T>)): Option<T> {
+	public static from<T>(this: void, op: ResolvableOption<T> | (() => ResolvableOption<T>)): Option<T> {
 		try {
-			return resolve(isFunction(op) ? op() : op);
+			return resolveOption(isFunction(op) ? op() : op);
 		}
 		catch {
-			return none;
+			return Option.none;
 		}
 	}
 
@@ -973,12 +983,12 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @typeparam T The result's type.
 	 * @typeparam E The error's type.
 	 */
-	public static async fromAsync<T>(this: void, op: Awaitable<OptionResolvable<T>> | (() => Awaitable<OptionResolvable<T>>)): Promise<Option<T>> {
+	public static async fromAsync<T>(this: void, op: Awaitable<ResolvableOption<T>> | (() => Awaitable<ResolvableOption<T>>)): Promise<Option<T>> {
 		try {
-			return resolve(await (isFunction(op) ? op() : op));
+			return resolveOption(await (isFunction(op) ? op() : op));
 		}
 		catch {
-			return none;
+			return Option.none;
 		}
 	}
 
@@ -998,13 +1008,13 @@ export class Option<T, Exists extends boolean = boolean> {
 			values.push(result[ValueProperty]);
 		}
 
-		return some(values as UnwrapSomeArray<Entries>);
+		return Option.some(values as UnwrapSomeArray<Entries>);
 	}
 
 	/**
 	 * Returns the first encountered {@link Some}, or a {@link None} if none was found.
 	 *
-	 * @param results An array of {@link Option}s.
+	 * @param options An array of {@link Option}s.
 	 * @returns A new {@link Option}.
 	 */
 	public static any<const Entries extends readonly AnyOption[]>(this: void, results: Entries): Option<UnwrapSome<Entries[number]>> {
@@ -1012,24 +1022,8 @@ export class Option<T, Exists extends boolean = boolean> {
 			if (result.isSome())
 				return result;
 
-		return none;
+		return Option.none;
 	}
 }
 
-export type OptionResolvable<T, Exists extends boolean = boolean> = T | null | undefined | Option<T, Exists>;
-export type UnwrapSome<T extends AnyOption> = T extends Some<infer S> ? S : never;
-export type UnwrapSomeArray<T extends readonly AnyOption[] | []> = { -readonly [P in keyof T]: UnwrapSome<T[P]>; };
-
-export type Some<T> = Option<T, true>;
-export type None<T = any> = Option<T, false>;
-export type AnyOption = Option<any>;
-
-export const { none, some } = Option;
-
-function resolve<T>(value: OptionResolvable<T>): Option<T> {
-	if (value === null || value === undefined)
-		return none;
-	if (Option.isOption(value))
-		return value;
-	return some(value);
-}
+export const { some, none } = Option;

@@ -15,6 +15,6 @@ export default defineConfig({
 	},
 }, {
 	files: ['packages/eslint-plugin/src/rules/**/*.test.ts'],
-	name: 'user/test/indent',
+	name: 'userland/test/indent',
 	rules: { 'petal/indent-unindent': 'error' },
 });

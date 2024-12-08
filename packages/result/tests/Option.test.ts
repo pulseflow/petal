@@ -1,6 +1,7 @@
+import type { Err, None, Ok, Some } from '../src/index.ts';
 import { setTimeout as sleep } from 'node:timers/promises';
-import { err, type Err, none, type None, ok, type Ok, Option, OptionError, some, type Some } from '../src/index';
-import { error, makeThrow } from './shared';
+import { err, none, ok, Option, OptionError, some } from '../src/index.ts';
+import { error, makeThrow } from './shared.ts';
 
 describe('option', () => {
 	describe('prototype', () => {
@@ -62,6 +63,7 @@ describe('option', () => {
 			it('given some and true-returning callback then returns true', () => {
 				const x = some(2);
 				const cb = vi.fn((value: number) => value > 1);
+
 				expect(x.isNoneOr(cb)).toBe(true);
 				expect(cb).toHaveBeenCalledTimes(1);
 				expect(cb).toHaveBeenCalledWith(2);
@@ -71,6 +73,7 @@ describe('option', () => {
 			it('given some and false-returning callback then returns false', () => {
 				const x = some(0);
 				const cb = vi.fn((value: number) => value > 1);
+
 				expect(x.isNoneOr(cb)).toBe(false);
 				expect(cb).toHaveBeenCalledTimes(1);
 				expect(cb).toHaveBeenCalledWith(0);
@@ -80,6 +83,7 @@ describe('option', () => {
 			it('given none then always returns false', () => {
 				const x = none;
 				const cb = vi.fn((value: number) => value > 1);
+
 				expect(x.isNoneOr(cb)).toBe(true);
 				expect(cb).not.toHaveBeenCalled();
 			});
@@ -773,7 +777,7 @@ describe('option', () => {
 				const some = vi.fn((value: number) => value * 2);
 				const none = vi.fn(() => 0);
 
-				expect<number>(x.match({ none, some })).toBe(4);
+				expect<number>(x.match({ some, none })).toBe(4);
 				expect(some).toHaveBeenCalledTimes(1);
 				expect(some).toHaveBeenCalledWith(2);
 				expect(some).toHaveLastReturnedWith(4);
@@ -785,7 +789,7 @@ describe('option', () => {
 				const some = vi.fn((value: number) => value * 2);
 				const none = vi.fn(() => 0);
 
-				expect<number>(x.match({ none, some })).toBe(0);
+				expect<number>(x.match({ some, none })).toBe(0);
 				expect(some).not.toHaveBeenCalled();
 				expect(none).toHaveBeenCalledTimes(1);
 				expect(none).toHaveBeenCalledWith();
@@ -822,12 +826,18 @@ describe('option', () => {
 	});
 
 	describe('from', () => {
+		const { from } = Option;
+
 		it.each([
 			['T', 42],
 			['Some(T)', some(42)],
 			['() => T', () => 42],
 			['() => Some(T)', () => some(42)],
-		])('given from(%s) then returns Some(T)', (_, cb) => expect(Option.from(cb)).toStrictEqual(some(42)));
+		])('given from(%s) then returns Some(T)', (_, cb) => {
+			const x = from(cb);
+
+			expect(x).toStrictEqual(some(42));
+		});
 
 		it.each([
 			['null', null],
@@ -835,10 +845,16 @@ describe('option', () => {
 			['() => null', () => null],
 			['() => None', () => none],
 			['() => throw', makeThrow],
-		])('given from(%s) then returns None', (_, resolvable) => expect(Option.from(resolvable)).toStrictEqual(none));
+		])('given from(%s) then returns None', (_, resolvable) => {
+			const x = from(resolvable);
+
+			expect(x).toStrictEqual(none);
+		});
 	});
 
 	describe('fromAsync', () => {
+		const { fromAsync } = Option;
+
 		it.each([
 			['T', 42],
 			['Promise.resolve(T)', Promise.resolve(42)],
@@ -848,7 +864,11 @@ describe('option', () => {
 			['() => Some(T)', () => some(42)],
 			['() => Promise.resolve(T)', async () => Promise.resolve(42)],
 			['() => Promise.resolve(Some(T))', async () => Promise.resolve(some(42))],
-		])('given fromAsync(%s) then returns Some(T)', async (_, cb) => expect(await Option.fromAsync(cb)).toStrictEqual(some(42)));
+		])('given fromAsync(%s) then returns Some(T)', async (_, cb) => {
+			const x = await fromAsync(cb);
+
+			expect(x).toStrictEqual(some(42));
+		});
 
 		it.each([
 			['null', null],
@@ -859,7 +879,11 @@ describe('option', () => {
 			['() => Promise.resolve(None)', async () => Promise.resolve(none)],
 			['() => throw', makeThrow],
 			['() => Promise.reject(error)', async () => Promise.reject(error)],
-		])('given fromAsync(%s) then returns None', async (_, resolvable) => expect(await Option.fromAsync(resolvable)).toStrictEqual(none));
+		])('given fromAsync(%s) then returns None', async (_, resolvable) => {
+			const x = await fromAsync(resolvable);
+
+			expect(x).toStrictEqual(none);
+		});
 	});
 
 	describe('all', () => {

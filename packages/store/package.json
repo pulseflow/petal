@@ -3,7 +3,7 @@
 	"name": "@flowr/store",
 	"type": "module",
 	"version": "4.4.1",
-	"description": "Node-specific opinionated TypeScript utilities",
+	"description": "High-capacity fast raw string storage with UTF-16",
 	"author": "@flowr",
 	"contributors": ["Pauline <git@ethanlibs.co>"],
 	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
@@ -58,10 +58,9 @@
 		"node": ">=20"
 	},
 	"scripts": {
-		"build": "pnpm gen && tsup && pnpm build:cjs",
-		"start": "pnpm gen && tsup --watch",
-		"build:cjs": "tsx ../scripts/src/cjs.ts",
-		"gen": "tsx ../scripts/src/gen.ts store --write"
+		"build": "tsup && pnpm build:cjs",
+		"start": "tsup --watch",
+		"build:cjs": "tsx ../scripts/src/cjs.ts"
 	},
 	"publishConfig": {
 		"access": "public",

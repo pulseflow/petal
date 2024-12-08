@@ -1,10 +1,6 @@
 export type Awaitable<Type> = PromiseLike<Type> | Type;
-
 export type If<Value extends boolean, TrueResult, FalseResult> = Value extends true
-	? TrueResult
-	: Value extends false
-		? FalseResult
-		: TrueResult | FalseResult;
+	? TrueResult : Value extends false ? FalseResult : TrueResult | FalseResult;
 
 // eslint-disable-next-line ts/no-unnecessary-type-parameters -- type testing
 export function isFunction<A extends any[], R>(input: (...args: A) => R): true;

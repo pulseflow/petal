@@ -92,6 +92,7 @@
 		"./union": "./src/lib/union.ts",
 		"./unique": "./src/lib/unique.ts",
 		"./unzip": "./src/lib/unzip.ts",
+		"./windows": "./src/lib/windows.ts",
 		"./zip": "./src/lib/zip.ts"
 	},
 	"publish": {

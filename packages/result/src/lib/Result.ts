@@ -1,10 +1,22 @@
-/* eslint-disable ts/no-use-before-define -- everything here is self-referencial */
-import { ResultError } from './error';
-import { none, type None, type Option, some, type Some } from './Option';
-import { type Awaitable, type If, isFunction, returnThis } from './utils';
+import { ResultError } from './error.ts';
+import { none, type None, type Option, some, type Some } from './Option.ts';
+import { type Awaitable, type If, isFunction, returnThis } from './utils.ts';
 
 const ValueProperty: unique symbol = Symbol.for('@flowr/result:Result.value');
 const SuccessProperty: unique symbol = Symbol.for('@flowr/result:Result.success');
+
+export type Ok<T, E = any> = Result<T, E, true>;
+export type Err<E, T = any> = Result<T, E, false>;
+export type AnyResult = Result<any, any>;
+export type ResolvableResult<T, E = any, Success extends boolean = boolean> = T | Result<T, E, Success>;
+export type UnwrapOk<T extends AnyResult> = T extends Ok<infer S> ? S : never;
+export type UnwrapErr<T extends AnyResult> = T extends Err<infer S> ? S : never;
+export type UnwrapOkArray<T extends readonly AnyResult[] | []> = { -readonly [P in keyof T]: UnwrapOk<T[P]> };
+export type UnwrapErrArray<T extends readonly AnyResult[] | []> = { -readonly [P in keyof T]: UnwrapErr<T[P]> };
+
+export function resolveResult<T, E>(value: ResolvableResult<T, E>): Result<T, E> {
+	return Result.isResult(value) ? value : Result.ok(value);
+}
 
 /**
  * A type used to express computations that can fail, it can be used for returning and propagating errors. This is a
@@ -21,7 +33,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 * Branded value to ensure {@link Success `Success`} is typed correctly.
 	 * @internal
 	 */
-	protected declare __STATUS__: Success;
+	declare protected __STATUS__: Success;
 
 	private readonly [ValueProperty]: If<Success, T, E>;
 	private readonly [SuccessProperty]: Success;
@@ -145,7 +157,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.ok}
 	 */
 	public ok(): If<Success, Some<T>, None> {
-		return this.match({ err: () => none, ok: value => some(value) });
+		return this.match({ ok: value => some(value), err: () => none });
 	}
 
 	/**
@@ -167,7 +179,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.err}
 	 */
 	public err(): If<Success, None, Some<E>> {
-		return this.match({ err: error => some(error), ok: () => none });
+		return this.match({ ok: () => none, err: error => some(error) });
 	}
 
 	/**
@@ -188,8 +200,9 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 *
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.map}
 	 */
-	public map<OutputValue>(cb: (value: T) => OutputValue): If<Success, Ok<OutputValue, E>, Err<E>> {
-		return this.match({ err: returnThis, ok: value => ok(cb(value)) });
+	public map<OutputValue>(cb: (value: If<Success, T, never>) => OutputValue): Result<OutputValue, E, Success> {
+		// @ts-expect-error: Complex types
+		return this.match({ ok: value => Result.ok(cb(value)), err: returnThis });
 	}
 
 	/**
@@ -221,8 +234,8 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 *
 	 * @note This is an extension not supported in Rust
 	 */
-	public mapInto<OutputResult extends AnyResult>(cb: (value: T) => OutputResult): If<Success, OutputResult, Err<E>> {
-		return this.match({ err: returnThis, ok: value => cb(value) });
+	public mapInto<OutputResult extends AnyResult>(cb: (value: If<Success, T, never>) => OutputResult): If<Success, OutputResult, Err<E>> {
+		return this.match({ ok: value => cb(value), err: returnThis });
 	}
 
 	/**
@@ -248,9 +261,9 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 */
 	public mapOr<MappedOutputValue, DefaultOutputValue>(
 		defaultValue: DefaultOutputValue,
-		cb: (value: T) => MappedOutputValue,
+		cb: (value: If<Success, T, never>) => MappedOutputValue,
 	): If<Success, MappedOutputValue, DefaultOutputValue> {
-		return this.match({ err: () => defaultValue, ok: value => cb(value) });
+		return this.match({ ok: value => cb(value), err: () => defaultValue });
 	}
 
 	/**
@@ -274,8 +287,11 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 *
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.map_or_else}
 	 */
-	public mapOrElse<OutputValue, OutputError>(op: (error: E) => OutputError, cb: (value: T) => OutputValue): If<Success, OutputValue, OutputError> {
-		return this.match({ err: error => op(error), ok: value => cb(value) });
+	public mapOrElse<OutputValue, OutputError>(
+		op: (error: If<Success, never, E>) => OutputError,
+		cb: (value: If<Success, T, never>) => OutputValue,
+	): If<Success, OutputValue, OutputError> {
+		return this.match({ ok: value => cb(value), err: error => op(error) });
 	}
 
 	/**
@@ -298,8 +314,9 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 *
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.map_err}
 	 */
-	public mapErr<OutputError>(cb: (error: E) => OutputError): If<Success, Ok<T>, Err<OutputError>> {
-		return this.match({ err: error => err(cb(error)), ok: returnThis });
+	public mapErr<OutputError>(cb: (error: If<Success, never, E>) => OutputError): Result<T, OutputError, Success> {
+		// @ts-expect-error: Complex types
+		return this.match({ ok: returnThis, err: error => Result.err(cb(error)) });
 	}
 
 	/**
@@ -330,8 +347,8 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 *
 	 * @note This is an extension not supported in Rust
 	 */
-	public mapErrInto<OutputResult extends AnyResult>(cb: (error: E) => OutputResult): If<Success, Ok<T>, OutputResult> {
-		return this.match({ err: error => cb(error), ok: returnThis });
+	public mapErrInto<OutputResult extends AnyResult>(cb: (error: If<Success, never, E>) => OutputResult): If<Success, Ok<T>, OutputResult> {
+		return this.match({ ok: returnThis, err: error => cb(error) });
 	}
 
 	/**
@@ -607,7 +624,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap_or}
 	 */
 	public unwrapOr<OutputValue>(defaultValue: OutputValue): If<Success, T, OutputValue> {
-		return this.match({ err: () => defaultValue, ok: value => value });
+		return this.match({ ok: value => value, err: () => defaultValue });
 	}
 
 	/**
@@ -630,7 +647,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap_or_else}
 	 */
 	public unwrapOrElse<OutputValue>(op: (error: E) => OutputValue): If<Success, T, OutputValue> {
-		return this.match({ err: error => op(error), ok: value => value });
+		return this.match({ ok: value => value, err: error => op(error) });
 	}
 
 	/**
@@ -690,13 +707,13 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.and}
 	 */
 	public and<OutputResult extends AnyResult>(result: OutputResult): If<Success, OutputResult, Err<E>> {
-		return this.match({ err: returnThis, ok: () => result });
+		return this.match({ ok: () => result, err: returnThis });
 	}
 
 	/**
 	 * Calls `cb` if the result is {@link Ok `Ok`}, otherwise returns the {@link Err `Err`} value of self.
 	 *
-	 * This function can be used for control flow based on `Result` values.
+	 * This function can be used for control flow based on {@link Result `Result`} values.
 	 * @param cb The predicate.
 	 *
 	 * @example
@@ -713,7 +730,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.and_then}
 	 */
 	public andThen<OutputResult extends AnyResult>(cb: (value: T) => OutputResult): If<Success, OutputResult, Err<E>> {
-		return this.match({ err: returnThis, ok: value => cb(value) });
+		return this.match({ ok: value => cb(value), err: returnThis });
 	}
 
 	/**
@@ -751,7 +768,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.or}
 	 */
 	public or<OutputResult extends AnyResult>(result: OutputResult): If<Success, Ok<T>, OutputResult> {
-		return this.match({ err: () => result, ok: returnThis });
+		return this.match({ ok: returnThis, err: () => result });
 	}
 
 	/**
@@ -774,7 +791,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.or_else}
 	 */
 	public orElse<OutputResult extends AnyResult>(cb: (error: E) => OutputResult): If<Success, Ok<T>, OutputResult> {
-		return this.match({ err: error => cb(error), ok: returnThis });
+		return this.match({ ok: returnThis, err: error => cb(error) });
 	}
 
 	/**
@@ -834,7 +851,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	}
 
 	/**
-	 * Transposes a `Result` of an `Option` into an `Option` of a `Result`.
+	 * Transposes a {@link Result `Result`} of an `Option` into an `Option` of a {@link Result `Result`}.
 	 *
 	 * `ok(none)` will be mapped to `none`. `ok(some(v))` and `err(e)` will be mapped to `some(ok(v))` and `some(err(e))`.
 	 *
@@ -849,10 +866,10 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 */
 	public transpose<InnerValue>(this: Result<Option<InnerValue>, E, Success>): If<Success, Option<Ok<InnerValue>>, Some<Err<E>>> {
 		return this.match({
+			ok: value => value.map(value => Result.ok(value)),
 			err() {
 				return some(this);
 			},
-			ok: value => value.map(value => ok(value)),
 		});
 	}
 
@@ -878,7 +895,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.flatten}
 	 */
 	public flatten<InnerResult extends AnyResult>(this: Result<InnerResult, E, Success>): If<Success, InnerResult, Err<E>> {
-		return this.match({ err: returnThis, ok: value => value });
+		return this.match({ ok: value => value, err: returnThis });
 	}
 
 	/**
@@ -912,10 +929,14 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 *
 	 * @note This is an extension not supported in Rust
 	 */
-	public intoPromise(): If<Success, Promise<Ok<Awaited<T>>>, Promise<Err<Awaited<E>>>> {
-		return this.match({
-			err: async error => err(await error),
-			ok: async value => ok(await value),
+	public async intoPromise(): Promise<If<Success, Ok<Awaited<T>>, Err<Awaited<E>>>> {
+		return this.match<Ok<Awaited<T>>, Err<Awaited<E>>>({
+			// @ts-expect-error: Complex types
+			// eslint-disable-next-line ts/await-thenable -- nosonar
+			ok: async value => Result.ok(await value),
+			// @ts-expect-error: Complex types
+			// eslint-disable-next-line ts/await-thenable -- nosonar
+			err: async error => Result.err(await error),
 		});
 	}
 
@@ -945,8 +966,6 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	/**
 	 * Runs {@link ok `ok`} function if self is {@link Ok `Ok`}, otherwise runs {@link err `err`} function.
 	 * @param branches The branches to match.
-	 * @param branches.ok The {@link ok} branches to match.
-	 * @param branches.err The {@link err} branches to match.
 	 *
 	 * @example
 	 * ```typescript
@@ -966,10 +985,10 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 * ```
 	 */
 	public match<OkValue, ErrValue>(branches: {
-		ok: (this: Ok<T>, value: T) => OkValue;
-		err: (this: Err<E>, error: E) => ErrValue;
+		ok: (this: Ok<T>, value: If<Success, T, never>) => OkValue;
+		err: (this: Err<E>, error: If<Success, never, E>) => ErrValue;
 	}): If<Success, OkValue, ErrValue> {
-		// @ts-expect-error: Complex types
+		// @ts-expect-error:  Complex types
 		return this.isOk() ? branches.ok.call(this, this[ValueProperty]) : branches.err.call(this, this[ValueProperty] as E);
 	}
 
@@ -1003,7 +1022,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	}
 
 	public get [Symbol.toStringTag](): If<Success, 'Ok', 'Err'> {
-		return this.match({ err: () => 'Err', ok: () => 'Ok' });
+		return this.match({ ok: () => 'Ok', err: () => 'Err' });
 	}
 
 	public static ok<T = undefined, E = any>(this: void, value?: T): Ok<T, E>;
@@ -1017,12 +1036,12 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	}
 
 	/**
-	 * Checks if the `instance` object is an instance of `Result`, or if it is a `Result`-like object. This override
+	 * Checks if the `instance` object is an instance of {@link Result `Result`}, or if it is a {@link Result `Result`}-like object. This override
 	 * exists to interoperate with other versions of this class, such as the one coming from another version of this
 	 * library or from a different build.
 	 *
 	 * @param instance The instance to check.
-	 * @returns Whether or not the instance is a `Result`.
+	 * @returns Whether or not the instance is a {@link Result `Result`}.
 	 *
 	 * @example
 	 * ```typescript
@@ -1037,10 +1056,10 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	}
 
 	/**
-	 * Checks if the `instance` object is an instance of `Result`, or if it is a `Result`-like object.
+	 * Checks if the `instance` object is an instance of {@link Result `Result`}, or if it is a {@link Result `Result`}-like object.
 	 *
 	 * @param instance The instance to check.
-	 * @returns true if the instance is a `Result` or a `Result`-like object, false otherwise.
+	 * @returns true if the instance is a {@link Result `Result`} or a {@link Result `Result`}-like object, false otherwise.
 	 *
 	 * @example
 	 * ```typescript
@@ -1060,12 +1079,12 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 * @typeparam T The result's type.
 	 * @typeparam E The error's type.
 	 */
-	public static from<T, E = unknown>(this: void, op: ResultResolvable<T, E> | (() => ResultResolvable<T, E>)): Result<T, E> {
+	public static from<T, E = unknown>(this: void, op: ResolvableResult<T, E> | (() => ResolvableResult<T, E>)): Result<T, E> {
 		try {
-			return resolve(isFunction(op) ? op() : op);
+			return resolveResult(isFunction(op) ? op() : op);
 		}
 		catch (error) {
-			return err(error as E);
+			return Result.err(error as E);
 		}
 	}
 
@@ -1075,12 +1094,12 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 * @typeparam T The result's type.
 	 * @typeparam E The error's type.
 	 */
-	public static async fromAsync<T, E = unknown>(this: void, op: Awaitable<ResultResolvable<T, E>> | (() => Awaitable<ResultResolvable<T, E>>)): Promise<Result<T, E>> {
+	public static async fromAsync<T, E = unknown>(this: void, op: Awaitable<ResolvableResult<T, E>> | (() => Awaitable<ResolvableResult<T, E>>)): Promise<Result<T, E>> {
 		try {
-			return resolve(await (isFunction(op) ? op() : op));
+			return resolveResult(await (isFunction(op) ? op() : op));
 		}
 		catch (error) {
-			return err(error as E);
+			return Result.err(error as E);
 		}
 	}
 
@@ -1100,7 +1119,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 			values.push(result[ValueProperty]);
 		}
 
-		return ok(values as UnwrapOkArray<Entries>);
+		return Result.ok(values as UnwrapOkArray<Entries>);
 	}
 
 	/**
@@ -1118,19 +1137,8 @@ export class Result<T, E, const Success extends boolean = boolean> {
 			errors.push(result[ValueProperty]);
 		}
 
-		return err(errors as UnwrapErrArray<Entries>);
+		return Result.err(errors as UnwrapErrArray<Entries>);
 	}
 }
 
-export type ResultResolvable<T, E = any, Success extends boolean = boolean> = T | Result<T, E, Success>;
-
-export type Ok<T, E = any> = Result<T, E, true>;
-export type Err<E, T = any> = Result<T, E, false>;
-export type AnyResult = Result<any, any>;
-export const { err, ok } = Result;
-
-const resolve = <T, E>(value: ResultResolvable<T, E>): Result<T, E> => Result.isResult(value) ? value : ok(value);
-export type UnwrapOk<T extends AnyResult> = T extends Ok<infer S> ? S : never;
-export type UnwrapErr<T extends AnyResult> = T extends Err<infer S> ? S : never;
-export type UnwrapOkArray<T extends readonly AnyResult[] | []> = { -readonly [P in keyof T]: UnwrapOk<T[P]> };
-export type UnwrapErrArray<T extends readonly AnyResult[] | []> = { -readonly [P in keyof T]: UnwrapErr<T[P]> };
+export const { ok, err } = Result;

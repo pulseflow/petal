@@ -1,6 +1,7 @@
+import type { Err, None, Ok, Some } from '../src/index.ts';
 import { setTimeout as sleep } from 'node:timers/promises';
-import { err, type Err, none, type None, ok, type Ok, Option, Result, ResultError, some, type Some } from '../src/index';
-import { error, makeThrow } from './shared';
+import { err, none, ok, Option, Result, ResultError, some } from '../src/index.ts';
+import { error, makeThrow } from './shared.ts';
 
 describe('result', () => {
 	describe('prototype', () => {
@@ -136,6 +137,15 @@ describe('result', () => {
 				expect(x.map(cb)).toEqual(err('Some error message'));
 				expect(cb).not.toHaveBeenCalled();
 			});
+
+			it('given ok then chain map and mapErr then returns Ok<number, string>', () => {
+				const x = Result.from<number, Error>(2);
+				const cb = vi.fn((value: number) => value);
+				const mapChain = x.map(cb).mapErr(error => error.message);
+
+				expectTypeOf(mapChain).toMatchTypeOf<Result<number, string>>();
+				expect<Result<number, string>>(mapChain).toEqual(ok(2));
+			});
 		});
 
 		describe('mapInto', () => {
@@ -155,6 +165,15 @@ describe('result', () => {
 
 				expect(x.mapInto(cb)).toBe(x);
 				expect(cb).not.toHaveBeenCalled();
+			});
+
+			it('given ok then chain mapInto and map then returns Ok<number, string>', () => {
+				const x = Result.from<number, string>(2);
+				const cb = vi.fn((value: number) => ok(value));
+				const mapChain = x.mapInto(cb).map(value => value + 1);
+
+				expectTypeOf(mapChain).toMatchTypeOf<Result<number, string>>();
+				expect<Result<number, string>>(mapChain).toEqual(ok(3));
 			});
 		});
 
@@ -221,6 +240,15 @@ describe('result', () => {
 				expect(cb).toHaveBeenCalledTimes(1);
 				expect(cb).toHaveBeenCalledWith('Some error message');
 				expect(cb).toHaveLastReturnedWith(18);
+			});
+
+			it('given ok then chain mapErr and map then returns Ok<number, string>', () => {
+				const x = Result.from<number, string>(42);
+				const cb = vi.fn((error: string) => error);
+				const mapChain = x.mapErr(cb).map(value => value + 1);
+
+				expectTypeOf(mapChain).toMatchTypeOf<Result<number, string>>();
+				expect<Result<number, string>>(mapChain).toEqual(ok(43));
 			});
 		});
 
@@ -789,24 +817,24 @@ describe('result', () => {
 		});
 
 		describe('match', () => {
-			it('given ok then calls callback', () => {
+			it('given ok then calls ok callback', () => {
 				const x = Result.ok(2);
 				const ok = vi.fn((value: number) => value * 2);
 				const err = vi.fn((error: string) => error.length);
 
-				expect<number>(x.match({ err, ok })).toBe(4);
+				expect<number>(x.match({ ok, err })).toBe(4);
 				expect(ok).toHaveBeenCalledTimes(1);
 				expect(ok).toHaveBeenCalledWith(2);
 				expect(ok).toHaveLastReturnedWith(4);
 				expect(err).not.toHaveBeenCalled();
 			});
 
-			it('given err then calls callback', () => {
+			it('given err then calls err callback', () => {
 				const x = Result.err('Some error message');
 				const ok = vi.fn((value: number) => value * 2);
 				const err = vi.fn((error: string) => error.length);
 
-				expect<number>(x.match({ err, ok })).toBe(18);
+				expect<number>(x.match({ ok, err })).toBe(18);
 				expect(ok).not.toHaveBeenCalled();
 				expect(err).toHaveBeenCalledTimes(1);
 				expect(err).toHaveBeenCalledWith('Some error message');
@@ -818,6 +846,7 @@ describe('result', () => {
 	describe('ok', () => {
 		it('given ok without an argument then returns Ok<undefined>', () => {
 			const x = ok();
+
 			expectTypeOf(x).toMatchTypeOf<Ok<undefined>>();
 			expectTypeOf(x).toMatchTypeOf<Result<undefined, Error>>();
 			expect<boolean>(x.isOk()).toBe(true);
@@ -837,6 +866,7 @@ describe('result', () => {
 	describe('err', () => {
 		it('given err without an argument then returns Err<undefined>', () => {
 			const x = err();
+
 			expectTypeOf(x).toMatchTypeOf<Err<undefined>>();
 			expectTypeOf(x).toMatchTypeOf<Result<number, undefined>>();
 			expect<boolean>(x.isOk()).toBe(false);
@@ -844,7 +874,7 @@ describe('result', () => {
 		});
 
 		it('given err with an argument then returns Err<T>', () => {
-			const x = err(new Error('girls kissing'));
+			const x = err(new Error('hey'));
 
 			expectTypeOf(x).toMatchTypeOf<Err<Error>>();
 			expectTypeOf(x).toMatchTypeOf<Result<number, Error>>();
@@ -854,13 +884,15 @@ describe('result', () => {
 	});
 
 	describe('from', () => {
+		const { from } = Result;
+
 		it.each([
 			['T', 42],
 			['Ok(T)', ok(42)],
 			['() => T', () => 42],
 			['() => Ok(T)', () => ok(42)],
 		])('given from(%s) then returns Ok(T)', (_, cb) => {
-			const x = Result.from(cb);
+			const x = from(cb);
 
 			expect(x).toStrictEqual(ok(42));
 		});
@@ -870,7 +902,7 @@ describe('result', () => {
 			['() => Err(E)', () => err(error)],
 			['() => throw E', makeThrow],
 		])('given from(%s) then returns Err(E)', (_, resolvable) => {
-			const x = Result.from(resolvable);
+			const x = from(resolvable);
 
 			expect(x).toStrictEqual(err(error));
 		});
@@ -899,7 +931,7 @@ describe('result', () => {
 			['() => throw E', makeThrow],
 			['() => Promise.reject(E)', async () => Promise.reject(error)],
 			['() => Err(E)', () => err(error)],
-			['() => Promise.reject(Err(E))', async () => Promise.reject(err(error))],
+			['() => Promise.reject(Err(E))', async () => Promise.reject(err(error))], // NOSONAR
 		])('given fromAsync(%s) then returns Err(E)', async (_, resolvable) => {
 			let x = await fromAsync(resolvable);
 

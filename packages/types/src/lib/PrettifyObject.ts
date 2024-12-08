@@ -5,11 +5,11 @@
  *
  * ```typescript
  * type Objects = {
- *   foo: string;
- *   bar: number;
+ * 	foo: string;
+ * 	bar: number;
  * } & {
- *   hello: boolean;
- *   world: bigint;
+ * 	hello: boolean;
+ * 	world: bigint;
  * };
  *
  * type PrettyObjects = PrettifyObject<Objects>;

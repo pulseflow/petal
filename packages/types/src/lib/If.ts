@@ -3,7 +3,7 @@
  * @example
  * ```typescript
  * declare function get<const GetValues extends boolean = false>(
- *   getValues?: GetValues
+ * 	getValues?: GetValues
  * ): If<GetValues, string, string[]>;
  *
  * const a = get(true);

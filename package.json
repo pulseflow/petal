@@ -4,7 +4,7 @@
 	"type": "module",
 	"version": "4.4.1",
 	"private": true,
-	"packageManager": "pnpm@9.14.4",
+	"packageManager": "pnpm@9.15.0",
 	"engineStrict": true,
 	"author": "@flowr",
 	"contributors": [
@@ -42,13 +42,14 @@
 		"docs": "turbo run docs --concurrency=4",
 		"docs:affected": "turbo run docs --filter=...[origin/main] --concurrency=4",
 		"lint": "eslint --cache . --flag unstable_ts_config",
-		"format": "pnpm lint --fix",
+		"lint:fix": "pnpm lint --fix",
 		"test": "vitest run",
-		"release": "bumpp -r && turbo run release --concurrency=4",
-		"create-package": "turbo gen create-package --args"
+		"test:update": "vitest --update",
+		"meta:release": "bumpp -r && turbo run release --concurrency=4",
+		"meta:create": "turbo gen create-package --args"
 	},
 	"devDependencies": {
-		"@arethetypeswrong/cli": "^0.17.0",
+		"@arethetypeswrong/cli": "^0.17.1",
 		"@flowr/eslint": "workspace:^",
 		"@turbo/gen": "^2.3.3",
 		"@types/jsdom": "^21.1.7",
@@ -64,18 +65,19 @@
 		"jiti": "^2.4.1",
 		"jsdom": "^25.0.1",
 		"jsr": "^0.13.2",
-		"msw": "^2.6.6",
+		"msw": "^2.6.8",
 		"pathe": "^1.1.2",
 		"tsup": "^8.3.5",
 		"tsx": "^4.19.2",
 		"turbo": "^2.3.3",
 		"typescript": "^5.7.2",
-		"vite": "^6.0.2",
+		"vite": "^6.0.3",
 		"vitest": "^2.1.8"
 	},
 	"pnpm": {
 		"patchedDependencies": {
-			"@types/jsdom": "./packages/patches/@types__jsdom.patch"
+			"@types/jsdom": "./packages/patches/@types__jsdom.patch",
+			"eslint-vitest-rule-tester": "./packages/patches/eslint-vitest-rule-tester.patch"
 		}
 	},
 	"resolutions": {

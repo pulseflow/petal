@@ -77,7 +77,7 @@ const dog = new Dog('Buddy');
 dog.bark();
 
 function fn(): string {
-	return `hello${1}`;
+	return `hello1`;
 }
 
 log(car1, car2, favoriteFruit, numericValue, fn());

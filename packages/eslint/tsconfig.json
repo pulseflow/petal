@@ -12,5 +12,5 @@
 		"tests",
 		"scripts"
 	],
-	"exclude": ["node_modules", "dist", ".turbo"]
+	"exclude": ["node_modules", "dist", ".turbo", "_fixtures", "fixtures"]
 }
