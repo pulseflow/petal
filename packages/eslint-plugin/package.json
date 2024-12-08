@@ -67,7 +67,7 @@
 		"@flowr/utilities": "workspace:^",
 		"@typescript-eslint/utils": "^8.17.0",
 		"eslint": "^9.16.0",
-		"eslint-vitest-rule-tester": "^0.7.0",
+		"eslint-vitest-rule-tester": "^0.7.1",
 		"jsonc-eslint-parser": "^2.4.0"
 	},
 	"publishConfig": {

@@ -199,7 +199,7 @@
 		"eslint-plugin-vuejs-accessibility": "^2.4.1",
 		"eslint-processor-vue-blocks": "^0.1.2",
 		"eslint-typegen": "^0.3.2",
-		"execa": "^9.5.1",
+		"execa": "^9.5.2",
 		"fast-glob": "^3.3.2",
 		"fs-extra": "^11.2.0",
 		"jiti": "^2.4.1",
@@ -207,7 +207,7 @@
 		"pathe": "^1.1.2",
 		"prettier-plugin-astro": "^0.14.1",
 		"prettier-plugin-slidev": "^1.0.5",
-		"svelte": "^5.8.1",
+		"svelte": "^5.9.0",
 		"svelte-eslint-parser": "^0.43.0",
 		"vue": "^3.5.13",
 		"vue-eslint-parser": "^9.4.3"
