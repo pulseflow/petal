@@ -259,8 +259,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0(eslint@9.16.0(jiti@2.4.1))
       eslint-plugin-solid:
-        specifier: ^0.14.4
-        version: 0.14.4(eslint@9.16.0(jiti@2.4.1))(typescript@5.7.2)
+        specifier: ^0.14.5
+        version: 0.14.5(eslint@9.16.0(jiti@2.4.1))(typescript@5.7.2)
       eslint-plugin-svelte:
         specifier: ^2.46.1
         version: 2.46.1(eslint@9.16.0(jiti@2.4.1))(svelte@5.9.0)(ts-node@10.9.2(@types/node@22.10.1)(typescript@5.7.2))
@@ -2219,11 +2219,12 @@ packages:
     peerDependencies:
       eslint: ^9.16.0
 
-  eslint-plugin-solid@0.14.4:
-    resolution: {integrity: sha512-uWsNA2okBgwBRPxjsQ7DxlRksq1EKdMhwQlViHdkkRDLnWqwnZEjQASWeckZ0DI24sVzPeETJhPv1BWKKiu99A==}
+  eslint-plugin-solid@0.14.5:
+    resolution: {integrity: sha512-nfuYK09ah5aJG/oEN6P1qziy1zLgW4PDWe75VNPi4CEFYk1x2AEqwFeQfEPR7gNn0F2jOeqKhx2E+5oNCOBYWQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       eslint: ^9.16.0
+      typescript: '>=4.8.4'
 
   eslint-plugin-svelte@2.46.1:
     resolution: {integrity: sha512-7xYr2o4NID/f9OEYMqxsEQsCsj4KaMy4q5sANaKkAb6/QeCjYFxRmDm2S3YC3A3pl1kyPZ/syOx/i7LcWYSbIw==}
@@ -6964,7 +6965,7 @@ snapshots:
       regexp-ast-analysis: 0.7.1
       scslre: 0.3.0
 
-  eslint-plugin-solid@0.14.4(eslint@9.16.0(jiti@2.4.1))(typescript@5.7.2):
+  eslint-plugin-solid@0.14.5(eslint@9.16.0(jiti@2.4.1))(typescript@5.7.2):
     dependencies:
       '@typescript-eslint/utils': 8.17.0(eslint@9.16.0(jiti@2.4.1))(typescript@5.7.2)
       eslint: 9.16.0(jiti@2.4.1)
@@ -6973,9 +6974,9 @@ snapshots:
       kebab-case: 1.0.2
       known-css-properties: 0.30.0
       style-to-object: 1.0.8
+      typescript: 5.7.2
     transitivePeerDependencies:
       - supports-color
-      - typescript
 
   eslint-plugin-svelte@2.46.1(eslint@9.16.0(jiti@2.4.1))(svelte@5.9.0)(ts-node@10.9.2(@types/node@22.10.1)(typescript@5.7.2)):
     dependencies:
