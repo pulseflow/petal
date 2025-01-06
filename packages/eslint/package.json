@@ -207,7 +207,7 @@
 		"pathe": "^1.1.2",
 		"prettier-plugin-astro": "^0.14.1",
 		"prettier-plugin-slidev": "^1.0.5",
-		"svelte": "^5.9.0",
+		"svelte": "^5.16.2",
 		"svelte-eslint-parser": "^0.43.0",
 		"vue": "^3.5.13",
 		"vue-eslint-parser": "^9.4.3"
