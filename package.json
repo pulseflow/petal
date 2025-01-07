@@ -4,7 +4,7 @@
 	"type": "module",
 	"version": "5.0.0",
 	"private": true,
-	"packageManager": "pnpm@9.15.3",
+	"packageManager": "pnpm@10.0.0",
 	"engineStrict": true,
 	"author": "@flowr",
 	"contributors": [
@@ -78,7 +78,8 @@
 	"pnpm": {
 		"patchedDependencies": {
 			"@types/jsdom": "./packages/patches/@types__jsdom.patch"
-		}
+		},
+		"onlyBuiltDependencies": ["@types/jsdom", "esbuild", "msw"]
 	},
 	"resolutions": {
 		"@eslint-community/eslint-utils": "^4.4.1",
