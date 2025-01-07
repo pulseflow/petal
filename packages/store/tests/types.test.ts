@@ -347,6 +347,25 @@ describe('types', () => {
 		});
 	});
 
+	describe('nullable', () => {
+		const type = t.nullable(t.int16);
+		it('given type then it has the correct properties', () => {
+			expect(type.BIT_SIZE).toBe(null);
+		});
+		it.each([null, undefined])('given a null value then it serializes and deserializes correctly', (input) => {
+			const buffer = new UnalignedUint16Array(2);
+			type.serialize(buffer, input);
+			const deserialized = type.deserialize(buffer, new Pointer());
+			expect(deserialized).toBe(null);
+		});
+		it('given a non-null value then it serializes and deserializes correctly', () => {
+			const buffer = new UnalignedUint16Array(2);
+			type.serialize(buffer, 42);
+			const deserialized = type.deserialize(buffer, new Pointer());
+			expect(deserialized).toBe(42);
+		});
+	});
+
 	describe('array(Bit)', () => {
 		const type = t.array(t.bit);
 
@@ -397,6 +416,20 @@ describe('types', () => {
 				expect(() => type.serialize(buffer, value)).toThrowError();
 			},
 		);
+	});
+
+	describe('constant', () => {
+		const type = t.constant('Hello World!');
+		it('given type then it has the correct properties', () => {
+			expect(type.BIT_SIZE).toBe(0);
+		});
+		it('given a buffer then it serializes and deserializes correctly', () => {
+			const buffer = new UnalignedUint16Array(10);
+			type.serialize(buffer, undefined as never);
+			expect(buffer.bitLength).toEqual(0);
+			const deserialized = type.deserialize(buffer, new Pointer());
+			expect(deserialized).toEqual('Hello World!');
+		});
 	});
 
 	describe('string', () => {

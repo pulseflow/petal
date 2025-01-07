@@ -185,6 +185,11 @@ const valids: ValidTestCase[] = [
 		name: 'Only React context',
 		code: 'export const MyContext = createContext(\'test\');',
 	},
+	{
+		name: 'Custom HOCs like mobx observer',
+		code: 'const MyComponent = () => {}; export default observer(MyComponent);',
+		options: [{ customHOCs: ['observer'] }],
+	},
 ];
 
 const invalid: InvalidTestCase[] = [
@@ -285,6 +290,11 @@ const invalid: InvalidTestCase[] = [
 		name: 'Component and React Context with React import',
 		code: 'export const MyComponent = () => {}; export const MyContext = React.createContext(\'test\');',
 		errors: [{ messageId: 'reactContext' }],
+	},
+	{
+		name: 'should be invalid when custom HOC is used without adding it to the rule configuration',
+		code: 'const MyComponent = () => {}; export default observer(MyComponent);',
+		errors: [{ messageId: 'localComponents' }, { messageId: 'anonymousExport' }],
 	},
 ];
 

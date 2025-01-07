@@ -1009,7 +1009,7 @@
 	},
 	"devDependencies": {
 		"@flowr/types": "workspace:^",
-		"pathe": "^1.1.2"
+		"pathe": "^2.0.0"
 	},
 	"publishConfig": {
 		"access": "public",

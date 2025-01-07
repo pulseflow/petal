@@ -1,4 +1,4 @@
-import type { Schema, UnwrapSchema } from './Schema.ts';
+import type { Schema, SerializeValue, UnwrapSchema } from './Schema.ts';
 import { Pointer } from './Pointer.ts';
 import { UnalignedUint16Array } from './types/base/UnalignedUint16Array.ts';
 
@@ -61,9 +61,9 @@ export class SchemaStore<Entries extends object = object> {
 	 * @param value The value to serialize
 	 * @returns The serialized buffer
 	 */
-	public serialize<const Id extends KeyOfStore<this>>(id: Id, value: Readonly<UnwrapSchema<Entries[Id] & object>>): UnalignedUint16Array {
+	public serialize<const Id extends KeyOfStore<this>>(id: Id, value: SerializeValue<Entries[Id] & object>): UnalignedUint16Array {
 		const schema = this.get(id) as Schema<Id>;
-		const buffer = new UnalignedUint16Array(schema.bitSize ?? this.defaultMaximumArrayLength);
+		const buffer = new UnalignedUint16Array(schema.totalBitSize ?? this.defaultMaximumArrayLength);
 		schema.serialize(buffer, value);
 		return buffer;
 	}

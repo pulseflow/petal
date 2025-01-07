@@ -15,12 +15,16 @@ export type Options = [{
 	allowConstantExport?: boolean;
 	checkJS?: boolean;
 	allowExportNames?: string[];
+	customHOCs?: string[];
 }];
 
-const defaultOptions: Options = [{}];
-const possibleRegex = /^[A-Z][a-zA-Z0-9]*$/u;
-const strictRegex = /^[A-Z][\dA-Z]*[a-z][\dA-Za-z]*$/u;
-const reactHOCs = new Set(['forwardRef', 'memo']);
+const defaultOptions: Options = [{
+	allowConstantExport: false,
+	checkJS: false,
+	allowExportNames: [],
+	customHOCs: [],
+}];
+const reactComponentNameRE = /^[A-Z][a-zA-Z0-9]*$/u;
 type ToString<Type> = Type extends `${infer String}` ? String : never;
 const notReactComponentExpression: Set<ToString<TSESTree.Expression['type']>> = new Set([
 	'ArrayExpression',
@@ -49,20 +53,30 @@ export default createEslintRule<Options, MessageIds>({
 
 		return {
 			Program: (program) => {
-				const ruleContext = {
-					hasExports: false,
-					mayHaveReactExport: false,
-					reactIsInScope: false,
-				};
+				const ruleContext = { hasExports: false, hasReactExport: false, reactIsInScope: false };
 				const localComponents: TSESTree.Identifier[] = [];
 				const nonComponentExports: Array<TSESTree.BindingName | TSESTree.StringLiteral> = [];
-				const allowExportNamesSet = options.allowExportNames ? new Set(options.allowExportNames) : undefined;
+				const allowExportNames = new Set(options.allowExportNames);
+				const reactHOCs = new Set(['forwardRef', 'memo', ...options.customHOCs!]);
 				const reactContextExports: TSESTree.Identifier[] = [];
+
+				const canBeReactFunctionComponent = (init: TSESTree.VariableDeclaratorMaybeInit['init']): boolean => {
+					if (!init)
+						return false;
+
+					if (init.type === 'ArrowFunctionExpression')
+						return true;
+
+					if (init.type === 'CallExpression' && init.callee.type === 'Identifier')
+						return reactHOCs.has(init.callee.name);
+
+					return false;
+				};
 
 				const handleLocalIdentifier = (id: TSESTree.BindingName): void => {
 					if (id.type !== 'Identifier')
 						return;
-					if (possibleRegex.test(id.name))
+					if (reactComponentNameRE.test(id.name))
 						localComponents.push(id);
 				};
 
@@ -72,7 +86,7 @@ export default createEslintRule<Options, MessageIds>({
 						return;
 					}
 
-					if (allowExportNamesSet?.has(id.name))
+					if (allowExportNames.has(id.name))
 						return;
 
 					// Literal: 1, 'foo', UnaryExpression: -1, TemplateLiteral: `Some ${template}`, BinaryExpression: 24 * 60.
@@ -80,8 +94,8 @@ export default createEslintRule<Options, MessageIds>({
 						return;
 
 					if (isFn) {
-						if (possibleRegex.test(id.name))
-							ruleContext.mayHaveReactExport = true;
+						if (reactComponentNameRE.test(id.name))
+							ruleContext.hasReactExport = true;
 						else nonComponentExports.push(id);
 					}
 					else {
@@ -100,9 +114,9 @@ export default createEslintRule<Options, MessageIds>({
 							nonComponentExports.push(id);
 							return;
 						}
-						if (!ruleContext.mayHaveReactExport && possibleRegex.test(id.name))
-							ruleContext.mayHaveReactExport = true;
-						if (!strictRegex.test(id.name))
+						if (reactComponentNameRE.test(id.name))
+							ruleContext.hasReactExport = true;
+						else
 							nonComponentExports.push(id);
 					}
 				};
@@ -116,17 +130,17 @@ export default createEslintRule<Options, MessageIds>({
 						else handleExportIdentifier(node.id, true);
 					else if (node.type === 'CallExpression')
 						if (node.callee.type === 'CallExpression' && node.callee.callee.type === 'Identifier' && node.callee.callee.name === 'connect')
-							ruleContext.mayHaveReactExport = true;
+							ruleContext.hasReactExport = true;
 						else if (node.callee.type !== 'Identifier')
 							if (node.callee.type === 'MemberExpression' && node.callee.property.type === 'Identifier' && reactHOCs.has(node.callee.property.name))
-								ruleContext.mayHaveReactExport = true;
+								ruleContext.hasReactExport = true;
 							else context.report({ messageId: 'anonymousExport', node });
 						else if (!reactHOCs.has(node.callee.name))
 							context.report({ messageId: 'anonymousExport', node });
 						else if (node.arguments[0].type === 'FunctionExpression' && node.arguments[0].id)
 							handleExportIdentifier(node.arguments[0].id, true);
 						else if (node.arguments[0]?.type === 'Identifier')
-							ruleContext.mayHaveReactExport = true;
+							ruleContext.hasReactExport = true;
 						else context.report({ messageId: 'anonymousExport', node });
 					else if (node.type === 'TSEnumDeclaration')
 						nonComponentExports.push(node.id);
@@ -141,11 +155,10 @@ export default createEslintRule<Options, MessageIds>({
 					}
 					else if (node.type === 'ExportDefaultDeclaration') {
 						ruleContext.hasExports = true;
-						const declaration
-							= node.declaration.type === 'TSAsExpression'
+						const declaration = node.declaration.type === 'TSAsExpression'
 							|| node.declaration.type === 'TSSatisfiesExpression'
-								? node.declaration.expression
-								: node.declaration;
+							? node.declaration.expression
+							: node.declaration;
 						if (
 							declaration.type === 'VariableDeclaration'
 							|| declaration.type === 'FunctionDeclaration'
@@ -181,7 +194,7 @@ export default createEslintRule<Options, MessageIds>({
 					return;
 
 				if (ruleContext.hasExports)
-					if (ruleContext.mayHaveReactExport) {
+					if (ruleContext.hasReactExport) {
 						nonComponentExports.forEach(node => context.report({ messageId: 'namedExport', node }));
 						reactContextExports.forEach(node => context.report({ messageId: 'reactContext', node }));
 					}
@@ -214,6 +227,7 @@ export default createEslintRule<Options, MessageIds>({
 				allowConstantExport: { type: 'boolean' },
 				allowExportNames: { items: { type: 'string' }, type: 'array' },
 				checkJS: { type: 'boolean' },
+				customHOCs: { type: 'array', items: { type: 'string' } },
 			} satisfies Readonly<Record<keyof Options[0], JSONSchema4>>,
 			type: 'object',
 		}],
@@ -221,14 +235,3 @@ export default createEslintRule<Options, MessageIds>({
 	},
 	name: RULE_NAME,
 });
-
-function canBeReactFunctionComponent(init: TSESTree.Expression | null): boolean {
-	if (!init)
-		return false;
-	if (init.type === 'ArrowFunctionExpression')
-		return true;
-	if (init.type === 'CallExpression' && init.callee.type === 'Identifier')
-		return ['forwardRef', 'memo'].includes(init.callee.name);
-
-	return false;
-}

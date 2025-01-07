@@ -312,6 +312,19 @@ describe('schema', () => {
 			expect<Entry[]>([...schema.entries()]).toEqual([['a', StringType]]);
 		});
 
+		it('given a schema with a nullable property then it has the correct properties and types', () => {
+			const schema = new Schema(1).nullable('a', t.bit);
+			expectTypeOf<Schema<1, { a: Value }>>(schema);
+			expect(schema.bitSize).toBe(null);
+			type Key = 'a';
+			type Value = IType<0 | 1 | null, null, 0 | 1 | null | undefined>;
+			type Entry = readonly [Key, Value];
+			const value = schema.get('a');
+			expect<Key[]>([...schema.keys()]).toEqual(['a']);
+			expect<Value[]>([...schema.values()]).toEqual([value]);
+			expect<Entry[]>([...schema.entries()]).toEqual([['a', value]]);
+		});
+
 		it('given a schema with a snowflake property then it has the correct properties and types', () => {
 			const schema = new Schema(1).snowflake('a');
 			expectTypeOf<Schema<1, { a: Value }>>(schema);
@@ -332,7 +345,7 @@ describe('schema', () => {
 			expect(schema.bitSize).toBeNull();
 
 			type Key = 'a';
-			type Value = IType<number[], null>;
+			type Value = IType<Array<0 | 1>, null, Array<0 | 1>>;
 			type Entry = readonly [Key, Value];
 
 			const value = schema.get('a');
@@ -348,7 +361,7 @@ describe('schema', () => {
 			expect(schema.bitSize).toBe(2);
 
 			type Key = 'a';
-			type Value = IType<number[], number>;
+			type Value = IType<Array<0 | 1>, number, Array<0 | 1>>;
 			type Entry = readonly [Key, Value];
 
 			const value = schema.get('a');
@@ -369,6 +382,19 @@ describe('schema', () => {
 
 			const value = schema.get('a');
 
+			expect<Key[]>([...schema.keys()]).toEqual(['a']);
+			expect<Value[]>([...schema.values()]).toEqual([value]);
+			expect<Entry[]>([...schema.entries()]).toEqual([['a', value]]);
+		});
+
+		it('given a schema with a constant property then it has the correct properties and types', () => {
+			const schema = new Schema(1).constant('a', 'Hello There!');
+			expectTypeOf<Schema<1, { a: Value }>>(schema);
+			expect(schema.bitSize).toBe(0);
+			type Key = 'a';
+			type Value = IType<'Hello There!', 0, never>;
+			type Entry = readonly [Key, Value];
+			const value = schema.get('a');
 			expect<Key[]>([...schema.keys()]).toEqual(['a']);
 			expect<Value[]>([...schema.values()]).toEqual([value]);
 			expect<Entry[]>([...schema.entries()]).toEqual([['a', value]]);

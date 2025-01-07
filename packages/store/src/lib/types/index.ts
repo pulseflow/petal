@@ -6,6 +6,7 @@ import { BigUint32Type } from './BigUint32.ts';
 import { BigUint64Type } from './BigUint64.ts';
 import { BitType } from './Bit.ts';
 import { BooleanType } from './Boolean.ts';
+import { ConstantType } from './Constant.ts';
 import { FixedLengthArrayType } from './FixedLengthArray.ts';
 import { Float32Type } from './Float32.ts';
 import { Float64Type } from './Float64.ts';
@@ -15,6 +16,7 @@ import { Int8Type } from './Int8.ts';
 import { Int16Type } from './Int16.ts';
 import { Int32Type } from './Int32.ts';
 import { Int64Type } from './Int64.ts';
+import { NullableType } from './Nullable.ts';
 import { SnowflakeType } from './Snowflake.ts';
 import { StringType } from './String.ts';
 import { Uint2Type } from './Uint2.ts';
@@ -24,6 +26,7 @@ import { Uint16Type } from './Uint16.ts';
 import { Uint32Type } from './Uint32.ts';
 import { Uint64Type } from './Uint64.ts';
 
+// @keep-sorted
 export const t = {
 	array: ArrayType,
 	bigInt32: BigInt32Type,
@@ -32,6 +35,7 @@ export const t = {
 	bigUint64: BigUint64Type,
 	bit: BitType,
 	boolean: BooleanType,
+	constant: ConstantType,
 	fixedLengthArray: FixedLengthArrayType,
 	float32: Float32Type,
 	float64: Float64Type,
@@ -41,6 +45,7 @@ export const t = {
 	int4: Int4Type,
 	int64: Int64Type,
 	int8: Int8Type,
+	nullable: NullableType,
 	snowflake: SnowflakeType,
 	string: StringType,
 	uint16: Uint16Type,
@@ -59,6 +64,7 @@ export {
 	BigUint64Type,
 	BitType,
 	BooleanType,
+	ConstantType,
 	FixedLengthArrayType,
 	Float32Type,
 	Float64Type,
@@ -69,6 +75,7 @@ export {
 	Int32Type,
 	Int64Type,
 	type IType,
+	NullableType,
 	SnowflakeType,
 	StringType,
 	Uint2Type,

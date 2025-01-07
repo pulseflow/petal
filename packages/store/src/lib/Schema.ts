@@ -24,7 +24,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	}
 
 	/**
-	 * The total bit size of the schema.
+	 * The bit size of the entries in the schema.
 	 *
 	 * @remarks
 	 *
@@ -33,6 +33,18 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 */
 	public get bitSize(): number | null {
 		return this.#bitSize;
+	}
+
+	/**
+	 * The total bit size of the entries in the schema and the ID.
+	 *
+	 * @remarks
+	 *
+	 * If any of the entries have a bit size of `null`, the total bit size of
+	 * the schema will also be `null`.
+	 */
+	public get totalBitSize(): number | null {
+		return this.#bitSize === null ? null : this.#bitSize + 16;
 	}
 
 	/**
@@ -63,7 +75,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * The schema's ID is written to the buffer first, followed by each property
 	 * in the schema.
 	 */
-	public serialize(buffer: UnalignedUint16Array, value: Readonly<UnwrapSchemaEntries<Entries>>): void {
+	public serialize(buffer: UnalignedUint16Array, value: Readonly<SerializeValueEntries<Entries>>): void {
 		buffer.writeInt16(this.#id);
 		for (const [name, type] of this)
 			(type as IType<any, number | null>).serialize(buffer, (value as any)[name]);
@@ -104,7 +116,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	public array<const Name extends string, const ValueType, const ValueBitSize extends number | null>(
 		name: Name,
 		type: IType<ValueType, ValueBitSize>,
-	): Merge<Id, Entries, Name, IType<ValueType[], null>> {
+	): Merge<Id, Entries, Name, IType<ValueType[], null, ValueType[]>> {
 		return this.#addType(name, t.array(type));
 	}
 
@@ -122,7 +134,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 		name: Name,
 		type: IType<ValueType, ValueBitSize>,
 		length: number,
-	): Merge<Id, Entries, Name, IType<ValueType[], ValueBitSize extends null ? null : number>> {
+	): Merge<Id, Entries, Name, IType<ValueType[], ValueBitSize extends null ? null : number, ValueType[]>> {
 		return this.#addType(name, t.fixedLengthArray(type, length));
 	}
 
@@ -132,7 +144,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public string<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<string, null>> {
+	public string<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<string, null, string>> {
 		return this.#addType(name, t.string);
 	}
 
@@ -142,7 +154,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public boolean<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<boolean, 1>> {
+	public boolean<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<boolean, 1, boolean>> {
 		return this.#addType(name, t.boolean);
 	}
 
@@ -152,7 +164,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public bit<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 1>> {
+	public bit<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<0 | 1, 1, number>> {
 		return this.#addType(name, t.bit);
 	}
 
@@ -166,7 +178,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public int2<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 2>> {
+	public int2<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 2, number>> {
 		return this.#addType(name, t.int2);
 	}
 
@@ -180,7 +192,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public uint2<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 2>> {
+	public uint2<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 2, number>> {
 		return this.#addType(name, t.uint2);
 	}
 
@@ -194,7 +206,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public int4<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 4>> {
+	public int4<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 4, number>> {
 		return this.#addType(name, t.int4);
 	}
 
@@ -208,7 +220,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public uint4<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 4>> {
+	public uint4<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 4, number>> {
 		return this.#addType(name, t.uint4);
 	}
 
@@ -222,7 +234,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public int8<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 8>> {
+	public int8<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 8, number>> {
 		return this.#addType(name, t.int8);
 	}
 
@@ -236,7 +248,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public uint8<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 8>> {
+	public uint8<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 8, number>> {
 		return this.#addType(name, t.uint8);
 	}
 
@@ -250,7 +262,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public int16<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 16>> {
+	public int16<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 16, number>> {
 		return this.#addType(name, t.int16);
 	}
 
@@ -264,7 +276,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public uint16<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 16>> {
+	public uint16<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 16, number>> {
 		return this.#addType(name, t.uint16);
 	}
 
@@ -278,7 +290,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public int32<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 32>> {
+	public int32<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 32, number>> {
 		return this.#addType(name, t.int32);
 	}
 
@@ -292,7 +304,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public uint32<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 32>> {
+	public uint32<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 32, number>> {
 		return this.#addType(name, t.uint32);
 	}
 
@@ -308,7 +320,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public int64<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 64>> {
+	public int64<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 64, number>> {
 		return this.#addType(name, t.int64);
 	}
 
@@ -324,7 +336,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public uint64<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 64>> {
+	public uint64<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 64, number>> {
 		return this.#addType(name, t.uint64);
 	}
 
@@ -338,7 +350,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public bigInt32<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<bigint, 32>> {
+	public bigInt32<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<bigint, 32, bigint>> {
 		return this.#addType(name, t.bigInt32);
 	}
 
@@ -352,7 +364,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public bigUint32<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<bigint, 32>> {
+	public bigUint32<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<bigint, 32, bigint>> {
 		return this.#addType(name, t.bigUint32);
 	}
 
@@ -366,7 +378,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public bigInt64<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<bigint, 64>> {
+	public bigInt64<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<bigint, 64, bigint>> {
 		return this.#addType(name, t.bigInt64);
 	}
 
@@ -380,7 +392,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public bigUint64<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<bigint, 64>> {
+	public bigUint64<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<bigint, 64, bigint>> {
 		return this.#addType(name, t.bigUint64);
 	}
 
@@ -394,7 +406,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public float32<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 32>> {
+	public float32<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 32, number>> {
 		return this.#addType(name, t.float32);
 	}
 
@@ -408,8 +420,22 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public float64<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 64>> {
+	public float64<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<number, 64, number>> {
 		return this.#addType(name, t.float64);
+	}
+
+	/**
+	 * Adds a nullable property to the schema.
+	 *
+	 * @param name The name of the property
+	 * @param type The type of the underlying value
+	 * @returns The modified schema
+	 */
+	public nullable<const Name extends string, const ValueType, const ValueBitSize extends number | null>(
+		name: Name,
+		type: IType<ValueType, ValueBitSize>,
+	): Merge<Id, Entries, Name, IType<ValueType | null, null, ValueType | null | undefined>> {
+		return this.#addType(name, t.nullable(type));
 	}
 
 	/**
@@ -422,8 +448,21 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * @param name The name of the property
 	 * @returns The modified schema
 	 */
-	public snowflake<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<bigint, 64>> {
+	public snowflake<const Name extends string>(name: Name): Merge<Id, Entries, Name, IType<bigint, 64, string | bigint>> {
 		return this.#addType(name, t.snowflake);
+	}
+
+	/**
+	 * Adds a constant value in the schema, this will **not** be serialized and
+	 * can be used to add extra data without making the payload bigger.
+	 *
+	 * @param name The name of the property
+	 * @param constantValue The value to add to the schema
+	 * @returns The modified schema
+	 */
+	// eslint-disable-next-line ts/explicit-function-return-type, ts/explicit-module-boundary-types -- not sure why
+	public constant<const Name extends string, const ValueType>(name: Name, constantValue: ValueType) {
+		return this.#addType(name, t.constant(constantValue));
 	}
 
 	/**
@@ -462,9 +501,9 @@ export class Schema<Id extends number = number, Entries extends object = object>
 		return this.entries();
 	}
 
-	#addType<const EntryName extends string, const ValueType, const ValueBitSize extends number | null>(
+	#addType<const EntryName extends string, const ValueType, const ValueBitSize extends number | null, InputValue>(
 		name: EntryName,
-		type: IType<ValueType, ValueBitSize>,
+		type: IType<ValueType, ValueBitSize, InputValue>,
 	): Merge<Id, Entries, EntryName, typeof type> {
 		if (this.#types.has(name))
 			throw new Error(`Schema with id ${this.#id} already has a property with name "${name}"`);
@@ -484,6 +523,10 @@ type Merge<Id extends number, Entries extends object, EntryName extends string, 
 export type KeyOfSchema<SchemaValue extends object> = SchemaValue extends Schema<infer _, infer Type> ? keyof Type & string : never;
 export type ValueOfSchema<SchemaValue extends object> = SchemaValue extends Schema<infer _, infer Type> ? { [K in keyof Type]: Type[K] }[keyof Type] : never;
 export type EntryOfSchema<SchemaValue extends object> = SchemaValue extends Schema<infer _, infer Type> ? { [K in keyof Type]: readonly [K, Type[K]] }[keyof Type] : never;
-export type UnwrapSchemaType<Type extends object> = Type extends IType<infer T, infer _> ? T : never;
+export type UnwrapSchemaType<Type extends object> = Type extends IType<infer ValueType, infer _BitSize, infer _InputType> ? ValueType : never;
 export type UnwrapSchemaEntries<Entries extends object> = { [K in keyof Entries]: UnwrapSchemaType<Entries[K] & object> } & object;
-export type UnwrapSchema<SchemaValue extends object> = SchemaValue extends Schema<infer _, infer Type> ? UnwrapSchemaEntries<Type> : never;
+export type UnwrapSchema<SchemaValue extends object> = SchemaValue extends Schema<infer _Id, infer Type> ? UnwrapSchemaEntries<Type> : never;
+type OmitNever<T> = { [K in keyof T as T[K] extends never ? never : K]: T[K] };
+export type SerializeValueType<Type extends object> = Type extends IType<infer _ValueType, infer _BitSize, infer InputType> ? InputType : never;
+export type SerializeValueEntries<Entries extends object> = OmitNever<{ [K in keyof Entries]: SerializeValueType<Entries[K] & object> }>;
+export type SerializeValue<SchemaValue extends object> = SchemaValue extends Schema<infer _Id, infer Type> ? SerializeValueEntries<Type> : never;
