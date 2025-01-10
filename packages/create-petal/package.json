@@ -2,7 +2,7 @@
 	"$schema": "https://json.schemastore.org/package.json",
 	"name": "create-petal",
 	"type": "module",
-	"version": "5.0.0",
+	"version": "5.1.0",
 	"description": "A CLI utility to create a new Petal app",
 	"author": "@flowr",
 	"contributors": ["Pauline <git@ethanlibs.co>"],
