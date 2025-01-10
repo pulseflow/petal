@@ -11,7 +11,7 @@ import { FetchResultTypes, type RequestOptions } from './types';
  *
  * @returns A JSON of the response body. Defaults to `unknown`, with the type set by passing the generic type of this function, or casting the result.
  */
-export async function fetch<R>(url: URL | string, type?: FetchResultTypes.JSON): Promise<R>;
+export async function fetch<FetchResult>(url: URL | string, type?: FetchResultTypes.JSON): Promise<FetchResult>;
 /**
  * Performs an HTTP(S) fetch
  *
@@ -22,7 +22,7 @@ export async function fetch<R>(url: URL | string, type?: FetchResultTypes.JSON):
  *
  * @returns A JSON of the response body. Defaults to `unknown`, with the type set by passing the generic type of this function, or casting the result.
  */
-export async function fetch<R>(url: URL | string, options: RequestOptions, type?: FetchResultTypes.JSON): Promise<R>;
+export async function fetch<FetchResult>(url: URL | string, options: RequestOptions, type?: FetchResultTypes.JSON): Promise<FetchResult>;
 /**
  * Performs an HTTP(S) fetch
  *
@@ -122,7 +122,7 @@ export async function fetch(url: URL | string, options: RequestOptions, type: Fe
  * - When using `FetchResultTypes.Text` the return type will be a `string`
  * - When using `FetchResultTypes.Result` the return type will be a {@linkplain https://developer.mozilla.org/en-US/docs/Web/API/Response `Response`} ({@link Response} in typescript)
  */
-export async function fetch<R>(url: URL | string, options: RequestOptions, type: FetchResultTypes): Promise<Response | Blob | Buffer | string | R>;
+export async function fetch<FetchResult>(url: URL | string, options: RequestOptions, type: FetchResultTypes): Promise<Response | Blob | Buffer | string | FetchResult>;
 /**
  * Performs an HTTP(S) fetch
  *
@@ -138,7 +138,7 @@ export async function fetch<R>(url: URL | string, options: RequestOptions, type:
  * - When using `FetchResultTypes.Text` the return type will be a `string`
  * - When using `FetchResultTypes.Result` the return type will be a {@linkplain https://developer.mozilla.org/en-US/docs/Web/API/Response `Response`} ({@link Response} in typescript)
  */
-export async function fetch<R>(url: URL | string, options?: RequestOptions | FetchResultTypes, type?: FetchResultTypes): Promise<Response | Blob | Buffer | string | R> {
+export async function fetch<FetchResult>(url: URL | string, options?: RequestOptions | FetchResultTypes, type?: FetchResultTypes): Promise<Response | Blob | Buffer | string | FetchResult> {
 	if (typeof options === 'undefined') {
 		options = {};
 		type = FetchResultTypes.JSON;

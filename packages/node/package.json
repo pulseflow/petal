@@ -70,6 +70,6 @@
 		"provenance": true
 	},
 	"devDependencies": {
-		"pathe": "^2.0.0"
+		"pathe": "^2.0.1"
 	}
 }

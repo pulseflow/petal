@@ -10,7 +10,7 @@ export const baseOptions: Options = {
 	entry: ['src/index.ts'],
 	esbuildPlugins: [],
 	experimentalDts: false,
-	external: [],
+	external: undefined,
 	ignoreWatch: [],
 	inject: [],
 	injectStyle: false,

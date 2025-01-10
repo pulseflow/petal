@@ -64,6 +64,7 @@
 		"./dist/esm/chunk-PZX3YXIQ.js",
 		"./dist/esm/chunk-IPNQ7HKI.js",
 		"./dist/esm/chunk-FQ6VNCUR.js",
+		"./dist/esm/chunk-AZJ5KC7K.js",
 		"./dist/esm/chunk-K5V3IMNL.js",
 		"./dist/esm/chunk-WUCDYGWB.js",
 		"./dist/esm/chunk-GAMLSS57.js",
@@ -107,7 +108,6 @@
 		"./dist/esm/chunk-HXWDVXPT.js",
 		"./dist/esm/chunk-K2RGD3BD.js",
 		"./dist/esm/chunk-CLRV5DI2.js",
-		"./dist/esm/chunk-CLCWNW5F.js",
 		"./dist/esm/chunk-YE66WIBM.js",
 		"./dist/esm/chunk-XYUJLUMM.js",
 		"./dist/esm/chunk-AZXYAT3D.js",
@@ -1009,7 +1009,7 @@
 	},
 	"devDependencies": {
 		"@flowr/types": "workspace:^",
-		"pathe": "^2.0.0"
+		"pathe": "^2.0.1"
 	},
 	"publishConfig": {
 		"access": "public",

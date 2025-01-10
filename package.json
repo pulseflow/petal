@@ -8,7 +8,7 @@
 	"engineStrict": true,
 	"author": "@flowr",
 	"contributors": [
-		"Pauline <git@ethanlibs.co>"
+		"Pauline <me@dyn.gay>"
 	],
 	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
@@ -57,21 +57,21 @@
 		"@types/node": "^22.10.5",
 		"@vitest/coverage-v8": "^2.1.8",
 		"@vitest/ui": "^2.1.8",
-		"bumpp": "^9.9.2",
+		"bumpp": "^9.10.0",
 		"colorette": "^2.0.20",
 		"destr": "^2.0.3",
-		"esbuild": "^0.24.0",
+		"esbuild": "^0.24.2",
 		"esbuild-plugin-file-path-extensions": "^2.1.4",
 		"eslint": "^9.17.0",
 		"jiti": "^2.4.2",
-		"jsdom": "^25.0.1",
+		"jsdom": "^26.0.0",
 		"jsr": "^0.13.2",
 		"msw": "^2.7.0",
-		"pathe": "^2.0.0",
+		"pathe": "^2.0.1",
 		"tsup": "^8.3.5",
 		"tsx": "^4.19.2",
 		"turbo": "^2.3.3",
-		"typescript": "^5.7.2",
+		"typescript": "^5.7.3",
 		"vite": "^6.0.7",
 		"vitest": "^2.1.8"
 	},
@@ -79,7 +79,11 @@
 		"patchedDependencies": {
 			"@types/jsdom": "./packages/patches/@types__jsdom.patch"
 		},
-		"onlyBuiltDependencies": ["@types/jsdom", "esbuild", "msw"]
+		"onlyBuiltDependencies": [
+			"@types/jsdom",
+			"esbuild",
+			"msw"
+		]
 	},
 	"resolutions": {
 		"@eslint-community/eslint-utils": "^4.4.1",

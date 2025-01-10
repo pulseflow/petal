@@ -1,4 +1,4 @@
-import { roundNumber } from './roundNumber';
+import { roundNumber } from './roundNumber.ts';
 
 const uniqueTransformError = `
 Looks like your from unit had a "unique transform".
@@ -15,17 +15,66 @@ export enum System {
 	SECONDARY = 'secondary',
 }
 
+/** Measure system data */
+export interface MeasurementSystemData {
+	/** The default unit to use */
+	default: string;
+	/** The ratio to convert to other measurement system */
+	ratio: number;
+
+	/** A transformation function when a simple ratio is not enough */
+	transform?: (arg: string | number) => number;
+}
+
+/** Array of supported unit definitions */
+export interface UnitDefinition {
+	/** Name of the unit definition */
+	name: string;
+	/** Primary measurement system data */
+	primary: MeasurementSystemData;
+	/** Secondary measurement system data */
+	secondary?: MeasurementSystemData;
+	/** Unit data that belongs to this unit's definition */
+	data: UnitData[];
+}
+
+/** Single property of definitions */
+export interface UnitData {
+	/** ID of the unit */
+	id: string;
+	/** Whether the unit is of primary or secondary system */
+	system: System;
+	/** Multiplier for the unit */
+	multiplier: number;
+	/** A zero value shift to use instead of a multiplier */
+	valueShift?: number;
+	/**
+	 * A unique transformation when default ratio and multiplier do not apply.
+	 *
+	 * @returns the final value returned by the convertion
+	 */
+	uniqueTransform?: (value: number) => string;
+}
+
+/** Options for the convert method */
+export interface ConvertOptions {
+	/** The decimal precision to return */
+	precision: number;
+}
+
+type ExtractUnits<T extends readonly UnitDefinition[]> = T[number]['data'][number]['id'];
+
 /**
  * All the unit definitions used by the library
  */
-export const definitions: UnitDefinition[] = [
+export const definitions = [
 	{
 		data: [
 			{ id: 'gf', multiplier: 9.80665, system: System.PRIMARY },
 			{ id: 'm/s2', multiplier: 1, system: System.PRIMARY },
 		],
 		name: 'acceleration',
-		primary: { default: 'g', ratio: 1 },
+		primary: { default: 'gf', ratio: 1 },
 	},
 	{
 		data: [
@@ -412,7 +461,9 @@ export const definitions: UnitDefinition[] = [
 		primary: { default: 'l/s', ratio: 33.8140227 },
 		secondary: { default: 'fl-oz/s', ratio: 1 / 33.8140227 },
 	},
-];
+] as const satisfies UnitDefinition[];
+
+export type Units = ExtractUnits<typeof definitions>;
 
 export enum ConverterErrorType {
 	MissingInput = 'MISSING_INPUT',
@@ -461,7 +512,8 @@ export class ConverterError extends Error {
  * ```
  * @public
  */
-export function convert(value: number, fromUnit: string, toUnit: string, options: ConvertOptions = { precision: 8 }): number | string {
+export function convert(value: number, fromUnit: Units, toUnit: Units, options: ConvertOptions = { precision: 8 }): number | string {
+	// eslint-disable-next-line ts/no-unnecessary-condition -- iife
 	if (!value || !fromUnit || !toUnit)
 		throw new ConverterError(ConverterErrorType.MissingInput, 'some input arguments are absent, please supply all arguments');
 	if (typeof value !== 'number')
@@ -471,7 +523,7 @@ export function convert(value: number, fromUnit: string, toUnit: string, options
 	if (typeof toUnit !== 'string')
 		throw new ConverterError(ConverterErrorType.ToUnitNotString, `the toUnit (${toUnit}) is not of type string`);
 
-	const supportedIds = Object.values(definitions).map((definition: UnitDefinition) => definition.data.map((data: UnitData) => data.id)).flat();
+	const supportedIds = Object.values(definitions).map((definition: UnitDefinition) => definition.data.map(data => data.id)).flat();
 
 	if (!supportedIds.includes(fromUnit))
 		throw new ConverterError(ConverterErrorType.FromUnitNotSupported, `the fromUnit (${fromUnit}) is not supported by this library`);
@@ -488,7 +540,7 @@ export function convert(value: number, fromUnit: string, toUnit: string, options
 	};
 
 	Object.values(definitions).forEach((d) => {
-		const idsInDefinition = d.data.map((unit: UnitData) => unit.id);
+		const idsInDefinition = d.data.map(unit => unit.id);
 		if (idsInDefinition.includes(fromUnit) && idsInDefinition.includes(toUnit))
 			definitionData = d;
 	});
@@ -521,51 +573,4 @@ export function convert(value: number, fromUnit: string, toUnit: string, options
 	if (toData.uniqueTransform)
 		return toData.uniqueTransform(result);
 	return roundNumber(result / toData.multiplier, options.precision);
-}
-
-/** Measure system data */
-export interface MeasurementSystemData {
-	/** The default unit to use */
-	default: string;
-	/** The ratio to convert to other measurement system */
-	ratio: number;
-
-	/** A transformation function when a simple ratio is not enough */
-	transform?: (arg: string | number) => number;
-}
-
-/** Array of supported unit definitions */
-export interface UnitDefinition {
-	/** Name of the unit definition */
-	name: string;
-	/** Primary measurement system data */
-	primary: MeasurementSystemData;
-	/** Secondary measurement system data */
-	secondary?: MeasurementSystemData;
-	/** Unit data that belongs to this unit's definition */
-	data: UnitData[];
-}
-
-/** Single property of definitions */
-export interface UnitData {
-	/** ID of the unit */
-	id: string;
-	/** Whether the unit is of primary or secondary system */
-	system: System;
-	/** Multiplier for the unit */
-	multiplier: number;
-	/** A zero value shift to use instead of a multiplier */
-	valueShift?: number;
-	/**
-	 * A unique transformation when default ratio and multiplier do not apply.
-	 *
-	 * @returns the final value returned by the convertion
-	 */
-	uniqueTransform?: (value: number) => string;
-}
-
-/** Options for the convert method */
-export interface ConvertOptions {
-	/** The decimal precision to return */
-	precision: number;
 }
