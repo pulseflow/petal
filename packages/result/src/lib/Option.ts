@@ -401,7 +401,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 *
 	 * Arguments passed to `okOr` are eagerly evaluated; if you are passing the result of a function call, it is
 	 * recommended to use {@link okOrElse}, which is lazily evaluated.
-	 * @param err The error to be used.
+	 * @param error The error to be used.
 	 *
 	 * @example
 	 * ```typescript
@@ -858,6 +858,8 @@ export class Option<T, Exists extends boolean = boolean> {
 	/**
 	 * Runs {@link ok `ok`} function if self is {@link Ok `Ok`}, otherwise runs {@link Err `Err`} function.
 	 * @param branches The branches to match.
+	 * @param branches.some The {@link Some `Some`} branch to match.
+	 * @param branches.none The {@link None `None`} branch to match.
 	 *
 	 * @example
 	 * ```typescript
@@ -1014,7 +1016,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	/**
 	 * Returns the first encountered {@link Some}, or a {@link None} if none was found.
 	 *
-	 * @param options An array of {@link Option}s.
+	 * @param results An array of {@link Option}s.
 	 * @returns A new {@link Option}.
 	 */
 	public static any<const Entries extends readonly AnyOption[]>(this: void, results: Entries): Option<UnwrapSome<Entries[number]>> {

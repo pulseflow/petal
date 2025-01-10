@@ -68,15 +68,15 @@ export async function vue(options: OptionsVue = {}): Promise<TypedFlatConfigItem
 			processor: sfcBlocks === false
 				? pluginVue.processors['.vue']
 				: mergeProcessors([
-					pluginVue.processors['.vue'],
-					(await interopDefault(import('eslint-processor-vue-blocks')))({
-						...sfcBlocks,
-						blocks: {
-							styles: true,
-							...sfcBlocks.blocks,
-						},
-					}),
-				]),
+						pluginVue.processors['.vue'],
+						(await interopDefault(import('eslint-processor-vue-blocks')))({
+							...sfcBlocks,
+							blocks: {
+								styles: true,
+								...sfcBlocks.blocks,
+							},
+						}),
+					]),
 			rules: {
 				...pluginVue.configs.base.rules,
 

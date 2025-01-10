@@ -966,6 +966,8 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	/**
 	 * Runs {@link ok `ok`} function if self is {@link Ok `Ok`}, otherwise runs {@link err `err`} function.
 	 * @param branches The branches to match.
+	 * @param branches.ok The {@link Ok `Ok`} branch to match.
+	 * @param branches.err The {@link Err `Err`} branch to match.
 	 *
 	 * @example
 	 * ```typescript

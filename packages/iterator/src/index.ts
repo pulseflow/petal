@@ -66,7 +66,7 @@ export * from './lib/range.ts';
 export * from './lib/reduce.ts';
 export * from './lib/repeat.ts';
 export * from './lib/reverse.ts';
-export type { LexicographicComparison, CompareByComparator } from './lib/shared/_compare.ts';
+export type { CompareByComparator, LexicographicComparison } from './lib/shared/_compare.ts';
 export type { NumberResolvable } from './lib/shared/_toNumberOrThrow.ts';
 export * from './lib/shared/comparators.ts';
 export * from './lib/skip.ts';

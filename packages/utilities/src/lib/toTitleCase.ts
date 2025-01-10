@@ -40,9 +40,9 @@ export function toTitleCase(str: string, options: ToTitleCaseOptions = {}): stri
 		...(caseSensitive
 			? additionalVariants
 			: Object.entries(additionalVariants).reduce<Record<string, string>>(
-				(variants, [key, variant]) => ({ ...variants, [key.toLowerCase()]: variant }),
-				{},
-			)),
+					(variants, [key, variant]) => ({ ...variants, [key.toLowerCase()]: variant }),
+					{},
+				)),
 	};
 
 	return str.replace(
