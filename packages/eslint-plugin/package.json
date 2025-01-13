@@ -61,14 +61,14 @@
 		"build": "tsup"
 	},
 	"peerDependencies": {
-		"eslint": "^9.17.0"
+		"eslint": "^9.18.0"
 	},
 	"dependencies": {
 		"@flowr/utilities": "workspace:^"
 	},
 	"devDependencies": {
 		"@typescript-eslint/utils": "^8.19.1",
-		"eslint": "^9.17.0",
+		"eslint": "^9.18.0",
 		"eslint-vitest-rule-tester": "^1.0.0",
 		"jsonc-eslint-parser": "^2.4.0"
 	},
