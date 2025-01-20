@@ -204,7 +204,7 @@
 		"fs-extra": "^11.2.0",
 		"jiti": "^2.4.2",
 		"magic-regexp": "^0.8.0",
-		"pathe": "^2.0.1",
+		"pathe": "^2.0.2",
 		"prettier-plugin-astro": "^0.14.1",
 		"prettier-plugin-slidev": "^1.0.5",
 		"svelte": "^5.17.3",
