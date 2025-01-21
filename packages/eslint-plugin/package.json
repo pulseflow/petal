@@ -6,7 +6,7 @@
 	"description": "Custom ESLint rules for the Petal specification",
 	"author": "@flowr",
 	"contributors": [
-		"Pauline <git@ethanlibs.co>"
+		"Pauline <me@dyn.gay>"
 	],
 	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
@@ -61,15 +61,16 @@
 		"build": "tsup"
 	},
 	"peerDependencies": {
-		"eslint": "^9.17.0"
+		"eslint": "^9.18.0"
 	},
 	"dependencies": {
 		"@flowr/utilities": "workspace:^"
 	},
 	"devDependencies": {
-		"@typescript-eslint/utils": "^8.19.1",
-		"eslint": "^9.17.0",
-		"eslint-vitest-rule-tester": "^1.0.0",
+		"@typescript-eslint/parser": "^8.21.0",
+		"@typescript-eslint/utils": "^8.21.0",
+		"eslint": "^9.18.0",
+		"eslint-vitest-rule-tester": "^1.1.0",
 		"jsonc-eslint-parser": "^2.4.0"
 	},
 	"publishConfig": {

@@ -4,7 +4,8 @@ import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_SRC, GLOB_TS, GLOB_TSX } from '../gl
 import { ensurePackages, interopDefault } from '../utils.ts';
 
 const ReactRefreshAllowConstantExportPackages = ['vite'];
-const RemixPackages = ['@remix-run/node', '@remix-run/react', '@remix-run/serve', '@remix-run/dev'];
+const RouterPackages = ['node', 'react', 'serve', 'dev'];
+const pkgSort = (i: string): boolean => isPackageExists(i);
 const NextJsPackages = ['next'];
 
 export async function react(options: OptionsReact = {}): Promise<TypedFlatConfigItem[]> {
@@ -20,9 +21,10 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
 		interopDefault(import('eslint-plugin-petal')),
 	] as const);
 
-	const isAllowConstantExport = ReactRefreshAllowConstantExportPackages.some(p => isPackageExists(p));
-	const isUsingRemix = RemixPackages.some(p => isPackageExists(p));
-	const isUsingNext = NextJsPackages.some(p => isPackageExists(p));
+	const isAllowConstantExport = ReactRefreshAllowConstantExportPackages.some(pkgSort);
+	const isUsingRemix = RouterPackages.map(i => `@remix-run/${i}`).some(pkgSort);
+	const isUsingNext = NextJsPackages.some(pkgSort);
+	const isUsingReactRouter = RouterPackages.map(i => `@react-router/${i}`).some(pkgSort);
 	const plugins = pluginReact.configs.all.plugins;
 	const isTypeAware = !!tsconfigPath;
 	const typeAwareRules: TypedFlatConfigItem['rules'] = {
@@ -39,6 +41,7 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
 				'react-hooks': pluginReactHooks,
 				'react-hooks-extra': plugins['@eslint-react/hooks-extra'],
 				'react-naming-convention': plugins['@eslint-react/naming-convention'],
+				'react-web-api': plugins['@eslint-react/web-api'],
 
 				...accessibility ? { 'jsx-a11y': await interopDefault(import('eslint-plugin-jsx-a11y')) } : {},
 			},
@@ -78,7 +81,7 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
 										'generateViewport',
 									]
 								: [],
-							...isUsingRemix
+							...isUsingRemix || isUsingReactRouter
 								? [
 										'meta',
 										'links',
@@ -108,6 +111,12 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
 				'react-hooks/exhaustive-deps': 'warn',
 				'react-hooks/rules-of-hooks': 'error',
 
+				// recommended rules from @eslint-react/web-api
+				'react-web-api/no-leaked-event-listener': 'warn',
+				'react-web-api/no-leaked-interval': 'warn',
+				'react-web-api/no-leaked-resize-observer': 'warn',
+				'react-web-api/no-leaked-timeout': 'warn',
+
 				// recommended rules from @eslint-react
 				'react/ensure-forward-ref-using-ref': 'warn',
 				'react/jsx-no-duplicate-props': 'warn',
@@ -131,7 +140,6 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
 				'react/no-implicit-key': 'warn',
 				'react/no-forward-ref': 'warn',
 				'react/no-duplicate-key': 'error',
-				'react/no-leaked-conditional-rendering': 'warn',
 				'react/no-missing-key': 'error',
 				'react/no-nested-components': 'error',
 				'react/no-prop-types': 'error',

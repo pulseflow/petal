@@ -57,7 +57,7 @@ export default createEslintRule<Options, MessageIds>({
 				const localComponents: TSESTree.Identifier[] = [];
 				const nonComponentExports: Array<TSESTree.BindingName | TSESTree.StringLiteral> = [];
 				const allowExportNames = new Set(options.allowExportNames);
-				const reactHOCs = new Set(['forwardRef', 'memo', ...options.customHOCs!]);
+				const reactHOCs = ['forwardRef', 'memo', ...(options.customHOCs ?? [])];
 				const reactContextExports: TSESTree.Identifier[] = [];
 
 				const canBeReactFunctionComponent = (init: TSESTree.VariableDeclaratorMaybeInit['init']): boolean => {
@@ -68,7 +68,7 @@ export default createEslintRule<Options, MessageIds>({
 						return true;
 
 					if (init.type === 'CallExpression' && init.callee.type === 'Identifier')
-						return reactHOCs.has(init.callee.name);
+						return reactHOCs.includes(init.callee.name);
 
 					return false;
 				};
@@ -132,10 +132,10 @@ export default createEslintRule<Options, MessageIds>({
 						if (node.callee.type === 'CallExpression' && node.callee.callee.type === 'Identifier' && node.callee.callee.name === 'connect')
 							ruleContext.hasReactExport = true;
 						else if (node.callee.type !== 'Identifier')
-							if (node.callee.type === 'MemberExpression' && node.callee.property.type === 'Identifier' && reactHOCs.has(node.callee.property.name))
+							if (node.callee.type === 'MemberExpression' && node.callee.property.type === 'Identifier' && reactHOCs.includes(node.callee.property.name))
 								ruleContext.hasReactExport = true;
 							else context.report({ messageId: 'anonymousExport', node });
-						else if (!reactHOCs.has(node.callee.name))
+						else if (!reactHOCs.includes(node.callee.name))
 							context.report({ messageId: 'anonymousExport', node });
 						else if (node.arguments[0].type === 'FunctionExpression' && node.arguments[0].id)
 							handleExportIdentifier(node.arguments[0].id, true);

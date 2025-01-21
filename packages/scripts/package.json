@@ -7,7 +7,7 @@
 	"description": "A set of scripts that we use for Petal workflows",
 	"author": "@flowr",
 	"contributors": [
-		"Pauline <git@ethanlibs.co>"
+		"Pauline <me@dyn.gay>"
 	],
 	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
@@ -57,9 +57,9 @@
 	},
 	"dependencies": {
 		"@actions/glob": "^0.5.0",
-		"commander": "^13.0.0",
+		"commander": "^13.1.0",
 		"tslib": "^2.8.1",
-		"undici": "^7.2.1",
+		"undici": "^7.2.3",
 		"yaml": "^2.7.0"
 	},
 	"devDependencies": {

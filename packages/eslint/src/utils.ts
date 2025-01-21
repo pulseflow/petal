@@ -13,7 +13,7 @@ const isCwdInScope = isPackageExists('@flowr/eslint');
  *
  * @public
  */
-export const parserPlain: Linter.Parser = {
+export const parserPlain = {
 	meta: {
 		name: 'parser-plain',
 	},
@@ -32,7 +32,7 @@ export const parserPlain: Linter.Parser = {
 			Program: [],
 		},
 	}),
-};
+} satisfies Linter.Parser;
 
 /**
  * Combine array and non-array configs into a single array.

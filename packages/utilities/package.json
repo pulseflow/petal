@@ -5,9 +5,7 @@
 	"version": "5.1.0",
 	"description": "Opinionated collection of common TypeScript utilities",
 	"author": "@flowr",
-	"contributors": [
-		"Pauline <git@ethanlibs.co>"
-	],
+	"contributors": ["Pauline <me@dyn.gay>"],
 	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
@@ -44,7 +42,6 @@
 		"./dist/esm/chunk-GQQ27P4R.js",
 		"./dist/esm/chunk-EK2N3TZC.js",
 		"./dist/esm/chunk-6KKGHQJA.js",
-		"./dist/esm/chunk-6IHQ4J7Q.js",
 		"./dist/esm/chunk-SMF4ZSAZ.js",
 		"./dist/esm/chunk-QCWMJ2E5.js",
 		"./dist/esm/chunk-3KHAGD5I.js",
@@ -64,7 +61,7 @@
 		"./dist/esm/chunk-PZX3YXIQ.js",
 		"./dist/esm/chunk-IPNQ7HKI.js",
 		"./dist/esm/chunk-FQ6VNCUR.js",
-		"./dist/esm/chunk-AZJ5KC7K.js",
+		"./dist/esm/chunk-UQMIIBOW.js",
 		"./dist/esm/chunk-K5V3IMNL.js",
 		"./dist/esm/chunk-WUCDYGWB.js",
 		"./dist/esm/chunk-GAMLSS57.js",
@@ -110,6 +107,7 @@
 		"./dist/esm/chunk-CLRV5DI2.js",
 		"./dist/esm/chunk-YE66WIBM.js",
 		"./dist/esm/chunk-XYUJLUMM.js",
+		"./dist/esm/chunk-UHYSAHTC.js",
 		"./dist/esm/chunk-AZXYAT3D.js",
 		"./dist/esm/chunk-SZIYVUQO.js",
 		"./dist/iife/index.global.js"
@@ -1009,7 +1007,7 @@
 	},
 	"devDependencies": {
 		"@flowr/types": "workspace:^",
-		"pathe": "^2.0.1"
+		"pathe": "^2.0.2"
 	},
 	"publishConfig": {
 		"access": "public",

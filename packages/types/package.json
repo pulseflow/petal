@@ -5,9 +5,7 @@
 	"version": "5.1.0",
 	"description": "Essential TypeScript types used in @flowr/utilities",
 	"author": "@flowr",
-	"contributors": [
-		"Pauline <git@ethanlibs.co>"
-	],
+	"contributors": ["Pauline <me@dyn.gay>"],
 	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",

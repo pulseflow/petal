@@ -12,9 +12,8 @@ const defaultOptions: Options = [{
 }];
 
 export default createEslintRule<Options, MessageIds>({
-	create: (context) => {
-		const { tags = ['$', 'unindent', 'unIndent'] } = context.options[0];
-		const tagSet = new Set(tags);
+	create: (context, [options = {}] = defaultOptions) => {
+		const tagSet = new Set(options.tags);
 
 		return {
 			TaggedTemplateExpression: (node) => {
