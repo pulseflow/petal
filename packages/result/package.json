@@ -2,7 +2,7 @@
 	"$schema": "https://json.schemastore.org/package.json",
 	"name": "@flowr/result",
 	"type": "module",
-	"version": "5.2.0",
+	"version": "5.3.0",
 	"description": "A TypeScript port of Rust's Result<T> and Option<T> structures",
 	"author": "@flowr",
 	"contributors": ["Pauline <me@dyn.gay>"],
