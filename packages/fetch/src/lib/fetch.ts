@@ -1,6 +1,7 @@
 /* eslint-disable node/prefer-global/buffer -- iife */
+import type { RequestOptions } from './types';
 import { QueryError } from './error';
-import { FetchResultTypes, type RequestOptions } from './types';
+import { FetchResultTypes } from './types';
 
 /**
  * Performs an HTTP(S) fetch

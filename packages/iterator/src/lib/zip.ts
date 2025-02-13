@@ -1,4 +1,5 @@
-import { from, type IterableResolvable } from './from.ts';
+import type { IterableResolvable } from './from.ts';
+import { from } from './from.ts';
 
 /**
  * Creates an iterable with the elements of the input iterables zipped together. The opposite of {@linkcode unzip}.

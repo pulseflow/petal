@@ -1,4 +1,5 @@
-import { from, type IterableResolvable } from './from.ts';
+import type { IterableResolvable } from './from.ts';
+import { from } from './from.ts';
 import { repeat } from './repeat.ts';
 import { assertNotNegative } from './shared/_assertNotNegative.ts';
 import { makeIterableIterator } from './shared/_makeIterableIterator.ts';

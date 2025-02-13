@@ -16,7 +16,7 @@ export async function stylistic(options: StylisticOptions = {}): Promise<TypedFl
 		interopDefault(import('eslint-plugin-petal')),
 	] as const);
 
-	const config = pluginStylistic.configs.customize({ flat: true, indent, jsx, pluginName: 'style', quotes, semi });
+	const config = pluginStylistic.configs.customize({ indent, jsx, pluginName: 'style', quotes, semi });
 
 	return [
 		{

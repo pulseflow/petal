@@ -59,40 +59,40 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
 			name: 'petal/react/rules',
 			rules: {
 				// react refresh petal
-				'petal/only-export-components': [
-					'warn',
-					{
-						allowConstantExport: isAllowConstantExport,
-						allowExportNames: [
-							...isUsingNext
-								? [
-										'dynamic',
-										'dynamicParams',
-										'revalidate',
-										'fetchCache',
-										'runtime',
-										'preferredRegion',
-										'maxDuration',
-										'config',
-										'generateStaticParams',
-										'metadata',
-										'generateMetadata',
-										'viewport',
-										'generateViewport',
-									]
-								: [],
-							...isUsingRemix || isUsingReactRouter
-								? [
-										'meta',
-										'links',
-										'headers',
-										'loader',
-										'action',
-									]
-								: [],
-						],
-					},
-				],
+				// 'petal/only-export-components': [
+				// 	'warn',
+				// 	{
+				// 		allowConstantExport: isAllowConstantExport,
+				// 		allowExportNames: [
+				// 			...isUsingNext
+				// 				? [
+				// 						'dynamic',
+				// 						'dynamicParams',
+				// 						'revalidate',
+				// 						'fetchCache',
+				// 						'runtime',
+				// 						'preferredRegion',
+				// 						'maxDuration',
+				// 						'config',
+				// 						'generateStaticParams',
+				// 						'metadata',
+				// 						'generateMetadata',
+				// 						'viewport',
+				// 						'generateViewport',
+				// 					]
+				// 				: [],
+				// 			...isUsingRemix || isUsingReactRouter
+				// 				? [
+				// 						'meta',
+				// 						'links',
+				// 						'headers',
+				// 						'loader',
+				// 						'action',
+				// 					]
+				// 				: [],
+				// 		],
+				// 	},
+				// ],
 
 				// recommended rules from @eslint-react/dom
 				'react-dom/no-children-in-void-dom-elements': 'warn',
@@ -166,11 +166,11 @@ export async function react(options: OptionsReact = {}): Promise<TypedFlatConfig
 		},
 		...isTypeAware
 			? [{
-					files: filesTypeAware,
-					ignores: ignoresTypeAware,
-					name: 'petal/react/type-aware-rules',
-					rules: { ...typeAwareRules },
-				}]
+				files: filesTypeAware,
+				ignores: ignoresTypeAware,
+				name: 'petal/react/type-aware-rules',
+				rules: { ...typeAwareRules },
+			} satisfies TypedFlatConfigItem]
 			: [],
 	];
 }

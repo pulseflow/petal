@@ -1,4 +1,5 @@
-import { Timestamp, type TimestampTemplateEntry } from '../src/lib/timestamp';
+import type { TimestampTemplateEntry } from '../src/lib/timestamp';
+import { Timestamp } from '../src/lib/timestamp';
 
 describe(`timestamp`, () => {
 	describe(`displayAfternoon`, () => {

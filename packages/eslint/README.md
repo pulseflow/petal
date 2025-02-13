@@ -664,9 +664,13 @@ export default defineConfig({
 
 ### editor specific disables
 
-certain rules are disabled when inside [eslint ide integrations](#ide-integration), namely [`unused-imports/no-unused-imports`] and [`petal/no-only-tests`].
+auto-fixing for the following rules are disabled when [eslitn is running in a code editor](#ide-integration):
 
-this is to prevent unused imports and temporary patches from getting removed by the ide during refactoring. those rules are applied when eslint is ran in the terminal. you can disable this behavior by manually setting `isInEditor`:
+- [`prefer-const`]
+- [`unused-imports/no-unused-imports`]
+- [`petal/no-only-tests`]
+
+this is to prevent unused imports and temporary patches from getting removed by the editor during refactoring. those rules are applied when eslint is ran in the terminal. you can disable this behavior by manually setting `isInEditor`:
 
 ```js
 // eslint.config.js
@@ -754,6 +758,7 @@ export default defineConfig({
 [`eslint-plugin-command`]: https://eslint-plugin-command.antfu.me/
 [`@eslint/config-inspector`]: https://github.com/eslint/config-inspector
 [`eslint-plugin-json-schema-validator`]: https://ota-meshi.github.io/eslint-plugin-json-schema-validator/
+[`prefer-const`]: https://eslint.org/docs/rules/prefer-const
 [`unused-imports/no-unused-imports`]: https://github.com/sweepline/eslint-plugin-unused-imports
 [`petal/no-only-tests`]: ../eslint-plugin/src/rules/no-only-tests.md
 [npm-version-src]: https://img.shields.io/npm/v/@flowr/eslint?style=flat&colorA=080f12&colorB=1fa669

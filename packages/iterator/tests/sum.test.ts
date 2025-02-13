@@ -25,15 +25,15 @@ describe('sum', () => {
 		expect(result).toEqual(3);
 	});
 
-	it('given iterable with strings then throws TypeError', () => {
+	it('given iterable with strings then throws RangeError', () => {
 		const iterable = ['a', 'e', 'c', 'b', 'd'];
 		// @ts-expect-error: Testing invalid input
-		expect(() => sum(iterable)).toThrow(new TypeError('a must be a non-NaN number'));
+		expect(() => sum(iterable)).toThrow(new RangeError('a must be a non-NaN number'));
 	});
 
-	it('given iterable with NaN then throws TypeError', () => {
+	it('given iterable with NaN then throws RangeError', () => {
 		const iterable = [1, 2, 3, Number.NaN, 5];
-		expect(() => sum(iterable)).toThrow(new TypeError('NaN must be a non-NaN number'));
+		expect(() => sum(iterable)).toThrow(new RangeError('NaN must be a non-NaN number'));
 	});
 
 	it('given iterable with bigints then throws TypeError', () => {
@@ -48,10 +48,10 @@ describe('sum', () => {
 		expect(() => sum(iterable)).toThrow(new TypeError('Cannot convert a Symbol value to a number'));
 	});
 
-	it('given iterable with objects then throws TypeError', () => {
+	it('given iterable with objects then throws RangeError', () => {
 		const iterable = [{ foo: 'bar' }, { hello: 'world' }, { bax: 'qux' }];
 		// @ts-expect-error: Testing invalid input
-		expect(() => sum(iterable)).toThrow(new TypeError('[object Object] must be a non-NaN number'));
+		expect(() => sum(iterable)).toThrow(new RangeError('[object Object] must be a non-NaN number'));
 	});
 
 	it('given objects with valueOf method then returns the sum of all numbers', () => {

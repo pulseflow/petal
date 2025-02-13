@@ -6,12 +6,10 @@ import * as consistentListNewline from './rules/consistent-list-newline';
 import * as fileHeader from './rules/file-header';
 import * as ifNewline from './rules/if-newline';
 import * as importDedupe from './rules/import-dedupe';
-import * as indentUnindent from './rules/indent-unindent';
 import * as noImportDist from './rules/no-import-dist';
 import * as noImportNodeModulesByPath from './rules/no-import-node-modules-by-path';
 import * as noOnlyTests from './rules/no-only-tests';
 import * as noTsExportEqual from './rules/no-ts-export-equal';
-import * as onlyExportComponents from './rules/only-export-components';
 import * as topLevelFunction from './rules/top-level-function';
 
 const rules: Readonly<{
@@ -20,11 +18,9 @@ const rules: Readonly<{
 	[fileHeader.RULE_NAME]: typeof fileHeader.default;
 	[ifNewline.RULE_NAME]: typeof ifNewline.default;
 	[importDedupe.RULE_NAME]: typeof importDedupe.default;
-	[indentUnindent.RULE_NAME]: typeof indentUnindent.default;
 	[noImportNodeModulesByPath.RULE_NAME]: typeof noImportNodeModulesByPath.default;
 	[noImportDist.RULE_NAME]: typeof noImportDist.default;
 	[noOnlyTests.RULE_NAME]: typeof noOnlyTests.default;
-	[onlyExportComponents.RULE_NAME]: typeof onlyExportComponents.default;
 	[noTsExportEqual.RULE_NAME]: typeof noTsExportEqual.default;
 	[topLevelFunction.RULE_NAME]: typeof topLevelFunction.default;
 }> = {
@@ -33,27 +29,40 @@ const rules: Readonly<{
 	[fileHeader.RULE_NAME]: fileHeader.default,
 	[ifNewline.RULE_NAME]: ifNewline.default,
 	[importDedupe.RULE_NAME]: importDedupe.default,
-	[indentUnindent.RULE_NAME]: indentUnindent.default,
 	[noImportDist.RULE_NAME]: noImportDist.default,
 	[noImportNodeModulesByPath.RULE_NAME]: noImportNodeModulesByPath.default,
 	[noOnlyTests.RULE_NAME]: noOnlyTests.default,
 	[noTsExportEqual.RULE_NAME]: noTsExportEqual.default,
-	[onlyExportComponents.RULE_NAME]: onlyExportComponents.default,
 	[topLevelFunction.RULE_NAME]: topLevelFunction.default,
-};
+} as const satisfies FlatConfig.Plugin['rules'];
+
 const meta = {
 	name: 'petal',
 	version,
-} as const;
+} as const satisfies FlatConfig.Plugin['meta'];
+
+const configs = {
+	recommended: {
+		name: 'petal/recommended',
+		plugins: {
+			get petal(): FlatConfig.Plugin {
+				return plugin;
+			},
+		},
+		rules: {},
+	},
+} as const satisfies FlatConfig.Plugin['configs'];
 
 const plugin = {
 	meta,
 	rules,
-} satisfies FlatConfig.Plugin;
+	configs,
+} as const satisfies FlatConfig.Plugin;
 
 type ESLintPluginPetal = FlatConfig.Plugin & {
 	meta: typeof meta;
 	rules: typeof rules;
+	configs: typeof configs;
 };
 
 export default plugin as ESLintPluginPetal;

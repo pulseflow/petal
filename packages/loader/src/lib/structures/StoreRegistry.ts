@@ -1,9 +1,10 @@
+import type { Path } from '../utils.ts';
 import type { Piece, PieceOptions } from './Piece';
 import type { Store, StoreManuallyRegisteredPiece } from './Store';
 import { isClass } from '@flowr/utilities';
 import { Collection } from '@flowr/utilities/collection';
 import { join } from 'pathe';
-import { getRootData, ManuallyRegisteredPiecesSymbol, type Path, resolvePath } from '../utils.ts';
+import { getRootData, ManuallyRegisteredPiecesSymbol, resolvePath } from '../utils.ts';
 
 /**
  * A strict-typed store registry. This is available in {@link container}.

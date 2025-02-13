@@ -20,7 +20,7 @@ export async function markdown(options: OptionsMarkdown = {}): Promise<TypedFlat
 			// `@eslint/markdown` only creates virtual files for code blocks,
 			// but not the markdown file itself. we use `eslint-merge-processors` to
 			// add a pass-through processor for the markdown file itself.
-			processor: mergeProcessors([pluginMarkdown.processors!.markdown, processorPassThrough]),
+			processor: mergeProcessors([pluginMarkdown.processors.markdown, processorPassThrough]),
 		},
 		{
 			files: options.files ?? [GLOB_MARKDOWN],
@@ -50,6 +50,7 @@ export async function markdown(options: OptionsMarkdown = {}): Promise<TypedFlat
 				'no-unused-labels': 'off',
 				'no-unused-vars': 'off',
 
+				'node/prefer-global/buffer': 'off',
 				'node/prefer-global/process': 'off',
 				'style/comma-dangle': 'off',
 

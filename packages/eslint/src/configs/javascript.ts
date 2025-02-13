@@ -171,7 +171,7 @@ export async function javascript(options: OptionsJavaScript = {}): Promise<Typed
 					},
 				],
 				'prefer-const': [
-					'error',
+					options.isInEditor ?? false ? 'warn' : 'error',
 					{
 						destructuring: 'all',
 						ignoreReadBeforeAssign: true,
@@ -185,7 +185,7 @@ export async function javascript(options: OptionsJavaScript = {}): Promise<Typed
 				'prefer-template': 'error',
 				'symbol-description': 'error',
 				'unicode-bom': ['error', 'never'],
-				'unused-imports/no-unused-imports': options.isInEditor ?? false ? 'off' : 'error',
+				'unused-imports/no-unused-imports': options.isInEditor ?? false ? 'warn' : 'error',
 				'unused-imports/no-unused-vars': [
 					'error',
 					{

@@ -1,6 +1,9 @@
-import type { UnalignedUint16Array } from './types/base/UnalignedUint16Array.ts';
-import { Pointer, type PointerLike } from './Pointer.ts';
-import { type IType, t } from './types/index.ts';
+import type { PointerLike } from './Pointer.ts';
+import type { DuplexBuffer } from './types/base/DuplexBuffer.ts';
+import type { IType } from './types/index.ts';
+import { Pointer } from './Pointer.ts';
+import { UnalignedUint16Array } from './types/base/UnalignedUint16Array.ts';
+import { t } from './types/index.ts';
 
 export class Schema<Id extends number = number, Entries extends object = object> {
 	readonly #id: Id;
@@ -65,6 +68,32 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	}
 
 	/**
+	 * Create a buffer and serialize a value into it, then convert it to a string
+	 *
+	 * @param value The value to serialize into the buffer
+	 * @param defaultMaximumArrayLength The default maximum array length, if any
+	 * @returns The newly created string.
+	 *
+	 * @seealso This method calls {@link Schema.serializeRaw} before calling `toString()` to its result.
+	 */
+	public serialize(value: Readonly<SerializeValueEntries<Entries>>, defaultMaximumArrayLength = 100): string {
+		return this.serializeRaw(value, defaultMaximumArrayLength).toString();
+	}
+
+	/**
+	 * Create a buffer and serialize a value into it.
+	 *
+	 * @param value The value to serialize into the buffer
+	 * @param defaultMaximumArrayLength The default maximum array length, if any
+	 * @returns The newly created buffer.
+	 */
+	public serializeRaw(value: Readonly<SerializeValueEntries<Entries>>, defaultMaximumArrayLength = 100): DuplexBuffer {
+		const buffer = new UnalignedUint16Array(this.totalBitSize ?? defaultMaximumArrayLength);
+		this.serializeInto(buffer, value);
+		return buffer;
+	}
+
+	/**
 	 * Serialize a value into a buffer.
 	 *
 	 * @param buffer The buffer to serialize
@@ -75,7 +104,7 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 * The schema's ID is written to the buffer first, followed by each property
 	 * in the schema.
 	 */
-	public serialize(buffer: UnalignedUint16Array, value: Readonly<SerializeValueEntries<Entries>>): void {
+	public serializeInto(buffer: DuplexBuffer, value: Readonly<SerializeValueEntries<Entries>>): void {
 		buffer.writeInt16(this.#id);
 		for (const [name, type] of this)
 			(type as IType<any, number | null>).serialize(buffer, (value as any)[name]);
@@ -90,16 +119,17 @@ export class Schema<Id extends number = number, Entries extends object = object>
 	 *
 	 * @remarks
 	 *
-	 * Unlike {@link Schema.serialize}, this method does not read the schema's ID
+	 * Unlike {@link Schema.serializeInto}, this method does not read the schema's ID
 	 * from the buffer, that is reserved for the {@link SchemaStore}.
 	 */
-	public deserialize(buffer: UnalignedUint16Array, pointer: PointerLike): UnwrapSchemaEntries<Entries> {
-		const ptr = Pointer.from(pointer);
+	public deserialize(buffer: DuplexBuffer | string, pointer: PointerLike): UnwrapSchemaEntries<Entries> {
+		buffer = UnalignedUint16Array.from(buffer);
+		pointer = Pointer.from(pointer);
 		const result = Object.create(null) as UnwrapSchemaEntries<Entries>;
 		for (const [name, type] of this)
 			// @ts-expect-error: Complex types
 			// eslint-disable-next-line ts/no-unsafe-call -- complex types
-			result[name] = type.deserialize(buffer, ptr);
+			result[name] = type.deserialize(buffer, pointer);
 
 		return result;
 	}

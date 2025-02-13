@@ -13,8 +13,4 @@ export default defineConfig({
 		},
 		tsconfigPath: 'tsconfig.json',
 	},
-}, {
-	files: ['packages/eslint-plugin/src/rules/**/*.test.ts'],
-	name: 'userland/test/indent',
-	rules: { 'petal/indent-unindent': 'error' },
 });

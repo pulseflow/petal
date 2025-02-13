@@ -1,3 +1,3 @@
 import { createVitestConfig } from '../scripts/vitest.config.ts';
 
-export default createVitestConfig`utils`;
+export default createVitestConfig`utilities`;

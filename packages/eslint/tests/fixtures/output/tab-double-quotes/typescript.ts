@@ -19,7 +19,7 @@ for (const person of people)
 	log(`Hello, my name is ${person.name} and I am ${person.age} years old.`);
 
 // Define a generic function
-function identity< T >(arg: T): T {
+function identity<T>(arg: T): T {
 	return arg;
 }
 

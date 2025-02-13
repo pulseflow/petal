@@ -1,5 +1,6 @@
+import type { LoaderPieceContext, PieceJSON, PieceOptions } from './Piece';
 import type { StoreRegistryKey } from './StoreRegistry';
-import { type LoaderPieceContext, Piece, type PieceJSON, type PieceOptions } from './Piece';
+import { Piece } from './Piece';
 
 export interface AliasPieceOptions extends PieceOptions {
 	/**

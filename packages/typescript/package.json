@@ -65,15 +65,15 @@
 		"src/**/*.json"
 	],
 	"engines": {
-		"node": ">=20"
+		"node": ">=22"
 	},
 	"peerDependencies": {
 		"typescript": ">=5"
 	},
 	"devDependencies": {
-		"@vitest/coverage-v8": "^3.0.2",
+		"@vitest/coverage-v8": "^3.0.5",
 		"typescript": "^5.7.3",
-		"vitest": "^3.0.2"
+		"vitest": "^3.0.5"
 	},
 	"publishConfig": {
 		"access": "public",

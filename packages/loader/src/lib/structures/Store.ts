@@ -1,14 +1,17 @@
 import type { AbstractConstructor, Constructor } from '@flowr/types';
+import type { HydratedModuleData, ILoaderResultEntry, ILoaderStrategy } from '../strategies/ILoaderStrategy';
+import type { Path } from '../utils.ts';
+import type { Container } from './Container';
 import type { Piece } from './Piece';
 import type { StoreRegistryEntries, StoreRegistryKey } from './StoreRegistry';
 import { classExtends, isClass } from '@flowr/utilities';
 import { Collection } from '@flowr/utilities/collection';
 import { join } from 'pathe';
 import { LoaderError, LoaderErrorType } from '../errors/LoaderError';
-import { type HydratedModuleData, hydrateModuleData, type ILoaderResultEntry, type ILoaderStrategy } from '../strategies/ILoaderStrategy';
+import { hydrateModuleData } from '../strategies/ILoaderStrategy';
 import { LoaderStrategy } from '../strategies/LoaderStrategy';
-import { ManuallyRegisteredPiecesSymbol, type Path, resolvePath, VirtualPath } from '../utils.ts';
-import { container, type Container } from './Container';
+import { ManuallyRegisteredPiecesSymbol, resolvePath, VirtualPath } from '../utils.ts';
+import { container } from './Container';
 
 /**
  * The options for the store, this features both hooks (changes the behaviour) and handlers (similar to event listeners).

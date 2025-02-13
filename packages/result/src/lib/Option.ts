@@ -1,7 +1,8 @@
 import type { Err, Ok, Result } from './Result.ts';
+import type { Awaitable, If } from './utils.ts';
 import { OptionError } from './error.ts';
 import { err, ok } from './Result.ts';
-import { type Awaitable, type If, isFunction, returnThis } from './utils.ts';
+import { isFunction, returnThis } from './utils.ts';
 
 const ValueProperty: unique symbol = Symbol.for('@flowr/result:Option.value');
 const ExistsProperty: unique symbol = Symbol.for('@flowr/result:Option.exists');

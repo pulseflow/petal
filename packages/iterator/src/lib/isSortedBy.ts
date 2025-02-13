@@ -1,6 +1,7 @@
 import type { IterableResolvable } from './from.ts';
+import type { CompareByComparator } from './shared/_compare.ts';
 import { assertFunction } from './shared/_assertFunction';
-import { type CompareByComparator, compareIteratorElements, orderingIsGreater } from './shared/_compare.ts';
+import { compareIteratorElements, orderingIsGreater } from './shared/_compare.ts';
 import { toIterableIterator } from './toIterableIterator.ts';
 
 /**

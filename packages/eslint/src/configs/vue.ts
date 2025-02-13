@@ -92,6 +92,7 @@ export async function vue(options: OptionsVue = {}): Promise<TypedFlatConfigItem
 							...pluginVue.configs['vue3-recommended'].rules,
 						},
 
+				'node/prefer-global/buffer': 'off',
 				'node/prefer-global/process': 'off',
 				'ts/explicit-function-return-type': 'off',
 				'vue/attributes-order': ['error', { alphabetical: true }],

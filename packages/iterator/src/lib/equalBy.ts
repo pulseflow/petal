@@ -1,4 +1,5 @@
-import { from, type IterableResolvable } from './from.ts';
+import type { IterableResolvable } from './from.ts';
+import { from } from './from.ts';
 import { assertFunction } from './shared/_assertFunction.ts';
 import { toIterableIterator } from './toIterableIterator.ts';
 

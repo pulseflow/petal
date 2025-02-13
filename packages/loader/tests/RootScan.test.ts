@@ -1,7 +1,8 @@
 import type { MockInstance } from 'vitest';
+import type { RootData } from '../src/lib/utils.ts';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'pathe';
-import { parseRootData, type RootData } from '../src/lib/utils.ts';
+import { parseRootData } from '../src/lib/utils.ts';
 
 let cwd: MockInstance<typeof process.cwd>;
 

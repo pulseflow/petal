@@ -41,7 +41,7 @@
 		"start:affected": "pnpm turbo run start --filter=...[origin/main] --concurrency=4",
 		"docs": "pnpm turbo run docs --concurrency=4",
 		"docs:affected": "pnpm turbo run docs --filter=...[origin/main] --concurrency=4",
-		"lint": "eslint --cache . --flag unstable_ts_config",
+		"lint": "eslint --cache .",
 		"lint:fix": "pnpm lint --fix",
 		"test": "vitest run",
 		"test:update": "vitest --update",
@@ -52,28 +52,28 @@
 	"devDependencies": {
 		"@arethetypeswrong/cli": "^0.17.3",
 		"@flowr/eslint": "workspace:^",
-		"@turbo/gen": "^2.3.3",
+		"@turbo/gen": "^2.4.2",
 		"@types/jsdom": "^21.1.7",
-		"@types/node": "^22.10.7",
-		"@vitest/coverage-v8": "^3.0.2",
-		"@vitest/ui": "^3.0.2",
-		"bumpp": "^9.10.1",
+		"@types/node": "^22.13.1",
+		"@vitest/coverage-v8": "^3.0.5",
+		"@vitest/ui": "^3.0.5",
+		"bumpp": "^10.0.3",
 		"colorette": "^2.0.20",
 		"destr": "^2.0.3",
-		"esbuild": "^0.24.2",
+		"esbuild": "^0.25.0",
 		"esbuild-plugin-file-path-extensions": "^2.1.4",
-		"eslint": "^9.18.0",
+		"eslint": "^9.20.1",
 		"jiti": "^2.4.2",
 		"jsdom": "^26.0.0",
 		"jsr": "^0.13.2",
 		"msw": "^2.7.0",
-		"pathe": "^2.0.2",
-		"tsup": "^8.3.5",
+		"pathe": "^2.0.3",
+		"tsup": "^8.3.6",
 		"tsx": "^4.19.2",
-		"turbo": "^2.3.3",
+		"turbo": "^2.4.2",
 		"typescript": "^5.7.3",
-		"vite": "^6.0.10",
-		"vitest": "^3.0.2"
+		"vite": "^6.1.0",
+		"vitest": "^3.0.5"
 	},
 	"pnpm": {
 		"patchedDependencies": {
@@ -87,9 +87,8 @@
 	},
 	"resolutions": {
 		"@eslint-community/eslint-utils": "^4.4.1",
-		"@typescript-eslint/utils": "^8.21.0",
-		"esbuild": "^0.24.2",
-		"eslint": "^9.18.0",
+		"@typescript-eslint/utils": "^8.24.0",
+		"eslint": "^9.20.1",
 		"tsx": "^4.19.2"
 	}
 }

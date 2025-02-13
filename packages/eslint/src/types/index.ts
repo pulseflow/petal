@@ -43,9 +43,7 @@ export interface TypedFlatConfigItem extends Omit<InternalFlatConfigItem, 'plugi
 
 export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType {
 	/**
-	 * Enable gitignore support.
-	 *
-	 * Passing an object to configure the options.
+	 * Enable `.gitignore` support.
 	 *
 	 * @default true
 	 */
@@ -59,7 +57,7 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
 	opinionated?: boolean;
 
 	/**
-	 * Core JavaScript rules. Can't be disabled.
+	 * Core JavaScript rules which can't be disabled, only overriden.
 	 *
 	 * @default {}
 	 */
@@ -67,8 +65,6 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
 
 	/**
 	 * Enable TypeScript support.
-	 *
-	 * Passing an object to enable TypeScript Language Server support.
 	 *
 	 * @see https://typescript-eslint.io/
 	 * @default auto-detect based on the dependencies
@@ -81,6 +77,14 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
 	 * @default true
 	 */
 	jsx?: boolean;
+
+	/**
+	 * Enable `eslint-plugin-n` support.
+	 *
+	 * @see https://github.com/eslint-community/eslint-plugin-n
+	 * @default true
+	 */
+	node?: boolean;
 
 	/**
 	 * Enable `eslint-plugin-unicorn` support.

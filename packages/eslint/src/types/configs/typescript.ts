@@ -21,7 +21,7 @@ export interface OptionsTypeScriptParserOptions extends OptionsOverrides {
 	filesTypeAware?: string[];
 
 	/**
-	 * Glob patterns for files that should not be type aware.
+	 * Glob patterns for files that should **not** be type aware.
 	 *
 	 * @see https://typescript-eslint.io/getting-started/typed-linting
 	 * @default ['**\/*.md\/**', '**\/*.astro/*.ts']

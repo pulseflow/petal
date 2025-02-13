@@ -32,9 +32,10 @@ export async function test(options: OptionsTest = {}): Promise<TypedFlatConfigIt
 			files,
 			name: 'petal/test/rules',
 			rules: {
+				'node/prefer-global/buffer': 'off',
 				'node/prefer-global/process': 'off',
 
-				'petal/no-only-tests': 'error',
+				'petal/no-only-tests': options.isInEditor ?? false ? 'warn' : 'error',
 
 				'test/consistent-test-it': ['error', { fn: 'it', withinDescribe: 'it' }],
 				'test/no-identical-title': 'error',

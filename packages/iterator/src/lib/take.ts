@@ -1,5 +1,6 @@
+import type { IterableResolvable } from './from.ts';
 import { empty } from './empty.ts';
-import { from, type IterableResolvable } from './from.ts';
+import { from } from './from.ts';
 import { assertNotNegative } from './shared/_assertNotNegative.ts';
 import { makeIterableIterator } from './shared/_makeIterableIterator.ts';
 import { toIntegerOrInfinityOrThrow } from './shared/_toIntegerOrInfinityOrThrow.ts';

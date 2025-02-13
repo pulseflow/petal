@@ -40,6 +40,8 @@
   color: fbca04
 - name: packages:crypto
   color: fbca04
+- name: packages:crypto
+  color: fbca04
 - name: packages:eslint
   color: fbca04
 - name: packages:eslint-plugin

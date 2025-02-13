@@ -1,4 +1,5 @@
 import type { Schema, SerializeValue, UnwrapSchema } from './Schema.ts';
+import type { DuplexBuffer } from './types/base/DuplexBuffer.ts';
 import { Pointer } from './Pointer.ts';
 import { UnalignedUint16Array } from './types/base/UnalignedUint16Array.ts';
 
@@ -59,13 +60,22 @@ export class SchemaStore<Entries extends object = object> {
 	 *
 	 * @param id The id of the schema to use for serialization
 	 * @param value The value to serialize
+	 * @returns The serialized string
+	 */
+	public serialize<const Id extends KeyOfStore<this>>(id: Id, value: SerializeValue<Entries[Id] & object>): string {
+		return this.serializeRaw(id, value).toString();
+	}
+
+	/**
+	 * Serializes a value using the schema with the given id
+	 *
+	 * @param id The id of the schema to use for serialization
+	 * @param value The value to serialize
 	 * @returns The serialized buffer
 	 */
-	public serialize<const Id extends KeyOfStore<this>>(id: Id, value: SerializeValue<Entries[Id] & object>): UnalignedUint16Array {
+	public serializeRaw<const Id extends KeyOfStore<this>>(id: Id, value: SerializeValue<Entries[Id] & object>): DuplexBuffer {
 		const schema = this.get(id) as Schema<Id>;
-		const buffer = new UnalignedUint16Array(schema.totalBitSize ?? this.defaultMaximumArrayLength);
-		schema.serialize(buffer, value);
-		return buffer;
+		return schema.serializeRaw(value, this.defaultMaximumArrayLength);
 	}
 
 	/**
@@ -74,7 +84,7 @@ export class SchemaStore<Entries extends object = object> {
 	 * @param buffer The buffer to deserialize
 	 * @returns The resolved value, including the id of the schema used for deserialization
 	 */
-	public deserialize(buffer: string | UnalignedUint16Array): DeserializationResult<Entries> {
+	public deserialize(buffer: string | DuplexBuffer): DeserializationResult<Entries> {
 		buffer = UnalignedUint16Array.from(buffer);
 		const pointer = new Pointer();
 		const id = buffer.readInt16(pointer) as KeyOfStore<this>;
@@ -93,7 +103,7 @@ export class SchemaStore<Entries extends object = object> {
 	 * If an empty value is passed, a {@linkcode RangeError} will be thrown.
 	 */
 	// eslint-disable-next-line ts/class-methods-use-this -- complex buffer
-	public getIdentifier(buffer: string | UnalignedUint16Array): KeyOfStore<this> {
+	public getIdentifier(buffer: string | DuplexBuffer): KeyOfStore<this> {
 		if (buffer.length === 0)
 			throw new RangeError('Expected a non-empty value');
 

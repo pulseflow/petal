@@ -3,7 +3,7 @@
 	"globalDependencies": ["tsconfig.json", "./packages/scripts/tsup.config.ts"],
 	"globalEnv": [],
 	"cacheDir": ".turbo/cache",
-	"daemon": true,
+	"daemon": false,
 	"envMode": "strict",
 	"ui": "stream",
 	"dangerouslyDisablePackageManagerCheck": false,

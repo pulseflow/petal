@@ -1,6 +1,8 @@
+import type { None, Option, Some } from './Option.ts';
+import type { Awaitable, If } from './utils.ts';
 import { ResultError } from './error.ts';
-import { none, type None, type Option, some, type Some } from './Option.ts';
-import { type Awaitable, type If, isFunction, returnThis } from './utils.ts';
+import { none, some } from './Option.ts';
+import { isFunction, returnThis } from './utils.ts';
 
 const ValueProperty: unique symbol = Symbol.for('@flowr/result:Result.value');
 const SuccessProperty: unique symbol = Symbol.for('@flowr/result:Result.success');

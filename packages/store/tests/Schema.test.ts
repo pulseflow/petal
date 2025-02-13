@@ -1,4 +1,5 @@
-import { type IType, Schema, SnowflakeType, StringType, t, UnalignedUint16Array } from '../src';
+import type { IType } from '../src';
+import { Schema, SnowflakeType, StringType, t, UnalignedUint16Array } from '../src';
 
 describe('schema', () => {
 	it('given a new instance then it has the correct properties', () => {
@@ -402,11 +403,40 @@ describe('schema', () => {
 	});
 
 	describe('serialization', () => {
-		it('given a schema with a boolean property then it serializes correctly', () => {
+		it('given a schema with a boolean property then it serializes correctly (serialize)', () => {
+			const schema = new Schema(4).boolean('a').int16('b');
+			const buffer = schema.serialize({ a: true, b: 15234 }, 3);
+			// The buffer has 3 values:
+			// - 4     (schema:id) & 0xffff (mask)
+			//
+			// - 1     (prop:a)    & 0b0001 (mask)
+			// | 15234 (prop:b)    & 0xffff (mask) << 1 (offset)
+			//
+			// - 15234 (prop:b)    & 0xffff (mask) >> 15 (shift)
+			expect(buffer).toBe('\x04\u{7705}\0');
+			const value = schema.deserialize(buffer, 16);
+			expect<{ a: boolean }>(value).toEqual({ a: true, b: 15234 });
+		});
+
+		it('given a schema with a boolean property then it serializes correctly (serializeRaw)', () => {
+			const schema = new Schema(4).boolean('a').int16('b');
+			const buffer = schema.serializeRaw({ a: true, b: 15234 }, 3);
+			// The buffer has 3 values:
+			// - 4     (schema:id) & 0xffff (mask)
+			//
+			// - 1     (prop:a)    & 0b0001 (mask)
+			// | 15234 (prop:b)    & 0xffff (mask) << 1 (offset)
+			//
+			// - 15234 (prop:b)    & 0xffff (mask) >> 15 (shift)
+			expect(buffer.toArray()).toEqual(new Uint16Array([4, 30469, 0]));
+			const value = schema.deserialize(buffer, 16);
+			expect<{ a: boolean }>(value).toEqual({ a: true, b: 15234 });
+		});
+
+		it('given a schema with a boolean property then it serializes correctly (serializeInto)', () => {
 			const buffer = new UnalignedUint16Array(3);
 			const schema = new Schema(4).boolean('a').int16('b');
-
-			schema.serialize(buffer, { a: true, b: 15234 });
+			schema.serializeInto(buffer, { a: true, b: 15234 });
 			// The buffer has 3 values:
 			// - 4     (schema:id) & 0xffff (mask)
 			//

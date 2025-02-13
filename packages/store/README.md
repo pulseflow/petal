@@ -12,7 +12,7 @@ pnpm add
 
 ## Usage
 
-**Note**: While this section uses `import`, the imports match 1:1 with CJS imports. For example, `const { SchemaStore } = require('@sapphire/string-store')` is equivalent to `import { SchemaStore } from '@sapphire/string-store'`.
+**Note**: While this section uses `import`, the imports match 1:1 with CJS imports. For example, `const { SchemaStore } = require('@flowr/store')` is equivalent to `import { SchemaStore } from '@flowr/store'`.
 
 ```ts
 // Require the store classes

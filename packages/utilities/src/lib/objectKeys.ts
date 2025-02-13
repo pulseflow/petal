@@ -1,3 +1,3 @@
-export function objectKeys<Object extends object>(obj: Object): Object extends ArrayLike<any> ? Array<`${number}`> : Array<keyof Object> {
-	return Object.keys(obj) as Object extends ArrayLike<infer Values> ? Values[] : Array<keyof Object>;
+export function objectKeys<T extends object>(obj: T): T extends ArrayLike<any> ? Array<`${number}`> : Array<keyof T> {
+	return Object.keys(obj) as T extends ArrayLike<any> ? Array<`${number}`> : Array<keyof T>;
 }

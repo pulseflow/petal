@@ -1,7 +1,9 @@
 import type { Awaitable } from '@flowr/types';
+import type { Container } from './Container';
+import type { PieceLocationJSON } from './PieceLocation';
 import type { StoreOf, StoreRegistryKey } from './StoreRegistry';
-import { container, type Container } from './Container';
-import { PieceLocation, type PieceLocationJSON } from './PieceLocation';
+import { container } from './Container';
+import { PieceLocation } from './PieceLocation';
 
 /**
  * The context for the piece, contains extra information from the store,

@@ -1,4 +1,5 @@
-import { defineConfig, type ViteUserConfig } from 'vitest/config';
+import type { ViteUserConfig } from 'vitest/config';
+import { defineConfig } from 'vitest/config';
 
 export function createVitestConfig(name: string | TemplateStringsArray, options: ViteUserConfig = {}): ViteUserConfig {
 	return defineConfig({

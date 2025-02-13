@@ -1,4 +1,6 @@
-import { Pointer, type PointerLike } from '../../Pointer.ts';
+import type { PointerLike } from '../../Pointer.ts';
+import type { DuplexBuffer } from './DuplexBuffer.ts';
+import { Pointer } from '../../Pointer.ts';
 
 const ConverterUint8 = new Uint8Array(8);
 const ConverterUint16 = new Uint16Array(ConverterUint8.buffer);
@@ -9,7 +11,7 @@ const ConverterInt64 = new BigInt64Array(ConverterUint8.buffer);
 const ConverterFloat = new Float32Array(ConverterUint8.buffer);
 const ConverterDouble = new Float64Array(ConverterUint8.buffer);
 
-export class UnalignedUint16Array {
+export class UnalignedUint16Array implements DuplexBuffer {
 	#buffer: Uint16Array;
 	#bitLength = 0;
 	#wordIndex = 0;
@@ -298,8 +300,8 @@ export class UnalignedUint16Array {
 		this.#wordLength++;
 	}
 
-	public static from(value: string | UnalignedUint16Array): UnalignedUint16Array {
-		if (value instanceof UnalignedUint16Array)
+	public static from(value: string | DuplexBuffer): DuplexBuffer {
+		if (typeof value !== 'string')
 			return value;
 
 		const buffer = new UnalignedUint16Array(value.length);

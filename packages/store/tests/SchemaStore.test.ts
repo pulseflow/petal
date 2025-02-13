@@ -1,4 +1,4 @@
-import type { Float64Type } from '../src';
+import type { DuplexBuffer, Float64Type } from '../src';
 import { Schema, SchemaStore, UnalignedUint16Array } from '../src';
 
 describe('schemaStore', () => {
@@ -29,23 +29,24 @@ describe('schemaStore', () => {
 		it('given a schema and a value then it serializes and deserializes the buffer correctly', () => {
 			const store = new SchemaStore(10).add(new Schema(2).string('name').float64('height'));
 
-			const buffer = store.serialize(2, { name: 'Mario', height: 1.8 });
+			const buffer = store.serializeRaw(2, { name: 'Mario', height: 1.8 });
 			const deserialized = store.deserialize(buffer);
 			expect<{ id: 2; data: { height: number } }>(deserialized).toEqual({ id: 2, data: { name: 'Mario', height: 1.8 } });
 
 			expect<2>(store.getIdentifier(buffer)).toBe(2);
 			expect<2>(store.getIdentifier(buffer.toString())).toBe(2);
+			expectTypeOf(buffer).toEqualTypeOf<DuplexBuffer>();
 		});
 
 		it('given a schema and a value then it serializes and deserializes the binary string correctly', () => {
 			const store = new SchemaStore(10).add(new Schema(2).string('name').float64('height'));
 
 			const buffer = store.serialize(2, { name: 'Mario', height: 1.8 });
-			const deserialized = store.deserialize(buffer.toString());
+			const deserialized = store.deserialize(buffer);
 			expect<{ id: 2; data: { height: number } }>(deserialized).toEqual({ id: 2, data: { name: 'Mario', height: 1.8 } });
 
 			expect<2>(store.getIdentifier(buffer)).toBe(2);
-			expect<2>(store.getIdentifier(buffer.toString())).toBe(2);
+			expectTypeOf(buffer).toEqualTypeOf<string>();
 		});
 
 		it('given a schema with a constant then it serializes and deserializes the buffer correctly', () => {

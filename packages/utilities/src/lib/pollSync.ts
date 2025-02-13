@@ -47,7 +47,7 @@ export function pollSync<Return>(cb: () => Return, cbCondition: (value: Return) 
 			throw new DOMException('This operation was aborted', 'AbortError');
 		if (waitBetweenRetries > 0) {
 			if (options.verbose)
-				// eslint-disable-next-line no-console -- info logging
+				// eslint-disable-next-line no-console -- yeah
 				console.log(`Waiting ${waitBetweenRetries}ms before polling again...`);
 			sleepSync(waitBetweenRetries);
 		}

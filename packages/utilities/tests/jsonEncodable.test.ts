@@ -1,4 +1,5 @@
-import { isJSONEncodable, type JSONEncodable } from '../src/lib/jsonEncodable';
+import type { JSONEncodable } from '../src/lib/jsonEncodable';
+import { isJSONEncodable } from '../src/lib/jsonEncodable';
 
 class Encodable implements JSONEncodable<{
 	meow: string;

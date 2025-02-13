@@ -1,4 +1,5 @@
-import { getDeepObjectKeys, type GetDeepObjectKeysOptions } from '../src';
+import type { GetDeepObjectKeysOptions } from '../src';
+import { getDeepObjectKeys } from '../src';
 
 describe('getDeepObjectKeys', () => {
 	const scenarios: Scenario[] = [

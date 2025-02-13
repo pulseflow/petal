@@ -5,7 +5,9 @@
 	"version": "5.2.0",
 	"description": "Opinionated collection of common TypeScript utilities",
 	"author": "@flowr",
-	"contributors": ["Pauline <me@dyn.gay>"],
+	"contributors": [
+		"Pauline <me@dyn.gay>"
+	],
 	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
@@ -36,7 +38,6 @@
 		"./dist/esm/chunk-5D2TBMQN.js",
 		"./dist/esm/chunk-UXJTKJQU.js",
 		"./dist/esm/chunk-GBICWU25.js",
-		"./dist/esm/chunk-7OLL5IN4.js",
 		"./dist/esm/chunk-N7LXSAF2.js",
 		"./dist/esm/chunk-QAJAZWBL.js",
 		"./dist/esm/chunk-GQQ27P4R.js",
@@ -46,7 +47,6 @@
 		"./dist/esm/chunk-QCWMJ2E5.js",
 		"./dist/esm/chunk-3KHAGD5I.js",
 		"./dist/esm/chunk-HFABF7LA.js",
-		"./dist/esm/chunk-W3A5COZA.js",
 		"./dist/esm/chunk-3RGNDQFH.js",
 		"./dist/esm/chunk-QWDAQH4J.js",
 		"./dist/esm/chunk-JBPLL3WN.js",
@@ -55,19 +55,20 @@
 		"./dist/esm/chunk-YO24QW7U.js",
 		"./dist/esm/chunk-4X33FJXC.js",
 		"./dist/esm/chunk-MI3YHEDY.js",
-		"./dist/esm/chunk-7WMK52DC.js",
 		"./dist/esm/chunk-M4EL5XHZ.js",
 		"./dist/esm/chunk-XU4VQA6E.js",
 		"./dist/esm/chunk-PZX3YXIQ.js",
 		"./dist/esm/chunk-IPNQ7HKI.js",
 		"./dist/esm/chunk-FQ6VNCUR.js",
 		"./dist/esm/chunk-UQMIIBOW.js",
+		"./dist/esm/chunk-MBKH65RG.js",
 		"./dist/esm/chunk-K5V3IMNL.js",
 		"./dist/esm/chunk-WUCDYGWB.js",
 		"./dist/esm/chunk-GAMLSS57.js",
 		"./dist/esm/chunk-DNKF52KZ.js",
 		"./dist/esm/chunk-E3BLVHJY.js",
 		"./dist/esm/chunk-6RCL46UG.js",
+		"./dist/esm/chunk-3X4ONC5T.js",
 		"./dist/esm/chunk-BRYQC7ZV.js",
 		"./dist/esm/chunk-VV45RV77.js",
 		"./dist/esm/chunk-TWPQRIYA.js",
@@ -77,6 +78,7 @@
 		"./dist/esm/chunk-VTA5WZ7F.js",
 		"./dist/esm/chunk-OAOGU5I5.js",
 		"./dist/esm/chunk-7UVTFIHZ.js",
+		"./dist/esm/chunk-QFSUO7VH.js",
 		"./dist/esm/chunk-MQMMOFTQ.js",
 		"./dist/esm/chunk-PRRKL2MU.js",
 		"./dist/esm/chunk-FBSMGDUQ.js",
@@ -86,7 +88,6 @@
 		"./dist/esm/chunk-P3ET2WKY.js",
 		"./dist/esm/chunk-NBLCMKV7.js",
 		"./dist/esm/chunk-ZEDYR3SF.js",
-		"./dist/esm/chunk-UPEYEHRM.js",
 		"./dist/esm/chunk-3GNFTKMG.js",
 		"./dist/esm/chunk-T6ORITVN.js",
 		"./dist/esm/chunk-Q3DZBJIJ.js",
@@ -106,6 +107,7 @@
 		"./dist/esm/chunk-K2RGD3BD.js",
 		"./dist/esm/chunk-CLRV5DI2.js",
 		"./dist/esm/chunk-YE66WIBM.js",
+		"./dist/esm/chunk-4EYG4JHI.js",
 		"./dist/esm/chunk-XYUJLUMM.js",
 		"./dist/esm/chunk-UHYSAHTC.js",
 		"./dist/esm/chunk-AZXYAT3D.js",
@@ -162,6 +164,26 @@
 			"require": {
 				"types": "./dist/cjs/lib/boundMethods.d.cts",
 				"default": "./dist/cjs/lib/boundMethods.cjs"
+			}
+		},
+		"./brand": {
+			"import": {
+				"types": "./dist/esm/lib/brand.d.ts",
+				"default": "./dist/esm/lib/brand.js"
+			},
+			"require": {
+				"types": "./dist/cjs/lib/brand.d.cts",
+				"default": "./dist/cjs/lib/brand.cjs"
+			}
+		},
+		"./branded": {
+			"import": {
+				"types": "./dist/esm/lib/branded.d.ts",
+				"default": "./dist/esm/lib/branded.js"
+			},
+			"require": {
+				"types": "./dist/cjs/lib/branded.d.cts",
+				"default": "./dist/cjs/lib/branded.cjs"
 			}
 		},
 		"./capitalizeFirstLetter": {
@@ -402,6 +424,26 @@
 			"require": {
 				"types": "./dist/cjs/lib/flattenArrayable.d.cts",
 				"default": "./dist/cjs/lib/flattenArrayable.cjs"
+			}
+		},
+		"./flavor": {
+			"import": {
+				"types": "./dist/esm/lib/flavor.d.ts",
+				"default": "./dist/esm/lib/flavor.js"
+			},
+			"require": {
+				"types": "./dist/cjs/lib/flavor.d.cts",
+				"default": "./dist/cjs/lib/flavor.cjs"
+			}
+		},
+		"./flavored": {
+			"import": {
+				"types": "./dist/esm/lib/flavored.d.ts",
+				"default": "./dist/esm/lib/flavored.js"
+			},
+			"require": {
+				"types": "./dist/cjs/lib/flavored.d.cts",
+				"default": "./dist/cjs/lib/flavored.cjs"
 			}
 		},
 		"./getDeepObjectKeys": {
@@ -992,7 +1034,7 @@
 		"dist/**/*.mjs"
 	],
 	"engines": {
-		"node": ">=20"
+		"node": ">=22"
 	},
 	"scripts": {
 		"build": "pnpm gen && tsup && pnpm run '/^build:.*/'",
@@ -1007,7 +1049,7 @@
 	},
 	"devDependencies": {
 		"@flowr/types": "workspace:^",
-		"pathe": "^2.0.2"
+		"pathe": "^2.0.3"
 	},
 	"publishConfig": {
 		"access": "public",

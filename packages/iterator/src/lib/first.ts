@@ -1,4 +1,5 @@
-import { from, type IterableResolvable } from './from.ts';
+import type { IterableResolvable } from './from.ts';
+import { from } from './from.ts';
 
 /**
  * Consumes the first element of the iterable, returning it if it's found and `undefined` otherwise.

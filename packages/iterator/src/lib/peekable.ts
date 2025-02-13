@@ -1,4 +1,5 @@
-import { from, type IterableResolvable } from './from.ts';
+import type { IterableResolvable } from './from.ts';
+import { from } from './from.ts';
 
 /**
  * Creates an iterator that allows you to peek at the next element without advancing the iterator.

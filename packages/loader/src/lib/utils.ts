@@ -144,20 +144,20 @@ const checkEnvVariable = (name: string, value?: string): boolean => value ? proc
  */
 export const CanLoadTypeScriptFiles: boolean
 	= Reflect.has(globalThis, 'Deno') // deno
-	|| 'bun' in process.versions // bun
-	|| Symbol.for('ts-node.register.instance') in process // ts-node/register
-	|| checkProcessArgv('ts-node/esm') // ts-node/esm
-	|| !isNullish(process.env.TS_NODE_DEV) // ts-node-dev
-	|| checkProcessArgv('babel-node') // @babel/node
-	|| checkEnvVariable('VITEST', 'true') // vitest
-	|| checkEnvVariable('VITEST_WORKER_ID') // vitest/worker
-	|| checkEnvVariable('JEST_WORKER_ID') // jest
-	|| checkPreloadModules('@swc/register') // swc/register
-	|| checkPreloadModules('@swc-node/register') // swc-node/register
-	|| checkProcessArgv('.bin/swc-node') // swc-node
-	|| checkPreloadModules('tsm') // tsm
-	|| checkPreloadModules('esbuild-register') // esbuild
-	|| checkPreloadModules('tsx'); // tsx
+		|| 'bun' in process.versions // bun
+		|| Symbol.for('ts-node.register.instance') in process // ts-node/register
+		|| checkProcessArgv('ts-node/esm') // ts-node/esm
+		|| !isNullish(process.env.TS_NODE_DEV) // ts-node-dev
+		|| checkProcessArgv('babel-node') // @babel/node
+		|| checkEnvVariable('VITEST', 'true') // vitest
+		|| checkEnvVariable('VITEST_WORKER_ID') // vitest/worker
+		|| checkEnvVariable('JEST_WORKER_ID') // jest
+		|| checkPreloadModules('@swc/register') // swc/register
+		|| checkPreloadModules('@swc-node/register') // swc-node/register
+		|| checkProcessArgv('.bin/swc-node') // swc-node
+		|| checkPreloadModules('tsm') // tsm
+		|| checkPreloadModules('esbuild-register') // esbuild
+		|| checkPreloadModules('tsx'); // tsx
 
 /**
  * Determines whether or not a value is a class.

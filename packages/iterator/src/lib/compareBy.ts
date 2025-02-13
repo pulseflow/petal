@@ -1,5 +1,7 @@
-import { from, type IterableResolvable } from './from.ts';
-import { type CompareByComparator, compareIteratorElements, type LexicographicComparison, orderingIsEqual, orderingIsLess } from './shared/_compare.ts';
+import type { IterableResolvable } from './from.ts';
+import type { CompareByComparator, LexicographicComparison } from './shared/_compare.ts';
+import { from } from './from.ts';
+import { compareIteratorElements, orderingIsEqual, orderingIsLess } from './shared/_compare.ts';
 import { toIterableIterator } from './toIterableIterator.ts';
 
 /**

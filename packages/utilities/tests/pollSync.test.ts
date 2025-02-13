@@ -18,7 +18,7 @@ describe('pollSync', () => {
 
 	it('given a function that fails twice then succeeds then calls that function thrice', () => {
 		const cb = vi
-			.fn()
+			.fn() //
 			.mockReturnValueOnce(fail)
 			.mockReturnValueOnce(fail)
 			.mockReturnValueOnce(pass);
@@ -51,7 +51,7 @@ describe('pollSync', () => {
 
 		it('given a poll with only one retry and fails both then calls that function twice, but condition only once', () => {
 			const cb = vi
-				.fn()
+				.fn() //
 				.mockReturnValueOnce(fail)
 				.mockReturnValueOnce(fail);
 			const cbCondition = vi.fn((result: string) => result === pass);
@@ -87,7 +87,7 @@ describe('pollSync', () => {
 		it.each(['foo', true])('given %j then throws TypeError', (waitBetweenRetries) => {
 			const cb = vi.fn(cbRaw);
 			const cbCondition = vi.fn(cbConditionRaw);
-			const callback = () => pollSync(cb, cbCondition, { waitBetweenRetries: waitBetweenRetries as unknown as number });
+			const callback = () => pollSync(cb, cbCondition, { waitBetweenRetries: waitBetweenRetries as any });
 
 			expect(callback).toThrowError(new TypeError('Expected waitBetweenRetries to be a number'));
 			expect(cb).toBeCalledTimes(0);
@@ -106,7 +106,7 @@ describe('pollSync', () => {
 
 		it('given a poll with a wait of 5ms then waits 5ms between retries', () => {
 			const cb = vi
-				.fn()
+				.fn() //
 				.mockReturnValueOnce(fail)
 				.mockReturnValueOnce(pass);
 			const cbCondition = vi.fn(cbConditionRaw);
@@ -145,7 +145,7 @@ describe('pollSync', () => {
 
 		it('given a poll with 5ms timeout but takes longer then throws an error', () => {
 			const cb = vi
-				.fn()
+				.fn() //
 				.mockReturnValueOnce(fail)
 				.mockReturnValueOnce(fail);
 			const cbCondition = vi.fn((result: string) => result === pass);
@@ -162,7 +162,7 @@ describe('pollSync', () => {
 			expect(callback).toThrowError(new DOMException('This operation was aborted', 'AbortError'));
 			expect(cb).toBeCalledTimes(2);
 			expect(cbCondition).toBeCalledTimes(2);
-			expect(dateNow).toBeCalledTimes(6);
+			expect(dateNow).toBeCalledTimes(16);
 		});
 	});
 

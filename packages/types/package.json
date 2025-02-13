@@ -5,7 +5,9 @@
 	"version": "5.2.0",
 	"description": "Essential TypeScript types used in @flowr/utilities",
 	"author": "@flowr",
-	"contributors": ["Pauline <me@dyn.gay>"],
+	"contributors": [
+		"Pauline <me@dyn.gay>"
+	],
 	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
@@ -33,11 +35,17 @@
 		".": {
 			"types": "./src/index.ts"
 		},
+		"./abstractClass": {
+			"types": "./src/lib/AbstractClass.ts"
+		},
 		"./abstractConstructor": {
 			"types": "./src/lib/AbstractConstructor.ts"
 		},
 		"./abstractCtor": {
 			"types": "./src/lib/AbstractCtor.ts"
+		},
+		"./accessorPropertyDescriptor": {
+			"types": "./src/lib/AccessorPropertyDescriptor.ts"
 		},
 		"./anyReadonlyArray": {
 			"types": "./src/lib/AnyReadonlyArray.ts"
@@ -51,6 +59,9 @@
 		"./arrayElementType": {
 			"types": "./src/lib/ArrayElementType.ts"
 		},
+		"./as": {
+			"types": "./src/lib/As.ts"
+		},
 		"./awaitable": {
 			"types": "./src/lib/Awaitable.ts"
 		},
@@ -59,6 +70,9 @@
 		},
 		"./builtin": {
 			"types": "./src/lib/Builtin.ts"
+		},
+		"./class": {
+			"types": "./src/lib/Class.ts"
 		},
 		"./constructor": {
 			"types": "./src/lib/Constructor.ts"
@@ -99,11 +113,23 @@
 		"./firstArgument": {
 			"types": "./src/lib/FirstArgument.ts"
 		},
+		"./functionKeys": {
+			"types": "./src/lib/FunctionKeys.ts"
+		},
 		"./if": {
 			"types": "./src/lib/If.ts"
 		},
+		"./is": {
+			"types": "./src/lib/Is.ts"
+		},
+		"./keyOf": {
+			"types": "./src/lib/KeyOf.ts"
+		},
 		"./lastOf": {
 			"types": "./src/lib/LastOf.ts"
+		},
+		"./maybeVoidable": {
+			"types": "./src/lib/MaybeVoidable.ts"
 		},
 		"./merge": {
 			"types": "./src/lib/Merge.ts"
@@ -141,7 +167,16 @@
 		"./optionalExcept": {
 			"types": "./src/lib/OptionalExcept.ts"
 		},
+		"./optionalParametersOf": {
+			"types": "./src/lib/OptionalParametersOf.ts"
+		},
+		"./or": {
+			"types": "./src/lib/Or.ts"
+		},
 		"./package.json": "./package.json",
+		"./paramatersOf": {
+			"types": "./src/lib/ParamatersOf.ts"
+		},
 		"./parametersExceptFirst": {
 			"types": "./src/lib/ParametersExceptFirst.ts"
 		},
@@ -159,6 +194,9 @@
 		},
 		"./primitive": {
 			"types": "./src/lib/Primitive.ts"
+		},
+		"./propertyKeys": {
+			"types": "./src/lib/PropertyKeys.ts"
 		},
 		"./pushArray": {
 			"types": "./src/lib/PushArray.ts"
@@ -192,6 +230,15 @@
 		},
 		"./unionToIntersection": {
 			"types": "./src/lib/UnionToIntersection.ts"
+		},
+		"./valueOf": {
+			"types": "./src/lib/ValueOf.ts"
+		},
+		"./voidable": {
+			"types": "./src/lib/Voidable.ts"
+		},
+		"./voidableArgument": {
+			"types": "./src/lib/VoidableArgument.ts"
 		}
 	},
 	"types": "src/index.ts",
@@ -201,7 +248,7 @@
 		"src/**/*.ts"
 	],
 	"engines": {
-		"node": ">=20"
+		"node": ">=22"
 	},
 	"scripts": {
 		"build": "pnpm gen && pnpm run '/^build:.*/'",

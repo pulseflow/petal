@@ -5,7 +5,9 @@
 	"version": "5.2.0",
 	"description": "High-capacity fast raw string storage with UTF-16",
 	"author": "@flowr",
-	"contributors": ["Pauline <me@dyn.gay>"],
+	"contributors": [
+		"Pauline <me@dyn.gay>"
+	],
 	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
@@ -55,7 +57,7 @@
 		"dist/**/*.mjs"
 	],
 	"engines": {
-		"node": ">=20"
+		"node": ">=22"
 	},
 	"scripts": {
 		"build": "tsup && pnpm build:cjs",
@@ -67,6 +69,6 @@
 		"provenance": true
 	},
 	"devDependencies": {
-		"pathe": "^2.0.2"
+		"pathe": "^2.0.3"
 	}
 }

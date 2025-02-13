@@ -1,6 +1,7 @@
 import type { IterableResolvable } from './from.ts';
+import type { NumberResolvable } from './shared/_toNumberOrThrow.ts';
 import { map } from './map.ts';
-import { type NumberResolvable, toNumberOrThrow } from './shared/_toNumberOrThrow.ts';
+import { toNumberOrThrow } from './shared/_toNumberOrThrow.ts';
 
 /**
  * Consumes the iterable and returns the average value of all the elements. If the iterable is empty, it returns `null`.

@@ -1,4 +1,5 @@
-import { from, type IterableResolvable } from './from.ts';
+import type { IterableResolvable } from './from.ts';
+import { from } from './from.ts';
 
 /**
  * Advances the iterable once, returning `true` if it's exhausted and `false` otherwise.

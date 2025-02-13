@@ -1,7 +1,8 @@
 // @vitest-environment jsdom
 
+import type { DOMWindow } from 'jsdom';
 import { readFile } from 'node:fs/promises';
-import { type DOMWindow, JSDOM } from 'jsdom';
+import { JSDOM } from 'jsdom';
 import { join } from 'pathe';
 
 describe('browser-bundle-test', () => {

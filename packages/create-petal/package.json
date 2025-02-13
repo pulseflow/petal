@@ -55,7 +55,7 @@
 		"dist/**/*.mjs"
 	],
 	"engines": {
-		"node": ">=20"
+		"node": ">=22"
 	},
 	"scripts": {
 		"build": "tsup",
@@ -63,7 +63,7 @@
 	},
 	"dependencies": {
 		"@astrojs/cli-kit": "^0.4.1",
-		"giget": "^1.2.3"
+		"giget": "^1.2.4"
 	},
 	"devDependencies": {
 		"@flowr/utilities": "workspace:^",

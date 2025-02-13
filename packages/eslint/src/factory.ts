@@ -60,7 +60,9 @@ export const DEFAULT_PLUGIN_RENAMING = {
 	'vitest': 'test',
 	'vuejs-accessibility': 'vue-a11y',
 	'yml': 'yaml',
-};
+} as const;
+
+export const DEFAULT_RULE_FIX = ['unused-imports/no-unused-imports', 'petal/no-only-tests', 'prefer-const'];
 
 export type FactoryOptions = OptionsConfig & Omit<TypedFlatConfigItem, 'files'>;
 export type UserConfig = Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer | Linter.Config[]>;
@@ -100,11 +102,13 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 	configs.push(ignores(options.ignores));
 	configs.push(javascript({ isInEditor, overrides: getOverrides(options, 'javascript') }));
 	configs.push(comments());
-	configs.push(node());
 	configs.push(jsdoc({ stylistic: stylisticOptions }));
 	configs.push(imports({ stylistic: stylisticOptions }));
 	configs.push(command());
 	configs.push(perfectionist());
+
+	if (options.node ?? true)
+		configs.push(node());
 
 	if (options.unicorn ?? true)
 		configs.push(unicorn(resolveSubOptions(options, 'unicorn')));
@@ -134,6 +138,7 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 		configs.push(test({
 			...resolveSubOptions(options, 'test'),
 			overrides: getOverrides(options, 'test'),
+			isInEditor,
 		}));
 
 	if (options.regexp ?? true)
@@ -250,11 +255,14 @@ export function defineConfig(options: FactoryOptions = {}, ...userConfigs: UserC
 	if (Object.keys(fusedConfig).length)
 		configs.push([fusedConfig]);
 
-	const composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
+	let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
 		.append(...configs, ...userConfigs as TypedFlatConfigItem[]);
 
 	if (options.autoRenamePlugins ?? true)
-		return composer.renamePlugins(DEFAULT_PLUGIN_RENAMING);
+		composer = composer.renamePlugins(DEFAULT_PLUGIN_RENAMING);
+
+	if (isInEditor)
+		composer = composer.disableRulesFix(DEFAULT_RULE_FIX, { builtinRules: async () => import(['eslint', 'use-at-your-own-risk'].join('/')).then(r => r.builtinRules) });
 
 	return composer;
 }

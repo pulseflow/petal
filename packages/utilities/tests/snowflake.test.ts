@@ -1,4 +1,5 @@
-import { type DeconstructedSnowflake, Snowflake } from '../src/lib/snowflake';
+import type { DeconstructedSnowflake } from '../src/lib/snowflake';
+import { Snowflake } from '../src/lib/snowflake';
 
 const sampleEpoch = 1577836800000n;
 

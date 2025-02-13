@@ -33,6 +33,7 @@ export async function imports(options: OptionsImports = {}): Promise<TypedFlatCo
 				'import/no-named-default': 'error',
 				'import/no-self-import': 'error',
 				'import/no-webpack-loader-syntax': 'error',
+				'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
 
 				'petal/import-dedupe': 'error',
 				'petal/no-import-dist': 'error',

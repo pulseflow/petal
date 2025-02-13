@@ -1,6 +1,7 @@
 import type { IterableResolvable } from './from.ts';
+import type { NumberResolvable } from './shared/_toNumberOrThrow.ts';
 import { map } from './map.ts';
-import { type NumberResolvable, toNumberOrThrow } from './shared/_toNumberOrThrow.ts';
+import { toNumberOrThrow } from './shared/_toNumberOrThrow.ts';
 
 /**
  * Consumes the iterable and returns the sum of all the elements.

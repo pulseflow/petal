@@ -1,8 +1,6 @@
 import type { IType } from './base/IType.ts';
 
-// eslint-disable-next-line node/prefer-global/text-encoder -- iife
 const encoder = new TextEncoder();
-// eslint-disable-next-line node/prefer-global/text-decoder -- iife
 const decoder = new TextDecoder();
 export const StringType: IType<string, null> = {
 	serialize(buffer, value) {
