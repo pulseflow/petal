@@ -2,7 +2,7 @@
 	"$schema": "https://json.schemastore.org/package.json",
 	"name": "@flowr/fetch",
 	"type": "module",
-	"version": "5.3.0",
+	"version": "6.0.0",
 	"description": "Small wrapper around globalThis.fetch for improved TypeScript and data support",
 	"author": "@flowr",
 	"contributors": ["Pauline <me@dyn.gay>"],
