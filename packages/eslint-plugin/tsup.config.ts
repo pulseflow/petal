@@ -1,12 +1,8 @@
-import type { Options } from 'tsup';
 import { createTsupConfig } from '../scripts/tsup.config.ts';
 
-const options: Options = {
-	external: ['@typescript-eslint/utils'],
-};
-
 export default createTsupConfig('eslint-plugin', {
-	cjs: options,
-	esm: options,
+	esm: {
+		external: ['@typescript-eslint/utils'],
+	},
 	iife: { disabled: true },
 });

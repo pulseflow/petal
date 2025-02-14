@@ -12,8 +12,6 @@ pnpm add
 
 ## Usage
 
-**Note**: While this section uses `import`, the imports match 1:1 with CJS imports. For example, `const { SchemaStore } = require('@flowr/store')` is equivalent to `import { SchemaStore } from '@flowr/store'`.
-
 ```ts
 // Require the store classes
 import { Schema, SchemaStore, t } from '@flowr/store';

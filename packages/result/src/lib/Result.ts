@@ -1049,8 +1049,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 *
 	 * @example
 	 * ```typescript
-	 * import { Result } from '@flowr/result';
-	 * const { ok } = require('@flowr/result');
+	 * import { Result, ok } from '@flowr/result';
 	 *
 	 * ok(2) instanceof Result; // true
 	 * ```
@@ -1067,8 +1066,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 *
 	 * @example
 	 * ```typescript
-	 * import { Result } from '@flowr/result';
-	 * const { ok } = require('@flowr/result');
+	 * import { Result, ok } from '@flowr/result';
 	 *
 	 * Result.isResult(ok(2)); // true
 	 * ```

@@ -937,8 +937,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 *
 	 * @example
 	 * ```typescript
-	 * import { Option } from '@flowr/result';
-	 * const { some } = require('@flowr/result');
+	 * import { Option, some } from '@flowr/result';
 	 *
 	 * some(2) instanceof Option; // true
 	 * ```
@@ -955,8 +954,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 *
 	 * @example
 	 * ```typescript
-	 * import { Option } from '@flowr/result';
-	 * const { some } = require('@flowr/result');
+	 * import { Option, some } from '@flowr/result';
 	 *
 	 * Option.isOption(some(2)); // true
 	 * ```

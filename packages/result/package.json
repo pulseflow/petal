@@ -34,19 +34,13 @@
 	"sideEffects": false,
 	"exports": {
 		".": {
-			"import": {
-				"types": "./dist/esm/index.d.ts",
-				"default": "./dist/esm/index.js"
-			},
-			"require": {
-				"types": "./dist/cjs/index.d.cts",
-				"default": "./dist/cjs/index.cjs"
-			},
-			"browser": "./dist/iife/index.global.js"
+			"types": "./dist/esm/index.d.ts",
+			"browser": "./dist/iife/index.global.js",
+			"default": "./dist/esm/index.js"
 		},
 		"./package.json": "./package.json"
 	},
-	"main": "./dist/cjs/index.cjs",
+	"main": "./dist/esm/index.js",
 	"module": "./dist/esm/index.js",
 	"browser": "./dist/iife/index.global.js",
 	"unpkg": "./dist/iife/index.global.js",
@@ -54,8 +48,6 @@
 	"files": [
 		"LICENSE*",
 		"README.md",
-		"dist/**/*.cjs",
-		"dist/**/*.d.cts",
 		"dist/**/*.d.mts",
 		"dist/**/*.d.ts",
 		"dist/**/*.js",
@@ -65,9 +57,8 @@
 		"node": ">=22"
 	},
 	"scripts": {
-		"build": "pnpm gen && tsup && pnpm build:cjs",
+		"build": "pnpm gen && tsup",
 		"start": "pnpm gen && tsup --watch",
-		"build:cjs": "tsx ../scripts/src/cjs.ts",
 		"gen": "tsx ../scripts/src/gen.ts result --write"
 	},
 	"publishConfig": {

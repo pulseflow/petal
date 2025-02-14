@@ -6,14 +6,9 @@ import { destr } from 'destr';
 import { basename, resolve } from 'pathe';
 import { findFilesRecursivelyStringEndsWith } from '../../node/src/lib/findFilesRecursively';
 
-interface ExportEntry {
+interface Export {
 	types: string;
 	default: string;
-}
-
-interface Export {
-	import: ExportEntry;
-	require: ExportEntry;
 	browser?: string;
 }
 
@@ -30,15 +25,9 @@ const EXPORT_MAP: Map<string, Export | ExportTypes | string> = new Map();
 async function main() {
 	if (!TYPES_MODE)
 		EXPORT_MAP.set('.', {
-			import: {
-				types: './dist/esm/index.d.ts',
-				default: './dist/esm/index.js',
-			},
-			require: {
-				types: './dist/cjs/index.d.cts',
-				default: './dist/cjs/index.cjs',
-			},
+			types: './dist/esm/index.d.ts',
 			browser: './dist/iife/index.global.js',
+			default: './dist/esm/index.js',
 		});
 	else
 		EXPORT_MAP.set('.', {
@@ -55,25 +44,13 @@ async function main() {
 
 		if (PACKAGE_NAME === 'utilities' && name === 'debounce')
 			EXPORT_MAP.set(`./${name}`, {
-				import: {
-					types: `./dist/esm/lib/debounce/${name}.d.ts`,
-					default: `./dist/esm/lib/debounce/${name}.js`,
-				},
-				require: {
-					types: `./dist/cjs/lib/debounce/${name}.d.cts`,
-					default: `./dist/cjs/lib/debounce/${name}.cjs`,
-				},
+				types: `./dist/esm/lib/debounce/${name}.d.ts`,
+				default: `./dist/esm/lib/debounce/${name}.js`,
 			});
 		else if (PACKAGE_NAME === 'iterator' && name === 'comparators')
 			EXPORT_MAP.set(`./${name}`, {
-				import: {
-					types: `./dist/esm/lib/shared/${name}.d.ts`,
-					default: `./dist/esm/lib/shared/${name}.js`,
-				},
-				require: {
-					types: `./dist/cjs/lib/shared/${name}.d.cts`,
-					default: `./dist/cjs/lib/shared/${name}.cjs`,
-				},
+				types: `./dist/esm/lib/shared/${name}.d.ts`,
+				default: `./dist/esm/lib/shared/${name}.js`,
 			});
 		else if (TYPES_MODE)
 			EXPORT_MAP.set(`./${name.charAt(0).toLowerCase() + name.slice(1)}`, {
@@ -81,14 +58,8 @@ async function main() {
 			});
 		else
 			EXPORT_MAP.set(`./${name}`, {
-				import: {
-					types: `./dist/esm/lib/${name}.d.ts`,
-					default: `./dist/esm/lib/${name}.js`,
-				},
-				require: {
-					types: `./dist/cjs/lib/${name}.d.cts`,
-					default: `./dist/cjs/lib/${name}.cjs`,
-				},
+				types: `./dist/esm/lib/${name}.d.ts`,
+				default: `./dist/esm/lib/${name}.js`,
 			});
 	}
 

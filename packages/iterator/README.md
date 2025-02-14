@@ -16,14 +16,12 @@ For any of the following examples, you can import the utilities from the index f
 
 ```ts
 import { append } from '@flowr/iterator';
-const { append } = require('@flowr/iterator');
 ```
 
 Or you can import the utilities directly:
 
 ```ts
 import { append } from '@flowr/iterator/append';
-const { append } = require('@flowr/iterator/append');
 ```
 
 ### `append`

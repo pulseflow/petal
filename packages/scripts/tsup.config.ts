@@ -50,7 +50,7 @@ export const outExtension: Options['outExtension'] = (context) => {
 };
 
 export type TsupDisabled = Options & { disabled?: boolean };
-export interface ExtendedTsupOptions { esm?: Options; cjs?: TsupDisabled; iife?: TsupDisabled }
+export interface ExtendedTsupOptions { esm?: Options; iife?: TsupDisabled }
 
 export function createTsupConfig(name: string | TemplateStringsArray, options: ExtendedTsupOptions = {}): Array<ReturnType<typeof defineConfig>> {
 	name = name.toString();
@@ -65,16 +65,6 @@ export function createTsupConfig(name: string | TemplateStringsArray, options: E
 			outExtension,
 			...options.esm,
 		}),
-		...options.cjs?.disabled
-			? []
-			: [defineConfig({
-					name: `${name}/cjs`,
-					...baseOptions,
-					format: 'cjs',
-					outDir: 'dist/cjs',
-					outExtension,
-					...options.cjs,
-				})],
 		...options.iife?.disabled
 			? []
 			: [defineConfig({

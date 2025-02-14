@@ -17,17 +17,7 @@ export type FileNamePredicate = (filePath: string) => boolean;
  *
  * @example
  * ```typescript
- * // With CommonJS: To find all files ending with `.ts` in the src directory:
- * const path = require('node:path');
- *
- * for await (const file of findFilesRecursively(join(import.meta.dirname, 'src'), (filePath) => filePath.endsWith('.ts'))) {
- * 	console.log(file);
- * }
- * ```
- *
- * @example
- * ```typescript
- * // With ESM: To find all files ending with `.ts` in the src directory:
+ * // To find all files ending with `.ts` in the src directory:
  * for await (const file of findFilesRecursively(new URL('src', import.meta.url), (filePath) => filePath.endsWith('.ts'))) {
  * 	console.log(file);
  * }

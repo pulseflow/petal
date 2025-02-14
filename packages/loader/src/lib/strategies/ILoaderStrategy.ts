@@ -94,16 +94,6 @@ export interface ILoaderStrategy<T extends Piece> {
 	 * The pre-load hook, use this to override the loader.
 	 * @example
 	 * ```typescript
-	 * // CommonJS support:
-	 * class MyStrategy extends LoaderStrategy {
-	 * 	preload(path) {
-	 * 		return require(path);
-	 * 	}
-	 * }
-	 * ```
-	 * @example
-	 * ```typescript
-	 * // ESM support:
 	 * class MyStrategy extends LoaderStrategy {
 	 * 	preload(file) {
 	 * 		return import(file.path);

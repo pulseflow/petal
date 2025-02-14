@@ -12,8 +12,6 @@ pnpm add @flowr/result
 
 ## Usage
 
-**Note:** While this section uses `import`, the imports match 1:1 with CJS imports. For example `const { Result } = require('@flowr/result')` equals `import { Result } from '@flowr/result'`.
-
 ### Wrapping synchronous `try-catch` blocks
 
 **Old code without `Result.from`:**
