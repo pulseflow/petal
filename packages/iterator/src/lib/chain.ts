@@ -18,5 +18,5 @@ import { toIterableIterator } from './toIterableIterator.ts';
  */
 export function* chain<const ElementType>(...iterables: Array<IterableResolvable<ElementType>>): IterableIterator<ElementType> {
 	for (const iterable of iterables)
-		yield * toIterableIterator(iterable);
+		yield* toIterableIterator(iterable);
 }

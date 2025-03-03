@@ -26,5 +26,5 @@ export function* flatMap<const ElementType, const MappedType>(
 
 	let index = 0;
 	for (const value of toIterableIterator(iterable))
-		yield * toIterableIterator(cmp(value, index++));
+		yield* toIterableIterator(cmp(value, index++));
 }

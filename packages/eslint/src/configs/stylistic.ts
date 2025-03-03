@@ -41,6 +41,9 @@ export async function stylistic(options: StylisticOptions = {}): Promise<TypedFl
 							curly: 'error',
 						},
 
+				'style/generator-star-spacing': ['error', { after: true, before: false }],
+				'style/yield-star-spacing': ['error', { after: true, before: false }],
+
 				...overrides,
 			},
 		},

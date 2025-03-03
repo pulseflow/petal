@@ -1,4 +1,4 @@
-import { Cron } from '../src/lib/cron';
+import { Cron } from '../src/lib/cron.ts';
 
 describe('cron', () => {
 	it('pre-defined @hourly', () => {

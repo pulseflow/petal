@@ -23,7 +23,7 @@ export function* prepend<const ElementType>(
 	...iterables: Array<IterableResolvable<ElementType>>
 ): IterableIterator<ElementType> {
 	for (const iterable of iterables)
-		yield * toIterableIterator(iterable);
+		yield* toIterableIterator(iterable);
 
-	yield * toIterableIterator(iterable);
+	yield* toIterableIterator(iterable);
 }

@@ -19,7 +19,7 @@ export default createEslintRule<Options, MessageIds>({
 
 			const declaration = node.declarations[0];
 
-			if (declaration.init?.type !== 'ArrowFunctionExpression')
+			if (declaration.init?.type !== 'ArrowFunctionExpression' && declaration.init?.type !== 'FunctionExpression')
 				return;
 			if (declaration.id.type !== 'Identifier')
 				return;
@@ -31,7 +31,7 @@ export default createEslintRule<Options, MessageIds>({
 			)
 				return;
 
-			const arrowFn = declaration.init;
+			const expression = declaration.init;
 			const body = declaration.init.body;
 			const id = declaration.id;
 
@@ -39,19 +39,19 @@ export default createEslintRule<Options, MessageIds>({
 				fix: (f) => {
 					const code = context.sourceCode.text;
 					const textName = code.slice(id.range[0], id.range[1]);
-					const textArgs = arrowFn.params.length
-						? code.slice(arrowFn.params[0].range[0], arrowFn.params[arrowFn.params.length - 1].range[1])
+					const textArgs = expression.params.length
+						? code.slice(expression.params[0].range[0], expression.params[expression.params.length - 1].range[1])
 						: '';
 					const textBody = body.type === 'BlockStatement'
 						? code.slice(body.range[0], body.range[1])
 						: `{\n  return ${code.slice(body.range[0], body.range[1])}\n}`;
-					const textGeneric = arrowFn.typeParameters
-						? code.slice(arrowFn.typeParameters.range[0], arrowFn.typeParameters.range[1])
+					const textGeneric = expression.typeParameters
+						? code.slice(expression.typeParameters.range[0], expression.typeParameters.range[1])
 						: '';
-					const textTypeReturn = arrowFn.returnType
-						? code.slice(arrowFn.returnType.range[0], arrowFn.returnType.range[1])
+					const textTypeReturn = expression.returnType
+						? code.slice(expression.returnType.range[0], expression.returnType.range[1])
 						: '';
-					const textAsync = arrowFn.async ? 'async ' : '';
+					const textAsync = expression.async ? 'async ' : '';
 
 					const final = `${textAsync}function ${textName} ${textGeneric}(${textArgs})${textTypeReturn} ${textBody}`;
 					return f.replaceTextRange([node.range[0], node.range[1]], final);

@@ -253,7 +253,7 @@ export class BitField<Flags extends Record<string, number> | Record<string, bigi
 	 * // ['Read', 'Edit']
 	 * ```
 	 */
-	public *toKeys(field: ValueResolvable<this>): IterableIterator<keyof Flags> {
+	public* toKeys(field: ValueResolvable<this>): IterableIterator<keyof Flags> {
 		const bits = this.resolve(field);
 		for (const [key, bit] of this[FlagEntriesSymbol])
 			if ((bits & bit) === bit)
@@ -277,7 +277,7 @@ export class BitField<Flags extends Record<string, number> | Record<string, bigi
 	 * // [0b0001, 0b0100]
 	 * ```
 	 */
-	public *toValues(field: ValueResolvable<this>): IterableIterator<ValueType<this>> {
+	public* toValues(field: ValueResolvable<this>): IterableIterator<ValueType<this>> {
 		const bits = this.resolve(field);
 		for (const [_, bit] of this[FlagEntriesSymbol])
 			if ((bits & bit) === bit)
@@ -301,7 +301,7 @@ export class BitField<Flags extends Record<string, number> | Record<string, bigi
 	 * // [['Read', 0b0001], ['Edit', 0b0100]]
 	 * ```
 	 */
-	public *toEntries(field: ValueResolvable<this>): IterableIterator<[key: keyof Flags, value: ValueType<this>]> {
+	public* toEntries(field: ValueResolvable<this>): IterableIterator<[key: keyof Flags, value: ValueType<this>]> {
 		const bits = this.resolve(field);
 		for (const [key, bit] of this[FlagEntriesSymbol])
 			if ((bits & bit) === bit)

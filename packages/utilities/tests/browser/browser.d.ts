@@ -1,5 +1,5 @@
 declare module 'jsdom' {
 	interface DOMWindow {
-		PulseUtilities: typeof import('../../src');
+		PulseUtilities: typeof import('../../src/index.ts');
 	}
 }

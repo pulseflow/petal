@@ -21,16 +21,16 @@ function* getDeepObjectKeysGenerator(
 ): Generator<string> {
 	if (Array.isArray(obj))
 		for (const [index, value] of obj.entries())
-			yield * getDeepArrayKeysRecursive(value, index, { arrayKeysIndexStyle });
+			yield* getDeepArrayKeysRecursive(value, index, { arrayKeysIndexStyle });
 
 	else
 		for (const [key, value] of Object.entries(obj))
-			yield * getDeepObjectKeysRecursive(value, key, { arrayKeysIndexStyle });
+			yield* getDeepObjectKeysRecursive(value, key, { arrayKeysIndexStyle });
 }
 
 function* getDeepArrayKeysRecursive(value: unknown, index: number, { arrayKeysIndexStyle }: GetDeepObjectKeysOptions): Generator<string> {
 	const resolvedIndex = arrayKeysIndexStyle === 'dotted' ? `${index}` : arrayKeysIndexStyle === 'braces' ? `[${index}]` : `[${index}].`;
-	yield * getDeepObjectKeysRecursive(value, resolvedIndex, { arrayKeysIndexStyle });
+	yield* getDeepObjectKeysRecursive(value, resolvedIndex, { arrayKeysIndexStyle });
 }
 
 function* getDeepObjectKeysRecursive(obj: unknown, prefix: string, { arrayKeysIndexStyle }: GetDeepObjectKeysOptions): Generator<string> {
@@ -43,7 +43,7 @@ function* getDeepObjectKeysRecursive(obj: unknown, prefix: string, { arrayKeysIn
 		for (const [index, value] of obj.entries()) {
 			const resolvedPrefixedIndex = arrayKeysIndexStyle === 'dotted' ? `${prefix}.${index}` : `${prefix}[${index}]`;
 
-			yield * getDeepObjectKeysRecursive(value, resolvedPrefixedIndex, { arrayKeysIndexStyle });
+			yield* getDeepObjectKeysRecursive(value, resolvedPrefixedIndex, { arrayKeysIndexStyle });
 		}
 	}
 	else {
@@ -52,7 +52,7 @@ function* getDeepObjectKeysRecursive(obj: unknown, prefix: string, { arrayKeysIn
 			yield prefix;
 		else
 			for (const [key, value] of objectEntries)
-				yield * getDeepObjectKeysRecursive(value, arrayKeysIndexStyle === 'braces' ? `${prefix}${key}` : `${prefix}.${key}`, {
+				yield* getDeepObjectKeysRecursive(value, arrayKeysIndexStyle === 'braces' ? `${prefix}${key}` : `${prefix}.${key}`, {
 					arrayKeysIndexStyle,
 				});
 	}

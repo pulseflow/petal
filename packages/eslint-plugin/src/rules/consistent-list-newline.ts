@@ -100,7 +100,7 @@ export default createEslintRule<Options, MessageIds>({
 						data: {
 							name: node.type,
 						},
-						*fix(fixer) {
+						* fix(fixer) {
 							yield fixer.insertTextBefore(item, '\n');
 						},
 						messageId: 'shouldWrap',
@@ -117,7 +117,7 @@ export default createEslintRule<Options, MessageIds>({
 							data: {
 								name: node.type,
 							},
-							*fix(fixer) {
+							* fix(fixer) {
 								yield removeLines(fixer, lastItem.range[1], item.range[0], getDelimiter(node, lastItem));
 							},
 							messageId: 'shouldNotWrap',
@@ -143,7 +143,7 @@ export default createEslintRule<Options, MessageIds>({
 					data: {
 						name: node.type,
 					},
-					*fix(fixer) {
+					* fix(fixer) {
 						yield fixer.insertTextAfter(lastItem, '\n');
 					},
 					messageId: 'shouldWrap',
@@ -165,7 +165,7 @@ export default createEslintRule<Options, MessageIds>({
 						data: {
 							name: node.type,
 						},
-						*fix(fixer) {
+						* fix(fixer) {
 							yield removeLines(fixer, lastItem.range[1], endRange, getDelimiter(node, lastItem));
 						},
 						messageId: 'shouldNotWrap',

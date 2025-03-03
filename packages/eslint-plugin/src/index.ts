@@ -41,28 +41,28 @@ const meta = {
 	version,
 } as const satisfies FlatConfig.Plugin['meta'];
 
-const configs = {
-	recommended: {
-		name: 'petal/recommended',
-		plugins: {
-			get petal(): FlatConfig.Plugin {
-				return plugin;
-			},
-		},
-		rules: {},
-	},
-} as const satisfies FlatConfig.Plugin['configs'];
+// const configs = {
+// 	recommended: {
+// 		name: 'petal/recommended',
+// 		plugins: {
+// 			get petal(): FlatConfig.Plugin {
+// 				return plugin;
+// 			},
+// 		},
+// 		rules: {},
+// 	},
+// } as const satisfies FlatConfig.Plugin['configs'];
 
 const plugin = {
 	meta,
 	rules,
-	configs,
+	// configs,
 } as const satisfies FlatConfig.Plugin;
 
 type ESLintPluginPetal = FlatConfig.Plugin & {
 	meta: typeof meta;
 	rules: typeof rules;
-	configs: typeof configs;
+	// configs: typeof configs;
 };
 
 export default plugin as ESLintPluginPetal;

@@ -30,7 +30,7 @@ export async function* findFilesRecursively(path: PathLike, predicate: FileNameP
 		if (item.isFile() && predicate(item.name))
 			yield join(dir.path, item.name);
 		else if (item.isDirectory())
-			yield * findFilesRecursively(join(dir.path, item.name), predicate);
+			yield* findFilesRecursively(join(dir.path, item.name), predicate);
 }
 
 /**

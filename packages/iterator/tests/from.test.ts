@@ -50,7 +50,7 @@ describe('from', () => {
 
 	it('given an object with iterable values then returns an iterable with the same elements', () => {
 		const obj = {
-			*[Symbol.iterator]() {
+			* [Symbol.iterator]() {
 				yield 1;
 				yield 2;
 				yield 3;

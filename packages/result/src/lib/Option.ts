@@ -467,7 +467,7 @@ export class Option<T, Exists extends boolean = boolean> {
 	 * @see {@link Option.iter}
 	 * @see {@linkplain https://doc.rust-lang.org/std/option/enum.Option.html#method.iter}
 	 */
-	public *iter(): Generator<T> {
+	public* iter(): Generator<T> {
 		if (this.isSome())
 			yield this[ValueProperty];
 	}

@@ -335,7 +335,7 @@ export class Store<T extends Piece, StoreName extends StoreRegistryKey = StoreRe
 	 * @param root The directory to load the pieces from.
 	 * @return An async iterator that yields the pieces to be loaded into the store.
 	 */
-	private async *loadPath(root: string): AsyncIterableIterator<T> {
+	private async* loadPath(root: string): AsyncIterableIterator<T> {
 		Store.logger?.(`[STORE => ${this.name}] [WALK] Loading all pieces from '${root}'.`);
 		for await (const child of this.#walk(this, root, Store.logger)) {
 			const data = this.strategy.filter(child);

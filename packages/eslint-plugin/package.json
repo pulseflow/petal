@@ -53,15 +53,15 @@
 		"build": "tsup"
 	},
 	"peerDependencies": {
-		"eslint": "^9.20.0"
+		"eslint": "^9.20.1"
 	},
 	"dependencies": {
 		"@flowr/utilities": "workspace:^"
 	},
 	"devDependencies": {
-		"@typescript-eslint/parser": "^8.24.0",
-		"@typescript-eslint/utils": "^8.24.0",
-		"eslint": "^9.20.1",
+		"@typescript-eslint/parser": "^8.25.0",
+		"@typescript-eslint/utils": "^8.25.0",
+		"eslint": "^9.21.0",
 		"eslint-vitest-rule-tester": "^1.1.0",
 		"jsonc-eslint-parser": "^2.4.0"
 	},

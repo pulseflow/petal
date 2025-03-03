@@ -8,13 +8,10 @@ export const BLOB_URL = 'https://github.com/pulseflow/petal/blob/main/packages/e
  *
  * @public
  */
-export interface RuleModule<
+export type RuleModule<
 	TOptions extends readonly unknown[],
 	TMessageIds extends string,
-> extends TSESModule<
-		TMessageIds,
-		TOptions
-	> { defaultOptions: TOptions };
+> = TSESModule<TMessageIds, TOptions> & { defaultOptions: TOptions };
 
 /**
  * Creates reusable function to create {@link RuleModule | rules} with default options and docs URLs.

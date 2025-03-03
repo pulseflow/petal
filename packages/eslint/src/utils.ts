@@ -198,7 +198,7 @@ export async function ensurePackages(packages: Array<string | undefined>): Promi
 
 export type ResolveOptions<Resolver> = Resolver extends boolean ? never : NonNullable<Resolver>;
 export function resolveSubOptions<Key extends keyof OptionsConfig>(options: OptionsConfig, key: Key): ResolveOptions<OptionsConfig[Key]> {
-	return typeof options[key] === 'boolean' ? {} as any : options[key] || {};
+	return typeof options[key] === 'boolean' ? {} as any : options[key] || {} as any;
 }
 
 // eslint-disable-next-line ts/no-unnecessary-type-parameters -- weird types

@@ -5,7 +5,9 @@
 	"version": "6.0.0",
 	"description": "Common TSConfigs and TypeScript in Petal standardized projects",
 	"author": "@flowr",
-	"contributors": ["Pauline <me@dyn.gay>"],
+	"contributors": [
+		"Pauline <me@dyn.gay>"
+	],
 	"license": "(LicenseRef-OQL-1.2 OR MIT OR Apache-2.0)",
 	"funding": "https://ko-fi.com/pauliesnug",
 	"homepage": "https://petal.dyn.gay",
@@ -71,9 +73,9 @@
 		"typescript": ">=5"
 	},
 	"devDependencies": {
-		"@vitest/coverage-v8": "^3.0.5",
-		"typescript": "^5.7.3",
-		"vitest": "^3.0.5"
+		"@vitest/coverage-v8": "^3.0.7",
+		"typescript": "^5.8.2",
+		"vitest": "^3.0.7"
 	},
 	"publishConfig": {
 		"access": "public",

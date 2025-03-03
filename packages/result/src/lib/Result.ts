@@ -473,7 +473,7 @@ export class Result<T, E, const Success extends boolean = boolean> {
 	 *
 	 * @see {@linkplain https://doc.rust-lang.org/std/result/enum.Result.html#method.iter}
 	 */
-	public *iter(): Generator<T> {
+	public* iter(): Generator<T> {
 		if (this.isOk())
 			yield this[ValueProperty];
 	}

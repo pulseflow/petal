@@ -65,7 +65,7 @@ export class LoaderStrategy<T extends Piece> implements ILoaderStrategy<T> {
 		return mod;
 	}
 
-	public async *load(store: Store<T>, file: HydratedModuleData): ILoaderResult<T> {
+	public async* load(store: Store<T>, file: HydratedModuleData): ILoaderResult<T> {
 		let yielded = false;
 		const result = await this.preload(file);
 
@@ -95,7 +95,7 @@ export class LoaderStrategy<T extends Piece> implements ILoaderStrategy<T> {
 		console.error(`Error when loading '${path}':`, error);
 	}
 
-	public async *walk(store: Store<T>, path: string, logger?: StoreLogger | null): AsyncIterableIterator<string> {
+	public async* walk(store: Store<T>, path: string, logger?: StoreLogger | null): AsyncIterableIterator<string> {
 		logger?.(`[STORE => ${store.name}] [WALK] Loading all pieces from '${path}'.`);
 		try {
 			const dir = await opendir(path);
@@ -103,7 +103,7 @@ export class LoaderStrategy<T extends Piece> implements ILoaderStrategy<T> {
 				if (item.isFile())
 					yield join(dir.path, item.name);
 				else if (item.isDirectory())
-					yield * this.walk(store, join(dir.path, item.name), logger);
+					yield* this.walk(store, join(dir.path, item.name), logger);
 		}
 		catch (error) {
 			// Specifically ignore ENOENT, which is commonly raised by fs operations

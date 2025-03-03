@@ -53,16 +53,6 @@
 		"build": "tsup",
 		"start": "tsup --watch"
 	},
-	"dependencies": {
-		"@astrojs/cli-kit": "^0.4.1",
-		"giget": "^1.2.4"
-	},
-	"devDependencies": {
-		"@flowr/utilities": "workspace:^",
-		"strip-ansi": "^7.1.0",
-		"strip-json-comments": "^5.0.1",
-		"yargs": "^17.7.2"
-	},
 	"publishConfig": {
 		"access": "public",
 		"provenance": true

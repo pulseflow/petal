@@ -126,7 +126,7 @@ export default defineConfig(${configString}, ...${jsonString});
 `, 'utf-8');
 
 			if (process.platform === 'win32')
-				await execa({ cwd: target, stdio: 'pipe' })`npx eslint . --config ${target}\\eslint.config.js --fix`;
+				await execa({ cwd: target, stdio: 'pipe' })`npx eslint --config ${target}\\eslint.config.js --fix`;
 			else await execa({ cwd: target, stdio: 'pipe' })`pnpm -c dlx eslint --config ${target}/eslint.config.js . --fix`;
 
 			const files = await fg('**/*', {

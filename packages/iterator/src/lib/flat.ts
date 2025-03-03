@@ -18,5 +18,5 @@ import { toIterableIterator } from './toIterableIterator.ts';
  */
 export function* flat<const ElementType>(iterables: IterableResolvable<IterableResolvable<ElementType>>): IterableIterator<ElementType> {
 	for (const value of toIterableIterator(iterables))
-		yield * toIterableIterator(value);
+		yield* toIterableIterator(value);
 }

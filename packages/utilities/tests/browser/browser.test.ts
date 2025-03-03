@@ -30,6 +30,6 @@ describe('browser-bundle-test', () => {
 	});
 
 	it('stopwatch should be available in window', () => {
-		expect(new window.PulseUtilities.Stopwatch().stop().toString()).toBeDefined();
+		expect<string>(new window.PulseUtilities.Stopwatch().stop().toString()).toBeDefined();
 	});
 });

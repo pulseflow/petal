@@ -72,8 +72,8 @@ export default defineConfig(
 ```json
 {
 	"scripts": {
-		"lint": "eslint .",
-		"lint:fix": "eslint . --fix"
+		"lint": "eslint",
+		"lint:fix": "eslint --fix"
 	}
 }
 ```
@@ -637,7 +637,7 @@ const foo = async (bar: string): void => {
 };
 ```
 
-will be transformed into the following upon saving or running `eslint . --fix`:
+will be transformed into the following upon saving or running `eslint --fix`:
 
 ```ts
 async function foo(bar: string): void {
