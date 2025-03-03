@@ -2,7 +2,7 @@
 	"$schema": "https://json.schemastore.org/package.json",
 	"name": "@flowr/store",
 	"type": "module",
-	"version": "6.0.0",
+	"version": "6.0.1",
 	"description": "High-capacity fast raw string storage with UTF-16",
 	"author": "@flowr",
 	"contributors": [

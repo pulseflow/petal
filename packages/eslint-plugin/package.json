@@ -2,7 +2,7 @@
 	"$schema": "https://json.schemastore.org/package.json",
 	"name": "eslint-plugin-petal",
 	"type": "module",
-	"version": "6.0.0",
+	"version": "6.0.1",
 	"description": "Custom ESLint rules for the Petal specification",
 	"author": "@flowr",
 	"contributors": [
