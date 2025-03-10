@@ -143,7 +143,7 @@
 		"@eslint/compat": "^1.2.7",
 		"@eslint/markdown": "^6.2.1",
 		"@stylistic/eslint-plugin": "^4.2.0",
-		"@typescript-eslint/eslint-plugin": "^8.25.0",
+		"@typescript-eslint/eslint-plugin": "^8.26.0",
 		"@typescript-eslint/parser": "^8.25.0",
 		"@vitest/eslint-plugin": "^1.1.36",
 		"eslint-flat-config-utils": "^2.0.1",
